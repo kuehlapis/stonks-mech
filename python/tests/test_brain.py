@@ -90,13 +90,13 @@ class TestPriority(unittest.TestCase):
         self.assertEqual(m, "evade")
         self.assertEqual(a["fire"], [False, False])
 
-    def test_laser_holder_engages_gun_only_disengages(self):
+    def test_laser_holder_engaged_evades_firing_back(self):
         b = brain(perception=Fake(threats=[ENEMY], engaged_by=ENEMY),
                   survival=Fake(find_cover=[-20.0, 0.0], hold_point=[50.0, 0.0]))
         o = obs0()
         a, m = self.mode(b, o)
         self.assertEqual(m, "evade")  # we lose the trade (gun vs gun + laser): break line of sight
-        self.assertEqual(a["fire"][1], False)  # slot 1 empty; slot 0 gun may fire back
+        self.assertEqual(a["fire"], [True, True])  # EVADE_ALL: return fire with every weapon combat allows
 
     def test_engaged_no_cover_close_is_cornered_fight(self):
         e = dict(ENEMY, pos=[40.0, 0.0, 0.0])
