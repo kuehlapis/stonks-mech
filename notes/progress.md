@@ -5,6 +5,21 @@ Updated by the moderator after every agent report. A new session reads this firs
 ## Earlier state (local branch, superseded by the next section)
 
 Milestone: **M0 reached** (direct and Docker checks pass); local M1 proxy score 8.73 (iteration 2), track score not submitted. Zone deaths 7% → 1% after the hold-point fix (AAR 2). Bar to beat: 6.00.
+
+| Part | Status | Where |
+|---|---|---|
+| Research (local) | done | `notes/research/{config,map,zone,upgrades,stream}.md`, `hello.json` |
+| Research (online) | done | `notes/research/online-*.md` |
+| Game plan | revised after Critic review | `notes/ideas/game-plan.md` |
+| Alternative strategies | done (7 styles, A/B plan) | `notes/ideas/strategies.md` |
+| Critic review of plan | 1st and 2nd passes done; M1 code N1/N2 fixed | `notes/reviews/game-plan.md` and `python/brain.py` |
+| World module | done, committed | `python/world.py` |
+| Perception, Economy, Combat | done, committed | `python/{perception,economy,combat}.py` |
+| Survival, Nav, Brain | integrated; N1/N2 code fixes validated | `python/{survival,nav,brain}.py` |
+| Bot entry + Dockerfile | done | `python/bot.py` |
+| Simulator phase 1 | done, committed | `sim/` |
+| Simulator phase 2 (weapons, loot, cubes, NPCs, drops) | open; parallel `--jobs` runner done | `sim/` |
+
 ## State: 2026-11-21 evening, iteration 2, branch `iter-1`
 
 Track score: **not submitted yet**. Leaderboard best ≈ 5.96 (baseline example bot 1.15). Scoring closes **Sun 11:00 AM EST**. Up to 4 submissions per hour.
@@ -49,17 +64,6 @@ Guardrails: `python -m unittest discover python/tests` passes (63 tests); the pe
 
 | Build | Score | Kills/match |
 |---|---|---|
-| Research (local) | done | `notes/research/{config,map,zone,upgrades,stream}.md`, `hello.json` |
-| Research (online) | done | `notes/research/online-*.md` |
-| Game plan | revised after Critic review | `notes/ideas/game-plan.md` |
-| Alternative strategies | done (7 styles, A/B plan) | `notes/ideas/strategies.md` |
-| Critic review of plan | 1st and 2nd passes done; M1 code N1/N2 fixed | `notes/reviews/game-plan.md` and `python/brain.py` |
-| World module | done, committed | `python/world.py` |
-| Perception, Economy, Combat | done, committed | `python/{perception,economy,combat}.py` |
-| Survival, Nav, Brain | integrated; N1/N2 code fixes validated | `python/{survival,nav,brain}.py` |
-| Bot entry + Dockerfile | done | `python/bot.py` |
-| Simulator phase 1 | done, committed | `sim/` |
-| Simulator phase 2 (weapons, loot, cubes, NPCs, drops) | open; parallel `--jobs` runner done | `sim/` |
 | example bot | 1.01 | 0.3 |
 | M1 (iteration 1) | 0.80 | 0.14 |
 | iteration 2, hiding style | 1.3–1.6 | 0.5–0.6 |
