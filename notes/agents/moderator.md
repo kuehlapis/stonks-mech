@@ -34,6 +34,8 @@ Done when zone deaths are eliminated, simulator phase 2 is complete, and a robus
 
 ## Log (newest first)
 
+- 2026-11-22, iteration 3 (session end): track 1.60 for c529ecc = same as f803b02. Sim over-rewards fight changes; squad calibration in progress (Tester). Built ~18 switches (all off), none proven; run mode hurt (rear damage; fixed by RUN_HIT_S). Assumptions register + 2 discussion rounds (notes/ideas/assumptions*.md). Next: verify the map loads under the scorer's sandbox (Critic round 2), then calibration, then one-switch A/Bs (K1 lightning ambush, K2 peek laser first). Handover: notes/progress.md top section.
+
 - 2026-11-22, iteration 3: scoring confirmed as placement, practice confirmed as vs squad. Re-applied HOLD_SEARCH off (63 tests pass). Added boost-strafe and hop switches (off). Wrote `notes/ideas/movesets.md`. Queued 10 variants vs squad (112 matches each). Rejected taking mortars (no aim code, +60% cook-off). Results pending.
 
 - 2026-11-21, iteration 2: reconciled the stale handoff with the committed M1 modules; found and fixed the missing Critic N1 code condition and added the 30 ms optional-work guard. Corrected `check/check.py` to preserve explicit POSIX map paths on Windows; direct and Docker checks passed with the map mounted (Docker ready 2505 ms, p50/p99/max 6.5/11.0/12.5 ms). Full Python suite: 63 tests pass. Added parallel match execution (`--jobs 2`) to `sim/run.py`, then completed 100 M1 vs example x15 games. Result: M1 score 8.58 vs example field 7.42, but 7% zone deaths and 4% wins; see `notes/reviews/aar-2026-11-21-1.md`. Next: diagnose zone deaths and complete simulator phase 2.

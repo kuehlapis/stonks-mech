@@ -53,6 +53,8 @@ Done when the Critic has reviewed `game-plan.md` and the high-impact findings ar
 
 ## Log (newest first)
 
+- 2026-11-22, iteration 3 (kills round): appended "Round 2: kills" to assumptions-discussion.md. TTK table from protocol §7. K1 lightning ambush (laser denial via 2 s short; +1.5–2.5 kills), K2 peek laser (exposure < their 1.35 s react + charge; +1–1.5), K3 kill spacing via regen (+0.5), K4 laser upgrades first (+0.2–0.4), K5 no gun duels at range. Stacked ≈ 4–5.5 kills (guesses).
+
 - 2026-11-22, iteration 3 (assumptions discussion): wrote the Strategist section of `notes/ideas/assumptions-discussion.md` (new file). A17 failed (reasons: shared vision, no deterrent, far point among non-hunters). Back from 6.00: H1 zone deaths, H2 gentler squad, H3 an exploitable AI gap; behaviours: fortress fighter, laser peek sniper, roof perch. Experiments: attacker count at death from traces, always-fight flag variant, track probe for zone deaths.
 
 - 2026-11-22, iteration 3 (300–415 s round): added "300–415 s survival" to plateau.md. Numbers: 25 m final circle from 375 s, outside dps 100/160/260 (no regen) so being outside is fatal before 415 s; towers 72.9 m unreachable; shared vision defeats hiding. Conclusion: alive at 415 s about 0–5% vs zone-smart squad. Ranked: last stand for kills (+0.5–1), final-roof hold (+0.1–0.3), edge dance and sound bait ≈ 0. The realistic total is 3–4; 6 needs fight quality or a squad that dies to the zone. Lesson: compute the endgame geometry before proposing hiding. Next: track evidence on house-bot zone deaths.

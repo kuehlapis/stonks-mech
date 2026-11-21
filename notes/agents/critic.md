@@ -4,6 +4,8 @@ Owns: `notes/reviews/`. Rules: `CLAUDE.md` (Agent journals). Goal: `objective.md
 
 ## Current task
 
+Brief (moderator, 2026-11-22 #7): critic round 2: why two bots both 1.60; fight model first-engagement loser; review Strategist Round 2 when it appears (pending; session ended, carry over).
+
 Brief (moderator, 2026-11-22 #6): rank assumptions A1-A23, cheapest checks, how to reach 6.00; output Critic section in notes/ideas/assumptions-discussion.md. Done.
 
 Brief (moderator, 2026-11-22 #5): review plateau.md Zone-smart ZS1-3; output notes/reviews/zone-smart-2026-11-22.md. Done.
@@ -60,6 +62,7 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 
 ## Log (newest first)
 
+- 2026-11-22 #7: round 2. Track rounds to 1 decimal (scores.md '1.6'), SE ~0.2 so equal 1.60 is weak evidence. Cheapest decisive check: scorer-style docker run, grep 'world load failed' (bot.py:15 silent map-free fallback). Fight loser: OPEN_EDGE 1.2 + WEAK_GUN 0.6 open fights vs gun-only hard bots; kiting to 130 m favours lasers. Strategist Round 2 not yet written.
 - 2026-11-22 #6: assumptions ranking. Top: A23 (is 6.00 from this squad?), A4/A3 (check (16-place)-kills from track end messages), A7, A8 (sim sensitivity runs), A15 (cross-version comparisons invalid). Recommend no builds until checks 1-2.
 - 2026-11-22 #5: zone-smart review. Burn HP math right (2981 HP/11.5 s) but 3 plating unlikely; gun-only != easy (all tiers start gun-only); ladder hits mediums after kill 2 (n=1+dead) -> cap 2 kills/150 s; FIRE_POLICY blocks ladder shots (brain.py:137) and reload in the open (:152). Expect ZS1 ~+1.
 - 2026-11-22 #4: diff 65bd2fe review. Must fix: run-wait holds at last-seen spot (squad walks there), stale _run_spot, run-wait blocks non-urgent zone travel 30 s. Should: boost without cover, run-finish not 'alone', tests. No crash or >50 ms path found (worst ~45 los).

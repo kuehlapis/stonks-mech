@@ -51,3 +51,75 @@ Source: `notes/research/house-bots.md` (the recorded match; FFA, 16 mechs, 36.8 
 | A11 | Contradicts | boost at 19.4 m/s to close, jet hop to z 21, juking every 0.3-0.6 s | squad_chase (boost) is closer to reality; add juke + jet hop |
 | A12 | Weak support | no turn to our gunfire for 0.5 s before the hit | stays guess |
 | A13 | Supports (loot) | had a laser by t 4.9 (spawn is gun only) | lasers looted early; upgrades: no data |
+
+## Strategist, Round 2: kills (2026-11-22)
+
+Premise (moderator): the squad never dies to the zone, so score ≈ 1 + kills, and > 6 needs about 5 kills per match. Real house bots (`notes/research/house-bots.md`): react about 0.6 s, lead within about 0.023 rad, full-charge laser hits 4 of 5 at 100–150 m (90% of our damage taken), boost and zigzag, retaliate for 31 s or more.
+
+### Kill-speed numbers (protocol §7, against 1400 HP)
+
+| Weapon | Damage rate | TTK at 100% hits | Notes |
+|---|---|---|---|
+| Gun | 45 / 0.24 s = 188/s burst; mag 12 then 2.4 s reload → ~102/s sustained | ~8 s (≥ 16 s at the 50% we land on zigzaggers) | Projectile; misses boosting targets at range |
+| Laser (full) | 315 per 0.75 s charge + 1.65 s cooldown = 131/s | 5 beams: 0.75 + 4 × 2.4 = 10.4 s | Hitscan, can't be dodged once released |
+| Lightning | 60 / 0.25 s = 240/s, 3 energy per shot (12/s, below the 18/s regen) | 5.8 s, plus chains to 2 more at 0.7× | 45 m, 30° cone, **shorts lasers for 2 s** |
+| Laser + gun | ~230/s | ~6 s | |
+| Lightning + laser | ~370/s | ~4 s | |
+| Their laser on us | 315 × 0.8 / 2.4 s ≈ 105/s each | 1 hunter: 13 s; 2 hunters: 6.7 s | |
+
+What this says: from range with the gun, we lose every even fight, since their laser lands 4 of 5 and our bullets miss a zigzagging target. To get kills we need either **(a) no exposure during their charge**, or **(b) to take their laser away**.
+
+### Ranked behaviours
+
+**K1 (top): lightning ambush (laser denial).**
+Lightning hits shorten the target's laser: no charge for 2 s, and we fire every 0.25 s, so a target inside 45 m of us can **never** fire its laser, which is 90% of the damage they deal. Hunters walk to our last known position (shared vision). So: once seen, break LOS around a corner, wait 10–25 m past it facing the corner, and fire lightning when the hunter turns it. We react before them (they react in about 0.6 s; we already aim at the corner). Run lightning + laser (or gun): about 4–6 s TTK while they fight with the gun only, and chains hit a second bot that is following.
+- Needs: lightning picked up early (floor loot, crates, NPC kills; we already pick laser then lightning). Prefer **lightning first** when the squad is the opponent.
+- Expected: **+1.5 to +2.5 kills/match**, if we hold lightning by about 90 s in about half the matches. Biggest single lever.
+- A/B: existing pickup order plus a new ambush hold (brain, about 30 lines: corner point = a `find_cover` spot within 25 m of the LOS-break, aimed at our previous position). A cheap first check, flags only: lightning-first pickup + `_range_pref` close (`s_close` exists) vs s_base2, 56 matches; metric kills from lightning, and their laser hits on us after a short.
+
+**K2: peek laser (exposure shorter than their charge).**
+A laser charges with the trigger held, even without LOS. Charge fully behind cover, step out, release the moment LOS opens (aim pre-set to their last known position), step back. We're exposed for about 0.3–0.5 s. They need react 0.6 s + charge 0.75 s ≈ 1.35 s to beam us back, so **their laser can't answer a peek**; only their gun can, at 50% hits on a sidestepping target. One 315 beam per 2.4 s cycle = 5 cycles per kill, about 12 s, taking only gun chip damage.
+- Expected: **+1 to +1.5 kills.** Also the best opening move: the first beam lands before they have reacted.
+- A/B: PEEK_AFTER_BEAM + LASER_DUCK 30 exist (b_peek); the new piece is "charge while hidden, release on LOS" (combat + brain, about 30 lines). Metric: our beam hits, their beam hits on us per fight.
+
+**K3: space kills to the regen clock.**
+Each kill adds a hunter; the dead bot's cubes (+2) give +4% HP and damage each. After a kill, don't take the next fight until HP is ≥ 90% (45 HP/s after 5 s quiet: 1400 HP takes 31 s from 0, about 15 s from half). Move away from the death spot: the kill reveals us (death sound 600 m).
+- Expected: +0.5 kills (fewer second fights at half HP), and later deaths.
+- A/B: REGEN_BREAK + REGEN_HIDE (built) on top of s_base2; metric: HP at the start of each fight, kills/match.
+
+**K4: upgrades for kills.**
+At ~1 kill per match, cube offers are rare (1st cube, 3rd cube). For a kill bot the first offers should be `laser_damage` / `laser_charge` (faster cycles, more alpha: 4 beams per kill instead of 5 at about +10%), not plating. Each cube also gives +4% damage.
+- Expected: +0.2–0.4 kills.
+- A/B: an economy ORDER variant (laser_damage, laser_charge, plating...) vs s_base2.
+
+**K5 (avoid): gun duels at range.** Our bullets miss zigzagging boosters; their beams land 4 of 5. Never open a fight with the gun beyond 60 m against a laser holder. FIRE_POLICY's "one-shot kill only" can stay for gun-only engagements.
+
+### Will 5 kills happen?
+
+Stacked guesses: K1 + K2 + K3 + K4 ≈ 0.9 + 1.5–2.5 + 1–1.5 + 0.5 + 0.3 → **about 4–5.5 kills, score 5–6.5**, provided we live past 120 s. The 64% of deaths before 120 s are the first test. Run K2 and K1 first, judged by kills per match and deaths before 120 s, on 56 paired matches each. If neither moves kills by +0.7, the house-bot model is the problem, not the tactic.
+
+## Critic round 2 (2026-11-22)
+
+### (1) Is "score ≈ 1 + kills" the only reading of two 1.60s?
+
+Alternatives, ranked by likelihood × how much they would change the plan:
+
+1. **The track rounds to 1 decimal** (`scores.md`: the first entry is "1.6"). Two bots that differ by up to ±0.05 both show 1.6. On 48 matches the SE is ≈ 0.15–0.2, so a real difference of up to ~0.3 is invisible anyway. "Exactly equal" is not evidence; "no detectable change" is. *Check:* none needed. Treat the track as able to detect changes ≥ 0.4 only.
+2. **Both bots ran map-free on the track.** `bot.py:10-15` falls back silently when `World(hello["map"]["dir"])` fails. The fight changes then still matter, but cover, LOS, `_exposed` and navigation all degrade the same way in both bots. Map-free play in a squad is about "die early". *Check (cheapest, decisive):* the same container command as the scorer (`check.py --map-dir /arena` under docker with the sandbox flags), then grep stderr for "world load failed". Also time `ready`: world precompute under `--cpus 1 --memory 512m` could exceed the hello budget or hit memory limits on the track box.
+3. **We die before any fight logic matters.** Sim: 64% dead < 120 s, median ~100 s. If the track squad's first contact is 2–3 bots with full-charge lasers (house-bots §1: laser 1260 of 1390 damage, 2.2 s to first beam), both bots lose that first exchange the same way. The 876 lines change later fights we never reach. *Check:* a track submission that logs nothing helps little. Instead use the sim: s_base2 death causes by first-contact group size. If most deaths come in the first engagement, fight tuning can't move the score.
+4. **Timing.** Our worst ticks were 74–146 ms (A16). Over 50 ms the mech coasts, and after 1 s it idles. If spikes come in fights (cover search + funnel + combat), both bots lose fights to the same idle. *Check:* idle-machine timing under docker `--cpus 1`, p99 and max on fight ticks only.
+
+Reading "score ≈ 1 + kills" is right *for the sim* (0.91 kills + 0.97 other). For the track it is unproven until (2) is ruled out. **Do (2) first. It is the one alternative that would make every past track result meaningless, and it costs one docker run.**
+
+### (2) Which part of the fight model loses the first engagement (`python/brain.py`)
+
+Against a hunter that turns in ~0.6 s, leads, and opens with a full 315 laser 2.2 s after being hit:
+
+1. **We open fights we expect to lose: `OPEN_EDGE` 1.2 + `WEAK_GUN` 0.6** (`brain.py:25-26`, `_ttk_ratio:575`). We open when our time-to-kill is up to 1.2× theirs. And any gun-only enemy has its damage rate cut to 60%. But every bot starts gun-only (`protocol.md` §7), and the stream's bot had a laser by t 4.9 s. So a hard or expert bot holding only a gun looks like a 0.6× threat, the ratio says "win", and we open with a gun at up to 180 m (`OPEN_RANGE`). That reveals us to the whole squad (gun heard at 320 m), against an aim of ~0.02 rad with lead. **This is the most likely loser.** *Fix to test:* `WEAK_GUN = 1.0`, `OPEN_EDGE = 0.8` (open only on a clear edge). Two constants, A/B on paired seeds.
+2. **We kite to 130 m (`FIGHT_RANGE`, `_range_pref:749`), the laser's best range.** A laser is hitscan: no lead, 280 m. At 130 m our gun needs lead and lands ~40–50%, while their beam lands 4 of 5 (house-bots §3). Against a laser holder the right range is "out of LOS" or "< 60 m with strafing", not 130 m. *Fix to test:* if `laser in theirs and laser not in mine`, use `_range_pref` = close to 50 m behind cover, or break LOS.
+3. **`_dps` averages the laser over its cycle** (315 / 2.4 s ≈ 131 × hit probability). It ignores the alpha strike (315 at once, 22% of our HP), so the first 3 s of a fight are misjudged. Minor next to 1 and 2.
+4. **`_ttk_ratio` is one-on-one.** With shared vision a "lone visible" hunter is rarely alone. That is already covered by `others` being empty only in *our* view. Pair it with `danger` within 150 m (as `_may_fire` does).
+
+### Strategist "Round 2: kills"
+
+Not in the file yet at the time of writing. **Partial: the review of the Strategist Round 2 is still open (session ended).**

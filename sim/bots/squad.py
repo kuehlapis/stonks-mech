@@ -28,6 +28,11 @@ TIER = {
 }
 HUNT_ALL_T = 300.0       # guess: "all of them late"
 DEFEND_RANGE = 60.0     # guess: non-hunters shoot visible enemies this close
+ZONE_SMART = True        # user directive: house bots stay inside the next circle and regen before the end
+ZONE_MARGIN = 15.0
+RETALIATE_S = 30.0      # a member hit by an enemy hunts it this long (house-bots.md: >= 31 s)
+STRAFE_S = (0.3, 0.6)   # juke period (house-bots.md section 4)
+CHASE_BOOST_M = 40.0    # hunters boost toward targets farther than this (house-bots.md: boost 19.4 m/s closing)
 PREF = ["plating", "gun_damage", "laser_damage", "gun_rate", "armor", "laser_charge", "nanites", "gun_velocity"]
 _REG = {}
 
@@ -73,6 +78,7 @@ class Bot:
         self.first_seen = {}
         self.aim_err = 0.0
         self.last_pos, self.stuck_t = None, 0.0
+        self.hit_t = -1e9
 
     def _hunters(self, t):
         reg = self.reg
@@ -81,7 +87,8 @@ class Bot:
         n = 1 + dead + (1 if t > 150 else 0) + (2 if t > 240 else 0)
         if t >= HUNT_ALL_T:
             n = len(alive)
-        return {s for _, s in alive[:n]}
+        hit = t - self.hit_t < RETALIATE_S
+        return {s for _, s in alive[:n]} | ({self.slot} if hit else set())
 
     def pick_goal(self, z):
         nc, nr = z["next_center"], z["next_radius"]
@@ -101,6 +108,11 @@ class Bot:
             act["pick"] = min(range(len(ch)), key=lambda i: PREF.index(ch[i]["id"]) if ch[i]["id"] in PREF else 99)
         ws = me.get("weapons") or [None, None]
         kinds = [w and w["kind"] for w in ws]
+        for e in obs.get("events") or []:
+            if e.get("type") == "damaged" and e.get("by") is not None and e["by"] < 100 and e["by"] not in members:
+                self.hit_t = t
+                if e["by"] not in reg["seen"] and e.get("bearing") is not None:  # shared guess: 80 m along the bearing
+                    reg["seen"][e["by"]] = {"t": t, "pos": [x + 80 * math.cos(e["bearing"]), y + 80 * math.sin(e["bearing"]), zz], "vel": [0, 0, 0], "hp": None}
         # shared vision
         for m in obs.get("mechs") or []:
             if m.get("kind") == "mech" and m["id"] not in members:
@@ -120,6 +132,8 @@ class Bot:
         tgt = visible[0] if visible else None
         if tgt is not None and not hunting and math.dist(tgt["pos"], me["pos"]) > DEFEND_RANGE:
             tgt = None
+        if ZONE_SMART and not hunting and z["next_radius"] <= 25 and me.get("hp", 0) < (me.get("stats") or self.cfg["mech"]).get("hp", 1400):
+            tgt = None  # regen to full before the final burn
         if hunting and known:
             i, s = min(known, key=lambda kv: math.dist(kv[1]["pos"][:2], (x, y)))
             age = t - s["t"]
@@ -140,6 +154,10 @@ class Bot:
                 c = min(cubes, key=lambda c: math.dist(c["pos"][:2], (x, y)))
                 if math.dist(c["pos"][:2], (x, y)) < 50:
                     goal = c["pos"][:2]
+        nc, nrm = z["next_center"], max(0.0, z["next_radius"] - ZONE_MARGIN)
+        if ZONE_SMART and math.dist(goal[:2], nc) > nrm:  # clamp the goal into the next circle
+            gd = math.dist(goal[:2], nc)
+            goal = [nc[0] + (goal[0] - nc[0]) * nrm / gd, nc[1] + (goal[1] - nc[1]) * nrm / gd]
         if not me.get("in_zone", True):
             goal = z["next_center"]
         dx, dy = goal[0] - x, goal[1] - y
@@ -192,7 +210,7 @@ class Bot:
             if shoot.get("kind") == "mech":
                 b = math.atan2(dvec[1], dvec[0])
                 if self.strafes:
-                    if t - self.strafe_t > self.rng.uniform(0.6, 1.6):
+                    if t - self.strafe_t > self.rng.uniform(*STRAFE_S):
                         self.strafe, self.strafe_t = -self.strafe, t
                     px, py = -math.sin(b) * self.strafe, math.cos(b) * self.strafe
                 else:
@@ -202,6 +220,9 @@ class Bot:
                     mv = [px + fwd * math.cos(b), py + fwd * math.sin(b)]
             if gun and gun.get("ammo", 1) == 0:
                 act["reload"] = True
+        if ZONE_SMART and math.dist((x, y), nc) > nrm + 5:  # never let fighting pull us out of the next circle
+            d = math.dist((x, y), nc)
+            mv = [(nc[0] - x) / d, (nc[1] - y) / d]
         jump = False
         if self.last_pos and math.dist(self.last_pos, (x, y)) < 0.3 and (mv[0] or mv[1]):
             self.stuck_t += 0.1
@@ -209,6 +230,14 @@ class Bot:
             self.stuck_t = 0.0
         self.last_pos = (x, y)
         boost = (not me.get("in_zone", True)) or (self.stuck_t > 0.5 and not me.get("grounded", True))
+        if hunting and self.stuck_t == 0 and me.get("energy", 0) > 30 and math.dist(goal[:2], (x, y)) > CHASE_BOOST_M:
+            boost = True
+        if ZONE_SMART and (not me.get("in_zone", True) or (t > z["shrink_start"] - 10 and math.dist((x, y), nc) > nrm + 5)):
+            boost = True  # about to be caught: the pull-back already points mv at the next centre
+        if self.stuck_t > 0.3 and (mv[0] or mv[1]):
+            # wedged on a wall the zone pull-back keeps aiming at: slide sideways (flip every 4 s)
+            sg = 1 if int(t / 4) % 2 else -1
+            mv = [-mv[1] * sg, mv[0] * sg]
         if self.stuck_t > 0.5 and me.get("grounded", True):
             jump = True
         if self.stuck_t > 3:

@@ -2,6 +2,65 @@
 
 Updated by the moderator after every agent report. A new session reads this first, then `notes/agents/moderator.md` and `notes/decisions.md`.
 
+## HANDOVER: 2026-11-22 ~03:30, iteration 3, branch `iter-1` (read this first)
+
+**Track scores:** f803b02 = 1.6, c529ecc (current default bot, all iteration-3 switches off) = **1.60**. 876 lines of fight changes between them did nothing on the track. Leaderboard best ≈ 5.96. Scoring closes **Sun 11:00 AM EST**; 4 submissions/hour; the user submits (give them repo `https://github.com/kuehlapis/stonks-mech` + full commit hash, then wait for the score).
+
+**User rules (standing):**
+- Score is placement (16 − place) vs a 15-bot squad (4 easy, 4 medium, 4 hard, 3 expert; shared vision; never fight each other; hunt us weakest first).
+- **Squad bots never die to the zone** (user). They **shoot back at whoever shoots them**, and **shooting exposes us** (gun heard 320 m, laser 380 m, beams show the shooter).
+- Commit after big changes; push freely to `iter-*` branches, never `main` without asking.
+- Run agents as a continuous loop: the moderator evaluates each report and sends feedback.
+- Ask the user for a track submission when one is needed, then pause.
+
+**Key finding:** score ≈ kills + ~1 other squad death (drones). Sim s_base2, 56 matches: 1.88 = 0.91 kills + 0.97 other; 36% zero-kill matches; 64% dead before 120 s; 48/56 deaths by gun. So > 6 needs about 5 kills per match and surviving the first 2 minutes. Real house-bot data (`notes/research/house-bots.md`, from one FFA recording): react ~0.6 s, lead with ~0.023 rad error, full-charge lasers hit 4/5 at 100–150 m (90% of our damage), boost, zigzag, jet-hop, retaliate ≥ 31 s.
+
+**Sim is NOT calibrated.** It gives c529ecc 1.88–3.0 against the track's 1.6, and the old squad still died to the zone (548/840). In progress (Tester journal `notes/agents/tester.md`, log `notes/tests/2026-11-22-calibration.md`): tune `sim/bots/squad.py` (the old one is kept as `squad_v1.py`) until, on 40 seeds:
+- `sim/versions/sub1` (f803b02) = 1.6 ± 0.2,
+- `sim/versions/s_base2` (c529ecc) = 1.6 ± 0.2,
+- `example_bot` = 1.15 ± 0.2,
+- 0 squad zone deaths before 415 s.
+
+Make it realistic first (boost/zigzag like `squad_chase.py`, retaliate ~30 s, wall-slide unstick fix), then adjust the guessed knobs (DEFEND_RANGE, hunter schedule, 30 s shared memory, aim noise). **No sim result counts until this lands.**
+
+**Built, all OFF by default (switch names in `python/brain.py`, `combat.py`, `survival.py`, `economy.py`), none proven to help:**
+- Brain: PEEK_AFTER_BEAM, RELOAD_PUSH, REAR_TURN, BURN_ENDGAME, REGEN_BREAK, REGEN_HIDE, BURN_QUIET, RUN_MODE (+ RUN_HIT_S fix: after a hit, fight back facing the shooter), FIRE_POLICY, LADDER, STRAFE_BOOST_E, STRAFE_JUMP.
+- Combat: AIM_PREDICT (strafer hit rate 0.20 → 0.40 in a unit test), mortar arc aim.
+- Survival: FUNNEL, ZONE_LEAN.
+- Economy: TAKE_MORTAR, CUBE_CAP.
+
+Variants for each are in `sim/versions/` (untracked; rebuild with `python sim/variant.py NAME mod.CONST=val`).
+
+**Measured so far (uncalibrated squad, mostly 8 matches = weak):** run mode alone made us die sooner (back to the shooter, up to 2/3 rear damage; fixed by RUN_HIT_S). Stacking everything (`z_full`) was worse. Nothing beat the default bot.
+
+**Next steps, in order:**
+0. **FIRST, cheap and decisive (Critic round 2):** check that the world map actually loads under the scorer's sandbox. `bot.py:10-15` silently falls back to map-free play. Run the Docker full check from CLAUDE.md (`--map-dir /arena`, `--cpus 1`, `--memory 512m`, read-only) on Linux or WSL (on Windows, `/arena` becomes `C:\arena`). Grep stderr for "world load failed" and note the `ready` time. If the map doesn't load there, both 1.60s were map-free play, and that is the bug to fix before anything else.
+   - Also from the Critic: the track shows one decimal and its SE over 48 matches is ~0.2, so only changes of ≥ 0.4 are visible.
+   - Prime suspects for losing the first fight (`brain.py`):
+     - `WEAK_GUN` 0.6 + `OPEN_EDGE` 1.2 make gun-only hard bots look beatable. Test `WEAK_GUN=1.0`, `OPEN_EDGE=0.8`.
+     - Kiting to 130 m (`FIGHT_RANGE`) is the laser's best range. Close to < 60 m behind cover, or break LOS, against laser holders.
+     - `_ttk_ratio` ignores remembered enemies.
+1. Finish calibration (above).
+2. Baseline on the calibrated squad, 56 paired matches (`--seed 11 --rotate`). Then test one switch at a time against it, ranked by kills/match and the share dead before 120 s: laser defence (`s_duck30`, `b_peek`), AIM_PREDICT (`c_aim`), REAR_TURN (`b_rear`), LADDER, STRAFE_BOOST_E (`m_boost`), RUN_MODE (`r_run`).
+3. Stack only the winners; re-test; commit with the switches ON; push; ask the user to submit; record in `notes/scores.md`.
+4. Discussion round 2 (`notes/ideas/assumptions-discussion.md`, "Round 2: kills"). The Strategist's answer: we lose every even gun duel at range (their lasers land 4 of 5). Ranked:
+   1. **K1, lightning ambush** (+1.5–2.5 kills). Lightning shorts their laser for 2 s and we fire every 0.25 s. Pick lightning BEFORE laser, wait 10–25 m past a corner for the hunter walking to our last position. First A/B, flags only: lightning-first pickup + `s_close`.
+   2. **K2, peek laser** (+1–1.5): charge behind cover, step out, release, step back. They need ~1.35 s to answer.
+   3. **K3, space the kills** (REGEN_BREAK / REGEN_HIDE on s_base2).
+   4. **K4, laser damage upgrades first.**
+   5. **K5, never open with the gun beyond 60 m on a laser holder.**
+
+   Test K1 and K2 first on the calibrated squad. If neither adds ≥ 0.7 kills/match, suspect the squad model. The Critic's round 2 (challenge "score ≈ 1 + kills"; what loses our first fight) was still running when this was written.
+
+**Pitfalls learned:**
+- Never run two batches at once: stale loops overwrote results.
+- Pipe test output to a file and check the exit code of the test command itself, not of `tail`.
+- 8-match gaps under ~1.5–2 points are noise.
+- Timing tests fail under sim load; the conformance check passes (max 4.5 ms).
+- Don't edit `squad.py` while a run uses it.
+
+**Key files:** `notes/ideas/assumptions.md` (all assumptions A1–A23), `notes/ideas/assumptions-discussion.md`, `notes/ideas/plateau.md`, `notes/reviews/*-2026-11-22.md`, `notes/decisions.md` (iterations 3–3c).
+
 ## Earlier state (local branch, superseded by the next section)
 
 Milestone: **M0 reached** (direct and Docker checks pass); local M1 proxy score 8.73 (iteration 2), track score not submitted. Zone deaths 7% → 1% after the hold-point fix (AAR 2). Bar to beat: 6.00.
