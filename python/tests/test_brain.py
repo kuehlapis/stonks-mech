@@ -148,7 +148,7 @@ class TestMoves(unittest.TestCase):
     def setUp(self):
         import brain as B
         self.B = B
-        self.saved = {k: getattr(B, k) for k in ("PEEK_AFTER_BEAM", "RELOAD_PUSH", "REAR_TURN", "BURN_ENDGAME", "REGEN_BREAK", "REGEN_HIDE", "BURN_QUIET", "RUN_MODE", "DROP_SAFE_R", "DROP_SEEN_S", "FIRE_POLICY")}
+        self.saved = {k: getattr(B, k) for k in ("PEEK_AFTER_BEAM", "RELOAD_PUSH", "REAR_TURN", "BURN_ENDGAME", "REGEN_BREAK", "REGEN_HIDE", "BURN_QUIET", "RUN_MODE", "DROP_SAFE_R", "DROP_SEEN_S", "FIRE_POLICY", "LADDER")}
 
     def tearDown(self):
         for k, v in self.saved.items():
@@ -314,6 +314,23 @@ class TestMoves(unittest.TestCase):
         a, m = self.mode(b, o)
         self.assertEqual(m, "run-wait")
         self.assertGreater(math.hypot(*a["move"]), 0.1)  # walking away from the firing spot
+
+    def test_ladder_fights_gun_only_and_runs_from_laser(self):
+        self.B.LADDER = self.B.RUN_MODE = self.B.FIRE_POLICY = True
+        gun = dict(ENEMY, weapons=["gun"], hp=1000.0, pos=[130.0, 0.0, 0.0])
+        b = brain(perception=Fake(threats=[gun]))
+        a, m = self.mode(b, obs0())
+        self.assertEqual(m, "ladder")
+        self.assertTrue(any(a["fire"]))  # FIRE_POLICY bypassed: we shoot first
+        b = brain(perception=Fake(threats=[dict(gun, weapons=["gun", "laser"])]))
+        self.assertEqual(self.mode(b, obs0())[1], "run")
+        b = brain(perception=Fake(threats=[gun]))
+        o = obs0()
+        self.assertEqual(self.mode(b, o)[1], "ladder")
+        o["events"] = [{"type": "damaged", "amount": 45, "weapon": "gun", "bearing": 0.0, "by": 7}] * 2
+        self.mode(b, o)
+        o["events"] = []
+        self.assertEqual(self.mode(b, o)[1], "run")  # it can aim: off the ladder
 
 
 class TestRobust(unittest.TestCase):

@@ -56,6 +56,22 @@ class TestPick(unittest.TestCase):
         self.assertTrue(all(u["id"] in e.rank for u in CFG["upgrades"]))
 
 
+class TestCubeCap(unittest.TestCase):
+    def test_cap_skips_unless_upgrade(self):
+        import economy
+        old, economy.CUBE_CAP = economy.CUBE_CAP, 10
+        try:
+            e, o = Economy(CFG), copy.deepcopy(OBS[0])
+            o["self"]["cubes"] = 9
+            self.assertTrue(e.cube_ok(o))
+            o["self"]["cubes"] = 11
+            self.assertFalse(e.cube_ok(o))
+            o["self"]["cubes"] = 14  # the 15th cube earns an upgrade
+            self.assertTrue(e.cube_ok(o))
+        finally:
+            economy.CUBE_CAP = old
+
+
 class TestLoot(unittest.TestCase):
     def test_laser_in_reach_taken(self):
         e = Economy(CFG)

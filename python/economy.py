@@ -16,6 +16,7 @@ DETOUR = 1.3            # straight distance × this ≈ walked distance
 THREAT_RADIUS = 120.0   # m around the pickup
 THREAT_MEMORY_S = 5.0
 FAIL_BACKOFF_S = 5.0
+CUBE_CAP = 0            # ZS2: past this many cubes, skip cubes (each makes us 5% bigger) unless one completes an upgrade (0 = off)
 TAKE_DZ = 4.0           # protocol §6: vertical take reach is fixed, not in config
 
 
@@ -25,7 +26,13 @@ class Economy:
         extra = [u.get("id") for u in (cfg.get("upgrades") or []) if u.get("id") not in ORDER]
         self.rank = {u: i for i, u in enumerate(ORDER + extra)}
         self.reach = float((cfg.get("loot") or {}).get("pickup_radius", 4))
+        self.thresholds = (cfg.get("cubes") or {}).get("upgrade_thresholds") or []
         self.skip = {}  # pickup id -> t until which we don't try it again
+
+    def cube_ok(self, obs: dict) -> bool:
+        """Is one more cube worth picking up?"""
+        n = (obs.get("self") or {}).get("cubes", 0) or 0
+        return CUBE_CAP <= 0 or n < CUBE_CAP or (n + 1) in self.thresholds
 
     def pick(self, obs: dict) -> int | None:
         offer = obs.get("offer")

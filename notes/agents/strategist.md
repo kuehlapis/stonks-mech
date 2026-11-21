@@ -36,6 +36,7 @@ Done when the Critic has reviewed `game-plan.md` and the high-impact findings ar
 | Open zone facts: when `next_*` updates, `in_zone` test, dps after 415 s | Final-burn tactics (EG2) and the 8:00 rule depend on them | Researcher to check; adapt EG2/EG4 | open (asked in §0 and §11) |
 | Style ranking (strategies.md) is unmeasured | Picks the A/B order for the builders | Run the 3 recommended A/Bs on pools (a), (b), (d); judge each by its §8 metric | open |
 | Field of rival AI bots not modeled | Track opponents will copy obvious ideas; styles that win only against brawlers will fall | Ask the Tester for pool (d), the mirror field (4 edge-holders, 4 hiders, 4 farmers, 3 adaptive) | open |
+| Zone-smart ZS1–ZS3 unmeasured; easy-bot detection by gun-only is a guess | ZS1 carries most of the gap to 6 | Measure kills/240 s on a ZONE_SMART squad | open |
 | Plateau proposals P1–P4 unmeasured | Score can't see survival time (floor effect); only death_t shows progress | A/B P1 then P1+P2 on paired seeds, judge by death_t median and % alive 300/400 s | open |
 | Whether plating heals, and whether gun can fire while laser charges | Upgrade order and laser+gun DPS | Researcher or sim test | open |
 
@@ -49,6 +50,10 @@ Done when the Critic has reviewed `game-plan.md` and the high-impact findings ar
 - Label rules with distinct prefixes from the start (I first used E1 for both evidence and an endgame rule and had to rename).
 
 ## Log (newest first)
+
+- 2026-11-22, iteration 3 (300–415 s round): added "300–415 s survival" to plateau.md. Numbers: 25 m final circle from 375 s, outside dps 100/160/260 (no regen) so being outside is fatal before 415 s; towers 72.9 m unreachable; shared vision defeats hiding. Conclusion: alive at 415 s about 0–5% vs zone-smart squad. Ranked: last stand for kills (+0.5–1), final-roof hold (+0.1–0.3), edge dance and sound bait ≈ 0. The realistic total is 3–4; 6 needs fight quality or a squad that dies to the zone. Lesson: compute the endgame geometry before proposing hiding. Next: track evidence on house-bot zone deaths.
+
+- 2026-11-22, iteration 3 (zone-smart round): added "Zone-smart squad" to `notes/ideas/plateau.md`. ZS1 hunter ladder (kill gun-only easy hunters, which arrive weakest-first, 1 + dead; then RUN_MODE) 4–5; ZS2 max HP at the burn (built flags + skip cubes past cap) +1.5–3; ZS3 drone bait +0.2–0.5. Asked the Tester for ZONE_SMART in squad.py before the A/Bs. Evidence: squad.py `_hunters`/TIER, protocol §7 drones (25 dmg, 1 s), upgrades.md HP math. Next: A/B ZS1 kills.
 
 - 2026-11-22, iteration 3 (plateau): wrote `notes/ideas/plateau.md`. Evidence: Critic `squad-sim-2026-11-22.md` (squad median death 395 s, 19/30 zone; we die ~148 s, score ≈ kills + late squad deaths), `squad.py` (hunters walk, boost only out of zone; hunters = 1 + dead + time; non-hunters fire < 60 m). Own 14-match sim (finished after report): score 2.0, median death 100 s, 57% dead < 120 s, 12/14 by gun; squad 147/210 zone deaths. Added to plateau.md. Lesson: check what the score metric can see before tuning; aggression's earlier gain was measured on a floored score. Next: Tester A/B P1, P1+P2 by death_t.
 
