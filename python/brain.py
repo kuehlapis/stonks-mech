@@ -18,6 +18,7 @@ CORNER_DIST = 60.0            # m: a threat this close can't be outrun (same wal
 CORNER_ENERGY = 20.0          # below this energy we can't boost away
 FIGHT_EDGE = 1.2              # fight if our time-to-kill < this x theirs
 DANGER_RANGE = 220.0          # m: hold out of sight of remembered enemies this close (0 = off)
+FIGHT_RANGE = 130.0           # m: preferred gun-fight distance (unled shots miss out here; ours lead)
 GROUP_EDGE = 1.5              # fight several visible enemies when our ttk on the best target < this x their combined ttk
 WEAK_GUN = 0.6                # scale on a gun-only enemy's expected damage rate
 OPEN_EDGE = 1.2               # open fire on a lone visible enemy when the time-to-kill ratio is below this
@@ -33,6 +34,7 @@ EVADE_ALL = True             # fire every weapon (not just the gun) while evadin
 EVADE_GIVEUP_S = 4.0          # still being hit this long after starting to evade: turn and fight
 DROP_ON = True                # go for supply drops
 DROP_LATE, DROP_CLEAR = 12.0, 100.0   # s after landing we may still arrive; m of enemy-free space around it
+CUBE_RANGE, CUBE_CLEAR = 70.0, 50.0   # m: collect visible cubes this close unless a visible enemy is this close to them
 FARM_UNTIL = 330.0            # s: no farming after this (phase 5 and later)
 FARM_HP = 0.6                 # farm only above this HP fraction
 FARM_NPC_RANGE = 120.0        # m: shoot visible drones closer than this
@@ -237,6 +239,11 @@ class Brain:
             goal, boost = zg
             return {**self._go(obs, goal, boost=boost), **self._aim(obs, threats, threatened, goal)}, "travel"
 
+        # 5a. Cubes in reach (kills drop the victim's cubes + 2): +HP, +damage, upgrade offers
+        cube = self._safe_cube(obs, threats)
+        if cube:
+            return {**self._go(obs, cube), **self._aim(obs, threats, threatened, cube)}, "cube"
+
         # 5b. Supply drop: 3 cubes + full HP/energy if we can hold the ring alone
         dr = self._drop_target(obs, threats)
         if dr is not None:
@@ -257,9 +264,6 @@ class Brain:
         want = self._call(E, "wanted_pickup", obs, threats)
         if want and want.get("pos"):
             return {**self._go(obs, want["pos"]), **self._aim(obs, threats, threatened, want["pos"])}, "loot"
-        cube = self._safe_cube(obs, threats)
-        if cube:
-            return {**self._go(obs, cube), **self._aim(obs, threats, threatened, cube)}, "cube"
 
         # 8. Hold quietly: out of sight of every remembered enemy position if we can
         hold = None
@@ -510,6 +514,8 @@ class Brain:
             return 0.6
         if "lightning" in mine and "lightning" not in theirs and d > lr - 10:
             return -0.6
+        if FIGHT_RANGE > 0:
+            return max(-0.6, min(0.8, (FIGHT_RANGE - d) / 40.0))  # kite: hold the fight at our best range
         if d < 25:
             return 0.3
         return 0.0
@@ -570,13 +576,13 @@ class Brain:
     def _safe_cube(self, obs, threats):
         me = obs["self"]
         p = me["pos"]
-        best, bd = None, 45.0
+        best, bd = None, CUBE_RANGE
         for c in obs.get("cubes") or []:
             cp = c.get("pos")
             if not cp or abs(cp[2] - p[2]) > 6:
                 continue
             d = _dist(p, cp)
-            if d < bd and not any(_dist(th["pos"], cp) < 80 for th in threats):
+            if d < bd and not any(th.get("visible") and _dist(th["pos"], cp) < CUBE_CLEAR for th in threats):
                 best, bd = cp, d
         return best
 

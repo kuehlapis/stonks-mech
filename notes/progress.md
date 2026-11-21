@@ -60,16 +60,18 @@ Guardrails: `python -m unittest discover python/tests` passes (63 tests); the pe
 - `variant.py`: copies `python/` with constants overridden, for A/B sweeps (`python sim/variant.py v_x brain.FIGHT_EDGE=1.2`).
 - `versions/m1/`: the iteration-1 bot, as a regression baseline.
 
-### Results (squad sim, 112 matches each, SE about 0.15)
+### Results (112–140 matches each, SE about 0.13)
 
-| Build | Score | Kills/match |
-|---|---|---|
-| example bot | 1.01 | 0.3 |
-| M1 (iteration 1) | 0.80 | 0.14 |
-| iteration 2, hiding style | 1.3–1.6 | 0.5–0.6 |
-| iteration 2, aggressive (current) | **1.71–1.74** | 0.8 |
+| Build | Squad sim (defend 60 m) | Squad sim (non-hunters passive) | FFA pool (hunter/camper/rusher/example) |
+|---|---|---|---|
+| example bot | 1.01 | 1.70 | ~7 |
+| M1 (iteration 1) | 0.80 | – | 8.27 |
+| iteration 2, hiding style | 1.3–1.6 | – | 10.49 |
+| **current `iter-1`** | **1.8–1.95** (about 1.1 kills/match) | **2.79** (1.56 kills) | **11.21** |
 
-1v1 duels: we beat easy bots 100%, but only about 45% against hard and expert, and lasers cause many of our deaths.
+Real track: the example bot scores 1.15, so the real squad sits between the two squad-sim settings.
+
+Tried with no measurable effect (within noise): exposure-weighted hold spots, danger-memory hiding, fight range 100–170 m, supply drops, upgrade order, laser pickup radius, projectile dodge alone. Helped: aggression (fight edge 1.2, opening fire on lone enemies, gun-only enemies treated as weaker), group fights, faster strafing, lightning support, farming.
 
 ## Current next steps
 

@@ -91,10 +91,16 @@ class TestLoot(unittest.TestCase):
     def test_eta_limits(self):
         e = Economy(CFG)
         speed = OBS[0]["self"]["stats"]["walk_speed"]
-        d = 8.0 * speed / 1.3  # eta 8 s: too far before t = 70, fine after
+        import economy as EC
+        lo, hi = sorted((EC.ETA_EARLY_S, EC.ETA_LATE_S))
+        d = (lo + hi) / 2 * speed / 1.3  # between the two limits: wanted only under the larger one
         p = [{"id": 8004, "kind": "laser", "pos": at(OBS[0], d, 0)}]
-        self.assertIsNone(e.wanted_pickup(obs_with(p, t=30.0), []))
-        self.assertEqual(e.wanted_pickup(obs_with(p, t=80.0), [])["id"], 8004)
+        early = e.wanted_pickup(obs_with(p, t=30.0), [])
+        late = e.wanted_pickup(obs_with(p, t=80.0), [])
+        self.assertEqual((early is not None), EC.ETA_EARLY_S > EC.ETA_LATE_S)
+        self.assertEqual((late is not None), EC.ETA_LATE_S > EC.ETA_EARLY_S)
+        far = [{"id": 8006, "kind": "laser", "pos": at(OBS[0], (hi + 2) * speed / 1.3, 0)}]
+        self.assertIsNone(e.wanted_pickup(obs_with(far, t=30.0), []))
 
     def test_threat_near_pickup(self):
         e = Economy(CFG)
