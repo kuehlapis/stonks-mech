@@ -22,7 +22,7 @@ Milestone: **M0 reached** (direct and Docker checks pass); local M1 proxy score 
 
 ## State: 2026-11-21 evening, iteration 2, branch `iter-1`
 
-Track score: **not submitted yet**. Leaderboard best ≈ 5.96 (baseline example bot 1.15). Scoring closes **Sun 11:00 AM EST**. Up to 4 submissions per hour.
+Track score: **1.6** (first submission, commit f803b02; AAR 3). The squad sim's 1.71–1.74 matched it, so the sim is calibrated. Leaderboard best ≈ 5.96 (baseline example bot 1.15). Scoring closes **Sun 11:00 AM EST**. Up to 4 submissions per hour.
 
 ### The most important fact (from the track page, joinbuilders.org/buildathon/tracks/builders)
 

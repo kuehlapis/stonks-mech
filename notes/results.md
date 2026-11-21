@@ -9,6 +9,7 @@ Current highest score on the track: **6.00**. Objective: **≥ 12.00** mean, ≥
 | Iter | Date | Commit | Mean score | Δ prev | Δ vs 6.00 | Win rate | Milestone |
 |---|---|---|---|---|---|---|---|
 | 0 | 2026-11-21 | e4c70b3 | not submitted | – | – | – | – |
+| 2 | 2026-11-21 | f803b02 | **1.6** | – (first submission) | −4.4 | not shown | M0 (valid); below M1 |
 
 ## Guardrails (every build)
 
