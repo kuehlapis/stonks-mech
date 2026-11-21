@@ -94,6 +94,14 @@ Between submissions the loop continues on the local proxies; it does not wait fo
 
 Run in parallel only tasks that are independent. Don't spawn a subagent for a quick question the moderator can answer from the files.
 
+## Saving progress
+
+Work can stop at any moment (usage limits, a closed session). So:
+- The moderator updates `notes/progress.md` (state table + next steps) and commits after every agent report.
+- Every finished module is committed as soon as its tests pass; nothing finished stays uncommitted.
+- When the user says usage is near its limit (e.g. 95%), the moderator stops launching agents, tells running agents to finish and update their journals, commits everything that passes its tests, updates `notes/progress.md`, and stops.
+- A new session resumes from `notes/progress.md`, then the moderator journal.
+
 ## Briefing a subagent
 
 Every brief from the moderator includes:
