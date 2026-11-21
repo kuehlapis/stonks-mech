@@ -21,7 +21,7 @@ Researcher (online), iteration 1, 2026-11-21. Honest caveat: mech-game tactics o
 
 **For mechfight:** regen starts 5 s after the last damage dealt *or* taken, at 45 HP/s (`mech.regen_delay`, `mech.regen_per_s`). So every exchange costs 5 s plus heal time. Rules:
 - Poke from a cover edge, fire a burst (gun: up to the 12-round magazine, 2.9 s) or one laser shot, then step back out of LOS. Repeat from a different edge after ≥ 2 s so the enemy's lead and prediction is stale.
-- If our HP is < 50% and the enemy isn't nearly dead, break LOS and wait ≥ 5 s + `(max_hp − hp)/45` s. That's 23 s from 50% to full on base HP. MWO's 20–30 s matches this.
+- If our HP is < 50% and the enemy isn't nearly dead, break LOS and wait ≥ 5 s + `(max_hp − hp)/45` s. That's 5 + 700/45 ≈ 21 s from 50% to full on base HP. MWO's 20–30 s matches this.
 - The `nanites` upgrade (+60% regen, delay −1.5 s) makes poke-and-heal much stronger. Rank it high if we play this way.
 
 ## 3. Energy is mobility; keep a reserve

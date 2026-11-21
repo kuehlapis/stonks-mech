@@ -109,3 +109,93 @@ A `damaged` event from `by ≥ 100` is not "engaged", so M1 does nothing when a 
 **Ready for M1 builders with listed fixes.** Fix 1, 2 and 3 (high) and 4, 6 and 8 (medium, cheap) in the plan before the Survival, Brain and Nav builders start. 5 and 7 can be decided by the builders with the rules given here. 9 sets the Tester's first measurements. The rule facts are sound. The errors are in the M1 shortcuts, which were written as if `world.py` did not exist and leave out enemy weapons.
 
 Not checked: whether `fire: [true, true]` fires gun and laser together, whether plating heals, `in_zone` details (open with the Researcher). Built-in track bot behavior: one recorded match is all the evidence, and the plan's edge-hold depends on it.
+
+---
+
+# Second pass (revised plan + online research)
+
+Critic, iteration 1, 2026-11-21. Read: the revised `notes/ideas/game-plan.md` (with its "Changes after review" table), `notes/research/online-recommendations.md`, `notes/ideas/strategies.md`, `CLAUDE.md` L114–115.
+
+## 1. Are the 14 findings fixed?
+
+| # | Finding | Status | Where / note |
+|---|---|---|---|
+| 1 | M1 fight-back ignores weapons; aim counts as engaged | **fixed for rule (b)**, but see N1 below | §1 "engaged" is damage only, "threatened" means hide; §4 M1 (b) checks for a laser and requires `e.hp ≤ 0.8 × self.hp` |
+| 2 | Disengage doesn't break LOS | **partly** | §4 F3 `find_cover` with `los` and a boost from lasers. But "no cover found" now means "cornered, fight" (N1) |
+| 3 | Edge hold exposes our back | fixed | Z4: face outward while the live edge is more than 30 m away, inward once it is within 30 m. Phase C text corrected |
+| 4 | Z2 at radius 0 | fixed | `max(0, …)` plus a required unit test |
+| 5 | `obs.zone` during a shrink | fixed | `self.in_zone` is the truth; interpolate only from values saved at `shrink_start`; the Tester logs the zone |
+| 6 | Cover search time | fixed | cap of 32 `los` calls, cached for 1 s. Side effect in N1 |
+| 7 | Unseen attacker | fixed | §1 `unseen_attacker` (150 m for a laser, 100 m for a gun; mortar: step 20 m sideways) |
+| 8 | Stuck / hold point inside a building | fixed | Z2 snaps off `blocked` cells; N1 stuck rule (under 3 m of progress in 2 s, then jump + jet, then 10 m along the wall) |
+| 9 | Guesses not labeled | fixed | header, §3, §9 and §10 order. The "+1.5 to +3" and "each early death costs 13 points" lines in §4 are still unlabeled (cosmetic) |
+| 10 | Three versions of Z1, margin | fixed | one rule (move on announce); margin = radius + 12 |
+| 11 | "Two threats > 180° apart" | fixed | bisector rule; disengage with 3+ threats or a gap over 170° |
+| 12 | Range order | fixed | fact 4: 280 > 230 > 200 |
+| 13 | Laser charge while retreating | fixed | gun only while disengaging (F3 step 2) |
+| 14 | Drones / standing still | fixed | drones are not "engaged" and are never shot in M1; stand still or move below 5 m/s at the hold point |
+
+## 2. New findings in the revised plan
+
+### N1 (high, **M1-blocking**). "No cover found" means cornered, so the bot fights back in exactly the E1 case
+- **Where:** §4 M1 (a) "cornered: engaged, and `find_cover` returns nothing". §4 F3 step 1: "If no point qualifies within the cap, return none: the caller treats that as cornered". The same step also says "while not cornered it moves straight away", which can never happen, because "no cover" is the only way to be cornered.
+- **Problem:** `find_cover` returns none in three common cases:
+  - Open ground with no building within 30 m: the west parking lots (~203k m²) and the south-east Oval (~128k m², `map.md` L109–110), which is where E1 happened.
+  - Two or more threats, which use up the 32-call cap: 2 threats × 2 rays = 4 calls per point, so only 8 points get tested. With 3 threats, about 5.
+  - The world failed to load.
+
+  In each case M1 rule (a) fires back at whatever hit us, including a laser at 150 m. That is the E1 trade again: gun only against gun + laser, 1260 HP of laser hits (`stream.md` L54). `CLAUDE.md` L115's map-free fallback ("fight what you see") pushes the same way.
+- **Fix (two lines in §4):** cornered = engaged **and** no cover **and** (the threat is within 60 m **or** `energy < 20`). We can't outrun a mech at 60 m: same walk speed (F-walk in `strategies.md`). Otherwise, with no cover: boost straight away from the threat, keeping inside the zone, with the torso on the threat. Boosting at 19.5 m/s for a full tank (5.9 s, 115 m, `zone.md` L22) takes a 150 m laser past 280 m in about 6–7 s. That means about 3 shots instead of a fight we lose. For the map-free fallback, override `CLAUDE.md`'s "fight what you see" with the same rule; the moderator decides.
+- **If we skip it:** M1's main rule (+1.5 to +3 guessed) fails in the open areas where long laser fights happen (`map.md` L123).
+
+### N2 (medium, M1). No hard per-tick time guard
+`CLAUDE.md` L114 sets mean ≤ 15 ms and p99 ≤ 35 ms, but neither the plan nor CLAUDE.md says what `act()` does when it runs long. The online precondition (`online-recommendations.md` L7) asks for one. **Fix:** Brain checks `time.perf_counter()` after each module. Past 30 ms it skips `find_cover` and other optional work for this tick and reuses the last cover point. One `if`, no design change.
+
+### N3 (low). `strategies.md` §7 still uses the old Z1 deadline formula
+Its mode table has `eta × 1.3 + 5 ≥ shrink_start − obs.t` with `eta` already multiplied by 1.3, the double factor removed from the plan (finding 10). The §8 edge-hold row says "all of them face inward", which Z4 changed. Fix both when that file is next edited. This does not affect M1.
+
+## 3. Plan vs the online top 15
+
+| # | Online recommendation | In the plan? | Verdict |
+|---|---|---|---|
+| 1 | Zone discipline from travel time | **yes**, stronger (Z1 moves on announce; Z2 margin 14.5 m vs online `max(10, 0.2 r)`) | keep the plan |
+| 2 | Go/no-go fights (≥ 2 of 4 conditions), disengage + heal | yes (§4 M1 (b), F3) | **online rule is wrong here:** "HP ≥ 60% + inside the next circle" passes 2 of 4, so a gun-only mech fights a gun + laser mech. That is E1: a laser is hitscan to 280 m (§7), and laser hits alone did 1260 HP (`stream.md`). Keep the plan's weapon check |
+| 3 | Simulator, varied opponents, A/B | yes (§10; `CLAUDE.md` L91) | covered |
+| 4 | Face the threat, bisector | yes (§8, §4 bisector, Z4) | covered. "Back toward a wall" is M2 V1 |
+| 5 | Exact gun lead, fire only when aligned | M3 in the plan | **move to M2.** M1 already fires back (rule (b), cornered). An unled gun misses a walking target at 100 m (it moves 4.6 m in the 0.4 s flight, about 2× its radius). The intercept is about 15 lines and "fire only when aligned" saves noise and regen time |
+| 6 | Minimum-risk hold point on the side with the fewest enemies, 0.6–0.85 r | partly (Z2 = our own side, at the edge) | **add M2:** score 8–12 edge candidates by tracked and heard enemies (sound sectors) with +15% hysteresis, and test the radius fraction as a parameter. The edge-vs-depth argument is opinion on both sides |
+| 7 | Endgame HP plan | yes (EG2, EG3, U1 plating first) | covered |
+| 8 | Dodging: strafe reversal + visible-projectile dodge | **no** | **add M3.** Valid by the rules: bullets fly at 252 m/s and are listed in `obs.projectiles` (§6). At 58.5 m/s² ground acceleration we clear 2.8 m sideways in about 0.34 s, so shots seen from about 110 m or more are dodgeable. It does nothing against the hitscan laser and it is noisy, so use it only when engaged by a gun or mortar |
+| 9 | Oldest-scanned vision sweep; 16-sector sound histogram | partly (fixed ±50°/±60° sweeps; "sound threat map" in M2) | **add M2:** cheap. It also feeds #6 and the unseen-attacker guess |
+| 10 | Safe economy: loot on the path; NPCs from 100–150 m | yes (G1–G3 M2, L1) | **test, don't adopt blindly:** the plan's NPC window is 60–90 m. Online's 100–150 m is beyond `npc.deaggro_range` 90 (§7: "chases until its target is 90 m away"), so the drone may never reach us, but whether it still shoots is not stated. A sim A/B in M2 settles it. "Loot within 60 m of the path" fits the farmer style (`strategies.md` §6) |
+| 11 | Drops: uncontested only; keep moving inside the ring | yes (S1 M2), but S1 says "stand still in the ring" | **change S1 (M2):** §7 only requires being alone in the 8 m ring for 4 s, and moving is allowed. Moving spoils gun leads and mortar aim, and the drop's location is public anyway (600 m landing sound), so silence buys nothing there. Keep the plan's ±20 s late-chance rule; online's "≤ 10 s after landing" is the riskier version |
+| 12 | Target choice with anti-thrash | no | **add M3** with the fight model: a ×1.2 switch threshold. Needed once we choose fights |
+| 13 | Third-party after a death sound, target < 50% HP | yes (F2 vulture M3; `strategies.md` §3) | covered. Online's death-sound trigger is a cheap extra condition: add it to F2 |
+| 14 | Triangle: laser on mortar holders, **mortar on campers / drop holders**, lightning ≤ 45 m | partly (laser on mortar, avoid lightning; plan: never carry a mortar) | **mortar half rejected:** holding a mortar gives every enemy laser +60% against us (§7 cook-off: 504 per full shot), and a third of floor loot is lasers (`loot.weights`). Keep "never carry a mortar" until the sim says otherwise |
+| 15 | Upgrades: plating > armor > nanites > gun_velocity … | yes (U1) | minor disagreement. Plating is first in both. `gun_velocity` becomes worth more once the gun lead exists (M2), so raise it above `gun_mag` then. Both orders are guesses; A/B at M3 |
+| — | Not recommended: RL, GOAP, per-tick influence maps | plan agrees | `strategies.md` §7 uses a priority table, not GOAP. Fine |
+
+### M1 changes from this pass (the build in progress)
+1. **N1**: "no cover" no longer means "cornered". Boost away unless the threat is within 60 m or energy is under 20. (Blocking.)
+2. **N2**: a 30 ms `perf_counter` guard that skips `find_cover`. (Strongly recommended; small.)
+Nothing from the online list has to go into M1. Its M1-level items (#1, #3, #4, #7) are already there.
+
+### Top additions for M2+ (by expected gain per effort, all guesses)
+1. Gun lead + fire only when aligned (online #5): moved from M3 to **M2**.
+2. Minimum-risk hold-point choice among edge candidates, using sound sectors, with hysteresis (online #6 + #9): **M2**.
+3. Oldest-scanned vision sweep inside the threat's ±90° (online #9): **M2**.
+4. Move inside the drop ring while capturing (online #11): **M2** change to S1.
+5. Projectile dodge + strafe reversal when engaged by a gun or mortar (online #8): **M3**.
+
+## 4. `strategies.md` against the online findings (brief)
+
+- **Agreements:** online #7 (burn HP) backs the farmer → turtle (§6) and the adaptive endgame. Online #11 backs "drop chaser only as S1". Online #13 backs "vulture as a mode, not a style". Online's "not recommended" list doesn't hit any strategy.
+- **Gaps:** every style that fights (camper, vulture, farmer, adaptive) needs online #5 (lead) and #8 (dodge), which no strategy lists in its "Needs" except camper/vulture's "gun lead". The farmer should take online #10's "loot within 60 m of the path, before the departure time" as its farming radius: less noise and less walking than "`eta ≤ 15 s`".
+- **Conflict:** online #6 (deadside: hold on the side with the fewest enemies) is a cheap improvement to the hider (§1) and edge-hold alike. The camper (§2) does the opposite on purpose (it sits where traffic comes). Fine as an A/B, but the camper shouldn't share Z4's outward facing logic without its trigger rules.
+- N3 above (old Z1 formula and stale facing text in §7/§8).
+
+## Second-pass verdict
+
+**M1 may continue once N1 is fixed** (a two-line rule change in §4 and, if the moderator agrees, in `CLAUDE.md`'s map-free fallback). N2 is a one-`if` guard to add during the build. All 14 original findings are fixed, except #2, which is partly fixed because of N1. The online list needs no other M1 change. Five items go to M2/M3 as listed.
+
+Not checked this pass: the four `online-*.md` source files behind the recommendations (I read only the summary), and any M1 code being built.

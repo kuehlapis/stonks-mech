@@ -45,7 +45,7 @@ where `threat_e` scales with enemy HP × cube damage multiplier and is higher fo
 
 **For mechfight:** better than Robocode, we *see* enemy bullets and shells in `obs.projectiles` with `pos` and `vel`, and hear `gun` sounds (Perception) [rule]. Rules:
 - **Strafe** perpendicular to the shooter's bearing when engaged, and reverse at random every 0.4–1.5 s (4–15 decisions). Ground accel 58.5 m/s² reaches 11.7 m/s in 0.2 s.
-- **Dodge visible bullets:** for each projectile whose closest approach to our predicted center is < `radius + 0.3 + 0.5` m within the next 0.5 s, pick the move direction (of 8) that maximizes the miss distance. Gun bullets fired from > ~80 m are dodgeable on sight: from 100 m a bullet takes 0.40 s and we can move ≈ 3.5 m sideways after accelerating.
+- **Dodge visible bullets:** for each projectile whose closest approach to our predicted center is < `radius + 0.3 + 0.5` m within the next 0.5 s, pick the move direction (of 8) that maximizes the miss distance. Gun bullets fired from ≳ 110 m are dodgeable on sight. From 100 m a bullet takes 0.40 s. Minus up to 0.1 s before we see it, a standing mech moves ≈ 2.3 m sideways (accel 58.5 m/s², then 11.7 m/s), just short of the 2.8 m needed (radius 2.5 + bullet 0.3). Closer than that, only pre-emptive strafing helps.
 - **Stop-and-go against gunfire** we can't see (heard only): when a `gun` sound arrives from a bearing, flip between moving and stopping.
 - Full wave surfing needs to learn per-enemy aim; probably overkill. Simple linear leading by built-ins is beaten by direction changes alone (assumption to verify in the sim).
 

@@ -33,17 +33,17 @@ The observations are recorded and do not react to your actions. Passing `check.p
 
 ## Files in this kit
 
-| Path | What it is |
-| --- | --- |
-| `protocol.md` | The rules and the protocol. Read this first. |
-| `mechfight.schema.json` | JSON Schema for every message (draft-07). Generate types from it in any language. |
-| `python/mechfight.py` | Python wrapper: one file, standard library only. Typed messages, the stdin/stdout loop, debug drawing. |
-| `python/example_bot.py` | A small Python bot using it. |
-| `ts/mechfight.ts` | TypeScript wrapper: one file, no dependencies, runs with `bun` or `node` (22.18+). |
-| `ts/example.ts` | A small TypeScript bot using it. |
-| `python/Dockerfile`, `ts/Dockerfile` | Images for submission. |
-| `check/check.py` | Protocol conformance check (above). |
-| `arena/` | The map (`arena/v2/world.json`, `arena/v2/terrain.i16`; protocol.md §11). Mounted at `/arena` in a match. |
+| Path                                     | What it is                                                                                                       |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `protocol.md`                          | The rules and the protocol. Read this first.                                                                     |
+| `mechfight.schema.json`                | JSON Schema for every message (draft-07). Generate types from it in any language.                                |
+| `python/mechfight.py`                  | Python wrapper: one file, standard library only. Typed messages, the stdin/stdout loop, debug drawing.           |
+| `python/example_bot.py`                | A small Python bot using it.                                                                                     |
+| `ts/mechfight.ts`                      | TypeScript wrapper: one file, no dependencies, runs with `bun` or `node` (22.18+).                           |
+| `ts/example.ts`                        | A small TypeScript bot using it.                                                                                 |
+| `python/Dockerfile`, `ts/Dockerfile` | Images for submission.                                                                                           |
+| `check/check.py`                       | Protocol conformance check (above).                                                                              |
+| `arena/`                               | The map (`arena/v2/world.json`, `arena/v2/terrain.i16`; protocol.md §11). Mounted at `/arena` in a match. |
 
 The wrappers are optional and deliberately thin. Copy one into your bot and change anything you want. They include no navigation, aiming, or physics. Building your own model of the world from `protocol.md` and from match observations is part of the challenge.
 
