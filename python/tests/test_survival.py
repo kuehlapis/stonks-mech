@@ -12,6 +12,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "python"))
 from survival import Survival  # noqa: E402
 from world import World  # noqa: E402
+from nav import Nav  # noqa: E402
+import survival as SV  # noqa: E402
 
 BUILDING = (-114.5, 62.0)  # real prism in arena/v2/world.json (see test_world.py)
 WALL = (-118.15, 60.85)    # its west wall midpoint
@@ -26,6 +28,7 @@ with gzip.open(ROOT / "check" / "stream.jsonl.gz", "rt") as f:
     CFG = json.loads(f.readline())["config"]
     OBS0 = json.loads(f.readline())
 WORLD = World(str(ROOT / "arena"))
+NAV = Nav(CFG, WORLD)
 MARGIN = OBS0["self"]["stats"]["radius"] + 12
 
 
@@ -89,7 +92,7 @@ class TestZone(unittest.TestCase):
         s = Survival(CFG, None)
         o = obs((600, -72.8), in_zone=False)
         goal, boost = s.zone_goal(o)
-        self.assertEqual(goal, OBS0["zone"]["next_center"])
+        self.assertEqual(goal, s.hold_point(o))  # the hold point inside the next circle (stable goal)
         self.assertFalse(boost)  # 0 m outside the 560 circle: no eta
         o = obs((2000, -72.8), in_zone=False)
         self.assertTrue(s.zone_goal(o)[1])  # far out: dps x eta > 0.2 hp
@@ -133,6 +136,7 @@ class TestCover(unittest.TestCase):
     def test_finds_point_behind_building(self):
         cw = CountingWorld()
         s = Survival(CFG, cw)
+        s.nav = NAV
         th = threat(_out(40))
         me = _out(5)
         o = obs(me)
@@ -142,7 +146,7 @@ class TestCover(unittest.TestCase):
         self.assertIsNotNone(p)
         self.assertFalse(WORLD.los(eye, (p[0], p[1], p[2] + 4.5)))
         self.assertFalse(WORLD.los(eye, (p[0], p[1], p[2] + 9)))
-        self.assertLessEqual(cw.calls, 32)
+        self.assertLessEqual(cw.calls, SV.LOS_CAP)
         n = cw.calls
         self.assertEqual(s.find_cover(obs(me, t=0.5), [th]), p)  # cached
         self.assertEqual(cw.calls, n)
@@ -154,8 +158,9 @@ class TestCover(unittest.TestCase):
         ths = [threat(_out(40)), threat((WALL[0] + 40, WALL[1] + 40))]
         cw = CountingWorld(see_from=ths[1]["pos"])  # second threat sees everything: every point fails late
         s = Survival(CFG, cw)
+        s.nav = NAV
         self.assertIsNone(s.find_cover(obs(_out(5)), ths))
-        self.assertLessEqual(cw.calls, 32)
+        self.assertLessEqual(cw.calls, SV.LOS_CAP)
         self.assertGreater(cw.calls, 16)
 
     def test_world_none(self):
@@ -169,8 +174,9 @@ class TestCover(unittest.TestCase):
 class TestTiming(unittest.TestCase):
     def test_timing(self):
         rng = random.Random(1)
-        worst_cover = worst_other = 0.0
+        worst_cover = worst_other = worst_hold = 0.0
         s = Survival(CFG, WORLD)
+        s.nav = NAV
         for i in range(200):
             me = (rng.uniform(-400, 400), rng.uniform(-400, 400))
             ths = []
@@ -181,16 +187,22 @@ class TestTiming(unittest.TestCase):
             t0 = time.perf_counter()
             s.find_cover(o, ths)
             worst_cover = max(worst_cover, time.perf_counter() - t0)
-            self.assertLessEqual(s.los_calls, 32)
+            self.assertLessEqual(s.los_calls, SV.LOS_CAP)
+            t0 = time.perf_counter()
+            s.hold_point(o)  # first call per circle: path search
+            worst_hold = max(worst_hold, time.perf_counter() - t0)
             t0 = time.perf_counter()
             s.hold_point(o), s.zone_goal(o), s.hold_facing(o), s.final_center(o)
             worst_other = max(worst_other, (time.perf_counter() - t0) / 4)
-        # snap worst case: hold point deep inside the building (several blocked steps)
+        # snap worst case: hold point deep inside the building (several blocked steps), map line fallback
+        s.nav = None
         o = obs((BUILDING[0] - 100, BUILDING[1]), next_center=[BUILDING[0] + 55, BUILDING[1]], next_radius=55 + MARGIN)
         t0 = time.perf_counter()
         s.hold_point(o)
         worst_other = max(worst_other, time.perf_counter() - t0)
         print(f"\nsurvival timing: find_cover max {worst_cover * 1e3:.2f} ms, other max {worst_other * 1e3:.3f} ms", file=sys.stderr)
+        print(f"hold search max {worst_hold * 1e3:.2f} ms", file=sys.stderr)
+        self.assertLess(worst_hold, 0.030)
         self.assertLess(worst_cover, 0.010)
         self.assertLess(worst_other, 0.001)
 

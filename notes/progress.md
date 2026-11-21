@@ -2,7 +2,11 @@
 
 Updated by the moderator after every agent report. A new session reads this first, then `notes/agents/moderator.md`.
 
-## State: 2026-11-21, iteration 1, branch `iter-1`
+## State: 2026-11-21, iteration 2, branch `iter-1`
+
+Iteration 2 (new session): sim phase 2 done (`sim/engine.py`), in-process runner `sim/inproc.py`, opponent pool `sim/bots/`, M1 snapshot `sim/versions/m1/`. Brain/nav/survival rewritten; sim phase 2 vs pool: 10.49 (M1 8.41). Benchmark command: `python sim/inproc.py --bot new=python/bot.py --count 1 --bot m1=sim/versions/m1/bot.py --count 1 --bot hunter=sim/bots/hunter.py --count 5 --bot camper=sim/bots/camper.py --count 3 --bot rusher=sim/bots/rusher.py --count 3 --bot ex=python/example_bot.py --matches 160 --jobs 14 --rotate`.
+
+## State before (iteration 1)
 
 Milestone: **M0 not yet reached** (M1 bot being assembled). Track score: not submitted. Bar to beat: 6.00.
 

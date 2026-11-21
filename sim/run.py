@@ -1,12 +1,16 @@
-"""Local match runner for mechfight/1 (phase 1). Usage:
+"""Local match runner for mechfight/1 (phase 2: full rules). Usage:
 
-  python sim/run.py --matches 10 --seed 1 --bot "python -u python/example_bot.py" [--bot CMD ...] [--out summary.json]
+  python sim/run.py --matches 10 --seed 1 --jobs 8 --bot "python -u python/example_bot.py" [--bot CMD ...] [--out summary.json]
+
+`--jobs N` plays N matches at once in separate processes (each match runs 16 bot processes, so keep
+N * 16 bots within what the machine can answer in 50 ms; check `late_pct`).
 
 Bots fill slots in the order given. `--count K` after a --bot gives it K slots (default 1); the last --bot
 fills any slots left, so `--bot NEW --bot OLD` is 1 NEW against 15 OLD, and
 `--bot A --count 4 --bot B --count 4 --bot C` is 4 A, 4 B and 8 C.
 """
 import argparse
+import concurrent.futures
 import gzip
 import json
 import os
@@ -37,6 +41,7 @@ def load_world():
 
 
 class FlatWorld:
+    canopy = None  # no trees
     def __init__(self):
         with open(os.path.join(ARENA, "v2", "world.json"), encoding="utf-8") as f:
             b = json.load(f)["bounds"]
@@ -123,6 +128,7 @@ class Bot:
 
 def play(cmds, cfg, world, seed, log_dir):
     hello = recorded_hello()
+    eng = 0.0
     match = Match(cfg, world, seed, len(cmds))
     bots = [Bot(c, os.path.join(log_dir, f"m{seed}-slot{i}.log")) for i, c in enumerate(cmds)]
     for i, b in enumerate(bots):
@@ -140,7 +146,9 @@ def play(cmds, cfg, world, seed, log_dir):
         sent = {}
         for m in match.alive():
             b = bots[m.id]
+            e0 = time.perf_counter()
             obs = match.observe(m)
+            eng += time.perf_counter() - e0
             if not b.dead:
                 b.send(obs)
                 sent[m.id] = time.perf_counter()
@@ -157,10 +165,12 @@ def play(cmds, cfg, world, seed, log_dir):
                     b.answered += 1
                     b.lat.append(ts - sent[m.id])
             match.apply_action(m, a)
+        e0 = time.perf_counter()
         for _ in range(cfg["match"]["decide_every"]):
             match.step()
             if match.over:
                 break
+        eng += time.perf_counter() - e0
         decisions += 1
     wall = time.perf_counter() - t0
     places = match.places()
@@ -177,13 +187,20 @@ def play(cmds, cfg, world, seed, log_dir):
                      "hp_at_3": (match.hp_at_3 or {}).get(m.id), "hp_at_415": (match.hp_at_415 or {}).get(m.id),
                      "death": None if m.death_tick is None else {
                          "t": round(m.death_tick * match.dt, 2), "cause": m.death_cause, "by_slot": m.killed_by,
-                         "by_cmd": None if m.killed_by is None else bots[m.killed_by].cmd,
+                         "by_cmd": None if m.killed_by is None else bots[m.killed_by].cmd if m.killed_by < len(bots) else "npc",
                          "hp_before": m.hp_before_death, "pos": m.death_pos},
+                     "cubes_final": m.cubes_final if m.cubes_final is not None else m.cubes,
+                     "weapons_final": m.weapons_final if m.weapons_final is not None else m.held_kinds(),
+                     "kinds_taken": m.kinds_taken, "upgrades": m.upgrades,
+                     "dmg_dealt_by": {k: round(v, 1) for k, v in m.dmg_dealt_by.items()},
+                     "dmg_taken_by": {k: round(v, 1) for k, v in m.dmg_taken_by.items()},
+                     "drops_captured": m.drops_captured, "npc_kills": m.npc_kills, "crates_broken": m.crates_broken,
                      "late": b.late, "answered": b.answered,
                      "bad": b.bad, "exceptions": b.exceptions,
                      "lat_max_ms": round(max(b.lat) * 1000, 1) if b.lat else None})
     return {"seed": seed, "t_end": round(match.t, 2), "wall_s": round(wall, 2), "decisions": decisions,
-            "ms_per_decision": round(wall / max(1, decisions) * 1000, 2), "mechs": rows}
+            "ms_per_decision": round(wall / max(1, decisions) * 1000, 2),
+            "engine_ms_per_decision": round(eng / max(1, decisions) * 1000, 2), "mechs": rows}
 
 
 def summarize(matches, n_mechs):
@@ -220,8 +237,45 @@ def summarize(matches, n_mechs):
             "bad_lines": sum(r["bad"] for r in rs),
             "exceptions": sum(r["exceptions"] for r in rs),
             "kills_per_match": round(sum(r["kills"] for r in rs) / n, 2),
+            "mean_cubes_at_death_or_end": round(sum(r["cubes_final"] for r in rs) / n, 2),
+            "weapons_held_at_death_or_end_pct": {k: round(100 * sum(k in r["weapons_final"] for r in rs) / n, 1)
+                                                 for k in ("gun", "mortar", "laser", "lightning")},
+            "pickups_taken_per_match": round(sum(len(r["kinds_taken"]) for r in rs) / n, 2),
+            "dmg_dealt_per_match_by_weapon": _mean_dict([r["dmg_dealt_by"] for r in rs], n),
+            "dmg_taken_per_match_by_weapon": _mean_dict([r["dmg_taken_by"] for r in rs], n),
+            "deaths_by_cause": _count(r["cause"] for r in rs if r["cause"]),
+            "drops_captured": sum(r["drops_captured"] for r in rs),
+            "npc_kills_per_match": round(sum(r["npc_kills"] for r in rs) / n, 2),
+            "crates_broken_per_match": round(sum(r["crates_broken"] for r in rs) / n, 2),
+            "upgrades_taken": _count(u for r in rs for u in r["upgrades"]),
         }
     return out
+
+
+def _mean_dict(ds, n):
+    out = {}
+    for d in ds:
+        for k, v in d.items():
+            out[k] = out.get(k, 0.0) + v
+    return {k: round(v / n, 1) for k, v in sorted(out.items())}
+
+
+def _count(it):
+    out = {}
+    for k in it:
+        out[k] = out.get(k, 0) + 1
+    return dict(sorted(out.items(), key=lambda kv: -kv[1]))
+
+
+_WORLD = None
+
+
+def _job(cmds, cfg, seed, log_dir):
+    """Worker entry: one match. The world loads once per worker process."""
+    global _WORLD
+    if _WORLD is None:
+        _WORLD = load_world()[0]
+    return play(cmds, cfg, _WORLD, seed, log_dir)
 
 
 class BotArg(argparse.Action):
@@ -244,6 +298,7 @@ def main():
     ap.add_argument("--seed", type=int, default=1)
     ap.add_argument("--mechs", type=int, default=None, help="mechs per match (default: config match.mechs = 16)")
     ap.add_argument("--out", help="write the JSON summary here")
+    ap.add_argument("--jobs", type=int, default=1, help="matches played in parallel processes (default 1)")
     args = ap.parse_args()
     cfg = recorded_hello()["config"]
     n = args.mechs or cfg["match"]["mechs"]
@@ -251,18 +306,33 @@ def main():
     if len(cmds) > n:
         ap.error(f"{len(cmds)} bots for {n} slots")
     cmds += [args.bots[-1][0]] * (n - len(cmds))
-    world, world_name = load_world()
     log_dir = tempfile.mkdtemp(prefix="mechsim-")
+    seeds = [args.seed * 1000 + k for k in range(args.matches)]
     matches = []
-    for k in range(args.matches):
-        mt = play(cmds, cfg, world, args.seed * 1000 + k, log_dir)
+
+    def report(mt):
         matches.append(mt)
         order = sorted(mt["mechs"], key=lambda r: r["place"])
-        print(f"match {k + 1}/{args.matches} seed {mt['seed']}: ended t={mt['t_end']} s, wall {mt['wall_s']} s, "
-              f"{mt['ms_per_decision']} ms/decision")
-        print("  " + " ".join(f"{r['place']}:s{r['slot']}{'/z' if r['cause'] == 'zone' else ''}" for r in order))
+        print(f"match {len(matches)}/{args.matches} seed {mt['seed']}: ended t={mt['t_end']} s, wall {mt['wall_s']} s, "
+              f"{mt['ms_per_decision']} ms/decision (engine {mt['engine_ms_per_decision']})")
+        print("  " + " ".join(f"{r['place']}:s{r['slot']}{'/' + r['cause'][:2] if r['cause'] else ''}" for r in order))
         sys.stdout.flush()
+
+    if args.jobs <= 1:
+        world, world_name = load_world()
+        for sd in seeds:
+            report(play(cmds, cfg, world, sd, log_dir))
+    else:
+        world_name = "python/world.py"
+        with concurrent.futures.ProcessPoolExecutor(max_workers=args.jobs) as ex:
+            futs = [ex.submit(_job, cmds, cfg, sd, log_dir) for sd in seeds]
+            for f in concurrent.futures.as_completed(futs):
+                report(f.result())
+    matches.sort(key=lambda mt: mt["seed"])
+    eng = [mt["engine_ms_per_decision"] for mt in matches]
     summary = {"world": world_name, "matches": args.matches, "seed": args.seed, "mechs": n, "bot_logs": log_dir,
+               "jobs": args.jobs, "engine_ms_per_decision_mean": round(sum(eng) / len(eng), 2),
+               "engine_ms_per_decision_max": max(eng),
                "per_bot": summarize(matches, n), "per_match": matches}
     print(json.dumps({k: v for k, v in summary.items() if k != "per_match"}, indent=2))
     if args.out:

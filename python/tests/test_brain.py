@@ -73,7 +73,7 @@ class TestPriority(unittest.TestCase):
         return a, mf.draw.take()["label"]
 
     def test_zone_outranks_loot(self):
-        b = brain(survival=Fake(zone_goal=([0.0, 300.0], True), hold_point=[50.0, 0.0]),
+        b = brain(survival=Fake(zone_goal=([0.0, 300.0], True), zone_urgent=True, hold_point=[50.0, 0.0]),
                   economy=Fake(wanted_pickup={"id": 1, "kind": "laser", "pos": [5.0, 0.0, 0.0]}))
         self.assertEqual(self.mode(b, obs0())[1], "zone")
 
@@ -87,7 +87,7 @@ class TestPriority(unittest.TestCase):
         b = brain(perception=Fake(threats=[ENEMY], threatened_by=ENEMY),
                   survival=Fake(find_cover=[-20.0, 0.0], hold_point=[50.0, 0.0]))
         a, m = self.mode(b, obs0())
-        self.assertEqual(m, "cover")
+        self.assertEqual(m, "evade")
         self.assertEqual(a["fire"], [False, False])
 
     def test_laser_holder_engages_gun_only_disengages(self):
@@ -95,14 +95,22 @@ class TestPriority(unittest.TestCase):
                   survival=Fake(find_cover=[-20.0, 0.0], hold_point=[50.0, 0.0]))
         o = obs0()
         a, m = self.mode(b, o)
-        self.assertEqual(m, "disengage")
+        self.assertEqual(m, "evade")  # we lose the trade (gun vs gun + laser): break line of sight
         self.assertEqual(a["fire"][1], False)  # slot 1 empty; slot 0 gun may fire back
 
-    def test_engaged_no_cover_is_cornered_fight(self):
+    def test_engaged_no_cover_close_is_cornered_fight(self):
+        e = dict(ENEMY, pos=[40.0, 0.0, 0.0])
+        b = brain(perception=Fake(threats=[e], engaged_by=e))
+        a, m = self.mode(b, obs0())
+        self.assertEqual(m, "fight")  # too close to escape and the trade is near even: fight
+        self.assertEqual(a["fire"], [True, True])
+
+    def test_engaged_no_cover_far_flees(self):
         b = brain(perception=Fake(threats=[ENEMY], engaged_by=ENEMY))
         a, m = self.mode(b, obs0())
-        self.assertEqual(m, "fight")
-        self.assertEqual(a["fire"], [True, True])
+        self.assertEqual(m, "flee")
+        self.assertTrue(a["boost"])
+        self.assertEqual(a["fire"][1], False)
 
     def test_rule_b_fights_weak_gun_only_enemy(self):
         e = dict(ENEMY, weapons=["gun"])
@@ -119,6 +127,12 @@ class TestPriority(unittest.TestCase):
         a, m = self.mode(b, obs0())
         self.assertEqual(m, "dodge")
         self.assertEqual(a["fire"], [False, False])
+
+    def test_zone_not_urgent_fights_first(self):
+        e = dict(ENEMY, weapons=["gun"])
+        b = brain(perception=Fake(threats=[e], engaged_by=e),
+                  survival=Fake(zone_goal=([0.0, 300.0], False), zone_urgent=False, hold_point=[50.0, 0.0]))
+        self.assertEqual(self.mode(b, obs0())[1], "fight")
 
     def test_offer_pick_merged(self):
         o = obs0()
