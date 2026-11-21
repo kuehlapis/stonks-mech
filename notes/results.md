@@ -57,3 +57,4 @@ Iteration 2: M1 versus example x15, 100 matches, seeds 1000-1099 (`notes/tests/2
 |---|---|---|---|---|
 | 0 | Baseline: kit example bot, unchanged | – | numbers above | kept as baseline |
 | 1 | Integrated M1 modules; N1/N2 fixes | +1.5 to +3 guessed | 100-match score 8.58 vs 7.42; 9.8% rear damage; 85.5% gun hits; 7% zone deaths | Keep M1, investigate zone deaths before submission |
+| 2 | Stable hold point per circle; zone moves can't step outside the live circle | zone deaths → 0% | same seeds: score 8.73 (Δ +0.15, within noise), zone deaths 1.0% (Δ −6.0 pts), outside-zone 0.03%, rear 8.7%, win 4% (AAR 2) | kept |

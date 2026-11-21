@@ -72,6 +72,12 @@ class TestHoldPoint(unittest.TestCase):
         p = s.hold_point(obs((20, 0), next_center=[0.0, 0.0], next_radius=100))  # already deeper: stay
         self.assertAlmostEqual(p[0], 20)
 
+    def test_hold_point_stays_stable_while_mech_moves(self):
+        s = Survival(CFG, None)
+        first = s.hold_point(obs((300, 0), next_center=[0.0, 0.0], next_radius=100))
+        second = s.hold_point(obs((0, 300), next_center=[0.0, 0.0], next_radius=100))
+        self.assertEqual(second, first)
+
     def test_snaps_off_building(self):
         nc = [BUILDING[0] + 55, BUILDING[1]]
         o = obs((BUILDING[0] - 100, BUILDING[1]), next_center=nc, next_radius=55 + MARGIN)

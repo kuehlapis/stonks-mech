@@ -89,7 +89,7 @@ class Brain:
         zg = self._call(S, "zone_goal", obs)
         if zg:
             goal, boost = zg
-            return {**self._go(obs, goal, boost=boost), **self._aim(obs, threats, threatened, engaged, goal)}, "zone"
+            return {**self._zone_go(obs, goal, boost), **self._aim(obs, threats, threatened, engaged, goal)}, "zone"
 
         # 2. Threatened (laser about to hit / aimed at us): hide, never start shooting
         cover = None
@@ -146,6 +146,26 @@ class Brain:
         if cover:
             self._last_cover = (obs.get("t", 0), tps, cover)
         return cover
+
+    def _zone_go(self, obs, goal, boost):
+        """Keep a detouring Nav path from stepping outside the live circle."""
+        action = self._go(obs, goal, boost=boost)
+        me = obs.get("self") or {}
+        if not me.get("in_zone", True):
+            return action
+        circle = self._call(self.survival, "live_circle", obs)
+        if not circle:
+            return action
+        center, radius = circle
+        pos = me.get("pos") or [0.0, 0.0]
+        dx, dy = pos[0] - center[0], pos[1] - center[1]
+        d = math.hypot(dx, dy)
+        move = action.get("move") or [0.0, 0.0]
+        stats = me.get("stats") or self.cfg.get("mech", {})
+        edge_buffer = float(stats.get("radius", 2.5)) + 12.0
+        if d >= radius - edge_buffer and d > 1e-6 and move[0] * dx + move[1] * dy > 0:
+            action["move"] = [-dx / d, -dy / d]
+        return action
 
     # --- rules ---
 

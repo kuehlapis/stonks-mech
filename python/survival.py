@@ -25,6 +25,7 @@ class Survival:
         self.final_radius = cfg["zone"]["phases"][-1]["radius"]
         self._saved = None   # (shrink_start, center, radius) of the circle as it stood before the shrink
         self._cover = None   # (t, threat positions, result)
+        self._hold = None    # (next-circle key, stable hold point) to keep Nav's goal from oscillating
         self.los_calls = 0   # los calls made by the last find_cover search (tests read it)
 
     def live_circle(self, obs):
@@ -44,21 +45,34 @@ class Survival:
         nc, pos = z["next_center"], obs["self"]["pos"]
         dx, dy = pos[0] - nc[0], pos[1] - nc[1]
         d = math.hypot(dx, dy)
-        k = min(d, max(0.0, z["next_radius"] - st["radius"] - MARGIN_EXTRA))
+        limit = max(0.0, z["next_radius"] - st["radius"] - MARGIN_EXTRA)
+        if d <= limit:
+            self._hold = None
+            return [pos[0], pos[1]]
+        key = (tuple(nc[:2]), z["next_radius"], st["radius"])
+        if self._hold and self._hold[0] == key:
+            return list(self._hold[1])
+        k = min(d, limit)
         if d < 1e-9 or k <= 0:
             return [nc[0], nc[1]]
         ux, uy = dx / d, dy / d
         w = self.world
         if w is None:
-            return [nc[0] + ux * k, nc[1] + uy * k]
+            p = [nc[0] + ux * k, nc[1] + uy * k]
+            self._hold = (key, p)
+            return p
         for _ in range(SNAP_MAX):
             x, y = nc[0] + ux * k, nc[1] + uy * k
             if not w.blocked(x, y, w.ground(x, y), st["radius"], st["height"], st["step_up"]):
-                return [x, y]
+                p = [x, y]
+                self._hold = (key, p)
+                return p
             k -= SNAP_STEP
             if k <= 0:
                 break
-        return [nc[0], nc[1]]
+        p = [nc[0], nc[1]]
+        self._hold = (key, p)
+        return p
 
     def zone_goal(self, obs):
         z, me, st = obs["zone"], obs["self"], _stats(obs, self.cfg)

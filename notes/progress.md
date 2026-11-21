@@ -4,7 +4,7 @@ Updated by the moderator after every agent report. A new session reads this firs
 
 ## State: 2026-11-21, iteration 2, branch `iter-1`
 
-Milestone: **M0 reached** (direct and Docker checks pass); local M1 proxy score 8.58, track score not submitted. Simulator target still misses 0% zone deaths at 7%. Bar to beat: 6.00.
+Milestone: **M0 reached** (direct and Docker checks pass); local M1 proxy score 8.73 (iteration 2), track score not submitted. Zone deaths 7% → 1% after the hold-point fix (AAR 2). Bar to beat: 6.00.
 
 | Part | Status | Where |
 |---|---|---|
@@ -22,10 +22,11 @@ Milestone: **M0 reached** (direct and Docker checks pass); local M1 proxy score 
 
 ## Current next steps
 
-1. Investigate the seven M1 zone deaths from the 100-match run; inspect Nav and zone transitions and fix the cause.
+1. Six of seven zone deaths fixed (AAR 2). Replay seed 1042 (the one left: 7.5 s outside at 199 s) and fix its cause.
 2. Continue simulator phase 2, starting with weapon firing and pickups, then cubes/upgrades, NPCs, and drops.
 3. Add passive, aggressive, and camper opponents after phase 2 mechanics are present.
-4. Rerun guardrails and proxies after changes; then decide whether M1 is ready to submit.
+4. Rerun guardrails and proxies after changes.
+5. Ask the user whether to submit M1 now for a first real score.
 
 ## Original handoff next steps (superseded)
 

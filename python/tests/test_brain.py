@@ -77,6 +77,16 @@ class TestPriority(unittest.TestCase):
                   economy=Fake(wanted_pickup={"id": 1, "kind": "laser", "pos": [5.0, 0.0, 0.0]}))
         self.assertEqual(self.mode(b, obs0())[1], "zone")
 
+    def test_zone_path_cannot_steer_outside_live_circle(self):
+        o = obs0()
+        o["self"]["pos"] = [90.0, 0.0, 0.0]
+        o["self"]["in_zone"] = True
+        s = Fake(zone_goal=([200.0, 0.0], True), live_circle=([0.0, 0.0], 100.0))
+        b = brain(survival=s)
+        a, mode = self.mode(b, o)
+        self.assertEqual(mode, "zone")
+        self.assertEqual(a["move"], [-1.0, 0.0])
+
     def test_loot_outranks_hold(self):
         b = brain(economy=Fake(wanted_pickup={"id": 1, "kind": "laser", "pos": [5.0, 0.0, 0.0]}, take={"take": 1}))
         a, m = self.mode(b, obs0())
