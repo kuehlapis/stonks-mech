@@ -25,6 +25,9 @@ Times are "direct / Docker" on this machine, not the 1-CPU match container.
 | Iter | Date | Matches | Zone deaths (0%) | Ticks outside zone (≤ 2%) | Mean place vs example ×15 (≤ 2.0) | Gun hit rate 50–150 m (≥ 40%) | Rear-hit damage share (≤ 20%) | HP at ≤ 3 alive (≥ 60%) | Drops captured uncontested (≥ 80%) |
 |---|---|---|---|---|---|---|---|---|---|
 | 0 | 2026-11-21 | – | no simulator yet | – | – | – | – | – | – |
+| 1 | 2026-11-21 | 10 (×16 mechs) | 2.5% (4/160) | 2.56% | n/a: example ×16, mean place 8.51, score 7.49, wins 6.2% (≈ even share by construction) | 32.4% (3526 shots) | 53.9% | 72.4% (30 samples) | not simulated | 
+
+Iter 1 note: **sim phase 1, example ×16** (`notes/tests/2026-11-21-sim-baseline.md`). First sim row, so Δ prev and Δ baseline are "–" (row 0 had no simulator). The sim leaves out mortar, laser, lightning, loot/pickups, crates, cubes, upgrades, NPCs, supply drops, trees, overhang slide-out and slope limits; in it every mech has only the gun. Proxies here are a calibration point, not a target check: "vs example ×15" and "drops captured" need a candidate bot and phase 2.
 
 ## What changed per iteration
 
