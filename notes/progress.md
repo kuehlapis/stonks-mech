@@ -40,7 +40,14 @@ Variants for each are in `sim/versions/` (untracked; rebuild with `python sim/va
      - `WEAK_GUN` 0.6 + `OPEN_EDGE` 1.2 make gun-only hard bots look beatable. Test `WEAK_GUN=1.0`, `OPEN_EDGE=0.8`.
      - Kiting to 130 m (`FIGHT_RANGE`) is the laser's best range. Close to < 60 m behind cover, or break LOS, against laser holders.
      - `_ttk_ratio` ignores remembered enemies.
-1. Finish calibration (above).
+1. Finish calibration (above). **Status at handover (Tester):**
+   - Only run c0 is done: sub1 vs the old `squad_v1.py`, 40 seeds, scored 1.23 ± 0.21. It is invalid, because squad bots died to the zone 320 times.
+   - `squad.py` v2 is written but has never run a match. v2 adds: RETALIATE_S 30, 0.3–0.6 s jukes, chase boost beyond 40 m, wall slide, and a zone fallback that boosts to the next centre.
+   - Next:
+     - Run v2 against sub1, example and s_base2, 40 seeds each.
+     - Confirm 0 squad zone deaths before 415 s.
+     - If sub1 is still below 1.6: DEFEND_RANGE 60 → 45, or move the extra hunter from 150 s to 180 s.
+   - The Tester's finding on the floor: score = mechs dead before us ≈ our kills + NPC kills of squad bots before we die (c0: 0.68 + 0.55 at a death around 60 s). Zone deaths come after ours, so they never count. So surviving longer early is the lever.
 2. Baseline on the calibrated squad, 56 paired matches (`--seed 11 --rotate`). Then test one switch at a time against it, ranked by kills/match and the share dead before 120 s: laser defence (`s_duck30`, `b_peek`), AIM_PREDICT (`c_aim`), REAR_TURN (`b_rear`), LADDER, STRAFE_BOOST_E (`m_boost`), RUN_MODE (`r_run`).
 3. Stack only the winners; re-test; commit with the switches ON; push; ask the user to submit; record in `notes/scores.md`.
 4. Discussion round 2 (`notes/ideas/assumptions-discussion.md`, "Round 2: kills"). The Strategist's answer: we lose every even gun duel at range (their lasers land 4 of 5). Ranked:
