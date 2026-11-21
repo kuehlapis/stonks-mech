@@ -17,3 +17,9 @@ Moderator's log, newest first. Each entry: what was decided, why, and what was r
   - Risk accepted: a geometry bug shows up in both bot and sim, so the sim can't catch it. The real track score is the check on that.
 - **Python 3.12 is installed locally; the image runs 3.13.** Code must run on both; the Docker check is the one that counts.
 - **All four first-wave agents work in the main tree, not worktrees.** Their files don't overlap (notes/research, notes/ideas, sim/, python/world.py), and the Tester needs to see `python/world.py` as soon as it lands. Worktrees return for builders that share files.
+
+## 2026-11-21, iteration 1: M1 build
+
+- **M1 interfaces written** (`notes/interfaces.md`) from the revised game plan (all 14 Critic findings addressed). Six builders start in parallel: Perception, Survival, Nav, Combat, Economy, Brain. `python/bot.py` (moderator) wires them, and the Dockerfile now runs `bot.py`.
+- **Builders share the main tree.** Each owns one file plus one test file, with no overlaps, and Brain needs the others' real files to integrate. Worktrees would add merges for no gain.
+- **Deferred past M1** (per the plan): DPS model, vulture, crates, drones, supply drops, cover map, lightning fallback.

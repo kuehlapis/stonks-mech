@@ -1,0 +1,7542 @@
+{
+ "world": "python/world.py",
+ "matches": 10,
+ "seed": 1,
+ "mechs": 16,
+ "bot_logs": "C:\\Users\\yaosh\\AppData\\Local\\Temp\\mechsim-dii_okot",
+ "per_bot": {
+  "python -u python/example_bot.py": {
+   "mech_matches": 160,
+   "mean_score": 7.49,
+   "mean_place": 8.51,
+   "win_rate": 0.062,
+   "zone_deaths_pct": 2.5,
+   "ticks_outside_zone_pct": 2.56,
+   "rear_hit_damage_share_pct": 53.9,
+   "gun_hit_rate_50_150_pct": 32.4,
+   "gun_shots_50_150": 3526,
+   "hp_at_le3_alive_pct": 72.4,
+   "hp_at_le3_samples": 30,
+   "hp_at_415s_survivors_pct": null,
+   "hp_at_415s_samples": 0,
+   "deaths": [
+    {
+     "t": 328.65,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 30.0,
+     "pos": [
+      45.86,
+      -196.03,
+      6.82
+     ],
+     "match_seed": 1000,
+     "slot": 0,
+     "place": 4
+    },
+    {
+     "t": 11.15,
+     "cause": "gun",
+     "by_slot": 5,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      258.06,
+      -161.45,
+      4.02
+     ],
+     "match_seed": 1000,
+     "slot": 1,
+     "place": 16
+    },
+    {
+     "t": 16.55,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -254.23,
+      -4.1,
+      21.4
+     ],
+     "match_seed": 1000,
+     "slot": 2,
+     "place": 14
+    },
+    {
+     "t": 211.75,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      63.9,
+      -153.61,
+      1.69
+     ],
+     "match_seed": 1000,
+     "slot": 3,
+     "place": 6
+    },
+    {
+     "t": 40.65,
+     "cause": "gun",
+     "by_slot": 5,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 38.8,
+     "pos": [
+      75.84,
+      -177.7,
+      4.26
+     ],
+     "match_seed": 1000,
+     "slot": 4,
+     "place": 11
+    },
+    {
+     "t": 187.6,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      48.25,
+      -1.14,
+      2.19
+     ],
+     "match_seed": 1000,
+     "slot": 6,
+     "place": 7
+    },
+    {
+     "t": 25.85,
+     "cause": "gun",
+     "by_slot": 5,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 0.5,
+     "pos": [
+      83.94,
+      -219.66,
+      2.13
+     ],
+     "match_seed": 1000,
+     "slot": 7,
+     "place": 12
+    },
+    {
+     "t": 15.15,
+     "cause": "gun",
+     "by_slot": 4,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      73.89,
+      -173.36,
+      2.33
+     ],
+     "match_seed": 1000,
+     "slot": 8,
+     "place": 15
+    },
+    {
+     "t": 42.65,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -55.0,
+      33.58,
+      -0.54
+     ],
+     "match_seed": 1000,
+     "slot": 9,
+     "place": 10
+    },
+    {
+     "t": 16.65,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -184.28,
+      -209.5,
+      -2.77
+     ],
+     "match_seed": 1000,
+     "slot": 10,
+     "place": 13
+    },
+    {
+     "t": 329.9,
+     "cause": "gun",
+     "by_slot": 5,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 10.0,
+     "pos": [
+      36.36,
+      -116.77,
+      1.51
+     ],
+     "match_seed": 1000,
+     "slot": 11,
+     "place": 3
+    },
+    {
+     "t": 367.05,
+     "cause": "gun",
+     "by_slot": 5,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 37.0,
+     "pos": [
+      75.78,
+      -177.34,
+      2.34
+     ],
+     "match_seed": 1000,
+     "slot": 12,
+     "place": 2
+    },
+    {
+     "t": 127.65,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 7.2,
+     "pos": [
+      57.27,
+      4.24,
+      2.84
+     ],
+     "match_seed": 1000,
+     "slot": 13,
+     "place": 8
+    },
+    {
+     "t": 118.1,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -99.91,
+      -59.83,
+      -2.04
+     ],
+     "match_seed": 1000,
+     "slot": 14,
+     "place": 9
+    },
+    {
+     "t": 321.0,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      82.7,
+      -158.21,
+      3.45
+     ],
+     "match_seed": 1000,
+     "slot": 15,
+     "place": 5
+    },
+    {
+     "t": 198.5,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      18.42,
+      -179.95,
+      2.67
+     ],
+     "match_seed": 1001,
+     "slot": 0,
+     "place": 11
+    },
+    {
+     "t": 119.4,
+     "cause": "gun",
+     "by_slot": 0,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      63.95,
+      -172.32,
+      1.23
+     ],
+     "match_seed": 1001,
+     "slot": 1,
+     "place": 13
+    },
+    {
+     "t": 313.55,
+     "cause": "zone",
+     "by_slot": null,
+     "by_cmd": null,
+     "hp_before": 5.0,
+     "pos": [
+      139.77,
+      -116.91,
+      43.04
+     ],
+     "match_seed": 1001,
+     "slot": 2,
+     "place": 4
+    },
+    {
+     "t": 185.85,
+     "cause": "gun",
+     "by_slot": 9,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -47.5,
+      -17.28,
+      -3.46
+     ],
+     "match_seed": 1001,
+     "slot": 3,
+     "place": 12
+    },
+    {
+     "t": 207.05,
+     "cause": "gun",
+     "by_slot": 14,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 16.2,
+     "pos": [
+      182.87,
+      -207.03,
+      4.84
+     ],
+     "match_seed": 1001,
+     "slot": 5,
+     "place": 9
+    },
+    {
+     "t": 238.55,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -57.63,
+      -183.35,
+      1.41
+     ],
+     "match_seed": 1001,
+     "slot": 6,
+     "place": 8
+    },
+    {
+     "t": 17.7,
+     "cause": "gun",
+     "by_slot": 3,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      54.73,
+      2.84,
+      2.69
+     ],
+     "match_seed": 1001,
+     "slot": 7,
+     "place": 14
+    },
+    {
+     "t": 10.35,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      181.71,
+      -122.84,
+      8.37
+     ],
+     "match_seed": 1001,
+     "slot": 8,
+     "place": 15
+    },
+    {
+     "t": 310.35,
+     "cause": "gun",
+     "by_slot": 14,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 20.0,
+     "pos": [
+      128.77,
+      -208.18,
+      4.7
+     ],
+     "match_seed": 1001,
+     "slot": 9,
+     "place": 5
+    },
+    {
+     "t": 6.2,
+     "cause": "gun",
+     "by_slot": 6,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -214.16,
+      -106.25,
+      -2.37
+     ],
+     "match_seed": 1001,
+     "slot": 10,
+     "place": 16
+    },
+    {
+     "t": 203.1,
+     "cause": "gun",
+     "by_slot": 2,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 19.5,
+     "pos": [
+      95.84,
+      -69.99,
+      4.46
+     ],
+     "match_seed": 1001,
+     "slot": 11,
+     "place": 10
+    },
+    {
+     "t": 274.05,
+     "cause": "gun",
+     "by_slot": 14,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 25.5,
+     "pos": [
+      90.9,
+      -230.36,
+      9.89
+     ],
+     "match_seed": 1001,
+     "slot": 12,
+     "place": 6
+    },
+    {
+     "t": 255.9,
+     "cause": "gun",
+     "by_slot": 9,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 2.0,
+     "pos": [
+      32.67,
+      -161.33,
+      0.21
+     ],
+     "match_seed": 1001,
+     "slot": 13,
+     "place": 7
+    },
+    {
+     "t": 320.5,
+     "cause": "gun",
+     "by_slot": 4,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      151.78,
+      -237.66,
+      3.71
+     ],
+     "match_seed": 1001,
+     "slot": 14,
+     "place": 3
+    },
+    {
+     "t": 323.2,
+     "cause": "gun",
+     "by_slot": 4,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      151.19,
+      -240.01,
+      0.93
+     ],
+     "match_seed": 1001,
+     "slot": 15,
+     "place": 2
+    },
+    {
+     "t": 331.15,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 40.0,
+     "pos": [
+      -198.04,
+      -64.59,
+      -4.78
+     ],
+     "match_seed": 1002,
+     "slot": 0,
+     "place": 3
+    },
+    {
+     "t": 10.6,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      76.43,
+      -189.14,
+      4.48
+     ],
+     "match_seed": 1002,
+     "slot": 2,
+     "place": 15
+    },
+    {
+     "t": 270.8,
+     "cause": "gun",
+     "by_slot": 10,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 31.0,
+     "pos": [
+      -31.51,
+      -26.85,
+      7.46
+     ],
+     "match_seed": 1002,
+     "slot": 3,
+     "place": 5
+    },
+    {
+     "t": 158.95,
+     "cause": "gun",
+     "by_slot": 0,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -136.61,
+      -38.48,
+      -5.07
+     ],
+     "match_seed": 1002,
+     "slot": 4,
+     "place": 8
+    },
+    {
+     "t": 7.7,
+     "cause": "gun",
+     "by_slot": 8,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      216.21,
+      -1.44,
+      5.95
+     ],
+     "match_seed": 1002,
+     "slot": 5,
+     "place": 16
+    },
+    {
+     "t": 364.7,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 44.0,
+     "pos": [
+      -195.69,
+      -68.35,
+      -3.08
+     ],
+     "match_seed": 1002,
+     "slot": 6,
+     "place": 2
+    },
+    {
+     "t": 255.55,
+     "cause": "gun",
+     "by_slot": 10,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 25.2,
+     "pos": [
+      -28.28,
+      -15.95,
+      -1.18
+     ],
+     "match_seed": 1002,
+     "slot": 7,
+     "place": 6
+    },
+    {
+     "t": 25.6,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      148.92,
+      -53.64,
+      5.15
+     ],
+     "match_seed": 1002,
+     "slot": 8,
+     "place": 11
+    },
+    {
+     "t": 11.0,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -210.73,
+      -128.87,
+      -3.46
+     ],
+     "match_seed": 1002,
+     "slot": 9,
+     "place": 14
+    },
+    {
+     "t": 322.35,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -186.69,
+      -63.82,
+      -2.26
+     ],
+     "match_seed": 1002,
+     "slot": 10,
+     "place": 4
+    },
+    {
+     "t": 244.9,
+     "cause": "gun",
+     "by_slot": 7,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -149.0,
+      -26.96,
+      -5.05
+     ],
+     "match_seed": 1002,
+     "slot": 11,
+     "place": 7
+    },
+    {
+     "t": 37.3,
+     "cause": "gun",
+     "by_slot": 6,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      76.44,
+      -188.98,
+      2.33
+     ],
+     "match_seed": 1002,
+     "slot": 12,
+     "place": 9
+    },
+    {
+     "t": 25.8,
+     "cause": "gun",
+     "by_slot": 8,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      237.78,
+      -100.88,
+      4.75
+     ],
+     "match_seed": 1002,
+     "slot": 13,
+     "place": 10
+    },
+    {
+     "t": 13.05,
+     "cause": "gun",
+     "by_slot": 8,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      181.44,
+      -124.82,
+      5.97
+     ],
+     "match_seed": 1002,
+     "slot": 14,
+     "place": 13
+    },
+    {
+     "t": 21.5,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -168.32,
+      -261.06,
+      -2.23
+     ],
+     "match_seed": 1002,
+     "slot": 15,
+     "place": 12
+    },
+    {
+     "t": 327.95,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 20.0,
+     "pos": [
+      -93.27,
+      -158.67,
+      -0.15
+     ],
+     "match_seed": 1003,
+     "slot": 0,
+     "place": 3
+    },
+    {
+     "t": 278.5,
+     "cause": "gun",
+     "by_slot": 0,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 33.5,
+     "pos": [
+      -116.39,
+      -108.06,
+      0.86
+     ],
+     "match_seed": 1003,
+     "slot": 1,
+     "place": 5
+    },
+    {
+     "t": 250.55,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -50.1,
+      -71.06,
+      1.38
+     ],
+     "match_seed": 1003,
+     "slot": 2,
+     "place": 7
+    },
+    {
+     "t": 92.75,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -88.61,
+      -19.95,
+      -3.27
+     ],
+     "match_seed": 1003,
+     "slot": 3,
+     "place": 11
+    },
+    {
+     "t": 22.3,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      -234.66,
+      -1.19,
+      21.36
+     ],
+     "match_seed": 1003,
+     "slot": 4,
+     "place": 14
+    },
+    {
+     "t": 10.75,
+     "cause": "gun",
+     "by_slot": 0,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      115.16,
+      -177.78,
+      4.63
+     ],
+     "match_seed": 1003,
+     "slot": 5,
+     "place": 16
+    },
+    {
+     "t": 66.8,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -107.89,
+      74.83,
+      -3.46
+     ],
+     "match_seed": 1003,
+     "slot": 6,
+     "place": 12
+    },
+    {
+     "t": 200.7,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -200.71,
+      -71.0,
+      -3.04
+     ],
+     "match_seed": 1003,
+     "slot": 7,
+     "place": 8
+    },
+    {
+     "t": 11.95,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      290.26,
+      35.61,
+      4.86
+     ],
+     "match_seed": 1003,
+     "slot": 8,
+     "place": 15
+    },
+    {
+     "t": 263.9,
+     "cause": "gun",
+     "by_slot": 0,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 53.8,
+     "pos": [
+      -4.26,
+      -131.9,
+      2.95
+     ],
+     "match_seed": 1003,
+     "slot": 9,
+     "place": 6
+    },
+    {
+     "t": 190.6,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 31.0,
+     "pos": [
+      40.55,
+      -3.5,
+      4.2
+     ],
+     "match_seed": 1003,
+     "slot": 11,
+     "place": 9
+    },
+    {
+     "t": 180.55,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      3.8,
+      -21.02,
+      2.7
+     ],
+     "match_seed": 1003,
+     "slot": 12,
+     "place": 10
+    },
+    {
+     "t": 324.5,
+     "cause": "gun",
+     "by_slot": 0,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 33.8,
+     "pos": [
+      -60.33,
+      -100.4,
+      16.81
+     ],
+     "match_seed": 1003,
+     "slot": 13,
+     "place": 4
+    },
+    {
+     "t": 33.25,
+     "cause": "gun",
+     "by_slot": 9,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      79.59,
+      -69.06,
+      4.45
+     ],
+     "match_seed": 1003,
+     "slot": 14,
+     "place": 13
+    },
+    {
+     "t": 369.85,
+     "cause": "gun",
+     "by_slot": 10,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      -135.29,
+      -109.18,
+      14.71
+     ],
+     "match_seed": 1003,
+     "slot": 15,
+     "place": 2
+    },
+    {
+     "t": 20.6,
+     "cause": "gun",
+     "by_slot": 10,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      88.27,
+      -9.68,
+      6.24
+     ],
+     "match_seed": 1004,
+     "slot": 0,
+     "place": 14
+    },
+    {
+     "t": 249.55,
+     "cause": "gun",
+     "by_slot": 2,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 58.2,
+     "pos": [
+      -65.67,
+      -128.55,
+      9.4
+     ],
+     "match_seed": 1004,
+     "slot": 1,
+     "place": 5
+    },
+    {
+     "t": 329.55,
+     "cause": "gun",
+     "by_slot": 3,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 39.2,
+     "pos": [
+      -213.75,
+      -108.89,
+      -3.69
+     ],
+     "match_seed": 1004,
+     "slot": 2,
+     "place": 3
+    },
+    {
+     "t": 25.35,
+     "cause": "gun",
+     "by_slot": 8,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -116.51,
+      11.77,
+      -5.29
+     ],
+     "match_seed": 1004,
+     "slot": 4,
+     "place": 13
+    },
+    {
+     "t": 11.1,
+     "cause": "gun",
+     "by_slot": 4,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -114.81,
+      11.37,
+      -5.25
+     ],
+     "match_seed": 1004,
+     "slot": 5,
+     "place": 16
+    },
+    {
+     "t": 192.05,
+     "cause": "gun",
+     "by_slot": 2,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 20.8,
+     "pos": [
+      13.03,
+      46.48,
+      1.9
+     ],
+     "match_seed": 1004,
+     "slot": 6,
+     "place": 6
+    },
+    {
+     "t": 16.6,
+     "cause": "gun",
+     "by_slot": 8,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      31.57,
+      -132.45,
+      1.86
+     ],
+     "match_seed": 1004,
+     "slot": 7,
+     "place": 15
+    },
+    {
+     "t": 191.6,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -96.04,
+      -159.08,
+      -0.14
+     ],
+     "match_seed": 1004,
+     "slot": 8,
+     "place": 7
+    },
+    {
+     "t": 161.1,
+     "cause": "gun",
+     "by_slot": 3,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -217.32,
+      -84.53,
+      -3.89
+     ],
+     "match_seed": 1004,
+     "slot": 9,
+     "place": 10
+    },
+    {
+     "t": 39.95,
+     "cause": "gun",
+     "by_slot": 2,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      79.73,
+      -58.77,
+      4.27
+     ],
+     "match_seed": 1004,
+     "slot": 10,
+     "place": 11
+    },
+    {
+     "t": 187.4,
+     "cause": "gun",
+     "by_slot": 6,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      12.02,
+      53.25,
+      1.04
+     ],
+     "match_seed": 1004,
+     "slot": 11,
+     "place": 8
+    },
+    {
+     "t": 183.0,
+     "cause": "zone",
+     "by_slot": null,
+     "by_cmd": null,
+     "hp_before": 1.0,
+     "pos": [
+      24.39,
+      159.85,
+      11.67
+     ],
+     "match_seed": 1004,
+     "slot": 12,
+     "place": 9
+    },
+    {
+     "t": 32.95,
+     "cause": "gun",
+     "by_slot": 8,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -114.83,
+      10.44,
+      -5.23
+     ],
+     "match_seed": 1004,
+     "slot": 13,
+     "place": 12
+    },
+    {
+     "t": 387.25,
+     "cause": "gun",
+     "by_slot": 3,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 4.0,
+     "pos": [
+      -213.72,
+      -109.09,
+      -3.67
+     ],
+     "match_seed": 1004,
+     "slot": 14,
+     "place": 2
+    },
+    {
+     "t": 250.95,
+     "cause": "gun",
+     "by_slot": 3,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      -246.66,
+      -71.68,
+      -4.98
+     ],
+     "match_seed": 1004,
+     "slot": 15,
+     "place": 4
+    },
+    {
+     "t": 23.65,
+     "cause": "gun",
+     "by_slot": 8,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      77.78,
+      5.06,
+      3.89
+     ],
+     "match_seed": 1005,
+     "slot": 0,
+     "place": 12
+    },
+    {
+     "t": 12.6,
+     "cause": "gun",
+     "by_slot": 14,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      -184.75,
+      -207.11,
+      -2.56
+     ],
+     "match_seed": 1005,
+     "slot": 2,
+     "place": 15
+    },
+    {
+     "t": 206.45,
+     "cause": "gun",
+     "by_slot": 10,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 20.5,
+     "pos": [
+      -220.02,
+      -1.85,
+      -2.47
+     ],
+     "match_seed": 1005,
+     "slot": 3,
+     "place": 5
+    },
+    {
+     "t": 15.4,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -146.16,
+      -43.72,
+      -4.9
+     ],
+     "match_seed": 1005,
+     "slot": 4,
+     "place": 14
+    },
+    {
+     "t": 236.6,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 0.5,
+     "pos": [
+      -49.6,
+      -74.45,
+      4.93
+     ],
+     "match_seed": 1005,
+     "slot": 5,
+     "place": 3
+    },
+    {
+     "t": 20.65,
+     "cause": "gun",
+     "by_slot": 7,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      76.39,
+      -189.47,
+      4.26
+     ],
+     "match_seed": 1005,
+     "slot": 6,
+     "place": 13
+    },
+    {
+     "t": 199.3,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 2.5,
+     "pos": [
+      -80.64,
+      -128.08,
+      6.52
+     ],
+     "match_seed": 1005,
+     "slot": 7,
+     "place": 7
+    },
+    {
+     "t": 129.65,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      61.14,
+      146.38,
+      3.78
+     ],
+     "match_seed": 1005,
+     "slot": 8,
+     "place": 9
+    },
+    {
+     "t": 25.9,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -124.77,
+      20.16,
+      -5.69
+     ],
+     "match_seed": 1005,
+     "slot": 9,
+     "place": 11
+    },
+    {
+     "t": 219.45,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 11.2,
+     "pos": [
+      -293.39,
+      -106.88,
+      -5.26
+     ],
+     "match_seed": 1005,
+     "slot": 10,
+     "place": 4
+    },
+    {
+     "t": 11.4,
+     "cause": "gun",
+     "by_slot": 6,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      81.17,
+      -55.16,
+      4.25
+     ],
+     "match_seed": 1005,
+     "slot": 11,
+     "place": 16
+    },
+    {
+     "t": 199.35,
+     "cause": "gun",
+     "by_slot": 3,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -221.13,
+      3.31,
+      -4.93
+     ],
+     "match_seed": 1005,
+     "slot": 12,
+     "place": 6
+    },
+    {
+     "t": 195.9,
+     "cause": "zone",
+     "by_slot": null,
+     "by_cmd": null,
+     "hp_before": 2.0,
+     "pos": [
+      137.84,
+      201.77,
+      16.01
+     ],
+     "match_seed": 1005,
+     "slot": 13,
+     "place": 8
+    },
+    {
+     "t": 125.45,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      -259.53,
+      -85.65,
+      -5.11
+     ],
+     "match_seed": 1005,
+     "slot": 14,
+     "place": 10
+    },
+    {
+     "t": 250.9,
+     "cause": "zone",
+     "by_slot": null,
+     "by_cmd": null,
+     "hp_before": 2.0,
+     "pos": [
+      -132.02,
+      -145.17,
+      32.83
+     ],
+     "match_seed": 1005,
+     "slot": 15,
+     "place": 2
+    },
+    {
+     "t": 113.65,
+     "cause": "gun",
+     "by_slot": 14,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      142.06,
+      -174.03,
+      4.27
+     ],
+     "match_seed": 1006,
+     "slot": 0,
+     "place": 11
+    },
+    {
+     "t": 187.0,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      40.17,
+      -121.21,
+      1.62
+     ],
+     "match_seed": 1006,
+     "slot": 1,
+     "place": 7
+    },
+    {
+     "t": 17.4,
+     "cause": "gun",
+     "by_slot": 5,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 54.5,
+     "pos": [
+      84.98,
+      -43.23,
+      4.12
+     ],
+     "match_seed": 1006,
+     "slot": 2,
+     "place": 15
+    },
+    {
+     "t": 314.55,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      118.69,
+      57.18,
+      7.85
+     ],
+     "match_seed": 1006,
+     "slot": 3,
+     "place": 4
+    },
+    {
+     "t": 8.0,
+     "cause": "gun",
+     "by_slot": 6,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -214.6,
+      -103.23,
+      -4.16
+     ],
+     "match_seed": 1006,
+     "slot": 4,
+     "place": 16
+    },
+    {
+     "t": 33.0,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 52.2,
+     "pos": [
+      76.59,
+      -37.2,
+      3.7
+     ],
+     "match_seed": 1006,
+     "slot": 5,
+     "place": 12
+    },
+    {
+     "t": 186.0,
+     "cause": "gun",
+     "by_slot": 10,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -104.49,
+      -25.72,
+      -4.19
+     ],
+     "match_seed": 1006,
+     "slot": 6,
+     "place": 8
+    },
+    {
+     "t": 327.95,
+     "cause": "gun",
+     "by_slot": 9,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      140.33,
+      34.64,
+      5.33
+     ],
+     "match_seed": 1006,
+     "slot": 7,
+     "place": 2
+    },
+    {
+     "t": 270.35,
+     "cause": "gun",
+     "by_slot": 3,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 41.8,
+     "pos": [
+      117.51,
+      61.55,
+      7.95
+     ],
+     "match_seed": 1006,
+     "slot": 8,
+     "place": 5
+    },
+    {
+     "t": 207.95,
+     "cause": "gun",
+     "by_slot": 7,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.8,
+     "pos": [
+      35.07,
+      12.07,
+      1.47
+     ],
+     "match_seed": 1006,
+     "slot": 10,
+     "place": 6
+    },
+    {
+     "t": 22.6,
+     "cause": "gun",
+     "by_slot": 7,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -9.16,
+      -1.66,
+      1.85
+     ],
+     "match_seed": 1006,
+     "slot": 11,
+     "place": 13
+    },
+    {
+     "t": 326.9,
+     "cause": "gun",
+     "by_slot": 7,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      137.07,
+      33.71,
+      5.25
+     ],
+     "match_seed": 1006,
+     "slot": 12,
+     "place": 3
+    },
+    {
+     "t": 17.4,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 18.5,
+     "pos": [
+      254.48,
+      -7.26,
+      4.86
+     ],
+     "match_seed": 1006,
+     "slot": 13,
+     "place": 15
+    },
+    {
+     "t": 132.4,
+     "cause": "gun",
+     "by_slot": 7,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 18.0,
+     "pos": [
+      133.08,
+      -4.28,
+      8.27
+     ],
+     "match_seed": 1006,
+     "slot": 14,
+     "place": 9
+    },
+    {
+     "t": 123.5,
+     "cause": "gun",
+     "by_slot": 14,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      150.94,
+      -16.53,
+      6.15
+     ],
+     "match_seed": 1006,
+     "slot": 15,
+     "place": 10
+    },
+    {
+     "t": 101.45,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 18.5,
+     "pos": [
+      -103.09,
+      -21.86,
+      -4.71
+     ],
+     "match_seed": 1007,
+     "slot": 0,
+     "place": 12
+    },
+    {
+     "t": 360.45,
+     "cause": "gun",
+     "by_slot": 4,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 8.0,
+     "pos": [
+      45.28,
+      -197.46,
+      7.37
+     ],
+     "match_seed": 1007,
+     "slot": 1,
+     "place": 4
+    },
+    {
+     "t": 186.55,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 33.2,
+     "pos": [
+      15.04,
+      -75.79,
+      2.4
+     ],
+     "match_seed": 1007,
+     "slot": 2,
+     "place": 9
+    },
+    {
+     "t": 17.15,
+     "cause": "gun",
+     "by_slot": 7,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      240.36,
+      -126.17,
+      4.75
+     ],
+     "match_seed": 1007,
+     "slot": 3,
+     "place": 16
+    },
+    {
+     "t": 375.55,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 12.0,
+     "pos": [
+      -7.27,
+      -208.8,
+      -0.35
+     ],
+     "match_seed": 1007,
+     "slot": 4,
+     "place": 2
+    },
+    {
+     "t": 214.35,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -57.41,
+      -179.02,
+      1.43
+     ],
+     "match_seed": 1007,
+     "slot": 5,
+     "place": 6
+    },
+    {
+     "t": 41.1,
+     "cause": "gun",
+     "by_slot": 4,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      136.2,
+      -104.64,
+      4.48
+     ],
+     "match_seed": 1007,
+     "slot": 6,
+     "place": 14
+    },
+    {
+     "t": 200.1,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      82.29,
+      -228.06,
+      3.26
+     ],
+     "match_seed": 1007,
+     "slot": 7,
+     "place": 7
+    },
+    {
+     "t": 196.65,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      45.16,
+      -177.05,
+      2.07
+     ],
+     "match_seed": 1007,
+     "slot": 8,
+     "place": 8
+    },
+    {
+     "t": 231.1,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      42.67,
+      -174.94,
+      0.08
+     ],
+     "match_seed": 1007,
+     "slot": 9,
+     "place": 5
+    },
+    {
+     "t": 368.0,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 39.0,
+     "pos": [
+      -9.2,
+      -205.93,
+      -0.17
+     ],
+     "match_seed": 1007,
+     "slot": 10,
+     "place": 3
+    },
+    {
+     "t": 112.7,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 33.5,
+     "pos": [
+      -103.02,
+      21.08,
+      -3.53
+     ],
+     "match_seed": 1007,
+     "slot": 11,
+     "place": 11
+    },
+    {
+     "t": 44.75,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -95.05,
+      76.64,
+      -3.15
+     ],
+     "match_seed": 1007,
+     "slot": 13,
+     "place": 13
+    },
+    {
+     "t": 31.4,
+     "cause": "gun",
+     "by_slot": 7,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      207.18,
+      -185.35,
+      5.09
+     ],
+     "match_seed": 1007,
+     "slot": 14,
+     "place": 15
+    },
+    {
+     "t": 178.95,
+     "cause": "gun",
+     "by_slot": 2,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 8.2,
+     "pos": [
+      32.8,
+      -44.29,
+      1.91
+     ],
+     "match_seed": 1007,
+     "slot": 15,
+     "place": 10
+    },
+    {
+     "t": 204.1,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 58.0,
+     "pos": [
+      -33.27,
+      -56.75,
+      1.43
+     ],
+     "match_seed": 1008,
+     "slot": 0,
+     "place": 9
+    },
+    {
+     "t": 14.7,
+     "cause": "gun",
+     "by_slot": 5,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -101.57,
+      75.74,
+      -2.8
+     ],
+     "match_seed": 1008,
+     "slot": 1,
+     "place": 14
+    },
+    {
+     "t": 6.05,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      87.18,
+      -4.68,
+      5.02
+     ],
+     "match_seed": 1008,
+     "slot": 2,
+     "place": 16
+    },
+    {
+     "t": 33.9,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 25.2,
+     "pos": [
+      -5.26,
+      -141.58,
+      -0.43
+     ],
+     "match_seed": 1008,
+     "slot": 3,
+     "place": 11
+    },
+    {
+     "t": 113.95,
+     "cause": "gun",
+     "by_slot": 10,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 45.5,
+     "pos": [
+      63.48,
+      130.49,
+      3.5
+     ],
+     "match_seed": 1008,
+     "slot": 4,
+     "place": 10
+    },
+    {
+     "t": 210.05,
+     "cause": "gun",
+     "by_slot": 9,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -177.02,
+      -7.11,
+      -4.05
+     ],
+     "match_seed": 1008,
+     "slot": 5,
+     "place": 7
+    },
+    {
+     "t": 7.6,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -239.28,
+      37.28,
+      -5.12
+     ],
+     "match_seed": 1008,
+     "slot": 6,
+     "place": 15
+    },
+    {
+     "t": 252.0,
+     "cause": "gun",
+     "by_slot": 9,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 29.0,
+     "pos": [
+      -65.15,
+      22.02,
+      -2.26
+     ],
+     "match_seed": 1008,
+     "slot": 8,
+     "place": 6
+    },
+    {
+     "t": 263.65,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -176.86,
+      -5.54,
+      -4.98
+     ],
+     "match_seed": 1008,
+     "slot": 9,
+     "place": 5
+    },
+    {
+     "t": 278.85,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 8.8,
+     "pos": [
+      -70.13,
+      61.46,
+      -0.45
+     ],
+     "match_seed": 1008,
+     "slot": 10,
+     "place": 4
+    },
+    {
+     "t": 207.85,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      -8.18,
+      -142.2,
+      -0.42
+     ],
+     "match_seed": 1008,
+     "slot": 11,
+     "place": 8
+    },
+    {
+     "t": 329.75,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 30.8,
+     "pos": [
+      -204.75,
+      -45.47,
+      -4.87
+     ],
+     "match_seed": 1008,
+     "slot": 12,
+     "place": 3
+    },
+    {
+     "t": 403.9,
+     "cause": "gun",
+     "by_slot": 7,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 37.0,
+     "pos": [
+      -184.82,
+      -73.05,
+      6.52
+     ],
+     "match_seed": 1008,
+     "slot": 13,
+     "place": 2
+    },
+    {
+     "t": 27.15,
+     "cause": "gun",
+     "by_slot": 5,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -124.72,
+      -43.25,
+      -4.41
+     ],
+     "match_seed": 1008,
+     "slot": 14,
+     "place": 12
+    },
+    {
+     "t": 26.55,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      80.01,
+      -69.75,
+      6.76
+     ],
+     "match_seed": 1008,
+     "slot": 15,
+     "place": 13
+    },
+    {
+     "t": 195.35,
+     "cause": "gun",
+     "by_slot": 8,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 4.0,
+     "pos": [
+      36.05,
+      -17.53,
+      1.58
+     ],
+     "match_seed": 1009,
+     "slot": 0,
+     "place": 9
+    },
+    {
+     "t": 259.4,
+     "cause": "gun",
+     "by_slot": 8,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 32.8,
+     "pos": [
+      180.95,
+      45.33,
+      5.75
+     ],
+     "match_seed": 1009,
+     "slot": 1,
+     "place": 5
+    },
+    {
+     "t": 39.15,
+     "cause": "gun",
+     "by_slot": 15,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -53.52,
+      20.38,
+      -2.46
+     ],
+     "match_seed": 1009,
+     "slot": 2,
+     "place": 11
+    },
+    {
+     "t": 202.55,
+     "cause": "gun",
+     "by_slot": 9,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      25.7,
+      176.75,
+      3.9
+     ],
+     "match_seed": 1009,
+     "slot": 3,
+     "place": 8
+    },
+    {
+     "t": 31.5,
+     "cause": "gun",
+     "by_slot": 13,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      94.74,
+      40.84,
+      3.92
+     ],
+     "match_seed": 1009,
+     "slot": 4,
+     "place": 12
+    },
+    {
+     "t": 374.9,
+     "cause": "gun",
+     "by_slot": 12,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      211.34,
+      27.69,
+      5.95
+     ],
+     "match_seed": 1009,
+     "slot": 5,
+     "place": 2
+    },
+    {
+     "t": 7.8,
+     "cause": "gun",
+     "by_slot": 2,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      -60.01,
+      46.74,
+      -1.4
+     ],
+     "match_seed": 1009,
+     "slot": 6,
+     "place": 16
+    },
+    {
+     "t": 26.95,
+     "cause": "gun",
+     "by_slot": 4,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 0.5,
+     "pos": [
+      94.67,
+      40.61,
+      3.92
+     ],
+     "match_seed": 1009,
+     "slot": 7,
+     "place": 13
+    },
+    {
+     "t": 263.15,
+     "cause": "gun",
+     "by_slot": 9,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      266.51,
+      43.09,
+      4.96
+     ],
+     "match_seed": 1009,
+     "slot": 8,
+     "place": 4
+    },
+    {
+     "t": 369.75,
+     "cause": "gun",
+     "by_slot": 5,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 2.0,
+     "pos": [
+      211.17,
+      26.49,
+      5.86
+     ],
+     "match_seed": 1009,
+     "slot": 9,
+     "place": 3
+    },
+    {
+     "t": 15.95,
+     "cause": "gun",
+     "by_slot": 7,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 27.5,
+     "pos": [
+      35.19,
+      -10.52,
+      1.55
+     ],
+     "match_seed": 1009,
+     "slot": 10,
+     "place": 15
+    },
+    {
+     "t": 219.35,
+     "cause": "gun",
+     "by_slot": 8,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 29.8,
+     "pos": [
+      235.63,
+      20.9,
+      5.28
+     ],
+     "match_seed": 1009,
+     "slot": 11,
+     "place": 6
+    },
+    {
+     "t": 204.7,
+     "cause": "gun",
+     "by_slot": 8,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      120.34,
+      50.02,
+      7.24
+     ],
+     "match_seed": 1009,
+     "slot": 13,
+     "place": 7
+    },
+    {
+     "t": 22.65,
+     "cause": "gun",
+     "by_slot": 11,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 5.0,
+     "pos": [
+      224.49,
+      -57.87,
+      6.79
+     ],
+     "match_seed": 1009,
+     "slot": 14,
+     "place": 14
+    },
+    {
+     "t": 117.65,
+     "cause": "gun",
+     "by_slot": 1,
+     "by_cmd": "python -u python/example_bot.py",
+     "hp_before": 50.0,
+     "pos": [
+      -179.78,
+      126.84,
+      30.07
+     ],
+     "match_seed": 1009,
+     "slot": 15,
+     "place": 10
+    }
+   ],
+   "late_pct": 0.001,
+   "bad_lines": 0,
+   "exceptions": 0,
+   "kills_per_match": 0.91
+  }
+ },
+ "per_match": [
+  {
+   "seed": 1000,
+   "t_end": 367.1,
+   "wall_s": 10.93,
+   "decisions": 3671,
+   "ms_per_decision": 2.98,
+   "mechs": [
+    {
+     "slot": 0,
+     "cmd": "python -u python/example_bot.py",
+     "place": 4,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 6574,
+     "ticks_out": 76,
+     "dmg_taken": 1372.5,
+     "dmg_rear": 202.5,
+     "shots_mid": 38,
+     "hits_mid": 3,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 328.65,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 30.0,
+      "pos": [
+       45.86,
+       -196.03,
+       6.82
+      ]
+     },
+     "late": 0,
+     "answered": 3287,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 7.2,
+     "seed": 1000
+    },
+    {
+     "slot": 1,
+     "cmd": "python -u python/example_bot.py",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 224,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 11.15,
+      "cause": "gun",
+      "by_slot": 5,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       258.06,
+       -161.45,
+       4.02
+      ]
+     },
+     "late": 0,
+     "answered": 112,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.3,
+     "seed": 1000
+    },
+    {
+     "slot": 2,
+     "cmd": "python -u python/example_bot.py",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 332,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 675.0,
+     "shots_mid": 8,
+     "hits_mid": 2,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 16.55,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -254.23,
+       -4.1,
+       21.4
+      ]
+     },
+     "late": 0,
+     "answered": 166,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.2,
+     "seed": 1000
+    },
+    {
+     "slot": 3,
+     "cmd": "python -u python/example_bot.py",
+     "place": 6,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 4236,
+     "ticks_out": 179,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 405.0,
+     "shots_mid": 15,
+     "hits_mid": 9,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 211.75,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       63.9,
+       -153.61,
+       1.69
+      ]
+     },
+     "late": 0,
+     "answered": 2118,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.8,
+     "seed": 1000
+    },
+    {
+     "slot": 4,
+     "cmd": "python -u python/example_bot.py",
+     "place": 11,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 814,
+     "ticks_out": 0,
+     "dmg_taken": 1552.5,
+     "dmg_rear": 877.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 40.65,
+      "cause": "gun",
+      "by_slot": 5,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 38.8,
+      "pos": [
+       75.84,
+       -177.7,
+       4.26
+      ]
+     },
+     "late": 0,
+     "answered": 407,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.0,
+     "seed": 1000
+    },
+    {
+     "slot": 5,
+     "cmd": "python -u python/example_bot.py",
+     "place": 1,
+     "kills": 5,
+     "cause": null,
+     "ticks_alive": 7342,
+     "ticks_out": 0,
+     "dmg_taken": 1665.0,
+     "dmg_rear": 540.0,
+     "shots_mid": 45,
+     "hits_mid": 27,
+     "hp_at_3": 1.0,
+     "hp_at_415": null,
+     "death": null,
+     "late": 0,
+     "answered": 3671,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.8,
+     "seed": 1000
+    },
+    {
+     "slot": 6,
+     "cmd": "python -u python/example_bot.py",
+     "place": 7,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 3753,
+     "ticks_out": 339,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 187.6,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       48.25,
+       -1.14,
+       2.19
+      ]
+     },
+     "late": 0,
+     "answered": 1877,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.3,
+     "seed": 1000
+    },
+    {
+     "slot": 7,
+     "cmd": "python -u python/example_bot.py",
+     "place": 12,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 518,
+     "ticks_out": 0,
+     "dmg_taken": 1710.0,
+     "dmg_rear": 540.0,
+     "shots_mid": 11,
+     "hits_mid": 6,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 25.85,
+      "cause": "gun",
+      "by_slot": 5,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 0.5,
+      "pos": [
+       83.94,
+       -219.66,
+       2.13
+      ]
+     },
+     "late": 0,
+     "answered": 259,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.2,
+     "seed": 1000
+    },
+    {
+     "slot": 8,
+     "cmd": "python -u python/example_bot.py",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 304,
+     "ticks_out": 0,
+     "dmg_taken": 1462.5,
+     "dmg_rear": 742.5,
+     "shots_mid": 19,
+     "hits_mid": 14,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 15.15,
+      "cause": "gun",
+      "by_slot": 4,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       73.89,
+       -173.36,
+       2.33
+      ]
+     },
+     "late": 0,
+     "answered": 152,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.8,
+     "seed": 1000
+    },
+    {
+     "slot": 9,
+     "cmd": "python -u python/example_bot.py",
+     "place": 10,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 854,
+     "ticks_out": 0,
+     "dmg_taken": 1462.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 7,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 42.65,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -55.0,
+       33.58,
+       -0.54
+      ]
+     },
+     "late": 0,
+     "answered": 427,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.9,
+     "seed": 1000
+    },
+    {
+     "slot": 10,
+     "cmd": "python -u python/example_bot.py",
+     "place": 13,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 334,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 16.65,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -184.28,
+       -209.5,
+       -2.77
+      ]
+     },
+     "late": 0,
+     "answered": 167,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.5,
+     "seed": 1000
+    },
+    {
+     "slot": 11,
+     "cmd": "python -u python/example_bot.py",
+     "place": 3,
+     "kills": 7,
+     "cause": "gun",
+     "ticks_alive": 6599,
+     "ticks_out": 148,
+     "dmg_taken": 1395.0,
+     "dmg_rear": 135.0,
+     "shots_mid": 80,
+     "hits_mid": 34,
+     "hp_at_3": 0.10357142857142858,
+     "hp_at_415": null,
+     "death": {
+      "t": 329.9,
+      "cause": "gun",
+      "by_slot": 5,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 10.0,
+      "pos": [
+       36.36,
+       -116.77,
+       1.51
+      ]
+     },
+     "late": 0,
+     "answered": 3300,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 8.8,
+     "seed": 1000
+    },
+    {
+     "slot": 12,
+     "cmd": "python -u python/example_bot.py",
+     "place": 2,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 7342,
+     "ticks_out": 147,
+     "dmg_taken": 1057.5,
+     "dmg_rear": 337.5,
+     "shots_mid": 58,
+     "hits_mid": 7,
+     "hp_at_3": 1.0,
+     "hp_at_415": null,
+     "death": {
+      "t": 367.05,
+      "cause": "gun",
+      "by_slot": 5,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 37.0,
+      "pos": [
+       75.78,
+       -177.34,
+       2.34
+      ]
+     },
+     "late": 0,
+     "answered": 3671,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.6,
+     "seed": 1000
+    },
+    {
+     "slot": 13,
+     "cmd": "python -u python/example_bot.py",
+     "place": 8,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 2554,
+     "ticks_out": 0,
+     "dmg_taken": 1822.5,
+     "dmg_rear": 1822.5,
+     "shots_mid": 7,
+     "hits_mid": 2,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 127.65,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 7.2,
+      "pos": [
+       57.27,
+       4.24,
+       2.84
+      ]
+     },
+     "late": 0,
+     "answered": 1277,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.7,
+     "seed": 1000
+    },
+    {
+     "slot": 14,
+     "cmd": "python -u python/example_bot.py",
+     "place": 9,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 2363,
+     "ticks_out": 0,
+     "dmg_taken": 1485.0,
+     "dmg_rear": 1485.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 118.1,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -99.91,
+       -59.83,
+       -2.04
+      ]
+     },
+     "late": 0,
+     "answered": 1182,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.4,
+     "seed": 1000
+    },
+    {
+     "slot": 15,
+     "cmd": "python -u python/example_bot.py",
+     "place": 5,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 6421,
+     "ticks_out": 114,
+     "dmg_taken": 2542.5,
+     "dmg_rear": 472.5,
+     "shots_mid": 21,
+     "hits_mid": 12,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 321.0,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       82.7,
+       -158.21,
+       3.45
+      ]
+     },
+     "late": 0,
+     "answered": 3211,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.7,
+     "seed": 1000
+    }
+   ]
+  },
+  {
+   "seed": 1001,
+   "t_end": 323.25,
+   "wall_s": 17.07,
+   "decisions": 3233,
+   "ms_per_decision": 5.28,
+   "mechs": [
+    {
+     "slot": 0,
+     "cmd": "python -u python/example_bot.py",
+     "place": 11,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 3971,
+     "ticks_out": 0,
+     "dmg_taken": 1462.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 11,
+     "hits_mid": 8,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 198.5,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       18.42,
+       -179.95,
+       2.67
+      ]
+     },
+     "late": 0,
+     "answered": 1986,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 16.8,
+     "seed": 1001
+    },
+    {
+     "slot": 1,
+     "cmd": "python -u python/example_bot.py",
+     "place": 13,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 2389,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 1215.0,
+     "shots_mid": 6,
+     "hits_mid": 4,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 119.4,
+      "cause": "gun",
+      "by_slot": 0,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       63.95,
+       -172.32,
+       1.23
+      ]
+     },
+     "late": 0,
+     "answered": 1195,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.6,
+     "seed": 1001
+    },
+    {
+     "slot": 2,
+     "cmd": "python -u python/example_bot.py",
+     "place": 4,
+     "kills": 1,
+     "cause": "zone",
+     "ticks_alive": 6272,
+     "ticks_out": 293,
+     "dmg_taken": 1057.5,
+     "dmg_rear": 607.5,
+     "shots_mid": 10,
+     "hits_mid": 10,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 313.55,
+      "cause": "zone",
+      "by_slot": null,
+      "by_cmd": null,
+      "hp_before": 5.0,
+      "pos": [
+       139.77,
+       -116.91,
+       43.04
+      ]
+     },
+     "late": 0,
+     "answered": 3136,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 31.8,
+     "seed": 1001
+    },
+    {
+     "slot": 3,
+     "cmd": "python -u python/example_bot.py",
+     "place": 12,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 3718,
+     "ticks_out": 0,
+     "dmg_taken": 1575.0,
+     "dmg_rear": 1485.0,
+     "shots_mid": 1,
+     "hits_mid": 1,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 185.85,
+      "cause": "gun",
+      "by_slot": 9,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -47.5,
+       -17.28,
+       -3.46
+      ]
+     },
+     "late": 0,
+     "answered": 1859,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 15.4,
+     "seed": 1001
+    },
+    {
+     "slot": 4,
+     "cmd": "python -u python/example_bot.py",
+     "place": 1,
+     "kills": 2,
+     "cause": null,
+     "ticks_alive": 6465,
+     "ticks_out": 75,
+     "dmg_taken": 877.5,
+     "dmg_rear": 607.5,
+     "shots_mid": 9,
+     "hits_mid": 7,
+     "hp_at_3": 1.0,
+     "hp_at_415": null,
+     "death": null,
+     "late": 0,
+     "answered": 3233,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 31.4,
+     "seed": 1001
+    },
+    {
+     "slot": 5,
+     "cmd": "python -u python/example_bot.py",
+     "place": 9,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 4142,
+     "ticks_out": 186,
+     "dmg_taken": 1350.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 17,
+     "hits_mid": 13,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 207.05,
+      "cause": "gun",
+      "by_slot": 14,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 16.2,
+      "pos": [
+       182.87,
+       -207.03,
+       4.84
+      ]
+     },
+     "late": 0,
+     "answered": 2071,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 60.7,
+     "seed": 1001
+    },
+    {
+     "slot": 6,
+     "cmd": "python -u python/example_bot.py",
+     "place": 8,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 4772,
+     "ticks_out": 103,
+     "dmg_taken": 1665.0,
+     "dmg_rear": 1620.0,
+     "shots_mid": 28,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 238.55,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -57.63,
+       -183.35,
+       1.41
+      ]
+     },
+     "late": 0,
+     "answered": 2386,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 15.1,
+     "seed": 1001
+    },
+    {
+     "slot": 7,
+     "cmd": "python -u python/example_bot.py",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 355,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 607.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 17.7,
+      "cause": "gun",
+      "by_slot": 3,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       54.73,
+       2.84,
+       2.69
+      ]
+     },
+     "late": 0,
+     "answered": 178,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.0,
+     "seed": 1001
+    },
+    {
+     "slot": 8,
+     "cmd": "python -u python/example_bot.py",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 208,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 10.35,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       181.71,
+       -122.84,
+       8.37
+      ]
+     },
+     "late": 0,
+     "answered": 104,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.0,
+     "seed": 1001
+    },
+    {
+     "slot": 9,
+     "cmd": "python -u python/example_bot.py",
+     "place": 5,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 6208,
+     "ticks_out": 248,
+     "dmg_taken": 2250.0,
+     "dmg_rear": 945.0,
+     "shots_mid": 63,
+     "hits_mid": 12,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 310.35,
+      "cause": "gun",
+      "by_slot": 14,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 20.0,
+      "pos": [
+       128.77,
+       -208.18,
+       4.7
+      ]
+     },
+     "late": 0,
+     "answered": 3104,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 14.0,
+     "seed": 1001
+    },
+    {
+     "slot": 10,
+     "cmd": "python -u python/example_bot.py",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 125,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1147.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 6.2,
+      "cause": "gun",
+      "by_slot": 6,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -214.16,
+       -106.25,
+       -2.37
+      ]
+     },
+     "late": 0,
+     "answered": 63,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.2,
+     "seed": 1001
+    },
+    {
+     "slot": 11,
+     "cmd": "python -u python/example_bot.py",
+     "place": 10,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 4063,
+     "ticks_out": 421,
+     "dmg_taken": 675.0,
+     "dmg_rear": 675.0,
+     "shots_mid": 35,
+     "hits_mid": 5,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 203.1,
+      "cause": "gun",
+      "by_slot": 2,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 19.5,
+      "pos": [
+       95.84,
+       -69.99,
+       4.46
+      ]
+     },
+     "late": 0,
+     "answered": 2032,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 14.5,
+     "seed": 1001
+    },
+    {
+     "slot": 12,
+     "cmd": "python -u python/example_bot.py",
+     "place": 6,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 5482,
+     "ticks_out": 257,
+     "dmg_taken": 1912.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 56,
+     "hits_mid": 1,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 274.05,
+      "cause": "gun",
+      "by_slot": 14,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 25.5,
+      "pos": [
+       90.9,
+       -230.36,
+       9.89
+      ]
+     },
+     "late": 0,
+     "answered": 2741,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 14.0,
+     "seed": 1001
+    },
+    {
+     "slot": 13,
+     "cmd": "python -u python/example_bot.py",
+     "place": 7,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 5119,
+     "ticks_out": 136,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 202.5,
+     "shots_mid": 34,
+     "hits_mid": 7,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 255.9,
+      "cause": "gun",
+      "by_slot": 9,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 2.0,
+      "pos": [
+       32.67,
+       -161.33,
+       0.21
+      ]
+     },
+     "late": 0,
+     "answered": 2560,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 59.2,
+     "seed": 1001
+    },
+    {
+     "slot": 14,
+     "cmd": "python -u python/example_bot.py",
+     "place": 3,
+     "kills": 3,
+     "cause": "gun",
+     "ticks_alive": 6411,
+     "ticks_out": 0,
+     "dmg_taken": 2722.5,
+     "dmg_rear": 337.5,
+     "shots_mid": 85,
+     "hits_mid": 69,
+     "hp_at_3": 0.6142857142857143,
+     "hp_at_415": null,
+     "death": {
+      "t": 320.5,
+      "cause": "gun",
+      "by_slot": 4,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       151.78,
+       -237.66,
+       3.71
+      ]
+     },
+     "late": 0,
+     "answered": 3206,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 28.9,
+     "seed": 1001
+    },
+    {
+     "slot": 15,
+     "cmd": "python -u python/example_bot.py",
+     "place": 2,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 6465,
+     "ticks_out": 360,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 135.0,
+     "shots_mid": 39,
+     "hits_mid": 20,
+     "hp_at_3": 0.4857142857142857,
+     "hp_at_415": null,
+     "death": {
+      "t": 323.2,
+      "cause": "gun",
+      "by_slot": 4,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       151.19,
+       -240.01,
+       0.93
+      ]
+     },
+     "late": 0,
+     "answered": 3233,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 13.9,
+     "seed": 1001
+    }
+   ]
+  },
+  {
+   "seed": 1002,
+   "t_end": 364.75,
+   "wall_s": 14.79,
+   "decisions": 3648,
+   "ms_per_decision": 4.05,
+   "mechs": [
+    {
+     "slot": 0,
+     "cmd": "python -u python/example_bot.py",
+     "place": 3,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 6624,
+     "ticks_out": 38,
+     "dmg_taken": 1260.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 162,
+     "hits_mid": 23,
+     "hp_at_3": 0.4142857142857143,
+     "hp_at_415": null,
+     "death": {
+      "t": 331.15,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 40.0,
+      "pos": [
+       -198.04,
+       -64.59,
+       -4.78
+      ]
+     },
+     "late": 0,
+     "answered": 3312,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 23.2,
+     "seed": 1002
+    },
+    {
+     "slot": 1,
+     "cmd": "python -u python/example_bot.py",
+     "place": 1,
+     "kills": 5,
+     "cause": null,
+     "ticks_alive": 7295,
+     "ticks_out": 82,
+     "dmg_taken": 1890.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 22,
+     "hits_mid": 7,
+     "hp_at_3": 0.8083928571428571,
+     "hp_at_415": null,
+     "death": null,
+     "late": 1,
+     "answered": 3647,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 38.0,
+     "seed": 1002
+    },
+    {
+     "slot": 2,
+     "cmd": "python -u python/example_bot.py",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 213,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 10.6,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       76.43,
+       -189.14,
+       4.48
+      ]
+     },
+     "late": 1,
+     "answered": 106,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 37.5,
+     "seed": 1002
+    },
+    {
+     "slot": 3,
+     "cmd": "python -u python/example_bot.py",
+     "place": 5,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 5417,
+     "ticks_out": 115,
+     "dmg_taken": 2002.5,
+     "dmg_rear": 742.5,
+     "shots_mid": 16,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 270.8,
+      "cause": "gun",
+      "by_slot": 10,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 31.0,
+      "pos": [
+       -31.51,
+       -26.85,
+       7.46
+      ]
+     },
+     "late": 0,
+     "answered": 2709,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 38.1,
+     "seed": 1002
+    },
+    {
+     "slot": 4,
+     "cmd": "python -u python/example_bot.py",
+     "place": 8,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 3180,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 12,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 158.95,
+      "cause": "gun",
+      "by_slot": 0,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -136.61,
+       -38.48,
+       -5.07
+      ]
+     },
+     "late": 0,
+     "answered": 1590,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 22.0,
+     "seed": 1002
+    },
+    {
+     "slot": 5,
+     "cmd": "python -u python/example_bot.py",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 155,
+     "ticks_out": 0,
+     "dmg_taken": 1462.5,
+     "dmg_rear": 607.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 7.7,
+      "cause": "gun",
+      "by_slot": 8,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       216.21,
+       -1.44,
+       5.95
+      ]
+     },
+     "late": 0,
+     "answered": 78,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.9,
+     "seed": 1002
+    },
+    {
+     "slot": 6,
+     "cmd": "python -u python/example_bot.py",
+     "place": 2,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 7295,
+     "ticks_out": 315,
+     "dmg_taken": 990.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 92,
+     "hits_mid": 29,
+     "hp_at_3": 0.9260714285714285,
+     "hp_at_415": null,
+     "death": {
+      "t": 364.7,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 44.0,
+      "pos": [
+       -195.69,
+       -68.35,
+       -3.08
+      ]
+     },
+     "late": 0,
+     "answered": 3648,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 24.2,
+     "seed": 1002
+    },
+    {
+     "slot": 7,
+     "cmd": "python -u python/example_bot.py",
+     "place": 6,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 5112,
+     "ticks_out": 0,
+     "dmg_taken": 2227.5,
+     "dmg_rear": 2227.5,
+     "shots_mid": 100,
+     "hits_mid": 17,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 255.55,
+      "cause": "gun",
+      "by_slot": 10,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 25.2,
+      "pos": [
+       -28.28,
+       -15.95,
+       -1.18
+      ]
+     },
+     "late": 0,
+     "answered": 2556,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 22.8,
+     "seed": 1002
+    },
+    {
+     "slot": 8,
+     "cmd": "python -u python/example_bot.py",
+     "place": 11,
+     "kills": 3,
+     "cause": "gun",
+     "ticks_alive": 513,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 202.5,
+     "shots_mid": 39,
+     "hits_mid": 31,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 25.6,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       148.92,
+       -53.64,
+       5.15
+      ]
+     },
+     "late": 0,
+     "answered": 257,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 35.4,
+     "seed": 1002
+    },
+    {
+     "slot": 9,
+     "cmd": "python -u python/example_bot.py",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 221,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 11.0,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -210.73,
+       -128.87,
+       -3.46
+      ]
+     },
+     "late": 0,
+     "answered": 111,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.6,
+     "seed": 1002
+    },
+    {
+     "slot": 10,
+     "cmd": "python -u python/example_bot.py",
+     "place": 4,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 6448,
+     "ticks_out": 230,
+     "dmg_taken": 1507.5,
+     "dmg_rear": 877.5,
+     "shots_mid": 7,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 322.35,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -186.69,
+       -63.82,
+       -2.26
+      ]
+     },
+     "late": 0,
+     "answered": 3224,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 21.9,
+     "seed": 1002
+    },
+    {
+     "slot": 11,
+     "cmd": "python -u python/example_bot.py",
+     "place": 7,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 4899,
+     "ticks_out": 63,
+     "dmg_taken": 1462.5,
+     "dmg_rear": 877.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 244.9,
+      "cause": "gun",
+      "by_slot": 7,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -149.0,
+       -26.96,
+       -5.05
+      ]
+     },
+     "late": 0,
+     "answered": 2450,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 34.3,
+     "seed": 1002
+    },
+    {
+     "slot": 12,
+     "cmd": "python -u python/example_bot.py",
+     "place": 9,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 747,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 742.5,
+     "shots_mid": 11,
+     "hits_mid": 6,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 37.3,
+      "cause": "gun",
+      "by_slot": 6,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       76.44,
+       -188.98,
+       2.33
+      ]
+     },
+     "late": 1,
+     "answered": 373,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 34.9,
+     "seed": 1002
+    },
+    {
+     "slot": 13,
+     "cmd": "python -u python/example_bot.py",
+     "place": 10,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 517,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 59,
+     "hits_mid": 18,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 25.8,
+      "cause": "gun",
+      "by_slot": 8,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       237.78,
+       -100.88,
+       4.75
+      ]
+     },
+     "late": 0,
+     "answered": 259,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 20.0,
+     "seed": 1002
+    },
+    {
+     "slot": 14,
+     "cmd": "python -u python/example_bot.py",
+     "place": 13,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 262,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 337.5,
+     "shots_mid": 11,
+     "hits_mid": 9,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 13.05,
+      "cause": "gun",
+      "by_slot": 8,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       181.44,
+       -124.82,
+       5.97
+      ]
+     },
+     "late": 0,
+     "answered": 131,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 36.7,
+     "seed": 1002
+    },
+    {
+     "slot": 15,
+     "cmd": "python -u python/example_bot.py",
+     "place": 12,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 431,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 30,
+     "hits_mid": 3,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 21.5,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -168.32,
+       -261.06,
+       -2.23
+      ]
+     },
+     "late": 0,
+     "answered": 216,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 36.2,
+     "seed": 1002
+    }
+   ]
+  },
+  {
+   "seed": 1003,
+   "t_end": 369.9,
+   "wall_s": 22.57,
+   "decisions": 3699,
+   "ms_per_decision": 6.1,
+   "mechs": [
+    {
+     "slot": 0,
+     "cmd": "python -u python/example_bot.py",
+     "place": 3,
+     "kills": 4,
+     "cause": "gun",
+     "ticks_alive": 6560,
+     "ticks_out": 115,
+     "dmg_taken": 1462.5,
+     "dmg_rear": 67.5,
+     "shots_mid": 52,
+     "hits_mid": 28,
+     "hp_at_3": 0.11071428571428571,
+     "hp_at_415": null,
+     "death": {
+      "t": 327.95,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 20.0,
+      "pos": [
+       -93.27,
+       -158.67,
+       -0.15
+      ]
+     },
+     "late": 0,
+     "answered": 3280,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 8.4,
+     "seed": 1003
+    },
+    {
+     "slot": 1,
+     "cmd": "python -u python/example_bot.py",
+     "place": 5,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 5571,
+     "ticks_out": 356,
+     "dmg_taken": 1282.5,
+     "dmg_rear": 877.5,
+     "shots_mid": 51,
+     "hits_mid": 5,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 278.5,
+      "cause": "gun",
+      "by_slot": 0,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 33.5,
+      "pos": [
+       -116.39,
+       -108.06,
+       0.86
+      ]
+     },
+     "late": 0,
+     "answered": 2786,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.0,
+     "seed": 1003
+    },
+    {
+     "slot": 2,
+     "cmd": "python -u python/example_bot.py",
+     "place": 7,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 5012,
+     "ticks_out": 0,
+     "dmg_taken": 1552.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 26,
+     "hits_mid": 8,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 250.55,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -50.1,
+       -71.06,
+       1.38
+      ]
+     },
+     "late": 0,
+     "answered": 2506,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.3,
+     "seed": 1003
+    },
+    {
+     "slot": 3,
+     "cmd": "python -u python/example_bot.py",
+     "place": 11,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 1856,
+     "ticks_out": 0,
+     "dmg_taken": 2745.0,
+     "dmg_rear": 2700.0,
+     "shots_mid": 12,
+     "hits_mid": 2,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 92.75,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -88.61,
+       -19.95,
+       -3.27
+      ]
+     },
+     "late": 0,
+     "answered": 928,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.0,
+     "seed": 1003
+    },
+    {
+     "slot": 4,
+     "cmd": "python -u python/example_bot.py",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 447,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 202.5,
+     "shots_mid": 13,
+     "hits_mid": 4,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 22.3,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       -234.66,
+       -1.19,
+       21.36
+      ]
+     },
+     "late": 0,
+     "answered": 224,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.0,
+     "seed": 1003
+    },
+    {
+     "slot": 5,
+     "cmd": "python -u python/example_bot.py",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 216,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 10.75,
+      "cause": "gun",
+      "by_slot": 0,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       115.16,
+       -177.78,
+       4.63
+      ]
+     },
+     "late": 0,
+     "answered": 108,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.6,
+     "seed": 1003
+    },
+    {
+     "slot": 6,
+     "cmd": "python -u python/example_bot.py",
+     "place": 12,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 1337,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 21,
+     "hits_mid": 9,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 66.8,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -107.89,
+       74.83,
+       -3.46
+      ]
+     },
+     "late": 0,
+     "answered": 669,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.1,
+     "seed": 1003
+    },
+    {
+     "slot": 7,
+     "cmd": "python -u python/example_bot.py",
+     "place": 8,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 4015,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 27,
+     "hits_mid": 1,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 200.7,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -200.71,
+       -71.0,
+       -3.04
+      ]
+     },
+     "late": 0,
+     "answered": 2008,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.0,
+     "seed": 1003
+    },
+    {
+     "slot": 8,
+     "cmd": "python -u python/example_bot.py",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 240,
+     "ticks_out": 0,
+     "dmg_taken": 1462.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 11.95,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       290.26,
+       35.61,
+       4.86
+      ]
+     },
+     "late": 0,
+     "answered": 120,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.4,
+     "seed": 1003
+    },
+    {
+     "slot": 9,
+     "cmd": "python -u python/example_bot.py",
+     "place": 6,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 5279,
+     "ticks_out": 58,
+     "dmg_taken": 1935.0,
+     "dmg_rear": 1350.0,
+     "shots_mid": 33,
+     "hits_mid": 5,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 263.9,
+      "cause": "gun",
+      "by_slot": 0,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 53.8,
+      "pos": [
+       -4.26,
+       -131.9,
+       2.95
+      ]
+     },
+     "late": 0,
+     "answered": 2640,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.6,
+     "seed": 1003
+    },
+    {
+     "slot": 10,
+     "cmd": "python -u python/example_bot.py",
+     "place": 1,
+     "kills": 1,
+     "cause": null,
+     "ticks_alive": 7398,
+     "ticks_out": 56,
+     "dmg_taken": 855.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 6,
+     "hits_mid": 6,
+     "hp_at_3": 1.0,
+     "hp_at_415": null,
+     "death": null,
+     "late": 0,
+     "answered": 3699,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.4,
+     "seed": 1003
+    },
+    {
+     "slot": 11,
+     "cmd": "python -u python/example_bot.py",
+     "place": 9,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 3813,
+     "ticks_out": 133,
+     "dmg_taken": 1485.0,
+     "dmg_rear": 1350.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 190.6,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 31.0,
+      "pos": [
+       40.55,
+       -3.5,
+       4.2
+      ]
+     },
+     "late": 0,
+     "answered": 1907,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.3,
+     "seed": 1003
+    },
+    {
+     "slot": 12,
+     "cmd": "python -u python/example_bot.py",
+     "place": 10,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 3612,
+     "ticks_out": 0,
+     "dmg_taken": 1980.0,
+     "dmg_rear": 1485.0,
+     "shots_mid": 19,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 180.55,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       3.8,
+       -21.02,
+       2.7
+      ]
+     },
+     "late": 0,
+     "answered": 1806,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.1,
+     "seed": 1003
+    },
+    {
+     "slot": 13,
+     "cmd": "python -u python/example_bot.py",
+     "place": 4,
+     "kills": 3,
+     "cause": "gun",
+     "ticks_alive": 6491,
+     "ticks_out": 260,
+     "dmg_taken": 1620.0,
+     "dmg_rear": 270.0,
+     "shots_mid": 83,
+     "hits_mid": 5,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 324.5,
+      "cause": "gun",
+      "by_slot": 0,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 33.8,
+      "pos": [
+       -60.33,
+       -100.4,
+       16.81
+      ]
+     },
+     "late": 0,
+     "answered": 3246,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.7,
+     "seed": 1003
+    },
+    {
+     "slot": 14,
+     "cmd": "python -u python/example_bot.py",
+     "place": 13,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 666,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 1350.0,
+     "shots_mid": 23,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 33.25,
+      "cause": "gun",
+      "by_slot": 9,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       79.59,
+       -69.06,
+       4.45
+      ]
+     },
+     "late": 0,
+     "answered": 333,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.4,
+     "seed": 1003
+    },
+    {
+     "slot": 15,
+     "cmd": "python -u python/example_bot.py",
+     "place": 2,
+     "kills": 5,
+     "cause": "gun",
+     "ticks_alive": 7398,
+     "ticks_out": 137,
+     "dmg_taken": 2317.5,
+     "dmg_rear": 472.5,
+     "shots_mid": 18,
+     "hits_mid": 5,
+     "hp_at_3": 0.7607142857142857,
+     "hp_at_415": null,
+     "death": {
+      "t": 369.85,
+      "cause": "gun",
+      "by_slot": 10,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       -135.29,
+       -109.18,
+       14.71
+      ]
+     },
+     "late": 0,
+     "answered": 3699,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.8,
+     "seed": 1003
+    }
+   ]
+  },
+  {
+   "seed": 1004,
+   "t_end": 387.3,
+   "wall_s": 28.31,
+   "decisions": 3873,
+   "ms_per_decision": 7.31,
+   "mechs": [
+    {
+     "slot": 0,
+     "cmd": "python -u python/example_bot.py",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 413,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 20.6,
+      "cause": "gun",
+      "by_slot": 10,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       88.27,
+       -9.68,
+       6.24
+      ]
+     },
+     "late": 0,
+     "answered": 207,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.6,
+     "seed": 1004
+    },
+    {
+     "slot": 1,
+     "cmd": "python -u python/example_bot.py",
+     "place": 5,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 4992,
+     "ticks_out": 107,
+     "dmg_taken": 1620.0,
+     "dmg_rear": 1485.0,
+     "shots_mid": 20,
+     "hits_mid": 4,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 249.55,
+      "cause": "gun",
+      "by_slot": 2,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 58.2,
+      "pos": [
+       -65.67,
+       -128.55,
+       9.4
+      ]
+     },
+     "late": 0,
+     "answered": 2496,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 12.4,
+     "seed": 1004
+    },
+    {
+     "slot": 2,
+     "cmd": "python -u python/example_bot.py",
+     "place": 3,
+     "kills": 3,
+     "cause": "gun",
+     "ticks_alive": 6592,
+     "ticks_out": 238,
+     "dmg_taken": 1080.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 50,
+     "hits_mid": 11,
+     "hp_at_3": 0.8585714285714285,
+     "hp_at_415": null,
+     "death": {
+      "t": 329.55,
+      "cause": "gun",
+      "by_slot": 3,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 39.2,
+      "pos": [
+       -213.75,
+       -108.89,
+       -3.69
+      ]
+     },
+     "late": 0,
+     "answered": 3296,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.0,
+     "seed": 1004
+    },
+    {
+     "slot": 3,
+     "cmd": "python -u python/example_bot.py",
+     "place": 1,
+     "kills": 4,
+     "cause": null,
+     "ticks_alive": 7746,
+     "ticks_out": 52,
+     "dmg_taken": 2250.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 118,
+     "hits_mid": 33,
+     "hp_at_3": 0.8071428571428572,
+     "hp_at_415": null,
+     "death": null,
+     "late": 0,
+     "answered": 3873,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 25.5,
+     "seed": 1004
+    },
+    {
+     "slot": 4,
+     "cmd": "python -u python/example_bot.py",
+     "place": 13,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 508,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 877.5,
+     "shots_mid": 28,
+     "hits_mid": 27,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 25.35,
+      "cause": "gun",
+      "by_slot": 8,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -116.51,
+       11.77,
+       -5.29
+      ]
+     },
+     "late": 0,
+     "answered": 254,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.7,
+     "seed": 1004
+    },
+    {
+     "slot": 5,
+     "cmd": "python -u python/example_bot.py",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 223,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 810.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 11.1,
+      "cause": "gun",
+      "by_slot": 4,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -114.81,
+       11.37,
+       -5.25
+      ]
+     },
+     "late": 0,
+     "answered": 112,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.2,
+     "seed": 1004
+    },
+    {
+     "slot": 6,
+     "cmd": "python -u python/example_bot.py",
+     "place": 6,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 3842,
+     "ticks_out": 171,
+     "dmg_taken": 1147.5,
+     "dmg_rear": 337.5,
+     "shots_mid": 6,
+     "hits_mid": 1,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 192.05,
+      "cause": "gun",
+      "by_slot": 2,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 20.8,
+      "pos": [
+       13.03,
+       46.48,
+       1.9
+      ]
+     },
+     "late": 0,
+     "answered": 1921,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 7.9,
+     "seed": 1004
+    },
+    {
+     "slot": 7,
+     "cmd": "python -u python/example_bot.py",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 333,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 3,
+     "hits_mid": 2,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 16.6,
+      "cause": "gun",
+      "by_slot": 8,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       31.57,
+       -132.45,
+       1.86
+      ]
+     },
+     "late": 0,
+     "answered": 167,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.8,
+     "seed": 1004
+    },
+    {
+     "slot": 8,
+     "cmd": "python -u python/example_bot.py",
+     "place": 7,
+     "kills": 3,
+     "cause": "gun",
+     "ticks_alive": 3833,
+     "ticks_out": 0,
+     "dmg_taken": 2655.0,
+     "dmg_rear": 1485.0,
+     "shots_mid": 5,
+     "hits_mid": 2,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 191.6,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -96.04,
+       -159.08,
+       -0.14
+      ]
+     },
+     "late": 0,
+     "answered": 1917,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.7,
+     "seed": 1004
+    },
+    {
+     "slot": 9,
+     "cmd": "python -u python/example_bot.py",
+     "place": 10,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 3223,
+     "ticks_out": 0,
+     "dmg_taken": 1507.5,
+     "dmg_rear": 67.5,
+     "shots_mid": 34,
+     "hits_mid": 6,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 161.1,
+      "cause": "gun",
+      "by_slot": 3,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -217.32,
+       -84.53,
+       -3.89
+      ]
+     },
+     "late": 0,
+     "answered": 1612,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 7.2,
+     "seed": 1004
+    },
+    {
+     "slot": 10,
+     "cmd": "python -u python/example_bot.py",
+     "place": 11,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 800,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 39.95,
+      "cause": "gun",
+      "by_slot": 2,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       79.73,
+       -58.77,
+       4.27
+      ]
+     },
+     "late": 0,
+     "answered": 400,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.8,
+     "seed": 1004
+    },
+    {
+     "slot": 11,
+     "cmd": "python -u python/example_bot.py",
+     "place": 8,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 3749,
+     "ticks_out": 0,
+     "dmg_taken": 3262.5,
+     "dmg_rear": 2497.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 187.4,
+      "cause": "gun",
+      "by_slot": 6,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       12.02,
+       53.25,
+       1.04
+      ]
+     },
+     "late": 0,
+     "answered": 1875,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.8,
+     "seed": 1004
+    },
+    {
+     "slot": 12,
+     "cmd": "python -u python/example_bot.py",
+     "place": 9,
+     "kills": 0,
+     "cause": "zone",
+     "ticks_alive": 3661,
+     "ticks_out": 209,
+     "dmg_taken": 1035.0,
+     "dmg_rear": 405.0,
+     "shots_mid": 20,
+     "hits_mid": 2,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 183.0,
+      "cause": "zone",
+      "by_slot": null,
+      "by_cmd": null,
+      "hp_before": 1.0,
+      "pos": [
+       24.39,
+       159.85,
+       11.67
+      ]
+     },
+     "late": 0,
+     "answered": 1831,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.5,
+     "seed": 1004
+    },
+    {
+     "slot": 13,
+     "cmd": "python -u python/example_bot.py",
+     "place": 12,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 660,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 20,
+     "hits_mid": 8,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 32.95,
+      "cause": "gun",
+      "by_slot": 8,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -114.83,
+       10.44,
+       -5.23
+      ]
+     },
+     "late": 0,
+     "answered": 330,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.3,
+     "seed": 1004
+    },
+    {
+     "slot": 14,
+     "cmd": "python -u python/example_bot.py",
+     "place": 2,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 7746,
+     "ticks_out": 125,
+     "dmg_taken": 990.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": 1.0,
+     "hp_at_415": null,
+     "death": {
+      "t": 387.25,
+      "cause": "gun",
+      "by_slot": 3,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 4.0,
+      "pos": [
+       -213.72,
+       -109.09,
+       -3.67
+      ]
+     },
+     "late": 0,
+     "answered": 3873,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 27.3,
+     "seed": 1004
+    },
+    {
+     "slot": 15,
+     "cmd": "python -u python/example_bot.py",
+     "place": 4,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 5020,
+     "ticks_out": 211,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 67.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 250.95,
+      "cause": "gun",
+      "by_slot": 3,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       -246.66,
+       -71.68,
+       -4.98
+      ]
+     },
+     "late": 0,
+     "answered": 2510,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.6,
+     "seed": 1004
+    }
+   ]
+  },
+  {
+   "seed": 1005,
+   "t_end": 250.95,
+   "wall_s": 19.73,
+   "decisions": 2510,
+   "ms_per_decision": 7.86,
+   "mechs": [
+    {
+     "slot": 0,
+     "cmd": "python -u python/example_bot.py",
+     "place": 12,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 474,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 23.65,
+      "cause": "gun",
+      "by_slot": 8,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       77.78,
+       5.06,
+       3.89
+      ]
+     },
+     "late": 0,
+     "answered": 237,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.3,
+     "seed": 1005
+    },
+    {
+     "slot": 1,
+     "cmd": "python -u python/example_bot.py",
+     "place": 1,
+     "kills": 4,
+     "cause": null,
+     "ticks_alive": 5019,
+     "ticks_out": 0,
+     "dmg_taken": 2722.5,
+     "dmg_rear": 472.5,
+     "shots_mid": 48,
+     "hits_mid": 42,
+     "hp_at_3": 0.26071428571428573,
+     "hp_at_415": null,
+     "death": null,
+     "late": 0,
+     "answered": 2510,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 19.2,
+     "seed": 1005
+    },
+    {
+     "slot": 2,
+     "cmd": "python -u python/example_bot.py",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 253,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 1350.0,
+     "shots_mid": 4,
+     "hits_mid": 1,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 12.6,
+      "cause": "gun",
+      "by_slot": 14,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       -184.75,
+       -207.11,
+       -2.56
+      ]
+     },
+     "late": 0,
+     "answered": 127,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.4,
+     "seed": 1005
+    },
+    {
+     "slot": 3,
+     "cmd": "python -u python/example_bot.py",
+     "place": 5,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 4130,
+     "ticks_out": 125,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 742.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 206.45,
+      "cause": "gun",
+      "by_slot": 10,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 20.5,
+      "pos": [
+       -220.02,
+       -1.85,
+       -2.47
+      ]
+     },
+     "late": 0,
+     "answered": 2065,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 19.1,
+     "seed": 1005
+    },
+    {
+     "slot": 4,
+     "cmd": "python -u python/example_bot.py",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 309,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 15.4,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -146.16,
+       -43.72,
+       -4.9
+      ]
+     },
+     "late": 0,
+     "answered": 155,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.0,
+     "seed": 1005
+    },
+    {
+     "slot": 5,
+     "cmd": "python -u python/example_bot.py",
+     "place": 3,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 4733,
+     "ticks_out": 150,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 742.5,
+     "shots_mid": 26,
+     "hits_mid": 6,
+     "hp_at_3": 0.12035714285714286,
+     "hp_at_415": null,
+     "death": {
+      "t": 236.6,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 0.5,
+      "pos": [
+       -49.6,
+       -74.45,
+       4.93
+      ]
+     },
+     "late": 0,
+     "answered": 2367,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 7.2,
+     "seed": 1005
+    },
+    {
+     "slot": 6,
+     "cmd": "python -u python/example_bot.py",
+     "place": 13,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 414,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 675.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 20.65,
+      "cause": "gun",
+      "by_slot": 7,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       76.39,
+       -189.47,
+       4.26
+      ]
+     },
+     "late": 0,
+     "answered": 207,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.0,
+     "seed": 1005
+    },
+    {
+     "slot": 7,
+     "cmd": "python -u python/example_bot.py",
+     "place": 7,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 3987,
+     "ticks_out": 211,
+     "dmg_taken": 1665.0,
+     "dmg_rear": 675.0,
+     "shots_mid": 24,
+     "hits_mid": 6,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 199.3,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 2.5,
+      "pos": [
+       -80.64,
+       -128.08,
+       6.52
+      ]
+     },
+     "late": 0,
+     "answered": 1994,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 7.3,
+     "seed": 1005
+    },
+    {
+     "slot": 8,
+     "cmd": "python -u python/example_bot.py",
+     "place": 9,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 2594,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 10,
+     "hits_mid": 2,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 129.65,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       61.14,
+       146.38,
+       3.78
+      ]
+     },
+     "late": 0,
+     "answered": 1297,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 38.9,
+     "seed": 1005
+    },
+    {
+     "slot": 9,
+     "cmd": "python -u python/example_bot.py",
+     "place": 11,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 519,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1147.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 25.9,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -124.77,
+       20.16,
+       -5.69
+      ]
+     },
+     "late": 0,
+     "answered": 260,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.8,
+     "seed": 1005
+    },
+    {
+     "slot": 10,
+     "cmd": "python -u python/example_bot.py",
+     "place": 4,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 4390,
+     "ticks_out": 319,
+     "dmg_taken": 1687.5,
+     "dmg_rear": 202.5,
+     "shots_mid": 42,
+     "hits_mid": 15,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 219.45,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 11.2,
+      "pos": [
+       -293.39,
+       -106.88,
+       -5.26
+      ]
+     },
+     "late": 0,
+     "answered": 2195,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 38.6,
+     "seed": 1005
+    },
+    {
+     "slot": 11,
+     "cmd": "python -u python/example_bot.py",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 229,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 1080.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 11.4,
+      "cause": "gun",
+      "by_slot": 6,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       81.17,
+       -55.16,
+       4.25
+      ]
+     },
+     "late": 0,
+     "answered": 115,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.5,
+     "seed": 1005
+    },
+    {
+     "slot": 12,
+     "cmd": "python -u python/example_bot.py",
+     "place": 6,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 3988,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 1350.0,
+     "shots_mid": 51,
+     "hits_mid": 2,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 199.35,
+      "cause": "gun",
+      "by_slot": 3,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -221.13,
+       3.31,
+       -4.93
+      ]
+     },
+     "late": 0,
+     "answered": 1994,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 47.3,
+     "seed": 1005
+    },
+    {
+     "slot": 13,
+     "cmd": "python -u python/example_bot.py",
+     "place": 8,
+     "kills": 1,
+     "cause": "zone",
+     "ticks_alive": 3919,
+     "ticks_out": 913,
+     "dmg_taken": 0.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 195.9,
+      "cause": "zone",
+      "by_slot": null,
+      "by_cmd": null,
+      "hp_before": 2.0,
+      "pos": [
+       137.84,
+       201.77,
+       16.01
+      ]
+     },
+     "late": 0,
+     "answered": 1960,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 46.5,
+     "seed": 1005
+    },
+    {
+     "slot": 14,
+     "cmd": "python -u python/example_bot.py",
+     "place": 10,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 2510,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 67.5,
+     "shots_mid": 13,
+     "hits_mid": 8,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 125.45,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       -259.53,
+       -85.65,
+       -5.11
+      ]
+     },
+     "late": 0,
+     "answered": 1255,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 26.7,
+     "seed": 1005
+    },
+    {
+     "slot": 15,
+     "cmd": "python -u python/example_bot.py",
+     "place": 2,
+     "kills": 2,
+     "cause": "zone",
+     "ticks_alive": 5019,
+     "ticks_out": 134,
+     "dmg_taken": 1552.5,
+     "dmg_rear": 67.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": 0.4857142857142857,
+     "hp_at_415": null,
+     "death": {
+      "t": 250.9,
+      "cause": "zone",
+      "by_slot": null,
+      "by_cmd": null,
+      "hp_before": 2.0,
+      "pos": [
+       -132.02,
+       -145.17,
+       32.83
+      ]
+     },
+     "late": 1,
+     "answered": 2509,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 19.3,
+     "seed": 1005
+    }
+   ]
+  },
+  {
+   "seed": 1006,
+   "t_end": 328.0,
+   "wall_s": 19.44,
+   "decisions": 3280,
+   "ms_per_decision": 5.93,
+   "mechs": [
+    {
+     "slot": 0,
+     "cmd": "python -u python/example_bot.py",
+     "place": 11,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 2274,
+     "ticks_out": 0,
+     "dmg_taken": 1552.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 113.65,
+      "cause": "gun",
+      "by_slot": 14,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       142.06,
+       -174.03,
+       4.27
+      ]
+     },
+     "late": 0,
+     "answered": 1137,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 14.2,
+     "seed": 1006
+    },
+    {
+     "slot": 1,
+     "cmd": "python -u python/example_bot.py",
+     "place": 7,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 3741,
+     "ticks_out": 0,
+     "dmg_taken": 1845.0,
+     "dmg_rear": 1755.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 187.0,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       40.17,
+       -121.21,
+       1.62
+      ]
+     },
+     "late": 0,
+     "answered": 1871,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.7,
+     "seed": 1006
+    },
+    {
+     "slot": 2,
+     "cmd": "python -u python/example_bot.py",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 349,
+     "ticks_out": 0,
+     "dmg_taken": 1530.0,
+     "dmg_rear": 1485.0,
+     "shots_mid": 5,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 17.4,
+      "cause": "gun",
+      "by_slot": 5,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 54.5,
+      "pos": [
+       84.98,
+       -43.23,
+       4.12
+      ]
+     },
+     "late": 0,
+     "answered": 175,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.1,
+     "seed": 1006
+    },
+    {
+     "slot": 3,
+     "cmd": "python -u python/example_bot.py",
+     "place": 4,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 6292,
+     "ticks_out": 128,
+     "dmg_taken": 2025.0,
+     "dmg_rear": 1620.0,
+     "shots_mid": 71,
+     "hits_mid": 21,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 314.55,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       118.69,
+       57.18,
+       7.85
+      ]
+     },
+     "late": 0,
+     "answered": 3146,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 10.3,
+     "seed": 1006
+    },
+    {
+     "slot": 4,
+     "cmd": "python -u python/example_bot.py",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 161,
+     "ticks_out": 0,
+     "dmg_taken": 1462.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 8.0,
+      "cause": "gun",
+      "by_slot": 6,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -214.6,
+       -103.23,
+       -4.16
+      ]
+     },
+     "late": 0,
+     "answered": 81,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.1,
+     "seed": 1006
+    },
+    {
+     "slot": 5,
+     "cmd": "python -u python/example_bot.py",
+     "place": 12,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 661,
+     "ticks_out": 0,
+     "dmg_taken": 1642.5,
+     "dmg_rear": 1552.5,
+     "shots_mid": 16,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 33.0,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 52.2,
+      "pos": [
+       76.59,
+       -37.2,
+       3.7
+      ]
+     },
+     "late": 0,
+     "answered": 331,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.4,
+     "seed": 1006
+    },
+    {
+     "slot": 6,
+     "cmd": "python -u python/example_bot.py",
+     "place": 8,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 3721,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 186.0,
+      "cause": "gun",
+      "by_slot": 10,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -104.49,
+       -25.72,
+       -4.19
+      ]
+     },
+     "late": 0,
+     "answered": 1861,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 10.0,
+     "seed": 1006
+    },
+    {
+     "slot": 7,
+     "cmd": "python -u python/example_bot.py",
+     "place": 2,
+     "kills": 4,
+     "cause": "gun",
+     "ticks_alive": 6560,
+     "ticks_out": 0,
+     "dmg_taken": 6075.0,
+     "dmg_rear": 1350.0,
+     "shots_mid": 82,
+     "hits_mid": 47,
+     "hp_at_3": 1.0,
+     "hp_at_415": null,
+     "death": {
+      "t": 327.95,
+      "cause": "gun",
+      "by_slot": 9,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       140.33,
+       34.64,
+       5.33
+      ]
+     },
+     "late": 0,
+     "answered": 3280,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 13.8,
+     "seed": 1006
+    },
+    {
+     "slot": 8,
+     "cmd": "python -u python/example_bot.py",
+     "place": 5,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 5408,
+     "ticks_out": 173,
+     "dmg_taken": 1102.5,
+     "dmg_rear": 877.5,
+     "shots_mid": 16,
+     "hits_mid": 11,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 270.35,
+      "cause": "gun",
+      "by_slot": 3,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 41.8,
+      "pos": [
+       117.51,
+       61.55,
+       7.95
+      ]
+     },
+     "late": 0,
+     "answered": 2704,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 13.4,
+     "seed": 1006
+    },
+    {
+     "slot": 9,
+     "cmd": "python -u python/example_bot.py",
+     "place": 1,
+     "kills": 1,
+     "cause": null,
+     "ticks_alive": 6560,
+     "ticks_out": 260,
+     "dmg_taken": 90.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 10,
+     "hits_mid": 7,
+     "hp_at_3": 1.0,
+     "hp_at_415": null,
+     "death": null,
+     "late": 0,
+     "answered": 3280,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 13.3,
+     "seed": 1006
+    },
+    {
+     "slot": 10,
+     "cmd": "python -u python/example_bot.py",
+     "place": 6,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 4160,
+     "ticks_out": 311,
+     "dmg_taken": 1282.5,
+     "dmg_rear": 202.5,
+     "shots_mid": 17,
+     "hits_mid": 12,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 207.95,
+      "cause": "gun",
+      "by_slot": 7,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.8,
+      "pos": [
+       35.07,
+       12.07,
+       1.47
+      ]
+     },
+     "late": 0,
+     "answered": 2080,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 13.1,
+     "seed": 1006
+    },
+    {
+     "slot": 11,
+     "cmd": "python -u python/example_bot.py",
+     "place": 13,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 453,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 22.6,
+      "cause": "gun",
+      "by_slot": 7,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -9.16,
+       -1.66,
+       1.85
+      ]
+     },
+     "late": 0,
+     "answered": 227,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.4,
+     "seed": 1006
+    },
+    {
+     "slot": 12,
+     "cmd": "python -u python/example_bot.py",
+     "place": 3,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 6539,
+     "ticks_out": 258,
+     "dmg_taken": 1080.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 63,
+     "hits_mid": 4,
+     "hp_at_3": 0.7428571428571429,
+     "hp_at_415": null,
+     "death": {
+      "t": 326.9,
+      "cause": "gun",
+      "by_slot": 7,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       137.07,
+       33.71,
+       5.25
+      ]
+     },
+     "late": 0,
+     "answered": 3270,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.7,
+     "seed": 1006
+    },
+    {
+     "slot": 13,
+     "cmd": "python -u python/example_bot.py",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 349,
+     "ticks_out": 0,
+     "dmg_taken": 1620.0,
+     "dmg_rear": 1620.0,
+     "shots_mid": 24,
+     "hits_mid": 3,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 17.4,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 18.5,
+      "pos": [
+       254.48,
+       -7.26,
+       4.86
+      ]
+     },
+     "late": 0,
+     "answered": 175,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 1.8,
+     "seed": 1006
+    },
+    {
+     "slot": 14,
+     "cmd": "python -u python/example_bot.py",
+     "place": 9,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 2649,
+     "ticks_out": 77,
+     "dmg_taken": 1350.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 35,
+     "hits_mid": 15,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 132.4,
+      "cause": "gun",
+      "by_slot": 7,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 18.0,
+      "pos": [
+       133.08,
+       -4.28,
+       8.27
+      ]
+     },
+     "late": 0,
+     "answered": 1325,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.3,
+     "seed": 1006
+    },
+    {
+     "slot": 15,
+     "cmd": "python -u python/example_bot.py",
+     "place": 10,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 2471,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 30,
+     "hits_mid": 12,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 123.5,
+      "cause": "gun",
+      "by_slot": 14,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       150.94,
+       -16.53,
+       6.15
+      ]
+     },
+     "late": 0,
+     "answered": 1236,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.4,
+     "seed": 1006
+    }
+   ]
+  },
+  {
+   "seed": 1007,
+   "t_end": 375.6,
+   "wall_s": 26.81,
+   "decisions": 3756,
+   "ms_per_decision": 7.14,
+   "mechs": [
+    {
+     "slot": 0,
+     "cmd": "python -u python/example_bot.py",
+     "place": 12,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 2030,
+     "ticks_out": 0,
+     "dmg_taken": 1687.5,
+     "dmg_rear": 1687.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 101.45,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 18.5,
+      "pos": [
+       -103.09,
+       -21.86,
+       -4.71
+      ]
+     },
+     "late": 0,
+     "answered": 1015,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.8,
+     "seed": 1007
+    },
+    {
+     "slot": 1,
+     "cmd": "python -u python/example_bot.py",
+     "place": 4,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 7210,
+     "ticks_out": 179,
+     "dmg_taken": 1777.5,
+     "dmg_rear": 742.5,
+     "shots_mid": 10,
+     "hits_mid": 1,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 360.45,
+      "cause": "gun",
+      "by_slot": 4,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 8.0,
+      "pos": [
+       45.28,
+       -197.46,
+       7.37
+      ]
+     },
+     "late": 0,
+     "answered": 3605,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 8.1,
+     "seed": 1007
+    },
+    {
+     "slot": 2,
+     "cmd": "python -u python/example_bot.py",
+     "place": 9,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 3732,
+     "ticks_out": 79,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 540.0,
+     "shots_mid": 17,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 186.55,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 33.2,
+      "pos": [
+       15.04,
+       -75.79,
+       2.4
+      ]
+     },
+     "late": 0,
+     "answered": 1866,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.0,
+     "seed": 1007
+    },
+    {
+     "slot": 3,
+     "cmd": "python -u python/example_bot.py",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 344,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 877.5,
+     "shots_mid": 1,
+     "hits_mid": 1,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 17.15,
+      "cause": "gun",
+      "by_slot": 7,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       240.36,
+       -126.17,
+       4.75
+      ]
+     },
+     "late": 0,
+     "answered": 172,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.8,
+     "seed": 1007
+    },
+    {
+     "slot": 4,
+     "cmd": "python -u python/example_bot.py",
+     "place": 2,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 7512,
+     "ticks_out": 244,
+     "dmg_taken": 1620.0,
+     "dmg_rear": 270.0,
+     "shots_mid": 5,
+     "hits_mid": 0,
+     "hp_at_3": 0.45357142857142857,
+     "hp_at_415": null,
+     "death": {
+      "t": 375.55,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 12.0,
+      "pos": [
+       -7.27,
+       -208.8,
+       -0.35
+      ]
+     },
+     "late": 0,
+     "answered": 3756,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.8,
+     "seed": 1007
+    },
+    {
+     "slot": 5,
+     "cmd": "python -u python/example_bot.py",
+     "place": 6,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 4288,
+     "ticks_out": 42,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 1215.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 214.35,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -57.41,
+       -179.02,
+       1.43
+      ]
+     },
+     "late": 0,
+     "answered": 2144,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.4,
+     "seed": 1007
+    },
+    {
+     "slot": 6,
+     "cmd": "python -u python/example_bot.py",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 823,
+     "ticks_out": 0,
+     "dmg_taken": 2025.0,
+     "dmg_rear": 2025.0,
+     "shots_mid": 3,
+     "hits_mid": 1,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 41.1,
+      "cause": "gun",
+      "by_slot": 4,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       136.2,
+       -104.64,
+       4.48
+      ]
+     },
+     "late": 0,
+     "answered": 412,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.2,
+     "seed": 1007
+    },
+    {
+     "slot": 7,
+     "cmd": "python -u python/example_bot.py",
+     "place": 7,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 4003,
+     "ticks_out": 0,
+     "dmg_taken": 2812.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 23,
+     "hits_mid": 21,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 200.1,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       82.29,
+       -228.06,
+       3.26
+      ]
+     },
+     "late": 0,
+     "answered": 2002,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.9,
+     "seed": 1007
+    },
+    {
+     "slot": 8,
+     "cmd": "python -u python/example_bot.py",
+     "place": 8,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 3934,
+     "ticks_out": 0,
+     "dmg_taken": 1462.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 196.65,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       45.16,
+       -177.05,
+       2.07
+      ]
+     },
+     "late": 0,
+     "answered": 1967,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.6,
+     "seed": 1007
+    },
+    {
+     "slot": 9,
+     "cmd": "python -u python/example_bot.py",
+     "place": 5,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 4623,
+     "ticks_out": 258,
+     "dmg_taken": 1755.0,
+     "dmg_rear": 405.0,
+     "shots_mid": 57,
+     "hits_mid": 13,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 231.1,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       42.67,
+       -174.94,
+       0.08
+      ]
+     },
+     "late": 0,
+     "answered": 2312,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 12.2,
+     "seed": 1007
+    },
+    {
+     "slot": 10,
+     "cmd": "python -u python/example_bot.py",
+     "place": 3,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 7361,
+     "ticks_out": 154,
+     "dmg_taken": 1980.0,
+     "dmg_rear": 945.0,
+     "shots_mid": 9,
+     "hits_mid": 5,
+     "hp_at_3": 0.51,
+     "hp_at_415": null,
+     "death": {
+      "t": 368.0,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 39.0,
+      "pos": [
+       -9.2,
+       -205.93,
+       -0.17
+      ]
+     },
+     "late": 0,
+     "answered": 3681,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 12.3,
+     "seed": 1007
+    },
+    {
+     "slot": 11,
+     "cmd": "python -u python/example_bot.py",
+     "place": 11,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 2255,
+     "ticks_out": 57,
+     "dmg_taken": 1507.5,
+     "dmg_rear": 472.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 112.7,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 33.5,
+      "pos": [
+       -103.02,
+       21.08,
+       -3.53
+      ]
+     },
+     "late": 0,
+     "answered": 1128,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 8.6,
+     "seed": 1007
+    },
+    {
+     "slot": 12,
+     "cmd": "python -u python/example_bot.py",
+     "place": 1,
+     "kills": 7,
+     "cause": null,
+     "ticks_alive": 7512,
+     "ticks_out": 361,
+     "dmg_taken": 2722.5,
+     "dmg_rear": 607.5,
+     "shots_mid": 105,
+     "hits_mid": 29,
+     "hp_at_3": 0.9035714285714286,
+     "hp_at_415": null,
+     "death": null,
+     "late": 0,
+     "answered": 3756,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 3.9,
+     "seed": 1007
+    },
+    {
+     "slot": 13,
+     "cmd": "python -u python/example_bot.py",
+     "place": 13,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 896,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 5,
+     "hits_mid": 2,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 44.75,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -95.05,
+       76.64,
+       -3.15
+      ]
+     },
+     "late": 0,
+     "answered": 448,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.2,
+     "seed": 1007
+    },
+    {
+     "slot": 14,
+     "cmd": "python -u python/example_bot.py",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 629,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 63,
+     "hits_mid": 30,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 31.4,
+      "cause": "gun",
+      "by_slot": 7,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       207.18,
+       -185.35,
+       5.09
+      ]
+     },
+     "late": 0,
+     "answered": 315,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 8.1,
+     "seed": 1007
+    },
+    {
+     "slot": 15,
+     "cmd": "python -u python/example_bot.py",
+     "place": 10,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 3580,
+     "ticks_out": 368,
+     "dmg_taken": 1350.0,
+     "dmg_rear": 135.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 178.95,
+      "cause": "gun",
+      "by_slot": 2,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 8.2,
+      "pos": [
+       32.8,
+       -44.29,
+       1.91
+      ]
+     },
+     "late": 0,
+     "answered": 1790,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 7.9,
+     "seed": 1007
+    }
+   ]
+  },
+  {
+   "seed": 1008,
+   "t_end": 403.95,
+   "wall_s": 25.74,
+   "decisions": 4040,
+   "ms_per_decision": 6.37,
+   "mechs": [
+    {
+     "slot": 0,
+     "cmd": "python -u python/example_bot.py",
+     "place": 9,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 4083,
+     "ticks_out": 97,
+     "dmg_taken": 1462.5,
+     "dmg_rear": 1282.5,
+     "shots_mid": 12,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 204.1,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 58.0,
+      "pos": [
+       -33.27,
+       -56.75,
+       1.43
+      ]
+     },
+     "late": 0,
+     "answered": 2042,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.5,
+     "seed": 1008
+    },
+    {
+     "slot": 1,
+     "cmd": "python -u python/example_bot.py",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 295,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 14.7,
+      "cause": "gun",
+      "by_slot": 5,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -101.57,
+       75.74,
+       -2.8
+      ]
+     },
+     "late": 0,
+     "answered": 148,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.7,
+     "seed": 1008
+    },
+    {
+     "slot": 2,
+     "cmd": "python -u python/example_bot.py",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 122,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 6.05,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       87.18,
+       -4.68,
+       5.02
+      ]
+     },
+     "late": 0,
+     "answered": 61,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.4,
+     "seed": 1008
+    },
+    {
+     "slot": 3,
+     "cmd": "python -u python/example_bot.py",
+     "place": 11,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 679,
+     "ticks_out": 0,
+     "dmg_taken": 1935.0,
+     "dmg_rear": 1890.0,
+     "shots_mid": 1,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 33.9,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 25.2,
+      "pos": [
+       -5.26,
+       -141.58,
+       -0.43
+      ]
+     },
+     "late": 0,
+     "answered": 340,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.9,
+     "seed": 1008
+    },
+    {
+     "slot": 4,
+     "cmd": "python -u python/example_bot.py",
+     "place": 10,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 2280,
+     "ticks_out": 0,
+     "dmg_taken": 1485.0,
+     "dmg_rear": 1485.0,
+     "shots_mid": 6,
+     "hits_mid": 4,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 113.95,
+      "cause": "gun",
+      "by_slot": 10,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 45.5,
+      "pos": [
+       63.48,
+       130.49,
+       3.5
+      ]
+     },
+     "late": 0,
+     "answered": 1140,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.8,
+     "seed": 1008
+    },
+    {
+     "slot": 5,
+     "cmd": "python -u python/example_bot.py",
+     "place": 7,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 4202,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 675.0,
+     "shots_mid": 10,
+     "hits_mid": 9,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 210.05,
+      "cause": "gun",
+      "by_slot": 9,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -177.02,
+       -7.11,
+       -4.05
+      ]
+     },
+     "late": 0,
+     "answered": 2101,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.4,
+     "seed": 1008
+    },
+    {
+     "slot": 6,
+     "cmd": "python -u python/example_bot.py",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 153,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 7.6,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -239.28,
+       37.28,
+       -5.12
+      ]
+     },
+     "late": 0,
+     "answered": 77,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.8,
+     "seed": 1008
+    },
+    {
+     "slot": 7,
+     "cmd": "python -u python/example_bot.py",
+     "place": 1,
+     "kills": 1,
+     "cause": null,
+     "ticks_alive": 8079,
+     "ticks_out": 51,
+     "dmg_taken": 1170.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 24,
+     "hits_mid": 8,
+     "hp_at_3": 1.0,
+     "hp_at_415": null,
+     "death": null,
+     "late": 0,
+     "answered": 4040,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 6.5,
+     "seed": 1008
+    },
+    {
+     "slot": 8,
+     "cmd": "python -u python/example_bot.py",
+     "place": 6,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 5041,
+     "ticks_out": 455,
+     "dmg_taken": 2497.5,
+     "dmg_rear": 1687.5,
+     "shots_mid": 16,
+     "hits_mid": 4,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 252.0,
+      "cause": "gun",
+      "by_slot": 9,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 29.0,
+      "pos": [
+       -65.15,
+       22.02,
+       -2.26
+      ]
+     },
+     "late": 0,
+     "answered": 2521,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.0,
+     "seed": 1008
+    },
+    {
+     "slot": 9,
+     "cmd": "python -u python/example_bot.py",
+     "place": 5,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 5274,
+     "ticks_out": 183,
+     "dmg_taken": 1957.5,
+     "dmg_rear": 472.5,
+     "shots_mid": 39,
+     "hits_mid": 14,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 263.65,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -176.86,
+       -5.54,
+       -4.98
+      ]
+     },
+     "late": 0,
+     "answered": 2637,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 8.0,
+     "seed": 1008
+    },
+    {
+     "slot": 10,
+     "cmd": "python -u python/example_bot.py",
+     "place": 4,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 5578,
+     "ticks_out": 407,
+     "dmg_taken": 1170.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 31,
+     "hits_mid": 14,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 278.85,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 8.8,
+      "pos": [
+       -70.13,
+       61.46,
+       -0.45
+      ]
+     },
+     "late": 0,
+     "answered": 2789,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 7.1,
+     "seed": 1008
+    },
+    {
+     "slot": 11,
+     "cmd": "python -u python/example_bot.py",
+     "place": 8,
+     "kills": 3,
+     "cause": "gun",
+     "ticks_alive": 4158,
+     "ticks_out": 0,
+     "dmg_taken": 1530.0,
+     "dmg_rear": 270.0,
+     "shots_mid": 7,
+     "hits_mid": 1,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 207.85,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       -8.18,
+       -142.2,
+       -0.42
+      ]
+     },
+     "late": 0,
+     "answered": 2079,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 5.6,
+     "seed": 1008
+    },
+    {
+     "slot": 12,
+     "cmd": "python -u python/example_bot.py",
+     "place": 3,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 6596,
+     "ticks_out": 106,
+     "dmg_taken": 900.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 29,
+     "hits_mid": 5,
+     "hp_at_3": 1.0,
+     "hp_at_415": null,
+     "death": {
+      "t": 329.75,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 30.8,
+      "pos": [
+       -204.75,
+       -45.47,
+       -4.87
+      ]
+     },
+     "late": 0,
+     "answered": 3298,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.9,
+     "seed": 1008
+    },
+    {
+     "slot": 13,
+     "cmd": "python -u python/example_bot.py",
+     "place": 2,
+     "kills": 4,
+     "cause": "gun",
+     "ticks_alive": 8079,
+     "ticks_out": 209,
+     "dmg_taken": 2542.5,
+     "dmg_rear": 337.5,
+     "shots_mid": 26,
+     "hits_mid": 17,
+     "hp_at_3": 0.5130357142857143,
+     "hp_at_415": null,
+     "death": {
+      "t": 403.9,
+      "cause": "gun",
+      "by_slot": 7,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 37.0,
+      "pos": [
+       -184.82,
+       -73.05,
+       6.52
+      ]
+     },
+     "late": 0,
+     "answered": 4040,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 4.7,
+     "seed": 1008
+    },
+    {
+     "slot": 14,
+     "cmd": "python -u python/example_bot.py",
+     "place": 12,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 544,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 27.15,
+      "cause": "gun",
+      "by_slot": 5,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -124.72,
+       -43.25,
+       -4.41
+      ]
+     },
+     "late": 0,
+     "answered": 272,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.2,
+     "seed": 1008
+    },
+    {
+     "slot": 15,
+     "cmd": "python -u python/example_bot.py",
+     "place": 13,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 532,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1147.5,
+     "shots_mid": 24,
+     "hits_mid": 3,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 26.55,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       80.01,
+       -69.75,
+       6.76
+      ]
+     },
+     "late": 0,
+     "answered": 266,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.2,
+     "seed": 1008
+    }
+   ]
+  },
+  {
+   "seed": 1009,
+   "t_end": 374.95,
+   "wall_s": 23.9,
+   "decisions": 3750,
+   "ms_per_decision": 6.37,
+   "mechs": [
+    {
+     "slot": 0,
+     "cmd": "python -u python/example_bot.py",
+     "place": 9,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 3908,
+     "ticks_out": 178,
+     "dmg_taken": 1620.0,
+     "dmg_rear": 1620.0,
+     "shots_mid": 20,
+     "hits_mid": 6,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 195.35,
+      "cause": "gun",
+      "by_slot": 8,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 4.0,
+      "pos": [
+       36.05,
+       -17.53,
+       1.58
+      ]
+     },
+     "late": 0,
+     "answered": 1954,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 34.7,
+     "seed": 1009
+    },
+    {
+     "slot": 1,
+     "cmd": "python -u python/example_bot.py",
+     "place": 5,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 5189,
+     "ticks_out": 324,
+     "dmg_taken": 990.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 38,
+     "hits_mid": 19,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 259.4,
+      "cause": "gun",
+      "by_slot": 8,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 32.8,
+      "pos": [
+       180.95,
+       45.33,
+       5.75
+      ]
+     },
+     "late": 0,
+     "answered": 2595,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 37.2,
+     "seed": 1009
+    },
+    {
+     "slot": 2,
+     "cmd": "python -u python/example_bot.py",
+     "place": 11,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 784,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 33,
+     "hits_mid": 9,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 39.15,
+      "cause": "gun",
+      "by_slot": 15,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -53.52,
+       20.38,
+       -2.46
+      ]
+     },
+     "late": 0,
+     "answered": 392,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 41.0,
+     "seed": 1009
+    },
+    {
+     "slot": 3,
+     "cmd": "python -u python/example_bot.py",
+     "place": 8,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 4052,
+     "ticks_out": 0,
+     "dmg_taken": 1620.0,
+     "dmg_rear": 945.0,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 202.55,
+      "cause": "gun",
+      "by_slot": 9,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       25.7,
+       176.75,
+       3.9
+      ]
+     },
+     "late": 0,
+     "answered": 2026,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 54.0,
+     "seed": 1009
+    },
+    {
+     "slot": 4,
+     "cmd": "python -u python/example_bot.py",
+     "place": 12,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 631,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 472.5,
+     "shots_mid": 39,
+     "hits_mid": 25,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 31.5,
+      "cause": "gun",
+      "by_slot": 13,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       94.74,
+       40.84,
+       3.92
+      ]
+     },
+     "late": 0,
+     "answered": 316,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 53.6,
+     "seed": 1009
+    },
+    {
+     "slot": 5,
+     "cmd": "python -u python/example_bot.py",
+     "place": 2,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 7499,
+     "ticks_out": 96,
+     "dmg_taken": 1462.5,
+     "dmg_rear": 67.5,
+     "shots_mid": 6,
+     "hits_mid": 6,
+     "hp_at_3": 1.0,
+     "hp_at_415": null,
+     "death": {
+      "t": 374.9,
+      "cause": "gun",
+      "by_slot": 12,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       211.34,
+       27.69,
+       5.95
+      ]
+     },
+     "late": 0,
+     "answered": 3750,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 65.8,
+     "seed": 1009
+    },
+    {
+     "slot": 6,
+     "cmd": "python -u python/example_bot.py",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 157,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 1350.0,
+     "shots_mid": 9,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 7.8,
+      "cause": "gun",
+      "by_slot": 2,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       -60.01,
+       46.74,
+       -1.4
+      ]
+     },
+     "late": 0,
+     "answered": 79,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.0,
+     "seed": 1009
+    },
+    {
+     "slot": 7,
+     "cmd": "python -u python/example_bot.py",
+     "place": 13,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 540,
+     "ticks_out": 0,
+     "dmg_taken": 1485.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 33,
+     "hits_mid": 9,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 26.95,
+      "cause": "gun",
+      "by_slot": 4,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 0.5,
+      "pos": [
+       94.67,
+       40.61,
+       3.92
+      ]
+     },
+     "late": 0,
+     "answered": 270,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 38.8,
+     "seed": 1009
+    },
+    {
+     "slot": 8,
+     "cmd": "python -u python/example_bot.py",
+     "place": 4,
+     "kills": 4,
+     "cause": "gun",
+     "ticks_alive": 5264,
+     "ticks_out": 242,
+     "dmg_taken": 2272.5,
+     "dmg_rear": 337.5,
+     "shots_mid": 93,
+     "hits_mid": 32,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 263.15,
+      "cause": "gun",
+      "by_slot": 9,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       266.51,
+       43.09,
+       4.96
+      ]
+     },
+     "late": 0,
+     "answered": 2632,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 67.1,
+     "seed": 1009
+    },
+    {
+     "slot": 9,
+     "cmd": "python -u python/example_bot.py",
+     "place": 3,
+     "kills": 2,
+     "cause": "gun",
+     "ticks_alive": 7396,
+     "ticks_out": 389,
+     "dmg_taken": 2025.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 23,
+     "hits_mid": 2,
+     "hp_at_3": 0.8435714285714285,
+     "hp_at_415": null,
+     "death": {
+      "t": 369.75,
+      "cause": "gun",
+      "by_slot": 5,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 2.0,
+      "pos": [
+       211.17,
+       26.49,
+       5.86
+      ]
+     },
+     "late": 0,
+     "answered": 3698,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 33.0,
+     "seed": 1009
+    },
+    {
+     "slot": 10,
+     "cmd": "python -u python/example_bot.py",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 320,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 742.5,
+     "shots_mid": 31,
+     "hits_mid": 14,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 15.95,
+      "cause": "gun",
+      "by_slot": 7,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 27.5,
+      "pos": [
+       35.19,
+       -10.52,
+       1.55
+      ]
+     },
+     "late": 0,
+     "answered": 160,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.8,
+     "seed": 1009
+    },
+    {
+     "slot": 11,
+     "cmd": "python -u python/example_bot.py",
+     "place": 6,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 4388,
+     "ticks_out": 0,
+     "dmg_taken": 2182.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 25,
+     "hits_mid": 10,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 219.35,
+      "cause": "gun",
+      "by_slot": 8,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 29.8,
+      "pos": [
+       235.63,
+       20.9,
+       5.28
+      ]
+     },
+     "late": 0,
+     "answered": 2194,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 46.6,
+     "seed": 1009
+    },
+    {
+     "slot": 12,
+     "cmd": "python -u python/example_bot.py",
+     "place": 1,
+     "kills": 1,
+     "cause": null,
+     "ticks_alive": 7499,
+     "ticks_out": 253,
+     "dmg_taken": 585.0,
+     "dmg_rear": 405.0,
+     "shots_mid": 44,
+     "hits_mid": 10,
+     "hp_at_3": 1.0,
+     "hp_at_415": null,
+     "death": null,
+     "late": 0,
+     "answered": 3750,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 267.6,
+     "seed": 1009
+    },
+    {
+     "slot": 13,
+     "cmd": "python -u python/example_bot.py",
+     "place": 7,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 4095,
+     "ticks_out": 0,
+     "dmg_taken": 2677.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 26,
+     "hits_mid": 10,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 204.7,
+      "cause": "gun",
+      "by_slot": 8,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       120.34,
+       50.02,
+       7.24
+      ]
+     },
+     "late": 0,
+     "answered": 2048,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 45.4,
+     "seed": 1009
+    },
+    {
+     "slot": 14,
+     "cmd": "python -u python/example_bot.py",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "ticks_alive": 454,
+     "ticks_out": 0,
+     "dmg_taken": 1440.0,
+     "dmg_rear": 0.0,
+     "shots_mid": 44,
+     "hits_mid": 4,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 22.65,
+      "cause": "gun",
+      "by_slot": 11,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 5.0,
+      "pos": [
+       224.49,
+       -57.87,
+       6.79
+      ]
+     },
+     "late": 0,
+     "answered": 227,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 2.2,
+     "seed": 1009
+    },
+    {
+     "slot": 15,
+     "cmd": "python -u python/example_bot.py",
+     "place": 10,
+     "kills": 1,
+     "cause": "gun",
+     "ticks_alive": 2354,
+     "ticks_out": 0,
+     "dmg_taken": 1417.5,
+     "dmg_rear": 1417.5,
+     "shots_mid": 0,
+     "hits_mid": 0,
+     "hp_at_3": null,
+     "hp_at_415": null,
+     "death": {
+      "t": 117.65,
+      "cause": "gun",
+      "by_slot": 1,
+      "by_cmd": "python -u python/example_bot.py",
+      "hp_before": 50.0,
+      "pos": [
+       -179.78,
+       126.84,
+       30.07
+      ]
+     },
+     "late": 0,
+     "answered": 1177,
+     "bad": 0,
+     "exceptions": 0,
+     "lat_max_ms": 14.0,
+     "seed": 1009
+    }
+   ]
+  }
+ ]
+}

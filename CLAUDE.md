@@ -21,6 +21,7 @@ One **moderator** agent (the main session) coordinates **subagents** that each o
 | Role | Journal | Does | Produces | Never |
 |---|---|---|---|---|
 | **Researcher** | `notes/agents/researcher.md` | Reads `protocol.md`, the map files, the recorded stream and the config; answers factual questions with evidence (section numbers, measured values) | `notes/research/<topic>.md` | Writes bot code |
+| **Researcher (online)** | `notes/agents/researcher-online.md` | Researches outside sources (battle royale games, bot competitions, game AI, mech games) and translates proven tactics into mechfight rules, with sources | `notes/research/online-<topic>.md` | Writes bot code |
 | **Strategist** (ideation) | `notes/agents/strategist.md` | Proposes behaviors that raise the score: phase plans, when to fight or flee, loot priorities, upgrade picks. Each proposal states its expected effect on mean score. | `notes/ideas/<topic>.md` | Writes bot code |
 | **Module builder** | `notes/agents/builder-<module>.md` | Implements one module against its interface, with unit tests | Its module file plus tests | Edits another module's file |
 | **Critic** | `notes/agents/critic.md` | Reviews proposals and diffs against `objective.md` and the rules: logic errors, rule misreadings, timing risk, crash risk, wasted complexity | `notes/reviews/<target>.md`, findings ranked by impact | Fixes the code itself |
@@ -79,7 +80,15 @@ The moderator runs this loop **continuously until the objective in `objective.md
 8. **Integrate.** The moderator merges, reruns the full check and commits. Any guardrail failure blocks the merge. Any proxy regression is reverted unless the Critic and the moderator record why it's acceptable.
 9. **Submit.** When the build beats the last submission on the proxies, the moderator asks the user to push and submit (or for permission to push), then records the score in `notes/scores.md`.
 10. **Record.** The Tester appends this iteration's row to every table in `notes/results.md`: guardrails, local proxies, the change made and its measured effect. Each table also gets the track score once it's known. Every row shows Δ against the previous row and against the baseline. A row is never edited after the fact; a correction is a new row that says what it corrects.
-11. **Learn.** Every agent updates its journal: what moved the score, what didn't, and its next areas of improvement. Go to step 1.
+11. **After-action review.** After every test run (simulator batch, conformance check, or track submission) the moderator writes `notes/reviews/aar-<date>-<n>.md`:
+    - **What went right**, with evidence (numbers, matches, deaths by cause)
+    - **What went wrong**, with evidence, and the root cause of each (rule misread, bug, bad strategy, opponent counter-play)
+    - **What we expected vs what happened**, for each change tested
+    - **Replan:** what changes next and why, which becomes step 2 of the next iteration
+    Every agent whose work was tested reads the review and updates its journal's Areas of improvement from it.
+12. **Learn.** Every agent updates its journal: what moved the score, what didn't, and its next areas of improvement. Go to step 1 with the replan from step 11.
+
+**Opponents are AI-built too.** Other bots on the track are written by other teams' AI agents, so expect them to find the same obvious strategies (edge-holding, lasers, plating, hiding) and to adapt between submissions. Plans must say how they hold up against a field of similar bots, and the simulator's opponent pool must include several styles (passive, aggressive, campers, copies of our own past versions), not just the example bot.
 
 Between submissions the loop continues on the local proxies; it does not wait for a score. If a submitted score drops by 1.0 or more, the next iteration starts by finding the cause.
 

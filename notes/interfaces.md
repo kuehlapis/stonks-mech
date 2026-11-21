@@ -48,6 +48,69 @@ Known limits (callers handle them):
 - `los` ignores trees; Perception adds trunks and canopy if it needs true sight.
 - `los` samples the ground every 1 m.
 
-## Other modules
+## M1 modules: iteration 1
 
-Defined after the Strategist's game plan and the Researcher's findings land (iteration 1, step 4). Until then, no builder other than World starts.
+Implements `notes/ideas/game-plan.md` §9 "M1" (rule ids like Z1, F3, N1 refer to it). Shared conventions:
+
+- `cfg` is `hello["config"]` (a dict). `world` is a `World` **or `None`** (map failed to load): every module must work with `None` (map-free fallback, CLAUDE.md).
+- `obs` is the raw observation dict. Time is `obs["t"]`, never tick counts (observations can be seconds apart).
+- A *threat* is a dict: `{"id": int|None, "pos": [x,y,z], "vel": [x,y,z], "weapons": [str], "hp": float|None, "max_hp": float|None, "aim": [yaw,pitch]|None, "charging": bool, "visible": bool, "last_seen": t, "virtual": bool}` (`virtual` = built from an unseen attacker's damage bearing, game-plan §1).
+- Points are `[x, y]` or `[x, y, z]` lists. Yaw/pitch per protocol.md §5.
+- No module prints to stdout. Each module's `__init__` must not raise on a valid config.
+
+```python
+# python/perception.py: per-tick cost ≤ 2 ms
+class Perception:
+    def __init__(self, cfg: dict, my_id: int) -> None: ...
+    def update(self, obs: dict) -> None: ...          # call once per obs, first
+    threats: list[dict]                               # visible + remembered (vision.memory_s) + virtual, enemies only (mechs, not NPCs)
+    def engaged_by(self, t: float) -> dict | None:    # threat that damaged us (by = mech id 0–15) in the last 3 s, else None
+    def threatened_by(self, obs: dict, world) -> dict | None:   # visible enemy aimed_at_me (≤ 15°, with los), charging first
+    def damage_bearing(self, t: float) -> float | None:         # bearing of latest damaged event ≤ 3 s old
+    def sound_bearing(self, t: float) -> float | None:          # latest combat sound near/mid ≤ 3 s old
+
+# python/survival.py: per-tick cost ≤ 10 ms worst case (cover search), ≤ 1 ms otherwise
+class Survival:
+    def __init__(self, cfg: dict, world) -> None: ...
+    def hold_point(self, obs: dict) -> list:          # Z2, clamped and snapped off buildings
+    def zone_goal(self, obs: dict) -> tuple[list, bool] | None:   # Z1: (goal, boost) when we must move for the zone, else None
+    def hold_facing(self, obs: dict) -> float:        # Z4 yaw (outward or inward)
+    def find_cover(self, obs: dict, threats: list) -> list | None:  # F3, ≤ 32 los calls, cached 1 s
+    def final_center(self, obs: dict) -> list | None: # phase 6: next_center when we should stand on it, else None
+
+# python/nav.py: per-tick cost ≤ 3 ms
+class Nav:
+    def __init__(self, cfg: dict, world) -> None: ...
+    def step(self, obs: dict, goal: list, boost: bool = False, quiet: bool = False) -> dict:
+        """Returns {"move": [dx, dy], "boost": bool, "jump": bool} toward goal.
+        Avoids buildings, applies the N1 stuck rule, never targets out-of-reach towers.
+        quiet=True keeps speed under sound.step_speed. Arrived (within 2 m): move [0, 0]."""
+
+# python/combat.py: per-tick cost ≤ 1 ms
+class Combat:
+    def __init__(self, cfg: dict, world) -> None: ...
+    def attack(self, obs: dict, target: dict) -> dict:
+        """{"aim": [yaw, pitch], "fire": [bool, bool], "reload": bool} at a threat: gun with lead
+        (intercept from target vel and gun speed), laser charged and released at full charge
+        when the actual aim is on target, nothing fired out of range or without los."""
+    def face(self, obs: dict, yaw: float) -> dict:
+        """{"aim": [yaw, 0.0], "fire": [False, False]} and releases (stops) any laser charge."""
+
+# python/economy.py: per-tick cost ≤ 1 ms
+class Economy:
+    def __init__(self, cfg: dict) -> None: ...
+    def pick(self, obs: dict) -> int | None:          # U1: index into offer choices, or None if no offer
+    def wanted_pickup(self, obs: dict, threats: list) -> dict | None:   # L1: the laser pickup to walk to, else None
+    def take(self, obs: dict) -> dict:                # {"take": id} (+ "drop") when a wanted pickup is in reach, else {}
+
+# python/brain.py: whole act() ≤ 15 ms mean, ≤ 35 ms p99
+class Brain:
+    def __init__(self, cfg: dict, world, my_id: int) -> None:   # builds the five modules above
+    def act(self, obs: dict) -> dict:                 # the full action (tick is filled in by the wrapper)
+```
+
+`python/bot.py` (moderator) loads the World (catching any error → `None`), builds `Brain`, and calls `mf.run`.
+
+## Later modules
+
+Defined when M2+ work starts.
