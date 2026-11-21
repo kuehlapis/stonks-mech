@@ -21,6 +21,9 @@ END_ALIVE = 3                 # alive count at which the endgame starts (more wi
 END_EDGE = 1.15               # endgame fight threshold (time-to-kill ratio)
 CLOSE_EDGE = 1.3              # fight at this ratio when the enemy is too close to escape, or evading fails
 FIGHT_HYST, FIGHT_STICK_S = 1.4, 2.0   # keep fighting the same enemy unless the ratio worsens by 40%
+EVADE_MAX = 1000.0            # m: evade to cover only if it is this close (else fight when the trade is fair)
+EVADE_FIGHT = 1.6             # ... "fair" = time-to-kill ratio below this
+EVADE_ALL = True             # fire every weapon (not just the gun) while evading
 EVADE_GIVEUP_S = 4.0          # still being hit this long after starting to evade: turn and fight
 FARM_UNTIL = 330.0            # s: no farming after this (phase 5 and later)
 FARM_HP = 0.6                 # farm only above this HP fraction
@@ -159,12 +162,15 @@ class Brain:
                     self._fight_id, self._fight_t = fid, t
                     return self._fight(obs, foe), "fight"
             cover = None if self._slow() else self._call(S, "find_cover", obs, [foe] + others)
+            if cover and engaged and not foe.get("virtual") and not others and ratio is not None                     and _dist(pos, cover) > EVADE_MAX and ratio < EVADE_FIGHT:
+                self._fight_id, self._fight_t = fid, t
+                return self._fight(obs, foe), "fight-far"  # cover too far to reach under fire: trade instead
             if cover:
                 lasery = self._lasery(foe)
                 hp_frac = me.get("hp", 0) / (me.get("max_hp") or 1)
                 at = _dist(pos, cover) < 3
                 mv = self._go(obs, cover, boost=(lasery or hp_frac < 0.5 or bool(engaged)) and not at)
-                aim = self._gun_only(obs, foe) if engaged and not foe.get("virtual") else self._face(obs, _bearing(pos, foe["pos"]))
+                aim = (self._attack(obs, foe) if EVADE_ALL else self._gun_only(obs, foe)) if engaged and not foe.get("virtual")                     else self._face(obs, _bearing(pos, foe["pos"]))
                 return {**mv, **aim}, "evade"
             if engaged and (d < CORNER_DIST or me.get("energy", 0) < CORNER_ENERGY or foe.get("virtual") is False and not others and ratio is not None and ratio < 1.3):
                 return self._fight(obs, foe), "cornered"

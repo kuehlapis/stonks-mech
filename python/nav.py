@@ -21,6 +21,7 @@ WALL_BUCKET = 32.0   # m, bucket size for wall-cell lookups
 WALL_VIEW = 4.0      # a neighbour surface this much higher counts as a wall (blocks sight)
 JET_PEN = 4.0        # extra cost (cells) of a jet edge: noise, energy, time
 CLIMB_LOOK = 10.0    # m: start a climb when the higher path node is this close
+EXPO_RAYS, EXPO_DIST = 12, 120.0   # exposure sampling: directions, sightline length (m)
 DIRS = [(1, 0, 1.0), (-1, 0, 1.0), (0, 1, 1.0), (0, -1, 1.0),
         (1, 1, 1.4142), (1, -1, 1.4142), (-1, 1, 1.4142), (-1, -1, 1.4142)]
 
@@ -107,6 +108,31 @@ class Nav:
                     L = math.hypot(sx, sy)
                     walls.setdefault((int(x // WALL_BUCKET), int(y // WALL_BUCKET)), []).append((x, y, s[k], sx / L, sy / L))
         self.walls, self._wall = walls, wall
+        # Exposure of each wall cell: share of EXPO_RAYS directions with an open sightline to EXPO_DIST m
+        # (our center to a viewer's eye height there). Trees are ignored. About 1 s at startup.
+        expo = {}
+        eh = float(self._m.get("eye_height", 8))
+        ch = h / 2
+        dirs = [(math.cos(a * 2 * math.pi / EXPO_RAYS), math.sin(a * 2 * math.pi / EXPO_RAYS)) for a in range(EXPO_RAYS)]
+        for k in range(nx * ny):
+            if not wall[k]:
+                continue
+            x, y = self._center(k % nx, k // nx)
+            z = s[k] + ch
+            n_open = 0
+            for dx, dy in dirs:
+                ex, ey = x + dx * EXPO_DIST, y + dy * EXPO_DIST
+                if w.los((x, y, z), (ex, ey, w.ground(ex, ey) + eh)):
+                    n_open += 1
+            expo[k] = n_open / EXPO_RAYS
+        self._expo = expo
+
+    def exposure(self, x, y):
+        """Exposure (0..1) of the wall cell at (x, y), or None if it is not a wall cell."""
+        if self.world is None:
+            return None
+        i, j = self._cell(x, y)
+        return self._expo.get(j * self._nx + i) if 0 <= i < self._nx and 0 <= j < self._ny else None
 
     def surface(self, x, y):
         """Grid surface height at (x, y) (ground or roof), or None without a map."""
@@ -145,7 +171,8 @@ class Nav:
 
     def search(self, x, y, accept, max_cost=200.0, max_nodes=8000):
         """Dijkstra over walkable cells from (x, y). Returns (point, path_m, is_wall) of the first cell where
-        accept(cx, cy, is_wall, path_m) is true, else None. is_wall: the cell is beside a building wall."""
+        accept(cx, cy, is_wall, path_m, exposure) is true, else None. is_wall: the cell is beside a building
+        wall; exposure: its exposure (0..1) or None."""
         if self.world is None:
             return None
         st = self._snap(x, y)
@@ -163,7 +190,7 @@ class Nav:
             n += 1
             i, j = k % nx, k // nx
             cx, cy = self._center(i, j)
-            if accept(cx, cy, bool(wall[k]), c * CELL):
+            if accept(cx, cy, bool(wall[k]), c * CELL, self._expo.get(k)):
                 return [cx, cy], c * CELL, bool(wall[k])
             if c * CELL > max_cost:
                 break

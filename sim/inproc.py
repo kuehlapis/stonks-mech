@@ -104,7 +104,7 @@ def _env(path):
     return _ENVS[path]
 
 
-def play(specs, seed, trace_slot=None, timing=True, engine="engine"):
+def play(specs, seed, trace_slot=None, timing=True, engine="engine", trace_label=None):
     """specs: list of (label, path) per slot. Returns a result dict (and the trace list if asked)."""
     Match = importlib.import_module(engine).Match
     hello0 = recorded_hello()
@@ -126,6 +126,8 @@ def play(specs, seed, trace_slot=None, timing=True, engine="engine"):
         envs.append(env)
         last.append({})
     trace = []
+    if trace_label is not None:
+        trace_slot = next((i for i, (lab, _) in enumerate(specs) if lab == trace_label), None)
     while not match.over:
         acts = []
         for m in match.alive():
@@ -186,9 +188,9 @@ def play(specs, seed, trace_slot=None, timing=True, engine="engine"):
 
 
 def _job(arg):
-    specs, seed, trace_slot, engine = arg
+    specs, seed, trace_slot, engine, trace_label = arg
     try:
-        return play(specs, seed, trace_slot, engine=engine)
+        return play(specs, seed, trace_slot, engine=engine, trace_label=trace_label)
     except Exception:
         traceback.print_exc()
         return None, []
@@ -235,6 +237,7 @@ def main():
     ap.add_argument("--rotate", action="store_true", help="rotate slot assignment per match (removes slot bias)")
     ap.add_argument("--trace", type=int, default=None, help="slot to trace (first match only, unless --trace-all)")
     ap.add_argument("--trace-out", default=None)
+    ap.add_argument("--trace-label", default=None, help="trace the first slot with this label in every match")
     ap.add_argument("--out", default=None)
     ap.add_argument("--start", type=int, default=0, help="first match index (to replay one match of a batch)")
     ap.add_argument("--engine", default="engine", help="engine module in sim/ (engine_p1 = frozen phase 1)")
@@ -253,7 +256,7 @@ def main():
     jobs = []
     for k in range(a.start, a.start + a.matches):
         s = slots[k % len(slots):] + slots[:k % len(slots)] if a.rotate else slots
-        jobs.append((s, a.seed * 100000 + k, a.trace if k == a.start else None, a.engine))
+        jobs.append((s, a.seed * 100000 + k, a.trace if k == a.start else None, a.engine, a.trace_label))
     t0 = time.time()
     if a.jobs > 1 and len(jobs) > 1:
         with Pool(min(a.jobs, len(jobs))) as pool:
@@ -261,7 +264,13 @@ def main():
     else:
         res = [_job(j) for j in jobs]
     results = [r for r, _ in res if r]
-    if a.trace is not None and a.trace_out and res and res[0][1]:
+    if a.trace_label is not None and a.trace_out:
+        with open(a.trace_out, "w") as f:
+            for k, (r, tr) in enumerate(res):
+                for row in tr:
+                    row["match"] = k + a.start
+                    f.write(json.dumps(row) + "\n")
+    elif a.trace is not None and a.trace_out and res and res[0][1]:
         with open(a.trace_out, "w") as f:
             for row in res[0][1]:
                 f.write(json.dumps(row) + "\n")

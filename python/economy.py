@@ -6,6 +6,7 @@ ORDER = ["plating", "nanites", "armor", "laser_damage", "sensors", "laser_charge
          "gun_damage", "gun_rate", "gun_mag", "gyros", "jets", "reactor", "capacitor", "gun_velocity",
          "lightning_efficiency", "lightning_range", "lightning_chain",
          "mortar_splash", "mortar_reload", "mortar_velocity", "laser_pierce"]
+WANT = ["laser"]   # weapon pickups worth taking, best first (the gun is always kept)
 # L1 tuning constants (game-plan §5).
 ETA_EARLY_S, ETA_LATE_S, LATE_T = 6.0, 10.0, 70.0
 DETOUR = 1.3            # straight distance × this ≈ walked distance
@@ -30,17 +31,28 @@ class Economy:
         ch = offer["choices"]
         return min(range(len(ch)), key=lambda i: (self.rank.get(ch[i].get("id"), len(self.rank)), i))
 
+    def _rank(self, kind):
+        return WANT.index(kind) if kind in WANT else None
+
     def _lasers(self, obs):
-        """Laser pickups we may take now (we hold no laser, not in backoff), or []."""
+        """Weapon pickups we would take now (better than our non-gun weapon, not in backoff), or []."""
         t = obs.get("t", 0.0)
         for e in obs.get("events") or []:
             if e.get("type") == "take_failed":
                 self.skip[e.get("id")] = t + FAIL_BACKOFF_S
         weapons = [w for w in obs["self"].get("weapons") or [] if w]
-        if any(w.get("kind") == "laser" for w in weapons):
-            return []
-        return [p for p in obs.get("pickups") or []
-                if p.get("kind") == "laser" and self.skip.get(p.get("id"), -1.0) <= t]
+        held = [w.get("kind") for w in weapons]
+        cur = [self._rank(k) for k in held if k != "gun" and self._rank(k) is not None]
+        best_held = min(cur) if cur else None
+        out = []
+        for p in obs.get("pickups") or []:
+            r = self._rank(p.get("kind"))
+            if r is None or p.get("kind") in held or self.skip.get(p.get("id"), -1.0) > t:
+                continue
+            if best_held is not None and r >= best_held:
+                continue
+            out.append(p)
+        return out
 
     def wanted_pickup(self, obs: dict, threats: list) -> dict | None:
         t, me = obs.get("t", 0.0), obs["self"]
@@ -71,6 +83,6 @@ class Economy:
             if math.hypot(px - x, py - y) <= self.reach and abs(pz - z) <= TAKE_DZ:
                 act = {"take": p["id"]}
                 if len(slots) >= 2 and slots[0] and slots[1]:
-                    act["drop"] = 0 if slots[1].get("kind") == "gun" else 1
+                    act["drop"] = 0 if slots[1].get("kind") == "gun" else 1  # replace the special, keep the gun
                 return act
         return {}

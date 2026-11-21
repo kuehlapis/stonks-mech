@@ -17,7 +17,9 @@ COVER_DZ = 2.5           # m, cover cells must be about our own height
 URGENT_LOOK, URGENT_EDGE = 8.0, 10.0   # zone travel is urgent if the edge passes within 10 m of us in 8 s
 URGENT_FACTOR, URGENT_SLACK = 1.5, 8.0  # ... or eta x 1.5 + 8 s reaches the deadline
 HOLD_DEPTH = 0.85        # hold within this fraction of the clamped next radius (room for the next circle)
-WALL_DETOUR = 40.0       # m of extra walking accepted to hold beside a wall
+WALL_DETOUR = 60.0       # m of extra walking accepted to hold at a better (beside a wall, hidden) spot
+HOLD_EXPO_W = 1.0        # hold score = exposure x this + path metres / 100
+HOLD_CANDS = 60          # wall cells considered for the hold point
 HOLD_SEARCH_M = 300.0    # m, path search limit for the hold point
 HOLD_FAR_M = 120.0       # m outside the clamped circle: walk the straight line first, search later
 HOLD_NODES = 4000        # grid nodes, path search limit for the hold point
@@ -67,25 +69,27 @@ class Survival:
         failed = self._hold_fail and self._hold_fail[0] == key and obs["t"] < self._hold_fail[1]
         if nav is not None and not far and not failed:
             inner = R * HOLD_DEPTH
-            first = []
+            first, cands = [], []
 
-            def accept(x, y, wall, c):
+            def accept(x, y, wall, c, expo):
                 if math.hypot(x - nc[0], y - nc[1]) > inner:
                     return False
-                if wall:
-                    return True
                 if not first:
                     first.append(([x, y], c))
-                return c > first[0][1] + WALL_DETOUR
+                if wall and expo is not None:
+                    cands.append((expo * HOLD_EXPO_W + c / 100.0, [x, y]))
+                return c > first[0][1] + WALL_DETOUR or len(cands) >= HOLD_CANDS
 
-            r = nav.search(pos[0], pos[1], accept, max_cost=HOLD_SEARCH_M, max_nodes=HOLD_NODES)
-            if r:
-                p = r[0] if r[2] or not first else first[0][0]
+            nav.search(pos[0], pos[1], accept, max_cost=HOLD_SEARCH_M, max_nodes=HOLD_NODES)
+            if cands:
+                p = min(cands)[1]
+            elif first:
+                p = first[0][0]
+            else:
+                p = None
+            if p is not None:
                 self._hold = (key, p)
                 return p
-            if first:
-                self._hold = (key, first[0][0])
-                return first[0][0]
             self._hold_fail = (key, obs["t"] + 3.0)
         return self._hold_line(obs, z, st, nc, pos)  # map-free (or search failed): nearest point on the line
 
