@@ -2,6 +2,15 @@
 
 Moderator's log, newest first. Each entry: what was decided, why, and what was rejected.
 
+## 2026-11-22, iteration 3: placement scoring, strategy and moveset A/B
+
+- **Scoring is placement** (16 − place), confirmed by the user. The sim already scores this way (`sim/inproc.py` summarize).
+- **The squad format is confirmed** by the user's paste of the track page: practice = us vs 15 house bots acting as one squad, and the leaderboard ranks the best practice score. The squad sim stays the test bed; a free-for-all batch was started on a wrong doubt and then stopped.
+- **Waiting-spot (hold point) search off** (`survival.HOLD_SEARCH = False`, user request): 50–62 ms worst case, over budget. It is re-applied: a working-tree reset had dropped it.
+- **New moves, off by default, for A/B:** `brain.STRAFE_BOOST_E` (boost-strafe above that energy) and `brain.STRAFE_JUMP` (hop chance on each strafe reversal). Why: `notes/ideas/movesets.md`.
+- **Weapon pickups: no "nearest regardless".** We already take the nearest laser or lightning. Rejected the mortar: combat can't aim it, and holding one gives enemy lasers +60% on us. Testing `e_far` (walk 30 s for a weapon instead of 15 s).
+- **Batches (112 squad matches each, seed 1):** strategies `s_base s_hide s_search_on s_close s_duck30 s_picky` (`notes/tests/strat/run_sq.sh`), then moves `m_boost m_hop m_both e_far` (`run_moves.sh`). Results and the AAR follow.
+
 ## 2026-11-21 night, iteration 2: the track is us vs a hunting squad
 
 - **Fact that changed the plan** (track page): 15 house bots act as one squad (shared vision, never fight each other, hunt us weakest first, more as we kill them, all of them late). Our score = 15 − squad bots alive at our death. Hiding can't win; kills and late survival do.
@@ -42,3 +51,8 @@ Moderator's log, newest first. Each entry: what was decided, why, and what was r
 - **M1 interfaces written** (`notes/interfaces.md`) from the revised game plan (all 14 Critic findings addressed). Six builders start in parallel: Perception, Survival, Nav, Combat, Economy, Brain. `python/bot.py` (moderator) wires them, and the Dockerfile now runs `bot.py`.
 - **Builders share the main tree.** Each owns one file plus one test file, with no overlaps, and Brain needs the others' real files to integrate. Worktrees would add merges for no gain.
 - **Deferred past M1** (per the plan): DPS model, vulture, crates, drones, supply drops, cover map, lightning fallback.
+
+## 2026-11-22, iteration 3b: continuous agent feedback loop (user request)
+
+- The moderator evaluates every agent report against evidence and sends feedback back to that agent (revise, go deeper, or next task) instead of one-shot launches.
+- Chain: Strategist + Researcher (online) proposals → Critic review → moderator feedback → builder (switch, off by default) → squad A/B → results back to Strategist and Critic → next round. Runs until mean > 6.00 or the user stops it.

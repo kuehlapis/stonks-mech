@@ -146,5 +146,56 @@ class TestCombat(unittest.TestCase):
         self.assertLess(ms, 1.0)
 
 
+MORTAR = {"kind": "mortar", "cooldown": 0, "stats": CFG["weapons"]["mortar"]}
+
+
+def shell_miss(aim, shooter, tgt):
+    """Fly the shell along `aim` from the tube and return its horizontal miss when it falls to the target's height."""
+    st, m = OBS["self"]["stats"], CFG["weapons"]["mortar"]
+    yaw, pitch = aim
+    u = [math.cos(pitch) * math.cos(yaw), math.cos(pitch) * math.sin(yaw), math.sin(pitch)]
+    r0 = st["radius"] + 0.5
+    b = [shooter[0] + u[0] * r0, shooter[1] + u[1] * r0, shooter[2] + st["height"] + 0.5 + u[2] * r0]
+    vel = [m["speed"] * k for k in u]
+    dt = 0.0005
+    while not (vel[2] < 0 and b[2] <= tgt[2]):
+        b = [b[k] + vel[k] * dt for k in range(3)]
+        vel[2] -= m["gravity"] * dt
+    return math.hypot(b[0] - tgt[0], b[1] - tgt[1])
+
+
+class TestMortar(unittest.TestCase):
+    def test_arc_lands_on_static_target(self):
+        for clear in (True, False):
+            for r in (40, 100, 180):
+                tgt = (r * 0.6, r * 0.8, 0.0)
+                a = Combat(CFG, FakeWorld(clear)).attack(obs([GUN, MORTAR]), target(tgt))
+                if not clear and r < 150:
+                    continue  # high arc under ~150 m is past max_pitch 1.3: no lob
+                self.assertLess(shell_miss(a["aim"], (0, 0, 0), tgt), 3.0, (r, clear))
+                self.assertTrue(clear or a["aim"][1] > math.pi / 4)
+
+    def test_fires_only_when_aimed_and_far(self):
+        c = Combat(CFG, None)
+        aim = c.attack(obs([GUN, MORTAR]), target((100, 0, 0)))["aim"]
+        self.assertTrue(c.attack(obs([GUN, MORTAR], aim=aim), target((100, 0, 0)))["fire"][1])
+        self.assertFalse(c.attack(obs([GUN, MORTAR]), target((100, 0, 0)))["fire"][1])  # aim flat: off
+        self.assertFalse(c.attack(obs([GUN, MORTAR], aim=aim), target((10, 0, 0)))["fire"][1])
+        self.assertFalse(c.attack(obs([GUN, MORTAR], aim=aim), target((400, 0, 0)))["fire"][1])  # out of reach
+
+    def test_no_mortar_same_as_before(self):
+        c = Combat(CFG, None)
+        a, b = c.attack(obs([GUN, None]), target((100, 0, 0))), c.attack(obs([GUN, MORTAR]), target((5, 0, 0)))
+        self.assertEqual(a["aim"], Combat(CFG, None).attack(obs([GUN, None]), target((100, 0, 0)))["aim"])
+        self.assertEqual(b["fire"][1], False)
+
+    def test_cheap(self):
+        c, o, tg = Combat(CFG, None), obs([GUN, MORTAR]), target((100, 20, 0), (5, 3, 0))
+        t0 = time.perf_counter()
+        for _ in range(1000):
+            c.attack(o, tg)
+        self.assertLess((time.perf_counter() - t0), 1.0)  # < 1 ms per call
+
+
 if __name__ == "__main__":
     unittest.main()

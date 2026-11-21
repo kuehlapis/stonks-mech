@@ -14,6 +14,8 @@ import mechfight as mf
 SWEEP = math.radians(50)      # look-around half-width while walking
 STRAFE_MIN = 0.25             # s between strafe reversals (random, min)
 STRAFE_MAX = 0.7             # ... and max
+STRAFE_BOOST_E = 999.0        # boost while strafing when energy is above this (999 = off)
+STRAFE_JUMP = 0.0             # chance to hop on each strafe reversal (0 = off)
 CORNER_DIST = 60.0            # m: a threat this close can't be outrun (same walk speed)
 CORNER_ENERGY = 20.0          # below this energy we can't boost away
 FIGHT_EDGE = 1.2              # fight if our time-to-kill < this x theirs
@@ -41,6 +43,20 @@ FARM_NPC_RANGE = 120.0        # m: shoot visible drones closer than this
 FARM_NPC_MIN, FARM_NPC_MAX = 55.0, 100.0   # m: keep drones in this band (aggro 45 m, their bullets are slow)
 FARM_CRATE_RANGE = 80.0       # m: shoot visible crates closer than this
 FARM_CRATE_NEAR = 25.0        # m: walk toward a crate until this close
+PEEK_AFTER_BEAM = False       # push an enemy during its laser cooldown (after its beam) instead of ducking/backing off
+RELOAD_PUSH = False           # push a gun-only enemy during its estimated reload
+REAR_TURN = False             # on a rear hit (x1.5 damage), turn the torso to its bearing first
+BURN_ENDGAME = False          # from final-zone time - BURN_LEAD s: no fights unless cornered, hold the final center
+BURN_LEAD = 40.0              # s before the radius-0 burn
+REGEN_BREAK = False           # after a trade, no voluntary fights for regen_delay s (let HP regen)
+REGEN_HIDE = False            # with REGEN_BREAK: in the regen window, run to cover from all hunters, then walk quiet, no fire
+BURN_QUIET = False            # with BURN_ENDGAME: hold in cover inside the final circle; fire only while exposed
+RUN_MODE = False              # never start a fight: on contact break LOS / run to the far side of the next circle
+RUN_ENERGY = 40.0             # ... boost only above this energy (escape reserve)
+RUN_FINISH = 0.35             # ... but finish a lone visible enemy below this fraction of its max HP
+RUN_HIDE_S = 30.0             # s: in RUN_MODE stay in cover this long after the last sighting (squad shared memory)
+DROP_SEEN_S = 0.0             # s: skip drops if a real enemy was seen this recently (0 = off)
+DROP_SAFE_R = 0.0             # m: skip a drop with any remembered enemy this close (0 = off)
 LASER_DUCK = 10.0             # m: duck to cover this close when a fought enemy charges its laser (0 = off)
 DODGE = True                  # sidestep visible projectiles that would hit us
 DODGE_T, DODGE_MARGIN = 0.9, 0.7   # s look-ahead; m added to our hit radius
@@ -66,6 +82,13 @@ class Brain:
         self._mode = None
         self._fight_id, self._fight_t = None, -1e9
         self._evade_id, self._evade_t = None, 0.0
+        self._beam_t = {}   # enemy id -> time of its last laser beam
+        self._seen_t = -1e9   # last time a real enemy was visible
+        self._run_spot = None # where RUN_MODE last broke line of sight
+        self._trade_t = -1e9  # last time we dealt or took mech damage
+        zp = (self.cfg.get("zone") or {}).get("phases") or []
+        self._burn_t = sum(ph.get("hold_s", 0) + ph.get("shrink_s", 0) for ph in zp) - BURN_LEAD if zp else 375.0
+        self._gun = {}      # enemy id -> [burst start, last gun hit, hits in burst]
 
     # --- never crash: every module call goes through _call ---
 
@@ -119,6 +142,10 @@ class Brain:
             p = self._call(self.economy, "pick", obs)
             if p is not None:
                 action["pick"] = p
+        if REAR_TURN:
+            for ev in obs.get("events") or ():
+                if ev.get("type") == "damaged" and ev.get("rear") and ev.get("bearing") is not None:
+                    action["aim"] = [ev["bearing"], (action.get("aim") or [0, 0])[1]]
         mf.draw.label(mode)
         return action
 
@@ -142,12 +169,18 @@ class Brain:
         me = obs["self"]
         pos = me["pos"]
         self._call(P, "update", obs)
+        if PEEK_AFTER_BEAM or RELOAD_PUSH:
+            self._track_shots(obs, t)
+        if REGEN_BREAK and any(ev.get("type") in ("damaged", "hit") for ev in obs.get("events") or ()):
+            self._trade_t = t
         threats = getattr(P, "threats", None)
         threats = [x for x in threats if isinstance(x, dict) and x.get("pos")] if isinstance(threats, list) else []
         engaged = self._engaged = self._call(P, "engaged_by", t)
         threatened = self._call(P, "threatened_by", obs, self.world)
         visible = sorted((x for x in threats if x.get("visible")), key=lambda x: _dist(pos, x["pos"]))
         endgame = obs.get("alive", 16) <= END_ALIVE
+        if any(not x.get("virtual") for x in visible):
+            self._seen_t = t
         foe = engaged or threatened
 
         # 1. Zone first when urgent: travel, but shoot back with the gun if someone is on us
@@ -158,6 +191,39 @@ class Brain:
             if foe and not foe.get("virtual"):
                 return {**self._go(obs, goal, boost=boost), **self._gun_only(obs, foe)}, "zone"
             return {**self._go(obs, goal, boost=boost), **self._aim(obs, threats, threatened, goal)}, "zone"
+
+        # 1b. Burn endgame: placement is decided at the burn, so keep HP; fight only when cornered
+        if BURN_ENDGAME and t >= self._burn_t:
+            if engaged and not engaged.get("virtual") and _dist(pos, engaged["pos"]) < CORNER_DIST:
+                return self._fight(obs, engaged), "burn-fight"
+            hunters = [x for x in threats if not x.get("virtual")]
+            if BURN_QUIET and hunters:
+                return self._hide(obs, hunters, engaged, "burn-quiet")
+            hold = self._call(S, "final_center", obs) or self._next_center(obs)
+            aim = self._gun_only(obs, engaged) if engaged and not engaged.get("virtual")                 else self._aim(obs, threats, threatened, hold)
+            return {**self._go(obs, hold, quiet=not engaged), **aim}, "burn"
+
+        # 1c. Regen window: break line of sight to every hunter, then stay quiet so regen runs
+        hunters = [x for x in threats if not x.get("virtual")]
+        if REGEN_HIDE and REGEN_BREAK and hunters and me.get("hp", 0) < me.get("max_hp", 0)                 and t - self._trade_t < (self.cfg.get("mech") or {}).get("regen_delay", 5):
+            if engaged and not engaged.get("virtual") and _dist(pos, engaged["pos"]) < CORNER_DIST:
+                return self._fight(obs, engaged), "regen-fight"
+            return self._hide(obs, hunters, engaged, "regen-hide")
+
+        # 1d. Run mode: never start a fight; fire back only when cornered or to finish a lone weak enemy
+        if RUN_MODE and (hunters or (foe and not foe.get("virtual"))):
+            if engaged and not engaged.get("virtual") and _dist(pos, engaged["pos"]) < CORNER_DIST:
+                return self._fight(obs, engaged), "run-fight"
+            if len(visible) == 1 and not visible[0].get("virtual") and visible[0].get("hp") is not None                     and visible[0]["hp"] < RUN_FINISH * (visible[0].get("max_hp") or 1e9):
+                return self._fight(obs, visible[0]), "run-finish"
+            hs = hunters or [foe]
+            return self._hide(obs, hs, engaged, "run", fallback=self._far_point(obs, hs), reserve=RUN_ENERGY)
+        if RUN_MODE and t - self._seen_t < RUN_HIDE_S and not foe:
+            # nobody in view but the squad still remembers us: stay put, quiet, facing the last sighting
+            spot = self._run_spot or pos
+            dg = self._call(P, "danger", t, pos, 1e9) or []
+            face = self._face(obs, _bearing(pos, dg[0]["pos"])) if dg else self._aim(obs, threats, threatened, spot)
+            return {**self._go(obs, spot, quiet=True), **face}, "run-wait"
 
         # 2. Under fire or in someone's sights
         if foe:
@@ -192,6 +258,9 @@ class Brain:
             if cover and engaged and not foe.get("virtual") and not others and ratio is not None                     and _dist(pos, cover) > EVADE_MAX and ratio < EVADE_FIGHT:
                 self._fight_id, self._fight_t = fid, t
                 return self._fight(obs, foe), "fight-far"  # cover too far to reach under fire: trade instead
+            if cover and engaged and not foe.get("virtual") and not others and self._push_window(obs, foe):
+                self._fight_id, self._fight_t = fid, t
+                return self._fight(obs, foe), "push"
             if cover:
                 lasery = self._lasery(foe)
                 hp_frac = me.get("hp", 0) / (me.get("max_hp") or 1)
@@ -214,7 +283,8 @@ class Brain:
             return self._fight(obs, self._npc_target(npc)), "npc"
 
         # 3. A lone, weak enemy in view: finish it (its cubes and weapons drop)
-        if visible:
+        if visible and not (REGEN_BREAK and t - self._trade_t < (self.cfg.get("mech") or {}).get("regen_delay", 5)
+                            and me.get("hp", 0) < me.get("max_hp", 0)):
             e = visible[0]
             others = visible[1:]
             if not e.get("virtual") and not others and self._finishable(obs, e, endgame):
@@ -250,7 +320,7 @@ class Brain:
             return {**self._go(obs, dr), **self._aim(obs, threats, threatened, dr)}, "drop"
 
         # 6. Farm drones and crates while nobody is around
-        farm = self._farm_target(obs, threats, endgame)
+        farm = None if RUN_MODE and t - self._seen_t < RUN_HIDE_S else self._farm_target(obs, threats, endgame)
         if farm:
             tgt, kind = farm
             d = _dist(pos, tgt["pos"])
@@ -370,6 +440,10 @@ class Brain:
             if dist * 1.3 / walk > (d.get("lands_in") or 0.0) + DROP_LATE:
                 continue
             if any(_dist(th["pos"], dp) < DROP_CLEAR for th in threats):
+                continue
+            if DROP_SEEN_S > 0 and obs.get("t", 0.0) - self._seen_t < DROP_SEEN_S:
+                continue
+            if DROP_SAFE_R > 0 and self._call(self.perception, "danger", obs.get("t", 0.0), dp, DROP_SAFE_R):
                 continue
             if best is None or dist < best[0]:
                 best = (dist, dp)
@@ -496,7 +570,70 @@ class Brain:
     def _lasery(e):
         return bool(e.get("charging")) or "laser" in (e.get("weapons") or [])
 
+    def _exposed(self, obs, hunters):
+        """True if any of the 5 nearest hunters has line of sight to us (map-free: any is visible)."""
+        w, p = self.world, obs["self"]["pos"]
+        if w is None:
+            return any(h.get("visible") for h in hunters)
+        eh = (self.cfg.get("mech") or {}).get("eye_height", 8)
+        me = (p[0], p[1], p[2] + eh)
+        near = sorted(hunters, key=lambda h: _dist(p, h["pos"]))[:5]
+        return any(w.los((h["pos"][0], h["pos"][1], h["pos"][2] + eh), me) for h in near)
+
+    def _far_point(self, obs, hunters):
+        """Point at 0.6 x next radius around the next center, farthest from every known enemy."""
+        z = obs.get("zone") or {}
+        c, r = z.get("next_center") or obs["self"]["pos"][:2], 0.6 * (z.get("next_radius") or 0.0)
+        ps = [h["pos"] for h in hunters] + [h["pos"] for h in self._call(self.perception, "danger", obs.get("t", 0.0),
+                                                                          obs["self"]["pos"], 1e9) or []]
+        pts = [[c[0] + r * math.cos(k * math.pi / 6), c[1] + r * math.sin(k * math.pi / 6)] for k in range(12)]
+        return max(pts, key=lambda q: min(_dist(q, h) for h in ps))
+
+    def _hide(self, obs, hunters, engaged, mode, fallback=None, reserve=-1.0):
+        """Full speed to cover while exposed (returning gun fire if shot); once hidden walk quiet, hold fire."""
+        p = obs["self"]["pos"]
+        near = min(hunters, key=lambda h: _dist(p, h["pos"]))
+        cover = None if self._slow() else self._call(self.survival, "find_cover", obs, hunters)
+        if self._exposed(obs, hunters):
+            aim = self._gun_only(obs, engaged) if engaged and not engaged.get("virtual")                 else self._face(obs, _bearing(p, near["pos"]))
+            # boost only toward cover (a LOS break); walk to the fallback point
+            boost = bool(cover) and obs["self"].get("energy", 0) > reserve
+            return {**self._go(obs, cover or fallback or self._next_center(obs), boost=boost), **aim}, mode
+        self._run_spot = cover or p
+        return {**self._go(obs, cover or p, quiet=True), **self._face(obs, _bearing(p, near["pos"]))}, mode
+
+    def _track_shots(self, obs, t):
+        for b in obs.get("beams") or ():
+            if b.get("kind") == "laser" and b.get("by") is not None:
+                self._beam_t[b["by"]] = t - b.get("age", 0)
+        rl = ((self.cfg.get("weapons") or {}).get("gun") or {}).get("reload", 2.4)
+        for ev in obs.get("events") or ():
+            if ev.get("type") == "damaged" and ev.get("weapon") == "gun" and ev.get("by") is not None:
+                g = self._gun.setdefault(ev["by"], [t, -1e9, 0])
+                if t - g[1] > rl:
+                    g[0], g[2] = t, 0
+                g[1] = t
+                g[2] += 1
+
+    def _push_window(self, obs, e):
+        """True while e can't shoot back well: its laser is on cooldown, or its gun is (estimated) reloading."""
+        t, fid = obs.get("t", 0.0), e.get("id")
+        W = self.cfg.get("weapons") or {}
+        if PEEK_AFTER_BEAM and not e.get("charging") and                 t - self._beam_t.get(fid, -1e9) < (W.get("laser") or {}).get("cooldown", 1.65):
+            return True
+        g = self._gun.get(fid)
+        if RELOAD_PUSH and g and (e.get("weapons") or []) == ["gun"]:
+            gw = W.get("gun") or {}
+            cd, rl = gw.get("cooldown", 0.24), gw.get("reload", 2.4)
+            # shortcut: counts only hits on us (misses are unseen), so a magazine ends by time, not shot count
+            mag_out = g[2] >= gw.get("mag", 12) or t - g[0] >= 0.8 * gw.get("mag", 12) * cd
+            return mag_out and 3 * cd < t - g[1] < rl
+        return False
+
     def _fight(self, obs, e):
+        if (PEEK_AFTER_BEAM or RELOAD_PUSH) and self._push_window(obs, e):
+            return {**self._strafe_move(obs, e["pos"], away=min(0.0, self._range_pref(obs, e)) - 0.4),
+                    **self._attack(obs, e)}
         if LASER_DUCK > 0 and e.get("charging") and e.get("visible") and not self._slow():
             # a charging laser can't be dodged (hitscan): duck behind cover if it is a few steps away
             cover = self._call(self.survival, "find_cover", obs, [e])
@@ -571,7 +708,12 @@ class Brain:
             dx, dy = nc[0] - p[0], nc[1] - p[1]
             L = math.hypot(dx, dy) or 1.0
             mx, my = dx / L, dy / L
-        return {"move": [mx, my], "boost": bool(boost) and me.get("energy", 0) > 15, "jump": False}
+        e = me.get("energy", 0)
+        boost = (bool(boost) and e > 15) or e > STRAFE_BOOST_E  # boost-strafe: 19.5 vs 11.7 m/s sideways
+        boost = boost and me.get("grounded", False)  # boost in the air is a jet (slow, visible climb)
+        # a hop on a strafe reversal breaks a shooter's straight-line lead (gravity curve)
+        jump = STRAFE_JUMP > 0 and self._strafe_t == t and me.get("grounded", False) and self.rng.random() < STRAFE_JUMP
+        return {"move": [mx, my], "boost": boost, "jump": bool(jump)}
 
     def _safe_cube(self, obs, threats):
         me = obs["self"]

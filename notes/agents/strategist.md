@@ -4,6 +4,9 @@ Owns: `notes/ideas/`. Rules: `CLAUDE.md` (Agent journals). Goal: `objective.md`.
 
 ## Current task
 
+Iteration 3 brief (moderator): why we die early vs the squad; 2–4 big strategy changes to reach 6+. Status: **written** `notes/ideas/plateau.md` (P1 run doctrine, P2 burn endgame, P3 edge ghost, P4 lone-hunter kill), ranked by expected death time per the Critic's floor-effect finding.
+
+
 Iteration 1 brief (moderator): write `notes/ideas/game-plan.md`, the survival-first plan: phase plan, fight-or-flee rule, loot and growth, supply drops, endgame, and staging into M1–M4, with the expected effect on mean score per rule and how to measure each in the local simulator. Status: **revised after the Critic's review** (`notes/reviews/game-plan.md`, 3 high, 6 medium, 5 low findings; all fixed, see the plan's "Changes after review").
 
 Second brief, same iteration (moderator): write `notes/ideas/strategies.md`, alternative whole-match styles to A/B against edge-hold (pacifist hider, camper/ambusher, plus others), each with rules, module needs, counters, expected score, sim test, how it does against a field of copies (other teams' AI bots), and one review metric with a pass line. Status: **written.**
@@ -33,6 +36,7 @@ Done when the Critic has reviewed `game-plan.md` and the high-impact findings ar
 | Open zone facts: when `next_*` updates, `in_zone` test, dps after 415 s | Final-burn tactics (EG2) and the 8:00 rule depend on them | Researcher to check; adapt EG2/EG4 | open (asked in §0 and §11) |
 | Style ranking (strategies.md) is unmeasured | Picks the A/B order for the builders | Run the 3 recommended A/Bs on pools (a), (b), (d); judge each by its §8 metric | open |
 | Field of rival AI bots not modeled | Track opponents will copy obvious ideas; styles that win only against brawlers will fall | Ask the Tester for pool (d), the mirror field (4 edge-holders, 4 hiders, 4 farmers, 3 adaptive) | open |
+| Plateau proposals P1–P4 unmeasured | Score can't see survival time (floor effect); only death_t shows progress | A/B P1 then P1+P2 on paired seeds, judge by death_t median and % alive 300/400 s | open |
 | Whether plating heals, and whether gun can fire while laser charges | Upgrade order and laser+gun DPS | Researcher or sim test | open |
 
 ## Lessons
@@ -45,6 +49,10 @@ Done when the Critic has reviewed `game-plan.md` and the high-impact findings ar
 - Label rules with distinct prefixes from the start (I first used E1 for both evidence and an endgame rule and had to rename).
 
 ## Log (newest first)
+
+- 2026-11-22, iteration 3 (plateau): wrote `notes/ideas/plateau.md`. Evidence: Critic `squad-sim-2026-11-22.md` (squad median death 395 s, 19/30 zone; we die ~148 s, score ≈ kills + late squad deaths), `squad.py` (hunters walk, boost only out of zone; hunters = 1 + dead + time; non-hunters fire < 60 m). Own 14-match sim (finished after report): score 2.0, median death 100 s, 57% dead < 120 s, 12/14 by gun; squad 147/210 zone deaths. Added to plateau.md. Lesson: check what the score metric can see before tuning; aggression's earlier gain was measured on a floored score. Next: Tester A/B P1, P1+P2 by death_t.
+
+- 2026-11-22, iteration 3: wrote `notes/ideas/movesets.md` (moves: boost-strafe, hop, backpedal, peek, roof escape, silent walk; weapon matchups and how to exploit each). Proposed A/B: `m_boost`, `m_hop`, `m_both`, `e_far`. Mortar pickup rejected (no aim, cook-off). Results pending.
 
 - 2026-11-21, iteration 1 (third task): revised `notes/ideas/game-plan.md` for the Critic's review. High: (1) engaged = damaged by a mech only, threatened = hide; M1 fight-back needs no enemy laser unless we hold one, `e.hp ≤ 0.8 × self.hp`; (2) `find_cover` with `world.los` over 16 points, boost to cover from lasers; (3) new Z4: face outward during holds while the live edge is > 30 m away, inward after. Medium: Z2 clamp `max(0, …)` + snap off `blocked`; Z1 uses `self.in_zone`; `find_cover` capped at 32 `los` calls (about 10 ms), cached 1 s; unseen-attacker virtual threat; N1 stuck rule; estimates labeled guesses + measurement order. Low: all fixed (margin radius + 12, bisector, range order, gun-only retreat, drones). Added the "Changes after review" table. No disagreement; on #3 I chose facing over a backed wall spot for M1 (cheaper; wall in M2). Next: builders start M1; the Tester's first four measurements in §10.
 

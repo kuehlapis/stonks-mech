@@ -74,6 +74,18 @@ class TestLoot(unittest.TestCase):
         self.assertEqual(e.take(o), {})
         self.assertIsNone(e.wanted_pickup(o, []))
 
+    def test_mortar_switch(self):
+        import economy
+        economy.TAKE_MORTAR = True
+        try:
+            e = Economy(CFG)
+            o = obs_with([{"id": 8002, "kind": "mortar", "pos": at(OBS[0], 1, 0)}])
+            self.assertEqual(e.take(o), {"take": 8002})
+            laser = {"kind": "laser", "cooldown": 0, "charge": 0}
+            self.assertEqual(e.take(obs_with(o["pickups"], (GUN, laser))), {})  # ranked below laser
+        finally:
+            economy.TAKE_MORTAR = False
+
     def test_full_slots_drop_non_gun(self):
         e = Economy(CFG)
         p = [{"id": 8003, "kind": "laser", "pos": at(OBS[0], 1, 1)}]

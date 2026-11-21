@@ -141,6 +141,140 @@ class TestPriority(unittest.TestCase):
         self.assertEqual(a["pick"], 2)
 
 
+class TestMoves(unittest.TestCase):
+    mode = TestPriority.mode
+
+    def setUp(self):
+        import brain as B
+        self.B = B
+        self.saved = {k: getattr(B, k) for k in ("PEEK_AFTER_BEAM", "RELOAD_PUSH", "REAR_TURN", "BURN_ENDGAME", "REGEN_BREAK", "REGEN_HIDE", "BURN_QUIET", "RUN_MODE", "DROP_SAFE_R", "DROP_SEEN_S")}
+
+    def tearDown(self):
+        for k, v in self.saved.items():
+            setattr(self.B, k, v)
+
+    def test_peek_after_beam_pushes_instead_of_evading(self):
+        self.B.PEEK_AFTER_BEAM = True
+        b = brain(perception=Fake(threats=[ENEMY], engaged_by=ENEMY), survival=Fake(find_cover=[-20.0, 0.0]))
+        o = obs0()
+        o["beams"] = [{"by": 7, "kind": "laser", "path": [[100, 0, 7], [0, 0, 7]], "age": 0.05}]
+        self.assertEqual(self.mode(b, o)[1], "push")
+        o["t"] = 12.0  # cooldown 1.65 s over
+        o["beams"] = []
+        self.assertEqual(self.mode(b, o)[1], "evade")
+
+    def test_reload_push_after_gun_burst(self):
+        self.B.RELOAD_PUSH = True
+        e = dict(ENEMY, weapons=["gun"])
+        b = brain(perception=Fake(threats=[e], engaged_by=e))
+        o = obs0()
+        for i in range(12):
+            o["t"] = 10.0 + 0.24 * i
+            o["events"] = [{"type": "damaged", "amount": 45, "weapon": "gun", "bearing": 0.0, "by": 7}]
+            b._track_shots(o, o["t"])
+        o["events"] = []
+        o["t"] += 0.3
+        self.assertFalse(b._push_window(o, e))  # could still be firing
+        o["t"] += 0.8
+        self.assertTrue(b._push_window(o, e))
+        o["t"] += 2.0
+        self.assertFalse(b._push_window(o, e))  # reload over
+
+    def test_rear_turn_faces_bearing(self):
+        self.B.REAR_TURN = True
+        o = obs0()
+        o["events"] = [{"type": "damaged", "amount": 45, "weapon": "gun", "bearing": 2.5, "by": 9, "rear": True}]
+        a, _ = self.mode(brain(), o)
+        self.assertEqual(a["aim"][0], 2.5)
+
+    def test_burn_endgame_holds_center(self):
+        self.B.BURN_ENDGAME = True
+        e = dict(ENEMY, weapons=["gun"])
+        b = brain(perception=Fake(threats=[e], engaged_by=e))
+        o = obs0()
+        o["t"] = 380.0
+        a, m = self.mode(b, o)
+        self.assertEqual(m, "burn")
+        self.assertFalse(a["fire"][1])  # gun only
+
+    def test_regen_break_skips_open_fight(self):
+        self.B.REGEN_BREAK = True
+        e = dict(ENEMY, weapons=["gun"], pos=[60.0, 0.0, 0.0], hp=100.0)
+        b = brain(perception=Fake(threats=[e]))
+        o = obs0()
+        o["self"]["hp"] = 900
+        o["events"] = [{"type": "hit", "target": 7, "amount": 45, "weapon": "gun"}]
+        self.assertNotIn(self.mode(b, o)[1], ("finish", "open"))
+        o["events"] = []
+        o["t"] = 16.0
+        self.assertIn(self.mode(b, o)[1], ("finish", "open"))
+
+    def test_regen_hide_runs_then_goes_quiet(self):
+        self.B.REGEN_BREAK = self.B.REGEN_HIDE = True
+        e = dict(ENEMY, weapons=["gun"])
+        b = brain(perception=Fake(threats=[e]), survival=Fake(find_cover=[-20.0, 0.0]))
+        o = obs0()
+        o["self"]["hp"] = 900
+        o["events"] = [{"type": "hit", "target": 7, "amount": 45, "weapon": "gun"}]
+        a, m = self.mode(b, o)
+        self.assertEqual(m, "regen-hide")
+        self.assertEqual(a["fire"], [False, False])  # seen but not shot: run, don't fire
+        o["events"] = []
+        e["visible"] = False  # out of its sight now
+        a, m = self.mode(b, o)
+        self.assertEqual(m, "regen-hide")
+        self.assertEqual(a["fire"], [False, False])
+
+    def test_burn_quiet_fires_only_when_exposed(self):
+        self.B.BURN_ENDGAME = self.B.BURN_QUIET = True
+        e = dict(ENEMY, weapons=["gun"])
+        b = brain(perception=Fake(threats=[e], engaged_by=e), survival=Fake(find_cover=[-20.0, 0.0]))
+        o = obs0()
+        o["t"] = 380.0
+        a, m = self.mode(b, o)
+        self.assertEqual(m, "burn-quiet")
+        self.assertTrue(a["fire"][0])  # exposed and shot at: return gun fire
+        e["visible"] = False
+        b.perception = Fake(threats=[e])
+        a, m = self.mode(b, o)
+        self.assertEqual(a["fire"], [False, False])
+
+    def test_run_mode_runs_unless_weak(self):
+        self.B.RUN_MODE = True
+        e = dict(ENEMY, weapons=["gun"], pos=[90.0, 0.0, 0.0], hp=1000.0)
+        b = brain(perception=Fake(threats=[e]))
+        a, m = self.mode(b, obs0())
+        self.assertEqual(m, "run")
+        self.assertEqual(a["fire"], [False, False])
+        e["hp"] = 300.0  # < 35% of 1400
+        self.assertEqual(self.mode(b, obs0())[1], "run-finish")
+
+    def test_drop_safe_r_skips_remembered_enemy(self):
+        o = obs0()
+        o["drops"] = [{"id": 1, "pos": [30.0, 0.0, 0.0], "radius": 8, "lands_in": 10, "capture_s": 4, "progress": 0, "holder": None}]
+        b = brain(perception=Fake(danger=[{"id": 9, "pos": [60.0, 0.0, 0.0]}]))
+        self.assertIsNotNone(b._drop_target(o, []))
+        self.B.DROP_SAFE_R = 80.0
+        self.assertIsNone(b._drop_target(o, []))
+
+    def test_run_mode_waits_hidden_and_skips_farm(self):
+        self.B.RUN_MODE = True
+        b = brain(perception=Fake(threats=[dict(ENEMY, weapons=["gun"], hp=1000.0)]))
+        self.assertEqual(self.mode(b, obs0())[1], "run")
+        b.perception = Fake(threats=[])  # lost sight of it
+        o = obs0()
+        o["t"] = 30.0
+        a, m = self.mode(b, o)
+        self.assertEqual(m, "run-wait")
+        self.assertEqual(a["fire"], [False, False])
+        o["t"] = 41.0  # 31 s after the sighting: free again
+        self.assertNotEqual(self.mode(b, o)[1], "run-wait")
+        b._seen_t = 40.0
+        self.B.DROP_SEEN_S = 10.0
+        o["drops"] = [{"id": 1, "pos": [30.0, 0.0, 0.0], "radius": 8, "lands_in": 10, "capture_s": 4, "progress": 0, "holder": None}]
+        self.assertIsNone(b._drop_target(o, []))
+
+
 class TestRobust(unittest.TestCase):
     def test_raising_modules_still_move_and_aim(self):
         b = brain()

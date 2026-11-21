@@ -28,7 +28,7 @@ Track score: **1.6** (first submission, commit f803b02; AAR 3). The squad sim's 
 
 Practice matches are **us vs 15 house bots (4 easy, 4 medium, 4 hard, 3 expert) acting as one squad**. They share vision, **never fight each other**, and **hunt us weakest first** (one early, more as we kill them, all of them late). So:
 - Our place = 1 + squad bots alive when we die. Score = 15 − (squad bots still alive at our death).
-- Points come from **killing hunters** (and from outlasting them in the final zone collapse at 415 s, where the most HP wins).
+- Points are **placement** (16 − place, death order), not kills. Squad bots leave the count by our kills, by the zone, or by burning in the final collapse at 415 s, where the most HP survives longest. **Alive at 415 s with more HP than every remaining hunter = 1st place.** Kills help only by removing mechs that could outlast us.
 - Hiding alone does not work; the early version that hid scored about 1.3 in the squad sim.
 
 ### How to submit (teammate)

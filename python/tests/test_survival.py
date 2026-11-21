@@ -171,6 +171,68 @@ class TestCover(unittest.TestCase):
         s.hold_point(o), s.zone_goal(o), s.hold_facing(o), s.final_center(o)
 
 
+class TestFunnel(unittest.TestCase):
+    def _hunters(self):
+        return [threat(_out(40)), threat(_out(45)), threat((_out(42)[0] + 10, _out(42)[1] + 10))]
+
+    def test_off_is_identical(self):
+        hs = self._hunters()
+        a, b = Survival(CFG, WORLD), Survival(CFG, WORLD)
+        a.nav = b.nav = NAV
+        r0 = a.find_cover(obs(_out(5)), hs)
+        try:
+            SV.FUNNEL, SV.FUNNEL_MIN = True, 99  # on but never triggers: same path as off
+            self.assertEqual(b.find_cover(obs(_out(5)), hs), r0)
+        finally:
+            SV.FUNNEL, SV.FUNNEL_MIN = False, 3
+
+    def test_picks_low_exposure_cell(self):
+        hs = self._hunters()
+        s = Survival(CFG, WORLD)
+        s.nav = NAV
+        try:
+            SV.FUNNEL = True
+            p = s.find_cover(obs(_out(5)), hs)
+        finally:
+            SV.FUNNEL = False
+        self.assertIsNotNone(p)
+        eye = OBS0["self"]["stats"]["eye_height"]
+        h2 = OBS0["self"]["stats"]["height"] / 2
+        seen = sum(WORLD.los((h["pos"][0], h["pos"][1], h["pos"][2] + eye), (p[0], p[1], p[2] + h2)) for h in hs)
+        self.assertLessEqual(seen, 2)
+        self.assertLessEqual(s.los_calls, SV.LOS_CAP)
+
+    def test_zone_lean_moves_away(self):
+        o = obs((100, 0), next_center=[0, 0], next_radius=200)
+        base = Survival(CFG, None)._hold_line(o, o["zone"], o["self"]["stats"], [0, 0], o["self"]["pos"])
+        o["mechs"] = [{"kind": "mech", "pos": [0, 150, 0]}]
+        try:
+            SV.ZONE_LEAN = True
+            lean = Survival(CFG, None)._hold_line(o, o["zone"], o["self"]["stats"], [0, 0], o["self"]["pos"])
+        finally:
+            SV.ZONE_LEAN = False
+        self.assertLess(lean[1], base[1] - 10)  # pushed to the side away from the hunter
+
+    def test_funnel_timing(self):
+        rng = random.Random(2)
+        s = Survival(CFG, WORLD)
+        s.nav = NAV
+        st = OBS0["self"]["stats"]
+        ts = []
+        for _ in range(100):
+            me = (rng.uniform(-400, 400), rng.uniform(-400, 400))
+            hs = [threat((me[0] + rng.uniform(-150, 150), me[1] + rng.uniform(-150, 150)), 3) for _ in range(6)]
+            o = obs(me, next_radius=2000)
+            s.los_calls = 0
+            t0 = time.perf_counter()
+            s._funnel(o, [h["pos"] for h in hs], st, st["eye_height"], o["self"]["pos"], [0, 0], 5000, NAV)
+            ts.append(time.perf_counter() - t0)
+            self.assertLessEqual(s.los_calls, SV.LOS_CAP)
+        ts.sort()
+        print(f"funnel median {ts[50]*1e3:.2f} ms worst {ts[-1]*1e3:.2f} ms", file=sys.stderr)
+        self.assertLess(ts[50], 0.005)
+
+
 class TestTiming(unittest.TestCase):
     def test_timing(self):
         rng = random.Random(1)

@@ -6,6 +6,7 @@ ORDER = ["plating", "nanites", "armor", "laser_damage", "sensors", "laser_charge
          "gun_damage", "gun_rate", "gun_mag", "gyros", "jets", "reactor", "capacitor", "gun_velocity",
          "lightning_efficiency", "lightning_range", "lightning_chain",
          "mortar_splash", "mortar_reload", "mortar_velocity", "laser_pierce"]
+TAKE_MORTAR = False  # A/B switch: also take a mortar into an empty special slot (ranked last)
 WANT = ["laser", "lightning"]   # weapon pickups worth taking, best first (the gun is always kept)
 # L1 tuning constants (game-plan §5).
 ETA_EARLY_S = 15.0       # s: walk this far for a laser before LATE_T
@@ -34,7 +35,8 @@ class Economy:
         return min(range(len(ch)), key=lambda i: (self.rank.get(ch[i].get("id"), len(self.rank)), i))
 
     def _rank(self, kind):
-        return WANT.index(kind) if kind in WANT else None
+        want = WANT + ["mortar"] if TAKE_MORTAR else WANT
+        return want.index(kind) if kind in want else None
 
     def _lasers(self, obs):
         """Weapon pickups we would take now (better than our non-gun weapon, not in backoff), or []."""

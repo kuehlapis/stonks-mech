@@ -4,10 +4,13 @@ Owns: `python/bot.py`, `notes/decisions.md`, `notes/interfaces.md`, `notes/score
 
 ## Current task
 
-Iteration 2: validate M1, diagnose remaining zone deaths, and continue simulator phase 2.
+Iteration 3 (2026-11-22): raise the practice score (placement vs the 15-bot squad; track 1.6, sim ~1.9). A/B strategies, movesets and weapon pickups in the squad sim; submit only when the sim predicts ≥ 6.00 (user rule). No commits unless the user asks.
 
 ## Plan
 
+Iteration 3: (a) strategy batch `run_sq.sh`, (b) moveset/pickup batch `run_moves.sh`, (c) AAR + results rows, (d) adopt variants > 2 SE over `s_base`, (e) build peek-after-beam and reload-push if movesets pay.
+
+Iteration 2 plan (superseded):
 1. Diagnose the seven M1 zone deaths by seed and phase; fix the responsible zone or navigation behavior.
 2. Finish simulator phase 2, starting with weapons and pickups; add cubes/upgrades, NPCs and drops after that.
 3. Add varied opponents, then rerun 100-match proxies and full guardrails.
@@ -20,13 +23,18 @@ Done when zone deaths are eliminated, simulator phase 2 is complete, and a robus
 | What | Why (effect on score or proxy) | How to be better | Status |
 |---|---|---|---|
 | M1 still dies to the zone | 7% zone deaths in the 100-match proxy misses the 0% target and costs placements | Diagnose the seven zone-death trajectories and fix Nav/zone handling | open |
+| Sim plateau ~1.9 vs 6.00 target | Placement vs the squad depends on outlasting hunters; tuned aggression barely moves it | Measure hiding, movesets and pickups; then the burn endgame (most HP at 415 s) | in progress |
+| Unchecked facts from other sessions | The squad claim was doubted, then confirmed; waste either way | Check a claim against `protocol.md` or ask the user before acting on it | open |
 | Simulator lacks weapons and economy | The current proxy excludes non-gun weapons, loot, upgrades, NPCs and drops | Continue phase 2 after diagnosing zone deaths | open |
 
 ## Lessons
 
-(none yet)
+- Hidden stderr (`2>/dev/null`) turned a missing-files crash into a silent empty batch. Always log errors to a file.
+- A working-tree reset can drop uncommitted changes; recheck `git diff` before every batch.
 
 ## Log (newest first)
+
+- 2026-11-22, iteration 3: scoring confirmed as placement, practice confirmed as vs squad. Re-applied HOLD_SEARCH off (63 tests pass). Added boost-strafe and hop switches (off). Wrote `notes/ideas/movesets.md`. Queued 10 variants vs squad (112 matches each). Rejected taking mortars (no aim code, +60% cook-off). Results pending.
 
 - 2026-11-21, iteration 2: reconciled the stale handoff with the committed M1 modules; found and fixed the missing Critic N1 code condition and added the 30 ms optional-work guard. Corrected `check/check.py` to preserve explicit POSIX map paths on Windows; direct and Docker checks passed with the map mounted (Docker ready 2505 ms, p50/p99/max 6.5/11.0/12.5 ms). Full Python suite: 63 tests pass. Added parallel match execution (`--jobs 2`) to `sim/run.py`, then completed 100 M1 vs example x15 games. Result: M1 score 8.58 vs example field 7.42, but 7% zone deaths and 4% wins; see `notes/reviews/aar-2026-11-21-1.md`. Next: diagnose zone deaths and complete simulator phase 2.
 

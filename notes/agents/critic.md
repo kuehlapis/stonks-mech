@@ -4,6 +4,14 @@ Owns: `notes/reviews/`. Rules: `CLAUDE.md` (Agent journals). Goal: `objective.md
 
 ## Current task
 
+Brief (moderator, 2026-11-22 #3): review notes/ideas/plateau.md P1-P4; output notes/reviews/plateau-2026-11-22.md. Done.
+
+Brief (moderator, 2026-11-22 #2): review online-squad-survival.md vs the floor effect; output notes/reviews/squad-survival-2026-11-22.md. Done.
+
+Brief (moderator, 2026-11-22): review squad sim for harshness/uniformity/bugs; output `notes/reviews/squad-sim-2026-11-22.md`. Done.
+
+Earlier:
+
 Brief (moderator, iteration 1): review `notes/ideas/game-plan.md` against `protocol.md`, `notes/research/*` and `objective.md` before any builder implements it. Output: `notes/reviews/game-plan.md`, findings ranked by score impact with evidence, fix, severity, and a verdict. Second pass (done 2026-11-21): verify the 14 fixes in the revised plan, compare with `online-recommendations.md`, check `strategies.md`, flag M1 items separately. Next queued: review `notes/interfaces.md` (other modules) when the moderator writes them.
 
 ## Plan
@@ -20,6 +28,8 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 
 | What | Why (effect on score or proxy) | How to be better | Status |
 |---|---|---|---|
+| Sim squad ignores sound and never boosts | Over-rewards run/hide plans (P1/P3) vs track | Ask Tester for a boost+hearing squad variant in A/Bs | open |
+| Squad sim calibration unverified | Fixes 3/4 in squad-sim review are guesses | Re-check after Tester runs example vs f803b02 paired | open |
 | Nothing reviewed yet | Unchecked assumptions become bugs | Review the plan before building starts | done (game-plan review, 2026-11-21) |
 | Findings rest on rule reasoning, not measurement | Severity of finding 3 (edge-hold rear exposure) and finding 9 (estimates) is a guess; wrong ranking wastes builder time | When the Tester's sim runs, ask for rear-hit share inward vs outward facing and the M1 death-time histogram; re-rank | open |
 | No re-check of fixes yet | A fix can introduce a new error | Second pass on the revised plan: verify each fix against the same evidence | done: found N1 (fix #6's cap + fix #2's 'no cover = cornered' recreate E1) |
@@ -28,6 +38,11 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 
 ## Lessons
 
+- Speed claims: compute the sustained average from drain/regen (boost here: ~15.5 m/s pulsed vs 11.7 walk), then compare with weapon range. Outrunning a 230 m gun is not escape.
+- A score that never moves can be a floor effect, not a bug: check what the score can see (here: only squad deaths before ours) before blaming the model.
+
+- Movement proposals: check the air model (air_accel, what boost does airborne) before judging a dodge.
+
 - Fixes interact: a cap added for timing (#6) plus "none = cornered" (#2) made a new E1 path. On a second pass, trace each original failure case (E1, open ground, 2+ threats, no map) through the combined fixes, not each fix alone.
 
 - Running the plan's own evidence (E1) through its own M1 rules found the worst bug (finding 1): the simplified rule fights E1's losing fight. Next time: replay every cited example through the simplified rule, not only the full model.
@@ -35,6 +50,12 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 - Checking a single number in the stream (who hit first, where the enemy was aiming) settled a claim in minutes. Prefer one-line stream queries over arguing.
 
 ## Log (newest first)
+
+- 2026-11-22 #3: plateau review. P1 must break LOS, not outrun (boost avg ~15.5 vs 11.7 m/s, gun 230 m); trees block vision (protocol.md:369-372) so 'never trees' is a misread; squad memory is 30 s (squad.py:118); P3 vs ZONE_LEAN conflict + edge speed 7.2 m/s > 5 m/s silent; P2 regen before 375 s; sim over-rewards P1/P3 (no sound, no boost).
+- 2026-11-22 #2: squad-survival review. Keep R6 (fix: hold fire only once LOS is broken; regen also needs no damage taken, protocol.md:291), R3, R1 (funnel + fallback share one LOS_CAP=40 counter, survival.py:223/250/277), R4a. Drop R4b, R2'.
+- 2026-11-22: squad sim review. 2-match run seed 7: squad deaths 19 zone/7 NPC/2 us, median 395 s; ours 148 s, score 1.0. Finding 1: score is a floor effect; use death_t. No scoring bug. File: notes/reviews/squad-sim-2026-11-22.md.
+
+- 2026-11-22, iteration 1: reviewed movesets diff + `notes/ideas/movesets.md` -> `notes/reviews/movesets-2026-11-22.md`. Top: hop misreads air control (`air_accel` 12 vs 58.5, protocol L279) so a hop is a 1 s straight line; boost while airborne = jet (L227) so `m_both` jets; boost-strafe at E>40 starves lightning (17+12 energy/s, regen delay 0.6 s). HOLD_SEARCH off is fine. Next: re-check after A/B results.
 
 - 2026-11-21, iteration 1, second pass: verified the revised plan's "Changes after review" line by line against its §1, §3, §4 text. 13/14 fixed, #2 partly. New: N1 (high, M1-blocking): `find_cover` returning none (open ground within 30 m, ≥2 threats exhausting the 32-call cap, or no world) makes M1 'cornered' and fire back, i.e. E1 again; fix = cornered also needs threat ≤ 60 m or energy < 20, else boost away. N2 (medium): no perf_counter guard (`CLAUDE.md` L114 sets budget, no guard). N3 (low): `strategies.md` §7 keeps the old double-1.3 Z1 formula. Online top 15: 7 covered, online #2 (≥2-of-4 go rule) and #14 mortar use rejected with §7 evidence, top M2+ adds: gun lead → M2, min-risk hold side, oldest-scanned sweep, move inside drop ring, dodge (M3). Written to `notes/reviews/game-plan.md` "Second pass". Next: review M1 code for N1/N2.
 

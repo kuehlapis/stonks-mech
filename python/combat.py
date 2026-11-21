@@ -4,6 +4,9 @@ import math
 AIM_TOL_FRAC = 0.6  # fire when the actual aim is within 0.6 target radii of the desired aim at the target
 MIN_TOL = 0.004  # rad, floor so long shots still fire
 LOW_AMMO_FRAC = 0.5  # reload with no target in range at or below this fraction of the mag
+MORTAR_MIN_DIST = 12.0  # m: closer and our own 50% splash (radius 7 m + knockback) hurts too much
+MORTAR_TOL_M = 3.0  # fire when the aim error at the target is under this (splash radius is 7 m)
+MORTAR_READY_S = 0.5  # take the torso from the gun when the mortar is this close to ready
 
 
 def _wrap(a):
@@ -24,6 +27,16 @@ def intercept(d, v, speed, r0):
     s = math.sqrt(disc)
     ts = [t for t in ((-b - s) / (2 * a), (-b + s) / (2 * a)) if t >= 0]
     return min(ts) if ts else (0.0 if c <= 0 else None)
+
+
+def arc_pitch(dx, dz, v, g, high):
+    """Launch pitch to hit a point dx out and dz up at speed v under gravity g; None if out of reach."""
+    if dx < 1e-6:
+        return None
+    disc = v ** 4 - g * (g * dx * dx + 2 * dz * v * v)
+    if disc < 0:
+        return None
+    return math.atan((v * v + (1 if high else -1) * math.sqrt(disc)) / (g * dx))
 
 
 class Combat:
@@ -88,6 +101,14 @@ class Combat:
                 reload = True
             fire[i] = (in_range and clear and ammo > 0 and not w.get("reload")
                        and w.get("cooldown", 0) <= self.dt and self._err(actual, lead) <= tol)
+        for i, w in self._slots(obs, "mortar"):
+            s = self._stats(w)
+            sol = self._mortar(p[2] + st.get("height", 2 * self.half_h) + 0.5, p, tp, tv, s, r0, clear)
+            ready = w.get("cooldown", 0)
+            if sol is None or dist < MORTAR_MIN_DIST or ready > MORTAR_READY_S:
+                continue
+            aim, rng = sol
+            fire[i] = ready <= self.dt and self._err(actual, aim) * rng <= MORTAR_TOL_M
         for i, w in self._slots(obs, "laser"):
             s = self._stats(w)
             charge = w.get("charge", 0)
@@ -102,6 +123,25 @@ class Combat:
             fire[i] = (dist <= s.get("range", 45) and clear and me.get("energy", 0) >= s.get("energy", 3) + 2
                        and w.get("cooldown", 0) <= self.dt and self._err(actual, direct) <= half * 0.8)
         return {"aim": aim, "fire": fire, "reload": reload}
+
+    def _mortar(self, tube_z, p, tp, tv, s, r0, clear):
+        """([yaw, pitch], range) to drop a shell on the target's feet, led by flight time; None if no arc fits.
+        Low arc when the line is clear, high arc (lob over walls) when not."""
+        v, g = s.get("speed", 72), s.get("gravity", 22)
+        t, pitch = 0.0, None
+        for _ in range(3):
+            gx, gy, gz = tp[0] + tv[0] * t, tp[1] + tv[1] * t, tp[2]  # feet stay on the ground
+            dx, dy = gx - p[0], gy - p[1]
+            R = math.hypot(dx, dy)
+            pitch = 0.0
+            for _ in range(2):  # the shell starts r0 out along the aim
+                pitch = arc_pitch(R - r0 * math.cos(pitch), gz - tube_z - r0 * math.sin(pitch), v, g, not clear)
+                if pitch is None:
+                    return None
+            t = (R - r0 * math.cos(pitch)) / (v * math.cos(pitch))
+        if not self.min_pitch <= pitch <= self.max_pitch:
+            return None
+        return [math.atan2(dy, dx), pitch], R
 
     def face(self, obs: dict, yaw: float) -> dict:
         # A laser charge can't be cancelled (protocol §7): any release fires, at min_charge at least,
