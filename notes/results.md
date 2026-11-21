@@ -48,6 +48,11 @@ Iter 1 note: **sim phase 1, example ×16** (`notes/tests/2026-11-21-sim-baseline
 | Kills per mech-match | 0.32 | 0.94 |
 
 Opponent figures aggregate the 1500 example mech-matches in these same runs. This is simulator phase 1: it has no non-gun weapons, loot, upgrades, NPCs, drops, or tree visibility.
+| 1 (sim phase 2) | 2026-11-21 | 16 (`bot.py` ×1 vs example ×15, seed 7) | 12.5% (2/16) | 1.52% | 6.88 (score 9.12, wins 25%) | 80.2% (182 shots) | 8.1% | 74.7% (4 samples) | 0 of 0 attempted (bot does not contest drops) |
+
+Iter 1 note: **sim phase 1, example ×16** (`notes/tests/2026-11-21-sim-baseline.md`). First sim row, so Δ prev and Δ baseline are "–" (row 0 had no simulator). The sim leaves out mortar, laser, lightning, loot/pickups, crates, cubes, upgrades, NPCs, supply drops, trees, overhang slide-out and slope limits; in it every mech has only the gun. Proxies here are a calibration point, not a target check: "vs example ×15" and "drops captured" need a candidate bot and phase 2.
+
+Iter 1 (sim phase 2) note: **first row on the full-rules simulator** (`notes/tests/2026-11-21-sim-phase2.md`): weapons, loot, crates, cubes, upgrades, drops, NPCs, trees. Not comparable with the phase 1 row (different rules and a different bot), so Δ is "–". 16 matches is small: wins 25% = 4/16. NPCs caused 3 of our 12 deaths; NPC behaviour has several assumptions (see the report).
 
 ## What changed per iteration
 

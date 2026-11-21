@@ -54,6 +54,7 @@ def duel(target_yaw):
     """Mech 0 at the origin aims east at mech 1, 60 m away, facing target_yaw; no spread."""
     cfg = dict(CFG, weapons=dict(CFG["weapons"], gun=dict(CFG["weapons"]["gun"], spread_deg=0)))
     m = Match(cfg, FlatWorld(), 1, 2)
+    m.npcs.clear(); m.crates.clear(); m.pickups.clear(); m.drop_times = []
     a, b = m.mechs
     a.pos, b.pos = [0.0, 0.0, 0.0], [60.0, 0.0, 0.0]
     a.aim = a.aim_cmd = [0.0, 0.0]
@@ -74,7 +75,7 @@ class TestGun(unittest.TestCase):
         self.assertEqual(dmg[0]["amount"], 45)
         self.assertNotIn("rear", dmg[0])
         self.assertAlmostEqual(abs(dmg[0]["bearing"]), math.pi, places=2)  # came from the west
-        self.assertEqual(m.mechs[0].ammo, 12 - 3)  # 10 ticks of held trigger at 0.24 s: t=0, 0.25, 0.5 -> 3 shots
+        self.assertEqual(m.mechs[0].ammo, 12 - 2)  # ticks 0..9 of held trigger at 0.24 s: t=0, 0.25 -> 2 shots
 
     def test_rear_hit(self):
         b = duel(0.0).mechs[1]  # target faces away
@@ -101,7 +102,7 @@ class TestTiming(unittest.TestCase):
         a = m.mechs[0]
         m.apply_action(a, {"move": [1, 0], "boost": True, "fire": [True, False], "aim": [1.0, 0.0]})
         m.apply_action(a, None)
-        self.assertEqual((a.move, a.boost, a.fire, a.aim_cmd), ([1.0, 0.0], True, False, [1.0, 0.0]))
+        self.assertEqual((a.move, a.boost, a.fire, a.aim_cmd), ([1.0, 0.0], True, [False, False], [1.0, 0.0]))
         m.tick = 22  # 1.1 s after the last answer
         m.apply_action(a, None)
         self.assertEqual((a.move, a.boost, a.aim_cmd), ([0.0, 0.0], False, a.aim))
@@ -110,7 +111,7 @@ class TestTiming(unittest.TestCase):
         m = Match(CFG, FlatWorld(), 1, 2)
         a = m.mechs[0]
         m.apply_action(a, {"move": "x", "aim": [float("nan"), 0], "fire": 1, "boost": "yes"})
-        self.assertEqual((a.move, a.boost, a.fire), ([0.0, 0.0], False, False))
+        self.assertEqual((a.move, a.boost, a.fire), ([0.0, 0.0], False, [False, False]))
 
 
 if __name__ == "__main__":

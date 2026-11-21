@@ -61,11 +61,11 @@ class Combat:
         r0 = st.get("radius", self.radius) + 0.5
         size = target.get("size", 1.0)
         tp = target["pos"]
-        tc = [tp[0], tp[1], tp[2] + self.half_h * size]
+        tc = [tp[0], tp[1], tp[2] + target.get("center_h", self.half_h * size)]
         tv = target.get("vel") or [0.0, 0.0, 0.0]
         d = [tc[0] - muzzle[0], tc[1] - muzzle[1], tc[2] - muzzle[2]]
         dist = math.sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2])
-        tol = max(MIN_TOL, math.atan2(AIM_TOL_FRAC * self.radius * size, max(dist, 1.0)))
+        tol = max(MIN_TOL, math.atan2(AIM_TOL_FRAC * target.get("radius", self.radius * size), max(dist, 1.0)))
         actual = me.get("aim") or [0.0, 0.0]
         direct = self._aim_at(d)
         clear = self.world is None or self.world.los(muzzle, tc)

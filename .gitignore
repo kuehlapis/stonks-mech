@@ -221,3 +221,5 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+sim/out/
+sim/versions/v_*/

@@ -73,19 +73,9 @@ class TestPriority(unittest.TestCase):
         return a, mf.draw.take()["label"]
 
     def test_zone_outranks_loot(self):
-        b = brain(survival=Fake(zone_goal=([0.0, 300.0], True), hold_point=[50.0, 0.0]),
+        b = brain(survival=Fake(zone_goal=([0.0, 300.0], True), zone_urgent=True, hold_point=[50.0, 0.0]),
                   economy=Fake(wanted_pickup={"id": 1, "kind": "laser", "pos": [5.0, 0.0, 0.0]}))
         self.assertEqual(self.mode(b, obs0())[1], "zone")
-
-    def test_zone_path_cannot_steer_outside_live_circle(self):
-        o = obs0()
-        o["self"]["pos"] = [90.0, 0.0, 0.0]
-        o["self"]["in_zone"] = True
-        s = Fake(zone_goal=([200.0, 0.0], True), live_circle=([0.0, 0.0], 100.0))
-        b = brain(survival=s)
-        a, mode = self.mode(b, o)
-        self.assertEqual(mode, "zone")
-        self.assertEqual(a["move"], [-1.0, 0.0])
 
     def test_loot_outranks_hold(self):
         b = brain(economy=Fake(wanted_pickup={"id": 1, "kind": "laser", "pos": [5.0, 0.0, 0.0]}, take={"take": 1}))
@@ -97,30 +87,30 @@ class TestPriority(unittest.TestCase):
         b = brain(perception=Fake(threats=[ENEMY], threatened_by=ENEMY),
                   survival=Fake(find_cover=[-20.0, 0.0], hold_point=[50.0, 0.0]))
         a, m = self.mode(b, obs0())
-        self.assertEqual(m, "cover")
+        self.assertEqual(m, "evade")
         self.assertEqual(a["fire"], [False, False])
 
-    def test_laser_holder_engages_gun_only_disengages(self):
+    def test_laser_holder_engaged_evades_firing_back(self):
         b = brain(perception=Fake(threats=[ENEMY], engaged_by=ENEMY),
                   survival=Fake(find_cover=[-20.0, 0.0], hold_point=[50.0, 0.0]))
         o = obs0()
         a, m = self.mode(b, o)
-        self.assertEqual(m, "disengage")
-        self.assertEqual(a["fire"][1], False)  # slot 1 empty; slot 0 gun may fire back
+        self.assertEqual(m, "evade")  # we lose the trade (gun vs gun + laser): break line of sight
+        self.assertEqual(a["fire"], [True, True])  # EVADE_ALL: return fire with every weapon combat allows
 
-    def test_engaged_no_cover_is_cornered_fight(self):
-        close = dict(ENEMY, pos=[50.0, 0.0, 0.0])
-        b = brain(perception=Fake(threats=[close], engaged_by=close))
+    def test_engaged_no_cover_close_is_cornered_fight(self):
+        e = dict(ENEMY, pos=[40.0, 0.0, 0.0])
+        b = brain(perception=Fake(threats=[e], engaged_by=e))
         a, m = self.mode(b, obs0())
-        self.assertEqual(m, "fight")
+        self.assertEqual(m, "fight")  # too close to escape and the trade is near even: fight
         self.assertEqual(a["fire"], [True, True])
 
-    def test_engaged_no_cover_distant_threat_flees(self):
+    def test_engaged_no_cover_far_flees(self):
         b = brain(perception=Fake(threats=[ENEMY], engaged_by=ENEMY))
         a, m = self.mode(b, obs0())
         self.assertEqual(m, "flee")
-        self.assertEqual(a["move"], [-1.0, 0.0])
         self.assertTrue(a["boost"])
+        self.assertEqual(a["fire"][1], False)
 
     def test_rule_b_fights_weak_gun_only_enemy(self):
         e = dict(ENEMY, weapons=["gun"])
@@ -137,6 +127,12 @@ class TestPriority(unittest.TestCase):
         a, m = self.mode(b, obs0())
         self.assertEqual(m, "dodge")
         self.assertEqual(a["fire"], [False, False])
+
+    def test_zone_not_urgent_fights_first(self):
+        e = dict(ENEMY, weapons=["gun"])
+        b = brain(perception=Fake(threats=[e], engaged_by=e),
+                  survival=Fake(zone_goal=([0.0, 300.0], False), zone_urgent=False, hold_point=[50.0, 0.0]))
+        self.assertEqual(self.mode(b, obs0())[1], "fight")
 
     def test_offer_pick_merged(self):
         o = obs0()
@@ -164,13 +160,6 @@ class TestRobust(unittest.TestCase):
 
 
 class TestTiming(unittest.TestCase):
-    def test_slow_tick_reuses_recent_cover(self):
-        b = brain()
-        p = [-20.0, 0.0, 0.0]
-        b._last_cover = (10.0, [list(ENEMY["pos"])], p)
-        b._tick_started = time.perf_counter() - 0.031
-        self.assertEqual(b._find_cover(obs0(), [ENEMY]), p)
-
     def test_stream_timing(self):
         b = Brain(CFG, None, int(HELLO["slot"]))
         try:

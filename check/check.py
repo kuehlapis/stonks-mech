@@ -152,10 +152,7 @@ def main():
     with gzip.open(a.stream, "rt") as f:
         msgs = [json.loads(l) for l in f if l.strip()]
     hello, obs, end = msgs[0], [m for m in msgs if m.get("type") == "obs"], msgs[-1]
-    # Preserve an explicit POSIX path for Linux containers when this checker
-    # itself runs on Windows (for example, --map-dir /arena).
-    map_dir = a.map_dir if a.map_dir.startswith("/") else os.path.abspath(a.map_dir)
-    hello["map"]["dir"] = map_dir
+    hello["map"]["dir"] = os.path.abspath(a.map_dir)
     cfg = hello["config"]
     budget = cfg["bot"]["tick_budget_ms"] / 1000
     caps = cfg["debug"]
