@@ -133,7 +133,10 @@ class TestCover(unittest.TestCase):
     def test_finds_point_behind_building(self):
         cw = CountingWorld()
         s = Survival(CFG, cw)
-        th = threat(_out(40))
+        # Put the threat across the building from the mech.  _out(40) would
+        # put both on the same side of this wall, so no nearby candidate can
+        # satisfy the cover assertion.
+        th = threat((-180.0, 0.0))
         me = _out(5)
         o = obs(me)
         eye = (th["pos"][0], th["pos"][1], th["pos"][2] + 8)

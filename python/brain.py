@@ -1,8 +1,11 @@
 """M1 decision layer: one fixed priority list per tick (game-plan §4 M1 simplification, §3, §8)."""
 import importlib
 import math
+import time
 
 import mechfight as mf
+
+COVER_BUDGET_S = 0.030
 
 SWEEP = math.radians(50)  # §8 rule 5: walking direction ±50°
 
@@ -11,6 +14,7 @@ class Brain:
     def __init__(self, cfg: dict, world, my_id: int) -> None:
         self.cfg, self.world, self.my_id = cfg or {}, world, my_id
         self._errors = {}
+        self._last_cover = None  # (obs.t, threat positions, point)
         self.perception = self._make("perception", "Perception", self.cfg, my_id)
         self.survival = self._make("survival", "Survival", self.cfg, world)
         self.nav = self._make("nav", "Nav", self.cfg, world)
@@ -71,6 +75,7 @@ class Brain:
                 "aim": [aim[0], 0.0], "fire": [False, False]}
 
     def _decide(self, obs):
+        self._tick_started = time.perf_counter()
         P, S, E = self.perception, self.survival, self.economy
         t = obs.get("t", 0.0)
         me = obs["self"]
@@ -89,7 +94,7 @@ class Brain:
         # 2. Threatened (laser about to hit / aimed at us): hide, never start shooting
         cover = None
         if threatened or engaged:
-            cover = self._call(S, "find_cover", obs, threats)
+            cover = self._find_cover(obs, threats)
         if threatened and (cover or not engaged):
             boost = self._lasery(threatened)
             if cover:
@@ -104,9 +109,13 @@ class Brain:
                 b = _bearing(me["pos"], engaged["pos"]) + math.pi / 2
                 side = [me["pos"][0] + 20 * math.cos(b), me["pos"][1] + 20 * math.sin(b)]
                 return {**self._go(obs, side), **self._face(obs, b)}, "dodge"
-            if self._may_fight(obs, engaged, threats) or not cover:
+            cornered = (not cover and
+                        (_dist(me["pos"], engaged["pos"]) <= 60.0 or me.get("energy", 0) < 20.0))
+            if self._may_fight(obs, engaged, threats) or cornered:
                 hold = self._call(S, "hold_point", obs) or self._next_center(obs)
                 return {**self._go(obs, hold), **self._attack(obs, engaged)}, "fight"
+            if not cover:  # Distant threat and no cover: boost away while facing it.
+                return {**self._away(me, engaged), **self._retreat_aim(obs, engaged, engaged)}, "flee"
             return {**self._go(obs, cover, boost=self._lasery(engaged)),
                     **self._retreat_aim(obs, engaged, engaged)}, "disengage"
 
@@ -123,6 +132,20 @@ class Brain:
         # 6. Hold quietly
         hold = self._call(S, "hold_point", obs) or self._next_center(obs)
         return {**self._go(obs, hold, quiet=True), **self._aim(obs, threats, threatened, engaged, hold)}, "hold"
+
+    def _find_cover(self, obs, threats):
+        """Skip optional cover search after 30 ms; reuse a recent point for the same threat layout."""
+        tps = [list(th["pos"]) for th in threats if th.get("pos")]
+        if time.perf_counter() - getattr(self, "_tick_started", time.perf_counter()) >= COVER_BUDGET_S:
+            c = self._last_cover
+            if c and 0 <= obs.get("t", 0) - c[0] < 1.0 and len(c[1]) == len(tps) and all(
+                    _dist(a, b) <= 10.0 for a, b in zip(c[1], tps)):
+                return c[2]
+            return None
+        cover = self._call(self.survival, "find_cover", obs, threats)
+        if cover:
+            self._last_cover = (obs.get("t", 0), tps, cover)
+        return cover
 
     # --- rules ---
 

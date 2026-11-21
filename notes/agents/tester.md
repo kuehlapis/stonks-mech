@@ -29,7 +29,7 @@ Superseded plan (iteration 0): "timing harness over the recorded stream" is stil
 | Only the example bot as opponent | Track opponents are other teams' bots; a pool of one style overfits | Moderator to commission passive / aggressive / camping opponents; `--count` already mixes them | open |
 | Zone `center` semantics during shrink and same-tick tie place are assumptions | Wrong assumption shifts zone timing and placement scoring | Ask the Researcher to settle §9 / §4 from the recorded stream or other evidence | open |
 | No per-tick timing harness over `check/stream.jsonl.gz` (mean/p99/max) | Guardrail table reports p50 as the mean stand-in | Small script replaying the stream and timing each answer | open |
-| 100-match proxy runs take ~35 min serially | objective.md asks for ≥ 100 matches per measurement | Run matches in parallel processes (`--jobs`), when needed | open |
+| 100-match proxy runs take ~35 min serially | objective.md asks for ≥ 100 matches per measurement | Run matches in parallel processes (`--jobs`), when needed | done: `sim/run.py --jobs` |
 
 ## Lessons
 
@@ -40,6 +40,8 @@ Superseded plan (iteration 0): "timing harness over the recorded stream" is stil
 - Timing per match varies 2× with machine load from parallel agents; report the worst case.
 
 ## Log (newest first)
+
+- 2026-11-21, iteration 2: moderator added `--jobs` to `sim/run.py` using isolated worker processes; two-match `--jobs 2` smoke run passed. A corrected M1 vs example x15 batch completed 100 matches (seeds 1000-1099): M1 mean score 8.58, mean place 7.42, win rate 4%, zone deaths 7%, outside-zone ticks 0.35%, rear damage share 9.8%, gun hit rate 85.5% (910 shots), HP at <=3 alive 80.0%, 0 exceptions. Raw JSON: `notes/tests/2026-11-21-m1-vs-example.json`; AAR: `notes/reviews/aar-2026-11-21-1.md`. Parallel runner work is done; phase 2 remains open, starting with weapons and loot.
 
 - 2026-11-21, iteration 1: built `sim/engine.py`, `sim/run.py`, `sim/tests/test_engine.py` (10 tests OK: `python -m unittest discover sim/tests`). Fixed two physics bugs found by an in-geometry check (seed 7000: 4–8 zone deaths/match from mechs stuck in walls → 0; overlap samples 2580 → 263, the rest curbs ≤ step_up). Added the moderator's mid-task asks: per-death records and HP at 415 s in the JSON, `--count`. Baseline `python sim/run.py --matches 10 --seed 1 --bot "python -u python/example_bot.py"`: mean score 7.49, place 8.51, wins 6.2%, zone deaths 2.5%, outside zone 2.56% of ticks, rear share 53.9%, gun hit 32.4% at 50–150 m (3526 shots), HP at ≤ 3 alive 72.4%, late 0.001%, 0 exceptions. Speed 2.98–7.86 ms/decision, max 28.3 s wall per match; worst full 8-minute estimate ≈ 38 s (≤ 90 s target). Report `notes/tests/2026-11-21-sim-baseline.md`, JSON `notes/tests/2026-11-21-sim-baseline.json`, results row iteration 1. Next: phase 2 weapons/loot; opponent pool; timing harness.
 - 2026-11-21, iteration 0: baseline measured on `example_bot.py`. `check.py` PASS direct (p50 1.4 ms, p99 4.1, max 4.3, ready 208 ms) and PASS under the Docker sandbox (p50 6.7, p99 11.4, max 11.7, ready 1755 ms, 2 stale observations correctly skipped). Recorded in `notes/results.md` row 0. Docker on Windows Git Bash needs `MSYS_NO_PATHCONV=1` and `$(pwd -W)` for the `-v` path. Next: timing harness and simulator design.

@@ -4,29 +4,31 @@ Owns: `python/bot.py`, `notes/decisions.md`, `notes/interfaces.md`, `notes/score
 
 ## Current task
 
-Start iteration 1: reach M0 (valid bot) and plan M1 (> 6.00).
+Iteration 2: validate M1, diagnose remaining zone deaths, and continue simulator phase 2.
 
 ## Plan
 
-1. Brief the Researcher (map + config facts) and the Tester (baseline timing, simulator plan).
-2. Write the first `notes/interfaces.md` for all modules.
-3. Brief builders for World, Survival, Brain and a minimal `python/bot.py` that never crashes.
-4. Integrate, run the full check, commit, ask the user to submit.
+1. Diagnose the seven M1 zone deaths by seed and phase; fix the responsible zone or navigation behavior.
+2. Finish simulator phase 2, starting with weapons and pickups; add cubes/upgrades, NPCs and drops after that.
+3. Add varied opponents, then rerun 100-match proxies and full guardrails.
+4. Write the AAR, update results and journals, and commit each validated iteration.
 
-Done when the first build passes the full check and is ready to submit.
+Done when zone deaths are eliminated, simulator phase 2 is complete, and a robust proxy improvement passes the full check.
 
 ## Areas of improvement
 
 | What | Why (effect on score or proxy) | How to be better | Status |
 |---|---|---|---|
-| No bot of our own yet | Can't score at all | Ship a safe M0 build first | open |
-| No local simulator | Only 48-match submissions give feedback, with ±0.7 noise | Prioritize the Tester's simulator | open |
+| M1 still dies to the zone | 7% zone deaths in the 100-match proxy misses the 0% target and costs placements | Diagnose the seven zone-death trajectories and fix Nav/zone handling | open |
+| Simulator lacks weapons and economy | The current proxy excludes non-gun weapons, loot, upgrades, NPCs and drops | Continue phase 2 after diagnosing zone deaths | open |
 
 ## Lessons
 
 (none yet)
 
 ## Log (newest first)
+
+- 2026-11-21, iteration 2: reconciled the stale handoff with the committed M1 modules; found and fixed the missing Critic N1 code condition and added the 30 ms optional-work guard. Corrected `check/check.py` to preserve explicit POSIX map paths on Windows; direct and Docker checks passed with the map mounted (Docker ready 2505 ms, p50/p99/max 6.5/11.0/12.5 ms). Full Python suite: 63 tests pass. Added parallel match execution (`--jobs 2`) to `sim/run.py`, then completed 100 M1 vs example x15 games. Result: M1 score 8.58 vs example field 7.42, but 7% zone deaths and 4% wins; see `notes/reviews/aar-2026-11-21-1.md`. Next: diagnose zone deaths and complete simulator phase 2.
 
 - 2026-11-21, iteration 1: Tester done: sim phase 1 committed (f8bec8e), 10 tests pass (verified), ≤ 38 s per match. Baseline example ×16: zone deaths 2.5%, rear-hit share 53.9% (the biggest weakness of a naive bot), gun hit 32.4%. Assumptions to settle: zone center semantics during a shrink, same-tick tie places. Sent the Tester on phase 2: parallel runs, the three weapons, loot, cubes/upgrades, NPCs, drops. Opponent pool (passive/aggressive/camper bots) deferred until M1 exists, so they can reuse our modules.
 - 2026-11-21, iteration 1: Researcher (online) done: 5 files with sources. Its top recommendations agree with the plan (zone discipline, fight only with good odds, a simulator first, face the threat, exact gun lead, minimum-risk spot scoring, plan for the 415 s collapse); new for M2+: strafe and dodging visible bullets, scanning toward the least-known direction. Several sources were unreachable and are marked. Critic resumed for a second pass (fix verification + comparison with the online recommendations). M1 builders (6) running; Tester running.

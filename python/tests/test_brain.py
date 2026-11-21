@@ -99,10 +99,18 @@ class TestPriority(unittest.TestCase):
         self.assertEqual(a["fire"][1], False)  # slot 1 empty; slot 0 gun may fire back
 
     def test_engaged_no_cover_is_cornered_fight(self):
-        b = brain(perception=Fake(threats=[ENEMY], engaged_by=ENEMY))
+        close = dict(ENEMY, pos=[50.0, 0.0, 0.0])
+        b = brain(perception=Fake(threats=[close], engaged_by=close))
         a, m = self.mode(b, obs0())
         self.assertEqual(m, "fight")
         self.assertEqual(a["fire"], [True, True])
+
+    def test_engaged_no_cover_distant_threat_flees(self):
+        b = brain(perception=Fake(threats=[ENEMY], engaged_by=ENEMY))
+        a, m = self.mode(b, obs0())
+        self.assertEqual(m, "flee")
+        self.assertEqual(a["move"], [-1.0, 0.0])
+        self.assertTrue(a["boost"])
 
     def test_rule_b_fights_weak_gun_only_enemy(self):
         e = dict(ENEMY, weapons=["gun"])
@@ -146,6 +154,13 @@ class TestRobust(unittest.TestCase):
 
 
 class TestTiming(unittest.TestCase):
+    def test_slow_tick_reuses_recent_cover(self):
+        b = brain()
+        p = [-20.0, 0.0, 0.0]
+        b._last_cover = (10.0, [list(ENEMY["pos"])], p)
+        b._tick_started = time.perf_counter() - 0.031
+        self.assertEqual(b._find_cover(obs0(), [ENEMY]), p)
+
     def test_stream_timing(self):
         b = Brain(CFG, None, int(HELLO["slot"]))
         try:

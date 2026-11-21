@@ -7,6 +7,7 @@ fills any slots left, so `--bot NEW --bot OLD` is 1 NEW against 15 OLD, and
 `--bot A --count 4 --bot B --count 4 --bot C` is 4 A, 4 B and 8 C.
 """
 import argparse
+from concurrent.futures import ProcessPoolExecutor, as_completed
 import gzip
 import json
 import os
@@ -186,6 +187,21 @@ def play(cmds, cfg, world, seed, log_dir):
             "ms_per_decision": round(wall / max(1, decisions) * 1000, 2), "mechs": rows}
 
 
+def play_job(job):
+    """Run one isolated match in a worker process for --jobs batches."""
+    cmds, cfg, seed, log_dir = job
+    world, _ = load_world()
+    return play(cmds, cfg, world, seed, log_dir)
+
+
+def report_match(mt, index, total):
+    order = sorted(mt["mechs"], key=lambda r: r["place"])
+    print(f"match {index}/{total} seed {mt['seed']}: ended t={mt['t_end']} s, wall {mt['wall_s']} s, "
+          f"{mt['ms_per_decision']} ms/decision")
+    print("  " + " ".join(f"{r['place']}:s{r['slot']}{'/z' if r['cause'] == 'zone' else ''}" for r in order))
+    sys.stdout.flush()
+
+
 def summarize(matches, n_mechs):
     by = {}
     for mt in matches:
@@ -242,9 +258,12 @@ def main():
     ap.add_argument("--count", action=CountArg, dest="bots", type=int, help="slots for the preceding --bot")
     ap.add_argument("--matches", type=int, default=1)
     ap.add_argument("--seed", type=int, default=1)
+    ap.add_argument("--jobs", type=int, default=1, help="matches to run concurrently (default: 1)")
     ap.add_argument("--mechs", type=int, default=None, help="mechs per match (default: config match.mechs = 16)")
     ap.add_argument("--out", help="write the JSON summary here")
     args = ap.parse_args()
+    if args.matches < 1 or args.jobs < 1:
+        ap.error("--matches and --jobs must be >= 1")
     cfg = recorded_hello()["config"]
     n = args.mechs or cfg["match"]["mechs"]
     cmds = [c for c, k in args.bots for _ in range(k or 1)]
@@ -254,14 +273,20 @@ def main():
     world, world_name = load_world()
     log_dir = tempfile.mkdtemp(prefix="mechsim-")
     matches = []
-    for k in range(args.matches):
-        mt = play(cmds, cfg, world, args.seed * 1000 + k, log_dir)
-        matches.append(mt)
-        order = sorted(mt["mechs"], key=lambda r: r["place"])
-        print(f"match {k + 1}/{args.matches} seed {mt['seed']}: ended t={mt['t_end']} s, wall {mt['wall_s']} s, "
-              f"{mt['ms_per_decision']} ms/decision")
-        print("  " + " ".join(f"{r['place']}:s{r['slot']}{'/z' if r['cause'] == 'zone' else ''}" for r in order))
-        sys.stdout.flush()
+    if args.jobs == 1:
+        for k in range(args.matches):
+            mt = play(cmds, cfg, world, args.seed * 1000 + k, log_dir)
+            matches.append(mt)
+            report_match(mt, k + 1, args.matches)
+    else:
+        jobs = [(cmds, cfg, args.seed * 1000 + k, log_dir) for k in range(args.matches)]
+        with ProcessPoolExecutor(max_workers=args.jobs) as pool:
+            futures = {pool.submit(play_job, job): i + 1 for i, job in enumerate(jobs)}
+            for future in as_completed(futures):
+                mt = future.result()
+                matches.append(mt)
+                report_match(mt, futures[future], args.matches)
+        matches.sort(key=lambda mt: mt["seed"])
     summary = {"world": world_name, "matches": args.matches, "seed": args.seed, "mechs": n, "bot_logs": log_dir,
                "per_bot": summarize(matches, n), "per_match": matches}
     print(json.dumps({k: v for k, v in summary.items() if k != "per_match"}, indent=2))
