@@ -54,7 +54,7 @@ Implements `notes/ideas/game-plan.md` §9 "M1" (rule ids like Z1, F3, N1 refer t
 
 - `cfg` is `hello["config"]` (a dict). `world` is a `World` **or `None`** (map failed to load): every module must work with `None` (map-free fallback, CLAUDE.md).
 - `obs` is the raw observation dict. Time is `obs["t"]`, never tick counts (observations can be seconds apart).
-- A *threat* is a dict: `{"id": int|None, "pos": [x,y,z], "vel": [x,y,z], "weapons": [str], "hp": float|None, "max_hp": float|None, "aim": [yaw,pitch]|None, "charging": bool, "visible": bool, "last_seen": t, "virtual": bool}` (`virtual` = built from an unseen attacker's damage bearing, game-plan §1).
+- A *threat* is a dict: `{"id": int|None, "pos": [x,y,z], "vel": [x,y,z], "weapons": [str], "hp": float|None, "max_hp": float|None, "aim": [yaw,pitch]|None, "charging": bool, "visible": bool, "last_seen": t, "virtual": bool, "cubes": int}` (`virtual` = built from an unseen attacker's damage bearing, game-plan §1; virtual threats sit at our foot height, and mortar ones lie on the blast bearing, so never aim along them).
 - Points are `[x, y]` or `[x, y, z]` lists. Yaw/pitch per protocol.md §5.
 - No module prints to stdout. Each module's `__init__` must not raise on a valid config.
 
