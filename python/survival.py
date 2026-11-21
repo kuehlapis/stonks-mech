@@ -18,6 +18,7 @@ URGENT_LOOK, URGENT_EDGE = 8.0, 10.0   # zone travel is urgent if the edge passe
 URGENT_FACTOR, URGENT_SLACK = 1.5, 8.0  # ... or eta x 1.5 + 8 s reaches the deadline
 HOLD_DEPTH = 0.85        # hold within this fraction of the clamped next radius (room for the next circle)
 WALL_DETOUR = 60.0       # m of extra walking accepted to hold at a better (beside a wall, hidden) spot
+HOLD_ROOF = 0.0          # m: if > 0, hold on roofs at least this high above the street (hunters must climb)
 HOLD_EXPO_W = 1.0        # hold score = exposure x this + path metres / 100
 HOLD_CANDS = 60          # wall cells considered for the hold point
 HOLD_SEARCH_M = 300.0    # m, path search limit for the hold point
@@ -74,6 +75,15 @@ class Survival:
             def accept(x, y, wall, c, expo):
                 if math.hypot(x - nc[0], y - nc[1]) > inner:
                     return False
+                if HOLD_ROOF > 0:
+                    sz = nav.surface(x, y)
+                    if sz is not None and self.world is not None and sz - self.world.ground(x, y) >= HOLD_ROOF:
+                        if not first:
+                            first.append(([x, y], c))
+                        cands.append((c / 100.0 - (sz - self.world.ground(x, y)) / 50.0, [x, y]))
+                        return len(cands) >= HOLD_CANDS
+                    if not first or c < first[0][1] + WALL_DETOUR * 3:
+                        return False
                 if not first:
                     first.append(([x, y], c))
                 if wall and expo is not None:
