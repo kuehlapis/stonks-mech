@@ -2,6 +2,15 @@
 
 Moderator's log, newest first. Each entry: what was decided, why, and what was rejected.
 
+## 2026-11-21 night, iteration 2: the track is us vs a hunting squad
+
+- **Fact that changed the plan** (track page): 15 house bots act as one squad (shared vision, never fight each other, hunt us weakest first, more as we kill them, all of them late). Our score = 15 − squad bots alive at our death. Hiding can't win; kills and late survival do.
+- **`sim/bots/squad.py`** models the squad. `DEFEND_RANGE = 60` (non-hunters shoot us within 60 m) chosen by calibration: the example bot scores 1.01 here (1.70 at 0 m) vs 1.15 on the track.
+- **Adopted (each measured against the squad sim, 112–140 matches):** aggression (fight edge 1.2, open fire on lone enemies at ratio < 1.2, gun-only enemies' damage × 0.6): 1.40 → 1.74; group fights (edge 1.5); fast random strafing (0.25–0.7 s); projectile dodge; lightning firing and laser-then-lightning pickups; eager cube pickup; laser duck; kiting at 130 m (neutral, kept).
+- **Rejected or kept off, no measurable gain:** roof holding (`HOLD_ROOF`, also causes late answers), exposure weight changes, supply-drop changes, upgrade-order changes, fight ranges 100–170 m.
+- **Root `Dockerfile` added** so the repo can be submitted as-is (builds `python/`). Full check passes under the Docker sandbox (ready 1.6 s, max tick 17 ms, 40 MB).
+- **Plateau:** the squad sim sits at about 1.9–2.0 whatever the behaviour; its structure (shared vision, hunters added per kill) may cap it. Real submissions are the next measurement; the moderator can't submit (track sign-in), so the teammate must.
+
 ## 2026-11-21, iteration 2 (new moderator session): measurement first, then the brain rewrite
 
 - **Ponytail skill waived.** It is not installed on this machine; CLAUDE.md's "always use ponytail" can't be followed. Recorded so later sessions know why.
