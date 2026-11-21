@@ -27,7 +27,7 @@ class World:
         """True if the straight segment a→b passes through no prism and stays above the terrain.
         Trees are ignored (they block vision only partly and never block shots)."""
 
-    def blocked(self, x: float, y: float, z: float, radius: float, height: float) -> bool:
+    def blocked(self, x: float, y: float, z: float, radius: float, height: float, step: float = 1.2) -> bool:
         """True if a vertical cylinder (feet at z, given radius and height) standing at x, y
         overlaps any prism, ignoring surfaces it could step onto (top - z <= step) — the test nav uses."""
 ```
@@ -42,6 +42,11 @@ Performance budget (one call, on this machine, measured by the builder's tests):
 | `blocked` | ≤ 0.05 ms |
 
 Hint (not binding): bucket prisms into a 2D grid of cells (e.g. 8 m) so each query tests only nearby prisms.
+
+Known limits (callers handle them):
+- `blocked` ignores the map edge and slopes steeper than `mech.max_slope_deg`; Navigation must treat both as walls. Pass `step=config.mech.step_up`.
+- `los` ignores trees; Perception adds trunks and canopy if it needs true sight.
+- `los` samples the ground every 1 m.
 
 ## Other modules
 

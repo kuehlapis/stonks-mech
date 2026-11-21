@@ -4,6 +4,10 @@ Moderator's log, newest first. Each entry: what was decided, why, and what was r
 
 ## 2026-11-21, iteration 1: start
 
+- **Strategy is chosen by experiment, not by argument.** At the user's request the Strategist writes alternative whole-match strategies (pacifist hider/runner, camper/ambusher, and others) in `notes/ideas/strategies.md`. The top 2–3 get built as A/B candidates against edge-hold and compared in the simulator, then on the track. Rejected: committing to one plan before any measurement.
+
+- **Added a Researcher (online) role** at the user's request: outside research on battle royale strategy, bot competitions, game AI and mech games. A separate agent so it runs in parallel with the local Researcher instead of delaying it.
+
 - **Work branch `iter-1`.** Docs committed there (eaab86f) so worktree agents see the rules and journals. Merge to `main` when the iteration passes the full check.
 - **First wave, in parallel:** Researcher (config, map, upgrades, zone), Strategist (game plan), Tester (local simulator), World builder (`python/world.py`). These four don't depend on each other's output.
   - Why: the map model and the simulator are the two long poles, and every later module needs the research facts and the plan.
