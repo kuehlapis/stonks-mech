@@ -6,9 +6,9 @@ ORDER = ["plating", "nanites", "armor", "laser_damage", "sensors", "laser_charge
          "gun_damage", "gun_rate", "gun_mag", "gyros", "jets", "reactor", "capacitor", "gun_velocity",
          "lightning_efficiency", "lightning_range", "lightning_chain",
          "mortar_splash", "mortar_reload", "mortar_velocity", "laser_pierce"]
-WANT = ["laser"]   # weapon pickups worth taking, best first (the gun is always kept)
+WANT = ["laser", "lightning"]   # weapon pickups worth taking, best first (the gun is always kept)
 # L1 tuning constants (game-plan §5).
-ETA_EARLY_S = 6.0       # s: walk this far for a laser before LATE_T
+ETA_EARLY_S = 15.0       # s: walk this far for a laser before LATE_T
 ETA_LATE_S = 10.0       # s: ... and after
 LATE_T = 70.0
 DETOUR = 1.3            # straight distance × this ≈ walked distance

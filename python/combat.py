@@ -96,6 +96,11 @@ class Combat:
                 fire[i] = not (charge >= s.get("charge", 0.75) and clear and self._err(actual, direct) <= tol)
             else:
                 fire[i] = clear and dist <= s.get("range", 280) and w.get("cooldown", 0) <= self.dt
+        for i, w in self._slots(obs, "lightning"):
+            s = self._stats(w)
+            half = math.radians(s.get("cone_deg", 30)) / 2
+            fire[i] = (dist <= s.get("range", 45) and clear and me.get("energy", 0) >= s.get("energy", 3) + 2
+                       and w.get("cooldown", 0) <= self.dt and self._err(actual, direct) <= half * 0.8)
         return {"aim": aim, "fire": fire, "reload": reload}
 
     def face(self, obs: dict, yaw: float) -> dict:
