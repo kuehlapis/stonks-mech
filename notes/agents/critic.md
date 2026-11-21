@@ -4,6 +4,8 @@ Owns: `notes/reviews/`. Rules: `CLAUDE.md` (Agent journals). Goal: `objective.md
 
 ## Current task
 
+Brief (moderator, 2026-11-22 #4): diff review 5bc9b89..65bd2fe python/; output notes/reviews/diff-65bd2fe.md. Done.
+
 Brief (moderator, 2026-11-22 #3): review notes/ideas/plateau.md P1-P4; output notes/reviews/plateau-2026-11-22.md. Done.
 
 Brief (moderator, 2026-11-22 #2): review online-squad-survival.md vs the floor effect; output notes/reviews/squad-survival-2026-11-22.md. Done.
@@ -38,6 +40,7 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 
 ## Lessons
 
+- Hide logic: check where the opponent model *goes* (squad walks to last known + 3 s vel), not only whether LOS is broken. Hiding at the last-seen spot invites the hunter in.
 - Speed claims: compute the sustained average from drain/regen (boost here: ~15.5 m/s pulsed vs 11.7 walk), then compare with weapon range. Outrunning a 230 m gun is not escape.
 - A score that never moves can be a floor effect, not a bug: check what the score can see (here: only squad deaths before ours) before blaming the model.
 
@@ -51,6 +54,7 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 
 ## Log (newest first)
 
+- 2026-11-22 #4: diff 65bd2fe review. Must fix: run-wait holds at last-seen spot (squad walks there), stale _run_spot, run-wait blocks non-urgent zone travel 30 s. Should: boost without cover, run-finish not 'alone', tests. No crash or >50 ms path found (worst ~45 los).
 - 2026-11-22 #3: plateau review. P1 must break LOS, not outrun (boost avg ~15.5 vs 11.7 m/s, gun 230 m); trees block vision (protocol.md:369-372) so 'never trees' is a misread; squad memory is 30 s (squad.py:118); P3 vs ZONE_LEAN conflict + edge speed 7.2 m/s > 5 m/s silent; P2 regen before 375 s; sim over-rewards P1/P3 (no sound, no boost).
 - 2026-11-22 #2: squad-survival review. Keep R6 (fix: hold fire only once LOS is broken; regen also needs no damage taken, protocol.md:291), R3, R1 (funnel + fallback share one LOS_CAP=40 counter, survival.py:223/250/277), R4a. Drop R4b, R2'.
 - 2026-11-22: squad sim review. 2-match run seed 7: squad deaths 19 zone/7 NPC/2 us, median 395 s; ours 148 s, score 1.0. Finding 1: score is a floor effect; use death_t. No scoring bug. File: notes/reviews/squad-sim-2026-11-22.md.

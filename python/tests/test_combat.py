@@ -35,6 +35,9 @@ class FakeWorld:
     def los(self, a, b):
         return self.clear
 
+    def ground(self, x, y):
+        return 0.0  # flat
+
 
 def miss(pos, vel, shooter=(0, 0, 0)):
     """Fire along the commanded aim and return the closest approach of bullet to target center."""
@@ -195,6 +198,100 @@ class TestMortar(unittest.TestCase):
         for _ in range(1000):
             c.attack(o, tg)
         self.assertLess((time.perf_counter() - t0), 1.0)  # < 1 ms per call
+
+
+def strafe_pos(t, steady):
+    """Target 130 m east, moving north at 11.7 m/s; the strafer flips every 0.5 s. Returns (pos, vel)."""
+    if steady:
+        return [130.0, 11.7 * t - 60, 0.0], [0.0, 11.7, 0.0]
+    k, f = divmod(t, 0.5)
+    sgn = 1 if int(k) % 2 == 0 else -1
+    return [130.0, sgn * (11.7 * f - 2.925), 0.0], [0.0, 11.7 * sgn, 0.0]
+
+
+def hop_pos(t):
+    """Target 130 m east hopping in place: jump_speed up every time it lands (gravity from config)."""
+    g, j = CFG["mech"]["gravity"], CFG["mech"]["jump_speed"]
+    f = t % (2 * j / g)
+    return [130.0, 0.0, j * f - 0.5 * g * f * f], [0.0, 0.0, j - g * f]
+
+
+def hit_rate(predict, traj):
+    """Aim each decision, fire one decision interval later (action applies next tick), straight bullets."""
+    import combat
+    combat.AIM_PREDICT = predict
+    try:
+        c, st, hits, n = Combat(CFG, FakeWorld(True)), OBS["self"]["stats"], 0, 0
+        r0, sp, dt = st["radius"] + 0.5, GUN["stats"]["speed"], c.dt
+        h = CFG["mech"]["height"]
+        for i in range(100):
+            t = 0.05 + i * 0.1
+            pos, vel = traj(t)
+            o = obs([GUN, None])
+            o["t"] = t
+            yaw, pitch = c.attack(o, {"id": 7, "pos": pos, "vel": vel, "visible": True, "last_seen": t})["aim"]
+            if i < 10:
+                continue  # warm up the history
+            u = [math.cos(pitch) * math.cos(yaw), math.cos(pitch) * math.sin(yaw), math.sin(pitch)]
+            tf = (130 - r0 * u[0]) / (sp * u[0])  # bullet reaches the target's x plane
+            p, _ = traj(t + dt + tf)
+            by = u[1] * (r0 + sp * tf)
+            bz = st["muzzle_height"] + u[2] * (r0 + sp * tf)
+            n += 1
+            hits += abs(by - p[1]) <= st["radius"] and p[2] <= bz <= p[2] + h
+        return hits / n
+    finally:
+        combat.AIM_PREDICT = False
+
+
+class TestPredict(unittest.TestCase):
+    def test_strafer_hit_more(self):
+        off, on = hit_rate(False, lambda t: strafe_pos(t, False)), hit_rate(True, lambda t: strafe_pos(t, False))
+        print(f"strafer hit rate off {off:.2f} on {on:.2f}", file=sys.stderr)
+        self.assertGreater(on, off)
+
+    def test_straight_not_worse(self):
+        self.assertGreaterEqual(hit_rate(True, lambda t: strafe_pos(t, True)), hit_rate(False, lambda t: strafe_pos(t, True)))
+
+    def test_hopper(self):
+        off, on = hit_rate(False, hop_pos), hit_rate(True, hop_pos)
+        print(f"hopper hit rate off {off:.2f} on {on:.2f}", file=sys.stderr)
+        self.assertGreater(on, off)
+
+    def test_blind_extrapolates_toward_us_only(self):
+        import combat
+        combat.AIM_PREDICT = True
+        try:
+            c = Combat(CFG, None)
+            o = obs([GUN, None])
+            o["zone"] = {"next_center": [0.0, 0.0]}
+            for i in range(10):
+                o["t"] = i * 0.1
+                c.attack(o, {"id": 3, "pos": [100.0, 0, 0], "vel": [-10.0, 0, 0], "visible": True, "last_seen": o["t"]})
+            o["t"] = 1.4
+            tp, _, _ = c._predict(o, {"id": 3, "pos": [100.0, 0, 0], "vel": [-10.0, 0, 0], "visible": False,
+                                   "last_seen": 0.9}, [100.0, 0, 0], [-10.0, 0, 0])
+            self.assertAlmostEqual(tp[0], 95.0, places=3)
+            tp, _, _ = c._predict(o, {"id": 4, "pos": [100.0, 0, 0], "vel": [10.0, 0, 0], "visible": False,
+                                   "last_seen": 0.9}, [100.0, 0, 0], [10.0, 0, 0])
+            self.assertEqual(tp[0], 100.0)  # heading away from us and the zone: no extrapolation
+        finally:
+            combat.AIM_PREDICT = False
+
+    def test_cheap(self):
+        import combat
+        combat.AIM_PREDICT = True
+        try:
+            c, o = Combat(CFG, None), obs([GUN, LASER])
+            t0 = time.perf_counter()
+            for i in range(1000):
+                o["t"] = i * 0.1
+                c.attack(o, {"id": 1, "pos": [100.0, 0, 0], "vel": [0, 11.7 * (-1) ** (i // 5), 0], "visible": True})
+            ms = (time.perf_counter() - t0)
+            print(f"predict attack: {ms:.4f} ms", file=sys.stderr)
+            self.assertLess(ms, 0.2)
+        finally:
+            combat.AIM_PREDICT = False
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import copy
 import gzip
 import json
+import math
 import statistics
 import sys
 import time
@@ -147,7 +148,7 @@ class TestMoves(unittest.TestCase):
     def setUp(self):
         import brain as B
         self.B = B
-        self.saved = {k: getattr(B, k) for k in ("PEEK_AFTER_BEAM", "RELOAD_PUSH", "REAR_TURN", "BURN_ENDGAME", "REGEN_BREAK", "REGEN_HIDE", "BURN_QUIET", "RUN_MODE", "DROP_SAFE_R", "DROP_SEEN_S")}
+        self.saved = {k: getattr(B, k) for k in ("PEEK_AFTER_BEAM", "RELOAD_PUSH", "REAR_TURN", "BURN_ENDGAME", "REGEN_BREAK", "REGEN_HIDE", "BURN_QUIET", "RUN_MODE", "DROP_SAFE_R", "DROP_SEEN_S", "FIRE_POLICY")}
 
     def tearDown(self):
         for k, v in self.saved.items():
@@ -273,6 +274,46 @@ class TestMoves(unittest.TestCase):
         self.B.DROP_SEEN_S = 10.0
         o["drops"] = [{"id": 1, "pos": [30.0, 0.0, 0.0], "radius": 8, "lands_in": 10, "capture_s": 4, "progress": 0, "holder": None}]
         self.assertIsNone(b._drop_target(o, []))
+
+    def test_run_wait_spot_expires_and_zone_travels_quietly(self):
+        self.B.RUN_MODE = True
+        b = brain(perception=Fake(threats=[]))
+        b._seen_t, b._run_spot = 5.0, (-30.0, [200.0, 0.0])  # spot older than RUN_HIDE_S
+        o = obs0()
+        b.nav = Fake(step=None)  # map-free straight-line move: shows the goal
+        a, m = self.mode(b, o)
+        self.assertEqual((m, a["move"]), ("run-wait", [0.0, 0.0]))  # holds where it is
+        b.survival = Fake(zone_goal=([0.0, 300.0], False), zone_urgent=False)
+        a, m = self.mode(b, o)
+        self.assertEqual(m, "run-wait")
+        self.assertAlmostEqual(a["move"][1], 0.4)  # toward the zone, quiet speed
+
+    def test_fire_policy(self):
+        self.B.FIRE_POLICY = True
+        b = brain()
+        passive = dict(ENEMY, hp=1000.0)
+        self.assertFalse(b._may_fire(obs0(), passive))  # never the first shot
+        weak = dict(ENEMY, hp=200.0)
+        self.assertTrue(b._may_fire(obs0(), weak))  # one laser shot (315) kills it, nobody else near
+        b.perception = Fake(danger=[{"id": 9, "pos": [120.0, 0.0, 0.0]}])
+        self.assertFalse(b._may_fire(obs0(), weak))
+        self.assertTrue(b._may_fire(obs0(), {"id": 101, "pos": [1, 0, 0]}))  # drone
+
+    def test_fire_reveals_and_return_fire_prefers_gun(self):
+        self.B.FIRE_POLICY = self.B.RUN_MODE = True
+        b = brain()
+        o = obs0()
+        o["self"]["weapons"] = [{"kind": "gun"}, {"kind": "laser"}]
+        e = dict(ENEMY, hp=1000.0)
+        self.assertEqual(b._prefer_gun(o, e, [True, True]), [True, False])
+        self.assertEqual(b._prefer_gun(o, dict(e, hp=100.0), [True, True]), [True, True])  # laser kills
+        o["zone"] = dict(o["zone"], next_center=[0.0, 0.0], next_radius=200.0)
+        b._seen_t, b._run_spot = 9.0, (9.0, [5.0, 0.0])
+        b._revealed_t, b._revealed_pos = 9.0, [0.0, 0.0, 0.0]  # we just fired from here
+        b.nav = Fake(step=None)
+        a, m = self.mode(b, o)
+        self.assertEqual(m, "run-wait")
+        self.assertGreater(math.hypot(*a["move"]), 0.1)  # walking away from the firing spot
 
 
 class TestRobust(unittest.TestCase):

@@ -4,6 +4,9 @@ Owns: `notes/tests/`, test harnesses and the local simulator (not bot behavior).
 
 ## Current task
 
+Iteration 1 (moderator brief, Critic plateau-2026-11-22 finding 3): harder squad model `sim/bots/squad_chase.py` (boost chase >40 m at energy >30, sound-bearing last-known position; roof jetting skipped: squad.py nav has none). Status: done (see Log 2026-11-22).
+
+Previous: 
 Iteration 1, simulator phase 2 (moderator brief): extend `sim/engine.py` to the full rules of `protocol.md` (laser, lightning, mortar, both fire slots, weapon loot, crates, cubes, upgrade offers, supply drops, NPC drones, trees for vision), keep the public API, ≤ ~10 ms per decision at 16 mechs, `--jobs N` and per-weapon/cause/cube/drop metrics in `sim/run.py`, schema test for observations, unit tests per feature, smoke run of 16 matches.
 
 Status: done (see Log).
@@ -33,6 +36,7 @@ Superseded plan (phase 1, iteration 1): engine/runner/tests/baseline, all done; 
 | Mortar direct = damage only (not + splash), laser linear charge scaling, lightning cone ±30° | Each changes a weapon's value by 20–50% in the sim | Settle from a recorded match with these weapons when one exists (Researcher) | open |
 | Only the example bot as opponent | Track opponents are other teams' bots; a pool of one style overfits | Moderator is writing `sim/bots/`; `--count` mixes them | open (moderator) |
 | Zone `center` semantics during shrink and same-tick tie place are assumptions | Wrong assumption shifts zone timing and placement scoring | Ask the Researcher to settle §9 / §4 from the recorded stream or other evidence | open |
+| Squad model too soft (hunters walk, no sound hunting) | A/B robustness wins may not hold vs the track's house squad | `sim/bots/squad_chase.py`; roof jetting still missing | done (roofs open) |
 | No per-tick timing harness over `check/stream.jsonl.gz` (mean/p99/max) | Guardrail table reports p50 as the mean stand-in | Small script replaying the stream and timing each answer | open |
 | 100-match proxy runs take ~35 min serially | objective.md asks for ≥ 100 matches per measurement | Run matches in parallel processes (`--jobs`), when needed | done: `sim/run.py --jobs` |
 | 100-match proxy runs take ~35 min serially | objective.md asks for ≥ 100 matches per measurement | `--jobs 8`: 16 matches in 39 s, so 100 matches ≈ 4 min, 0% late | done |
@@ -51,6 +55,8 @@ Superseded plan (phase 1, iteration 1): engine/runner/tests/baseline, all done; 
 - Timing per match varies 2× with machine load from parallel agents; report the worst case.
 
 ## Log (newest first)
+
+- 2026-11-22, iter 1: built `sim/bots/squad_chase.py` (subclass of squad.Bot, ~40 lines). Smoke: 4 matches, cur ×1 vs squad_chase ×15, 0 errors; cur score 3.0 (se 0.91), win 0%, death_t_median 171.4 s, deaths gun 2 laser 1 zone 1; squad score 7.78, 38 zone deaths, late=9/6 (batch running in parallel). Out: scratchpad chase.json. Limit: sounds carry no id, so sounds near a squad mate's position are dropped (heuristic).
 
 - 2026-11-21, iteration 2: moderator added `--jobs` to `sim/run.py` using isolated worker processes; two-match `--jobs 2` smoke run passed. A corrected M1 vs example x15 batch completed 100 matches (seeds 1000-1099): M1 mean score 8.58, mean place 7.42, win rate 4%, zone deaths 7%, outside-zone ticks 0.35%, rear damage share 9.8%, gun hit rate 85.5% (910 shots), HP at <=3 alive 80.0%, 0 exceptions. Raw JSON: `notes/tests/2026-11-21-m1-vs-example.json`; AAR: `notes/reviews/aar-2026-11-21-1.md`. Parallel runner work is done; phase 2 remains open, starting with weapons and loot.
 - 2026-11-21, iteration 1, sim phase 2: full rules in `sim/engine.py` (weapons as slot items: laser, lightning, mortar; loot/take/drop with all `take_failed` reasons; crates; cubes with size growth; upgrade offers; supply drops; 12 NPC drones; every sound kind), trees in new `sim/trees.py`, `--jobs` + engine timing + per-weapon damage, deaths by cause, cubes, weapons held, drops, upgrades in `sim/run.py`. Found and fixed a phase 1 bug: held trigger banked a tick, 2nd gun shot at 0.20 s instead of 0.24 s (`_tick_cd`). Tests: `python -m unittest discover sim/tests` → 50 OK (schema validator accepts the recorded stream and every sim obs). Speed: 16 alive, 2,700 decisions: mean 4.28 ms, p99 7.62, max 13.2. Smoke `python sim/run.py --matches 16 --jobs 8 --seed 7 --bot "python -u python/bot.py" --bot "python -u python/example_bot.py"`: 38.9 s wall; bot.py score 9.12, place 6.88, wins 4/16, deaths gun 6 / npc 3 / zone 2 / laser 1, rear share 8.1%, laser held at end 31%, 0 drops, 0 NPC kills; example 7.39; 0% late, 0 exceptions. 16 assumptions listed in `notes/tests/2026-11-21-sim-phase2.md`. Results row "1 (sim phase 2)". Next: slope/slide-out, NPC calibration, opponent pool.

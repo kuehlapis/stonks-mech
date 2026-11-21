@@ -31,6 +31,10 @@ Done when the module meets `notes/interfaces.md`, its tests pass, and the full c
 
 ## Log (newest first)
 
+- 2026-11-22: shots reveal us. Any fire (RUN_MODE or FIRE_POLICY) sets _revealed_t/_revealed_pos and refreshes _seen_t; _far_point avoids the firing spot; run-wait never rests within 40 m of it. Return fire masks the laser slot when we have a gun, unless the laser kills (_prefer_gun). FIRE_POLICY drops early reload while a hunter has LOS. test_brain 27 OK. Rebuilt r_run, r_run_end.
+
+- 2026-11-22: diff-65bd2fe fixes: hidden _hide walks quietly to the fallback (far point) and stores (t, spot); run-wait uses spot only if < RUN_HIDE_S old, does quiet zone travel when zone_goal exists; _hide boosts whenever energy > reserve; run-finish needs no other remembered enemy within 150 m and < RUN_KILLS_MAX kills (counted from `kill` events). FIRE_POLICY: act() post-filter via _may_fire on the last _attack target (return fire within FIRE_MEMORY 10 s only while exposed; else only a one-shot kill: HP <= laser damage or a gun magazine, alone, under kill cap). test_brain 26 OK. Rebuilt r_run, r_run_end with FIRE_POLICY on.
+
 - 2026-11-22: Critic fixes (notes/reviews/plateau-2026-11-22.md): RUN_HIDE_S 30 "run-wait" (stay at the LOS-break spot, quiet, after the last sighting), boost only toward cover (walk to far point), farming off within RUN_HIDE_S of a sighting, DROP_SEEN_S gate. Trees: world.py has no canopy model, so find_cover is buildings-only; needs a world canopy LOS + survival option (not done). BURN_LEAD 45 => hidden from 370 s. test_brain 24 OK. Rebuilt r_run, r_run_end.
 
 - 2026-11-22: plateau.md P1/P2. RUN_MODE (step 1d: cornered fight, finish lone < RUN_FINISH of max HP, else _hide with fallback _far_point = 12 points at 0.6 x next radius farthest from tracked+remembered enemies, boost only above RUN_ENERGY 40). DROP_SAFE_R gate via perception.danger. Plating late: already first in economy.ORDER, no economy edit. 23 tests OK. Variants r_run, r_run_end.
