@@ -5,6 +5,7 @@ COMBAT_SOUNDS = {"gun", "laser", "laser_charge", "lightning", "mortar", "explosi
 VIRTUAL_DIST = {"laser": 150.0, "gun": 100.0}  # game-plan §1 unseen_attacker
 WINDOW = 3.0  # s: engaged, virtual threat life, damage/sound bearing age (game-plan §1)
 AIM_TOL = math.radians(15)
+DANGER_S = 30.0  # s: remember where enemies were (to hold out of their sight)
 
 
 def _angle(a, b):
@@ -27,6 +28,7 @@ class Perception:
         self.npcs = {}         # id -> {"id", "pos", "vel", "hp", "last_seen", "visible"} (drones, 100+)
         self.npc_hit = {}      # npc id -> t of its latest damage on us
         self.heard = None      # t of the latest heard combat sound at any range
+        self.last_known = {}   # mech id -> (t, pos) of its latest sighting or hit on us, kept DANGER_S
 
     def update(self, obs):
         t = obs["t"]
@@ -77,6 +79,11 @@ class Perception:
                 st = t - s.get("age", 0)
                 if self.sound is None or st >= self.sound[0]:
                     self.sound = (st, s["bearing"])
+        for i, th in self.tracks.items():
+            if i in seen or not th["virtual"]:
+                self.last_known[i] = (th["last_seen"] if i not in seen else t, list(th["pos"]))
+        for i in [i for i, (lt, _) in self.last_known.items() if t - lt > DANGER_S]:
+            del self.last_known[i]
         for i, th in list(self.tracks.items()):
             if i not in seen:
                 th["visible"] = False
@@ -118,6 +125,14 @@ class Perception:
             if t - ht <= WINDOW and i in self.npcs and (best is None or ht > self.npc_hit[best]):
                 best = i
         return self.npcs[best] if best is not None else None
+
+    def danger(self, t, pos, rng):
+        """Remembered enemy positions (as threat dicts) within rng m, newest DANGER_S s."""
+        out = []
+        for i, (lt, p) in self.last_known.items():
+            if t - lt <= DANGER_S and math.hypot(p[0] - pos[0], p[1] - pos[1]) <= rng:
+                out.append({"id": i, "pos": p, "vel": [0.0, 0.0, 0.0], "virtual": True, "visible": False})
+        return out
 
     def damage_bearing(self, t):
         return self.damage[1] if self.damage and t - self.damage[0] <= WINDOW else None

@@ -12,10 +12,15 @@ import time
 import mechfight as mf
 
 SWEEP = math.radians(50)      # look-around half-width while walking
-STRAFE_MIN, STRAFE_MAX = 0.5, 1.4   # s between strafe reversals (random)
+STRAFE_MIN = 0.25             # s between strafe reversals (random, min)
+STRAFE_MAX = 0.7             # ... and max
 CORNER_DIST = 60.0            # m: a threat this close can't be outrun (same walk speed)
 CORNER_ENERGY = 20.0          # below this energy we can't boost away
-FIGHT_EDGE = 0.8              # fight if our time-to-kill < this x theirs
+FIGHT_EDGE = 1.2              # fight if our time-to-kill < this x theirs
+DANGER_RANGE = 220.0          # m: hold out of sight of remembered enemies this close (0 = off)
+WEAK_GUN = 0.6                # scale on a gun-only enemy's expected damage rate
+OPEN_EDGE = 1.2               # open fire on a lone visible enemy when the time-to-kill ratio is below this
+OPEN_RANGE = 180.0            # ... and it is this close
 FINISH_FRAC = 0.35            # finish a lone enemy below this fraction of our HP
 END_ALIVE = 3                 # alive count at which the endgame starts (more willing to fight)
 END_EDGE = 1.15               # endgame fight threshold (time-to-kill ratio)
@@ -31,6 +36,8 @@ FARM_NPC_RANGE = 120.0        # m: shoot visible drones closer than this
 FARM_NPC_MIN, FARM_NPC_MAX = 55.0, 100.0   # m: keep drones in this band (aggro 45 m, their bullets are slow)
 FARM_CRATE_RANGE = 80.0       # m: shoot visible crates closer than this
 FARM_CRATE_NEAR = 25.0        # m: walk toward a crate until this close
+DODGE = True                  # sidestep visible projectiles that would hit us
+DODGE_T, DODGE_MARGIN = 0.9, 0.7   # s look-ahead; m added to our hit radius
 SLOW_MS = 30.0                # past this many ms in act(), skip optional work (cover search)
 HIT_P = {"gun": (0.75, 0.35, 0.15), "laser": (0.95, 0.85, 0.7), "mortar": (0.6, 0.35, 0.2), "lightning": (1, 0, 0)}
 
@@ -91,6 +98,13 @@ class Brain:
             except Exception:  # obs itself is broken
                 action, mode = {"move": [0.0, 0.0], "aim": [0.0, 0.0], "fire": [False, False]}, "safe"
         self._mode = mode
+        if DODGE:
+            try:
+                d = self._dodge(obs, action.get("move"))
+                if d is not None:
+                    action["move"] = d
+            except Exception as e:
+                self._log("dodge", e)
         if not self._engaged:  # never swap weapons while engaged
             tk = self._call(self.economy, "take", obs)
             if isinstance(tk, dict):
@@ -192,6 +206,11 @@ class Brain:
             others = visible[1:]
             if not e.get("virtual") and not others and self._finishable(obs, e, endgame):
                 return self._fight(obs, e), "finish"
+            if not e.get("virtual") and not others and _dist(pos, e["pos"]) < OPEN_RANGE:
+                r = self._ttk_ratio(obs, e)
+                if r is not None and r < OPEN_EDGE:
+                    self._fight_id, self._fight_t = e.get("id"), t
+                    return self._fight(obs, e), "open"
 
         # 4. Final circle: stand on its center
         fc = self._call(S, "final_center", obs)
@@ -226,9 +245,88 @@ class Brain:
         if cube:
             return {**self._go(obs, cube), **self._aim(obs, threats, threatened, cube)}, "cube"
 
-        # 8. Hold quietly
+        # 8. Hold quietly: out of sight of every remembered enemy position if we can
+        hold = None
+        if DANGER_RANGE > 0:
+            danger = self._call(P, "danger", t, pos, DANGER_RANGE) or []
+            if danger and not self._slow():
+                hold = self._call(S, "find_cover", obs, danger)
+                if hold:
+                    return {**self._go(obs, hold, quiet=_dist(pos, hold) < 25),
+                            **self._face(obs, _bearing(pos, danger[0]["pos"]))}, "hide"
         hold = self._call(S, "hold_point", obs) or self._next_center(obs)
         return {**self._go(obs, hold, quiet=True), **self._aim(obs, threats, threatened, hold)}, "hold"
+
+    # --- dodging ---
+
+    def _dodge(self, obs, pref):
+        """If a visible enemy projectile will hit us within DODGE_T s, return the move (unit 2D) that
+        maximizes the closest miss, preferring `pref`; else None. Ground acceleration model."""
+        me = obs["self"]
+        if not me.get("grounded", True):
+            return None
+        projs = obs.get("projectiles") or []
+        if not projs:
+            return None
+        st = me.get("stats") or self.cfg.get("mech") or {}
+        p, u = me["pos"], me.get("vel") or [0.0, 0.0, 0.0]
+        R = st.get("radius", 2.5) + ((self.cfg.get("projectile") or {}).get("gun_radius", 0.3)) + DODGE_MARGIN
+        H = st.get("height", 9.0)
+        acc, vmax = st.get("ground_accel", 58.5), st.get("walk_speed", 11.7)
+        threats = []
+        for q in projs:
+            qp, qv = q.get("pos"), q.get("vel")
+            if not qp or not qv:
+                continue
+            rx, ry = qp[0] - p[0], qp[1] - p[1]
+            vx, vy = qv[0], qv[1]
+            vv = vx * vx + vy * vy
+            if vv < 1.0:
+                continue
+            tca = -(rx * vx + ry * vy) / vv  # closest approach if we stood still
+            if tca <= 0 or tca > DODGE_T:
+                continue
+            z = qp[2] + qv[2] * tca
+            if z < p[2] - 0.5 or z > p[2] + H + 0.5:
+                continue
+            threats.append((qp, qv, tca))
+        if not threats:
+            return None
+
+        def miss(m):
+            tx, ty = m[0] * vmax - u[0], m[1] * vmax - u[1]
+            dv = math.hypot(tx, ty)
+            ax, ay = (tx / dv * acc, ty / dv * acc) if dv > 1e-6 else (0.0, 0.0)
+            ta = dv / acc if dv > 1e-6 else 0.0
+            worst = 1e9
+            for qp, qv, tca in threats:
+                # our average velocity over the approach (accelerating toward m), then exact closest approach
+                t1 = min(tca, ta)
+                ox = u[0] * tca + 0.5 * ax * t1 * t1 + ax * t1 * (tca - t1)
+                oy = u[1] * tca + 0.5 * ay * t1 * t1 + ay * t1 * (tca - t1)
+                wx, wy = ox / tca, oy / tca
+                rx, ry = qp[0] - p[0], qp[1] - p[1]
+                vx, vy = qv[0] - wx, qv[1] - wy
+                vv = vx * vx + vy * vy
+                ts = max(0.0, min(1.5 * tca, -(rx * vx + ry * vy) / vv)) if vv > 1e-9 else 0.0
+                worst = min(worst, math.hypot(rx + vx * ts, ry + vy * ts))
+            return worst
+
+        pref = pref if pref and math.hypot(pref[0], pref[1]) > 0.1 else None
+        if pref is not None and miss(pref) >= R:
+            return None  # current plan already dodges
+        best, bm = None, -1.0
+        for k in range(8):
+            a = k * math.pi / 4
+            m = (math.cos(a), math.sin(a))
+            if not self._call(self.nav, "free_at", p[0] + 5 * m[0], p[1] + 5 * m[1], default=True):
+                continue
+            v = miss(m)
+            if pref is not None:
+                v += 0.3 * (m[0] * pref[0] + m[1] * pref[1])  # tie-break toward the plan
+            if v > bm:
+                best, bm = m, v
+        return [best[0], best[1]] if best else None
 
     # --- farming ---
 
@@ -293,6 +391,8 @@ class Brain:
         cap = (self.cfg.get("cubes") or {}).get("stat_cap", 10)
         ours = self._dps(_kinds(me), d, 1 + cpc * min(me.get("cubes") or 0, cap), me.get("energy", 100))
         theirs = self._dps(e.get("weapons") or ["gun"], d, 1 + cpc * min(e.get("cubes") or 0, cap))
+        if (e.get("weapons") or ["gun"]) == ["gun"]:
+            theirs *= WEAK_GUN  # gun-only bots are the weaker tiers (track: weakest hunt first)
         # cook-off: lasers do +60% to a mortar holder; armor from our stats
         lz = ((self.cfg.get("weapons") or {}).get("laser") or {}).get("cookoff", 0.6)
         if "mortar" in _kinds(me) and "laser" in (e.get("weapons") or []):
