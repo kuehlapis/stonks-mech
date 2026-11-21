@@ -56,3 +56,9 @@ Moderator's log, newest first. Each entry: what was decided, why, and what was r
 
 - The moderator evaluates every agent report against evidence and sends feedback back to that agent (revise, go deeper, or next task) instead of one-shot launches.
 - Chain: Strategist + Researcher (online) proposals → Critic review → moderator feedback → builder (switch, off by default) → squad A/B → results back to Strategist and Critic → next round. Runs until mean > 6.00 or the user stops it.
+
+## 2026-11-22, iteration 3c: calibrate the squad to the track (user directive)
+
+- The squad model must reproduce the track: the submitted bot (f803b02, `sim/versions/sub1`) scores 1.6 ± 0.2 and the example bot 1.15 ± 0.2, 40 seeds each. Until then no sim A/B decides anything.
+- Why: nothing built this session beat the current bot, and the critic showed the sim's guesses (instant 30 s shared vision, hunter schedule, 60 m defend range) may squeeze every build to the same score. The only real behaviour data (`notes/research/house-bots.md`, one FFA recording) shows bots that boost, zigzag, lead and land full lasers, so realism changes come first, knob tuning second.
+- Rejected: calibrating on the current `s_base` (876 lines newer than the submission).

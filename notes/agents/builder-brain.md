@@ -26,10 +26,16 @@ Done when the module meets `notes/interfaces.md`, its tests pass, and the full c
 
 ## Lessons
 
+- Any mode that turns our back to a shooter loses; the torso faces the last attacker always.
+- Running while being shot loses: torso turns away (rear x1.5) and fire stops. Fight/evade under fire, run only when not being hit.
 - world.los ignores canopy: tree hides need a world change first.
 - Sounds carry no `by`, so per-enemy shot counts must come from `damaged` events (hits only).
 
 ## Log (newest first)
+
+- 2026-11-22: rebuilt r_run_end, r_run_end_aim, z_ladder, z_full with the RUN_HIT_S fix. Earlier sim scores were on an uncalibrated squad (80/120 squad zone deaths); no more sims until the Tester's calibrated squad lands.
+
+- 2026-11-22: diagnosed r_run deaths (inproc --trace-label, 4 matches seed 3 vs squad): last 10 s fire share 0.02-0.21 with 8-19 hits taken, rear share 9-67% (m3 965/1443) vs s_base 0-5%; deaths in run/run-wait while being shot, incl. run-wait under drone fire (100% rear). Fix: RUN_HIT_S 3 s: after any non-zone damage, RUN_MODE 1d and run-wait yield to normal fight/evade, and FIRE_POLICY allows return fire. r_run 8 matches seed 3: median death 58 s (first fix only) -> 141.9 s, rear 21.9% -> 10.4%, score 1.75, kills 0.38. Scratch traces in session scratchpad.
 
 - 2026-11-22: ladder amended per zone-smart-2026-11-22 review: LADDER_END_T 150, LADDER_KILLS_MAX 2, drop a target after 2 hits on us in 3 s (_ladder_bad), FIRE_POLICY bypass + no reload block while laddering, cube pickup for LADDER_CUBE_S 5 s after a kill. 42 tests OK. Variants r_run_end_aim, z_ladder, z_full (all with AIM_PREDICT).
 

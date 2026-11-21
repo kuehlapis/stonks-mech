@@ -52,6 +52,7 @@ REGEN_BREAK = False           # after a trade, no voluntary fights for regen_del
 REGEN_HIDE = False            # with REGEN_BREAK: in the regen window, run to cover from all hunters, then walk quiet, no fire
 BURN_QUIET = False            # with BURN_ENDGAME: hold in cover inside the final circle; fire only while exposed
 RUN_MODE = False              # never start a fight: on contact break LOS / run to the far side of the next circle
+RUN_HIT_S = 3.0               # RUN_MODE yields to the normal fight/evade logic for this long after any hit on us
 RUN_ENERGY = 40.0             # ... boost only above this energy (escape reserve)
 RUN_FINISH = 0.35             # ... but finish a lone visible enemy below this fraction of its max HP
 RUN_HIDE_S = 30.0             # s: in RUN_MODE stay in cover this long after the last sighting (squad shared memory)
@@ -98,6 +99,7 @@ class Brain:
         self._run_spot = None # (t, point) RUN_MODE walks to after breaking line of sight
         self._kills = 0
         self._kill_t = -1e9
+        self._dmg_t = -1e9      # last mech damage on us
         self._hits_on_us = []   # times of mech damage on us (ladder skill check)
         self._ladder_bad = set()  # ids that proved they can aim
         self._revealed_t, self._revealed_pos = -1e9, None  # last time/place we fired
@@ -218,6 +220,8 @@ class Brain:
         visible = sorted((x for x in threats if x.get("visible")), key=lambda x: _dist(pos, x["pos"]))
         endgame = obs.get("alive", 16) <= END_ALIVE
         evs = obs.get("events") or ()
+        if any(ev.get("type") == "damaged" and ev.get("weapon") != "zone" for ev in evs):
+            self._dmg_t = t
         k = sum(ev.get("type") == "kill" for ev in evs)
         if k:
             self._kills, self._kill_t = self._kills + k, t
@@ -266,7 +270,8 @@ class Brain:
                 return self._fight(obs, real[0]), "ladder"
 
         # 1d. Run mode: never start a fight; fire back only when cornered or to finish a lone weak enemy
-        if RUN_MODE and (hunters or (foe and not foe.get("virtual"))):
+        # trace (r_run, seed 3): running under fire = few shots back, rear hits, death; so under fire fight/evade as usual
+        if RUN_MODE and t - self._dmg_t >= RUN_HIT_S and (hunters or (foe and not foe.get("virtual"))):
             if engaged and not engaged.get("virtual") and _dist(pos, engaged["pos"]) < CORNER_DIST:
                 return self._fight(obs, engaged), "run-fight"
             v = visible[0] if len(visible) == 1 else None
@@ -274,7 +279,7 @@ class Brain:
                 return self._fight(obs, v), "run-finish"
             hs = hunters or [foe]
             return self._hide(obs, hs, engaged, "run", fallback=self._far_point(obs, hs), reserve=RUN_ENERGY)
-        if RUN_MODE and t - self._seen_t < RUN_HIDE_S and not foe:
+        if RUN_MODE and t - self._seen_t < RUN_HIDE_S and not foe and t - self._dmg_t >= RUN_HIT_S:
             # nobody in view but the squad still remembers us: stay put, quiet, facing the last sighting
             cube = LADDER and t - self._kill_t < LADDER_CUBE_S and self._safe_cube(obs, threats)
             if cube:  # a ladder kill's drop
@@ -640,6 +645,8 @@ class Brain:
         if "weapons" not in e or e.get("virtual"):
             return "weapons" not in e
         t, fid = obs.get("t", 0.0), e.get("id")
+        if t - self._dmg_t < RUN_HIT_S:
+            return "return"  # under fire we're already found: shooting back costs no extra exposure
         if t - self._hit_t(fid) < FIRE_MEMORY or (e.get("visible") and e.get("charging")):
             return self._exposed(obs, [e]) and "return"  # return fire, unless we already broke its line of sight
         W, kinds = self.cfg.get("weapons") or {}, _kinds(obs["self"])

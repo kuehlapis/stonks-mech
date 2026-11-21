@@ -330,6 +330,7 @@ class TestMoves(unittest.TestCase):
         o["events"] = [{"type": "damaged", "amount": 45, "weapon": "gun", "bearing": 0.0, "by": 7}] * 2
         self.mode(b, o)
         o["events"] = []
+        o["t"] += 4.0  # past RUN_HIT_S
         self.assertEqual(self.mode(b, o)[1], "run")  # it can aim: off the ladder
 
 

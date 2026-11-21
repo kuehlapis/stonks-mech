@@ -42,6 +42,8 @@ Done when the Critic has reviewed `game-plan.md` and the high-impact findings ar
 
 ## Lessons
 
+- P1 (run/hide) was refuted in the sim: r_run 92 s vs s_base 123 s. Shared vision makes LOS breaks local, and holding fire leaves every shooter alive. Before proposing a doctrine, run a 56-match check of its core claim first; fighting and survival moved together.
+
 - The recorded stream holds real evidence (who hit whom, when we died): reading `events` took one command and gave the strongest argument in the plan (E1). Check data before reasoning from rules alone.
 - Deriving the final-burn fact (radius 0 at 415 s, everyone burns, so max HP at the collapse decides) changed the upgrade order and the endgame. Compute the timeline from config first; it reframes the "8:00 tiebreak" the brief asked about.
 - Ask "what if every opponent does this too?" for each idea. It reversed my ranking of the hider (cheap and strong against brawlers, weak against copies) and promoted the farmer.
@@ -50,6 +52,8 @@ Done when the Critic has reviewed `game-plan.md` and the high-impact findings ar
 - Label rules with distinct prefixes from the start (I first used E1 for both evidence and an endgame rule and had to rename).
 
 ## Log (newest first)
+
+- 2026-11-22, iteration 3 (assumptions discussion): wrote the Strategist section of `notes/ideas/assumptions-discussion.md` (new file). A17 failed (reasons: shared vision, no deterrent, far point among non-hunters). Back from 6.00: H1 zone deaths, H2 gentler squad, H3 an exploitable AI gap; behaviours: fortress fighter, laser peek sniper, roof perch. Experiments: attacker count at death from traces, always-fight flag variant, track probe for zone deaths.
 
 - 2026-11-22, iteration 3 (300–415 s round): added "300–415 s survival" to plateau.md. Numbers: 25 m final circle from 375 s, outside dps 100/160/260 (no regen) so being outside is fatal before 415 s; towers 72.9 m unreachable; shared vision defeats hiding. Conclusion: alive at 415 s about 0–5% vs zone-smart squad. Ranked: last stand for kills (+0.5–1), final-roof hold (+0.1–0.3), edge dance and sound bait ≈ 0. The realistic total is 3–4; 6 needs fight quality or a squad that dies to the zone. Lesson: compute the endgame geometry before proposing hiding. Next: track evidence on house-bot zone deaths.
 
