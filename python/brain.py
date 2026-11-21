@@ -18,6 +18,7 @@ CORNER_DIST = 60.0            # m: a threat this close can't be outrun (same wal
 CORNER_ENERGY = 20.0          # below this energy we can't boost away
 FIGHT_EDGE = 1.2              # fight if our time-to-kill < this x theirs
 DANGER_RANGE = 220.0          # m: hold out of sight of remembered enemies this close (0 = off)
+GROUP_EDGE = 1.5              # fight several visible enemies when our ttk on the best target < this x their combined ttk
 WEAK_GUN = 0.6                # scale on a gun-only enemy's expected damage rate
 OPEN_EDGE = 1.2               # open fire on a lone visible enemy when the time-to-kill ratio is below this
 OPEN_RANGE = 180.0            # ... and it is this close
@@ -30,12 +31,15 @@ EVADE_MAX = 1000.0            # m: evade to cover only if it is this close (else
 EVADE_FIGHT = 1.6             # ... "fair" = time-to-kill ratio below this
 EVADE_ALL = True             # fire every weapon (not just the gun) while evading
 EVADE_GIVEUP_S = 4.0          # still being hit this long after starting to evade: turn and fight
+DROP_ON = True                # go for supply drops
+DROP_LATE, DROP_CLEAR = 12.0, 100.0   # s after landing we may still arrive; m of enemy-free space around it
 FARM_UNTIL = 330.0            # s: no farming after this (phase 5 and later)
 FARM_HP = 0.6                 # farm only above this HP fraction
 FARM_NPC_RANGE = 120.0        # m: shoot visible drones closer than this
 FARM_NPC_MIN, FARM_NPC_MAX = 55.0, 100.0   # m: keep drones in this band (aggro 45 m, their bullets are slow)
 FARM_CRATE_RANGE = 80.0       # m: shoot visible crates closer than this
 FARM_CRATE_NEAR = 25.0        # m: walk toward a crate until this close
+LASER_DUCK = 10.0             # m: duck to cover this close when a fought enemy charges its laser (0 = off)
 DODGE = True                  # sidestep visible projectiles that would hit us
 DODGE_T, DODGE_MARGIN = 0.9, 0.7   # s look-ahead; m added to our hit radius
 SLOW_MS = 30.0                # past this many ms in act(), skip optional work (cover search)
@@ -175,6 +179,13 @@ class Brain:
                                                           or (stuck and ratio < CLOSE_EDGE)):
                     self._fight_id, self._fight_t = fid, t
                     return self._fight(obs, foe), "fight"
+                if others and GROUP_EDGE > 0:
+                    g = self._group_target(obs, [foe] + others, t)
+                    if g is not None:
+                        tgt, gr = g
+                        if gr < GROUP_EDGE * (FIGHT_HYST if self._fight_id == tgt.get("id") else 1.0):
+                            self._fight_id, self._fight_t = tgt.get("id"), t
+                            return self._fight(obs, tgt), "group"
             cover = None if self._slow() else self._call(S, "find_cover", obs, [foe] + others)
             if cover and engaged and not foe.get("virtual") and not others and ratio is not None                     and _dist(pos, cover) > EVADE_MAX and ratio < EVADE_FIGHT:
                 self._fight_id, self._fight_t = fid, t
@@ -225,6 +236,11 @@ class Brain:
         if zg:
             goal, boost = zg
             return {**self._go(obs, goal, boost=boost), **self._aim(obs, threats, threatened, goal)}, "travel"
+
+        # 5b. Supply drop: 3 cubes + full HP/energy if we can hold the ring alone
+        dr = self._drop_target(obs, threats)
+        if dr is not None:
+            return {**self._go(obs, dr), **self._aim(obs, threats, threatened, dr)}, "drop"
 
         # 6. Farm drones and crates while nobody is around
         farm = self._farm_target(obs, threats, endgame)
@@ -328,6 +344,33 @@ class Brain:
                 best, bm = m, v
         return [best[0], best[1]] if best else None
 
+    # --- supply drops ---
+
+    def _drop_target(self, obs, threats):
+        """Position of a supply drop worth taking now, else None: reachable by landing + DROP_LATE s,
+        not held by someone else, no tracked enemy within DROP_CLEAR m of it."""
+        if not DROP_ON:
+            return None
+        me = obs["self"]
+        pos = me["pos"]
+        walk = (me.get("stats") or {}).get("walk_speed", 11.7) or 11.7
+        best = None
+        for d in obs.get("drops") or []:
+            dp = d.get("pos")
+            if not dp:
+                continue
+            holder = d.get("holder")
+            if holder is not None and holder != self.my_id:
+                continue
+            dist = _dist(pos, dp)
+            if dist * 1.3 / walk > (d.get("lands_in") or 0.0) + DROP_LATE:
+                continue
+            if any(_dist(th["pos"], dp) < DROP_CLEAR for th in threats):
+                continue
+            if best is None or dist < best[0]:
+                best = (dist, dp)
+        return best[1] if best else None
+
     # --- farming ---
 
     def _npc_target(self, n):
@@ -404,6 +447,36 @@ class Brain:
             return 0.0
         return (e["hp"] / ours) / (me.get("hp", 1) / theirs)
 
+    def _group_target(self, obs, enemies, t):
+        """(target, ratio): the visible enemy we kill fastest, and our time to kill it divided by the time
+        all of them together need to kill us. None if HP is unknown for every one."""
+        me = obs["self"]
+        pos = me["pos"]
+        cpc = (self.cfg.get("cubes") or {}).get("damage_per_cube", 0.04)
+        cap = (self.cfg.get("cubes") or {}).get("stat_cap", 10)
+        mult = 1 + cpc * min(me.get("cubes") or 0, cap)
+        total, best = 0.0, None
+        for e in enemies:
+            if e.get("virtual") or not e.get("pos"):
+                continue
+            d = _dist(pos, e["pos"])
+            th = self._dps(e.get("weapons") or ["gun"], d, 1 + cpc * min(e.get("cubes") or 0, cap))
+            if (e.get("weapons") or ["gun"]) == ["gun"]:
+                th *= WEAK_GUN
+            total += th
+            if e.get("hp") is None:
+                continue
+            ours = self._dps(_kinds(me), d, mult, me.get("energy", 100))
+            if ours <= 0:
+                continue
+            ttk = e["hp"] / ours * (0.85 if e.get("id") == self._fight_id else 1.0)
+            if best is None or ttk < best[0]:
+                best = (ttk, e)
+        if best is None or total <= 0:
+            return None
+        total *= 1 - ((me.get("stats") or {}).get("armor", 0) or 0)
+        return best[1], best[0] / (me.get("hp", 1) / total)
+
     def _finishable(self, obs, e, endgame):
         me = obs["self"]
         if e.get("hp") is None or _dist(me["pos"], e["pos"]) > 180:
@@ -420,6 +493,11 @@ class Brain:
         return bool(e.get("charging")) or "laser" in (e.get("weapons") or [])
 
     def _fight(self, obs, e):
+        if LASER_DUCK > 0 and e.get("charging") and e.get("visible") and not self._slow():
+            # a charging laser can't be dodged (hitscan): duck behind cover if it is a few steps away
+            cover = self._call(self.survival, "find_cover", obs, [e])
+            if cover and _dist(obs["self"]["pos"], cover) <= LASER_DUCK:
+                return {**self._go(obs, cover, boost=True), **self._gun_only(obs, e)}
         return {**self._strafe_move(obs, e["pos"], away=self._range_pref(obs, e)), **self._attack(obs, e)}
 
     def _range_pref(self, obs, e):
