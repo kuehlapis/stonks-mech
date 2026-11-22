@@ -2,7 +2,15 @@
 
 ## LATEST (2026-11-22 ~07:40 UTC, moderator session 3) — read first
 
-**Submit this:** commit `e6768d2` (iter-1, squad mode ON + AIM_PREDICT + explore 25 s for a laser + HOLD_DEPTH 0.5). Full check passed 09:20 UTC: 99 tests, check.py direct, Docker sandbox with map (ready 1.7 s, max 1.5 ms). Nothing after squad mode has a track score yet: this submission is the key measurement.
+**SUBMISSIONS GO THROUGH BRANCH `iter-submit`** (slim: root Dockerfile + python/ only, ~184 KB). `iter-1` itself is >20 MB uncompressed (traces, sim/versions) and is rejected; an empty commit field scores `main` (starter kit, no root Dockerfile) and is rejected. Always paste the full 40-char hash.
+Base image pinned: `python:3.13.18-slim@sha256:e48f59cd...` (finalists are rebuilt).
+
+| Candidate | iter-submit commit | Bot | Track score |
+|---|---|---|---|
+| A | `14bc97837c3e3de90e18b76cab40a29eadab66cc` | iter-1 e6768d2 (squad mode, LETHAL, PRECHARGE, AIM_PREDICT, HUNT 25 s, HOLD_DEPTH 0.5) | pending |
+| B | `82af545ffe721c2f3ba8423e8963fcef1907133d` | A + LASER_JUKE (iter-1 9204adb) | pending |
+
+Old note: **Submit this:** commit `e6768d2` (iter-1, squad mode ON + AIM_PREDICT + explore 25 s for a laser + HOLD_DEPTH 0.5). Full check passed 09:20 UTC: 99 tests, check.py direct, Docker sandbox with map (ready 1.7 s, max 1.5 ms). Nothing after squad mode has a track score yet: this submission is the key measurement.
 Scoring closes Sun 11:00 AM EST. Leaderboard top ≈ 6.28 (rescoring on 96 seeds, scorer builders-4).
 
 **RULES UPDATE (leaderboard page):** "excessive code reuse may result in disqualification" (including another team's entry). Do NOT submit or vendor giddy/other teams' code. Our squad mode is our own Python implementation of ideas, not their code. Scoring is now 96 fresh random seeds per run (scorer builders-4); identical code keeps its first builders-4 score. Leader 6.74 (Ahmad Suliman) at ~08:10 UTC.
