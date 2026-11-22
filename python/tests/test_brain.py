@@ -73,6 +73,14 @@ class TestPriority(unittest.TestCase):
         a = b.act(o)
         return a, mf.draw.take()["label"]
 
+    def test_zero_hp_does_not_divide_in_ttk_ratio(self):
+        b = brain(perception=Fake(threats=[ENEMY], engaged_by=ENEMY))
+        o = obs0()
+        o["self"]["hp"] = 0
+        a = b.act(o)
+        self.assertIn("move", a)
+        self.assertIn("aim", a)
+
     def test_zone_outranks_loot(self):
         b = brain(survival=Fake(zone_goal=([0.0, 300.0], True), zone_urgent=True, hold_point=[50.0, 0.0]),
                   economy=Fake(wanted_pickup={"id": 1, "kind": "laser", "pos": [5.0, 0.0, 0.0]}))

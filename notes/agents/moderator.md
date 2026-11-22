@@ -5,6 +5,8 @@ Owns: `python/bot.py`, `notes/decisions.md`, `notes/interfaces.md`, `notes/score
 ## Current task
 
 Iteration 3 (2026-11-22): raise the practice score (placement vs the 15-bot squad; track 1.6, sim ~1.9). A/B strategies, movesets and weapon pickups in the squad sim; submit only when the sim predicts ≥ 6.00 (user rule). No commits unless the user asks.
+Match-run process now requires a post-16/56 classification and exactly one
+counterstrategy/corrective package; no code or match launch is active.
 
 ## Plan
 
@@ -33,6 +35,15 @@ Done when zone deaths are eliminated, simulator phase 2 is complete, and a robus
 - A working-tree reset can drop uncommitted changes; recheck `git diff` before every batch.
 
 ## Log (newest first)
+- 2026-11-22, counterstrategy gate: added the 16/56 match-run rule to
+  `CLAUDE.md`, `notes/decisions.md`, `notes/progress.md`, the ranked strategy
+  queue, and the Critic/Strategist journals. The rule requires win/death
+  classification, one strongest counterstrategy, and exactly one corrective
+  package. No code or match launch was performed.
+- 2026-11-22, ladder screener preparation: replaced invalid `sim/versions/z_ladder` with an exact `s_base2` copy and enabled only `brain.LADDER=True`. Verified the normalized diff contains only that Brain assignment and no other source/file differences. Required Ladder constants and logic are already present in s_base2; full Python suite passes 93/93. No shipped `python/` behavior changed. Next: 16 paired seed-11 rotated ladder vs squad matches.
+- 2026-11-22, surprise strategy: user requested cover/building play and battle-royale surprise/ambush elements. Separate cover-engagement and Critic tracks are active; no implementation or competing batch until AIM_PREDICT returns.
+- 2026-11-22, objective clarification: user clarified that zone and NPC/drone effects may support eliminations. Success requires controlling the match and finishing the field, with direct and assisted squad deaths reported separately. Active AIM_PREDICT remains measured by kill improvement and survival.
+- 2026-11-22, calibrated baseline and switch test: 56-match s_base2 baseline 2.00 ±0.25, 0.98 kills/match. Laser-defense b_peek rejected at 1.96 ±0.26, paired -0.20 ±0.20 and 51.8% early deaths. Next: isolated AIM_PREDICT rebuild.
 
 - 2026-11-22, iteration 3 (session end): track 1.60 for c529ecc = same as f803b02. Sim over-rewards fight changes; squad calibration in progress (Tester). Built ~18 switches (all off), none proven; run mode hurt (rear damage; fixed by RUN_HIT_S). Assumptions register + 2 discussion rounds (notes/ideas/assumptions*.md). Next: verify the map loads under the scorer's sandbox (Critic round 2), then calibration, then one-switch A/Bs (K1 lightning ambush, K2 peek laser first). Handover: notes/progress.md top section.
 

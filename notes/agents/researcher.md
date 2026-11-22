@@ -9,6 +9,11 @@ Iteration (2026-11-22) brief: measure opponent behaviour in the recorded stream 
 Previous: 
 Iteration 1 brief (moderator): collect the facts the builders and the Strategist need, with evidence: `hello.json` + `config.md`, `map.md`, `upgrades.md`, `zone.md`, `stream.md` in `notes/research/`. Status: **done** (all six files written, 2026-11-21).
 
+New (2026-11-22): answer the highest-impact open questions for zone timing,
+NPC/drone behavior, kill causality, upgrades, weapon choices, and converting
+environment assists into wins. Status: **done** in
+`notes/research/iteration-research-2026-11-22.md`.
+
 ## Plan
 
 1. Extract the `hello` line from `check/stream.jsonl.gz` raw into `hello.json`; diff every `config` value against the numbers protocol.md states. (done)
@@ -31,6 +36,10 @@ Done when the five files exist with evidence: met.
 | Spawn/drop placement semantics (`spawn_zone_fraction` 0.8, `arena_margin` 30, `drops.spread` 0.7) are inferred, not specified | Phase-1 travel need and drop contest planning | Collect spawn positions over several matches/sim runs | open |
 | Opponent model rests on one FFA bot (mech 10) over 36.8 s | Sim calibration of house bots (A9-A13) | Get a real squad-practice replay or obs log; repeat `house-bots.md` measures on it | open |
 | My map raster took 18 s in pure Python | Builders copying it would blow the 5 s ready budget | Flagged in `map.md`; recommend coarse grid / bbox culling | done (flagged) |
+| Zone timing is not open: exact six-phase schedule is recorded | Leaves no excuse for a pre-415 zone death | Use `shrink_start`/`next_circle` with zone priority and margin | done |
+| Direct kills and environmental removals are still aggregated inconsistently | NPC/zone/other-squad deaths can be mistaken for bot wins | Preserve `kill.target`, `killed_by`, cause and time in all result summaries | open |
+| Drone routing benefit is from a 4-match smoke | A large apparent effect may be noise | Do not enable routing on real code until a 40/56-seed rerun supports it | open |
+| Upgrade heal semantics and best post-offer priority need runtime evidence | Plating may decide the 415 s tiebreak, so wrong pickup behavior loses HP | Verify plating `self.hp/self.max_hp` and run a 56-seed cube/upgrade A/B | open |
 
 ## Lessons
 
@@ -41,6 +50,17 @@ Done when the five files exist with evidence: met.
 - Check every hand-computed number against a second calculation before writing it; I caught one wrong stacked value (gun_rate cooldown) only on review.
 
 ## Log (newest first)
+
+- 2026-11-22: wrote `notes/research/iteration-research-2026-11-22.md`. Evidence:
+  latest valid 40-seed sub1 1.82 ±0.27 with 70.0% early deaths and s_base2
+  1.55 ±0.26 with 72.5%; both had 0–1.09% outside-zone ticks. 56-seed s_base2
+  baseline was 2.00 ±0.25, 0.98 kills/match, 48.2% early deaths. In
+  `cal-immune-sub1.json`, 123/600 squad deaths were NPC (20.5%), 34 gun,
+  13 laser. Laser defense `b_peek` was -0.20 ±0.20 against s_base2, while
+  AIM_PREDICT has only unit evidence (gun hit rate 0.20→0.40). Findings: zone
+  routing is solved enough to stop; next effort is calibrated early-fight
+  survival, direct-kill attribution, plating/cube/HP priority, and one-switch
+  AIM_PREDICT testing.
 
 - 2026-11-22: wrote `notes/research/house-bots.md`. Recording is FFA (no squad keys, others kill each other). Mech 10: on target 0.6 s after being hit, laser hit 2.2 s; ignored our unseen shots; aim residual 0.023 rad around ideal lead; gun ~5/10 at 150 m, laser 4/5; boosts (19.4 m/s), jet-hops, jukes; looted laser by t 4.9. A11 contradicted, A5/A10/A13 supported, A2/A7/A8 untouched. Next: same measures on a squad-mode log.
 

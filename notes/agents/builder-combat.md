@@ -4,7 +4,9 @@ Owns: `python/combat.py` and `python/tests/test_combat.py`. Rules: `CLAUDE.md` (
 
 ## Current task
 
-2026-11-22 brief: mortar arc aiming behind `economy.TAKE_MORTAR` (off by default); A/B variant `sim/versions/c_mortar`. Done, awaiting sim result.
+2026-11-22 AIM_PREDICT rebuild: replace `sim/versions/c_aim` with an exact copy of `sim/versions/s_base2`, then set only `AIM_PREDICT=True`. Baseline and candidate isolation verified; no match batch run.
+
+Previous: mortar arc aiming behind `economy.TAKE_MORTAR` (off by default); A/B variant `sim/versions/c_mortar`. Done, awaiting sim result.
 
 Previous: Iteration 1 brief (M1 rows 3-4): `Combat.attack` (gun lead, firing discipline, laser charge/release, reload) and `Combat.face`, per `notes/interfaces.md`. Done: `python/combat.py`, `python/tests/test_combat.py`.
 
@@ -36,6 +38,8 @@ Done when the module meets `notes/interfaces.md`, its tests pass, and the full c
 - Real laser weapon dicts are not in `check/stream.jsonl.gz` (we never held one); tests build one from `cfg.weapons.laser`.
 
 ## Log (newest first)
+
+- 2026-11-22: rebuilt `sim/versions/c_aim` from `sim/versions/s_base2`; changed only `AIM_PREDICT=False` to `True` in candidate `combat.py`. Normalized file comparison found no extra file or text differences; raw combat diff is the single AIM_PREDICT assignment. `b_peek`, `RUN_MODE`, `REAR_TURN`, `LADDER`, `STRAFE_BOOST_E`, `TAKE_MORTAR`, `CUBE_CAP`, and `FIRE_POLICY` remain off. `python -m unittest discover python/tests`: first run hit a transient survival timing failure (34.14 ms), immediate rerun passed all 93 tests in 8.139 s; targeted combat suite passed 18/18. No match batch run.
 
 - 2026-11-22 (addendum): AIM_PREDICT gun path now: future target offset via `_future` (smoothed velocity capped within 0.5*ground_accel*T^2 of the instantaneous prediction; airborne = gravity parabola clamped to `world.ground`, grounded = follows terrain delta), flight time +1 decision interval (action applies next tick), refined 2x; P(hit) = 1-exp(-r^2/2sigma^2), sigma^2 = (dist*tan spread)^2 + (min(sd*T, 0.5aT^2)/2)^2, hold fire under HIT_GATE 0.25. Bullets don't inherit shooter velocity (sim/engine.py `_spawn_proj` uses aim dir x speed only). Muzzle/target radius already from obs stats/target. Tests 18 combat OK: strafer 0.20 -> 0.40, hopper 0.80 -> 1.00 (fire 1 dt late in the test sim), ~0.1 ms/call under load. Obs age not modelled (no field seen); airborne clamp is terrain-only (roofs). Variant c_aim rebuilt.
 

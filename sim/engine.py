@@ -191,6 +191,9 @@ class Mech:
         self.shots_mid = self.hits_mid = 0
         self.dmg_dealt_by = {}
         self.dmg_taken_by = {}
+        self.hits_taken_by = {}
+        self.dmg_by_slot = {}
+        self.hits_by_slot = {}
         self.drops_captured = 0
         self.kinds_taken = []
         self.npc_kills = self.crates_broken = 0
@@ -1088,9 +1091,13 @@ class Match:
             if effect in ("cookoff", "short"):
                 m.events.append({"type": "effect", "effect": effect, "by": by.id})  # concuss: see _concuss
             m.dmg_taken += amount
+            if by is not None and by is not m and by.kind == "mech":
+                m.dmg_by_slot[by.id] = m.dmg_by_slot.get(by.id, 0.0) + amount
+                m.hits_by_slot[by.id] = m.hits_by_slot.get(by.id, 0) + 1
         ev["amount"] = round(amount, 2)
         m.events.append(ev)
         m.dmg_taken_by[weapon] = m.dmg_taken_by.get(weapon, 0.0) + amount
+        m.hits_taken_by[weapon] = m.hits_taken_by.get(weapon, 0) + 1
         m.last_combat_t = t
         if m.hp - amount <= 0 and m.death_cause is None:
             m.death_cause, m.hp_before_death = weapon, round(m.hp, 1)

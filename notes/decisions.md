@@ -2,7 +2,18 @@
 
 Moderator's log, newest first. Each entry: what was decided, why, and what was rejected.
 
+## 2026-11-22, match-run counterstrategy rule
+
+- **After every 16-match screener or 56-match confirmation, classify wins and deaths before choosing another experiment.** Wins remain separated into direct kills, NPC/drone-assisted removals, zone-assisted removals, final-burn placement, and HP/position wins. Deaths are classified by weapon/cause, phase, cover and LOS state, zone pressure, hunter/squad size, surprise state, and rear/exposed state.
+- **Identify exactly one strongest counterstrategy** per run. The selection uses the dominant loss/win evidence and chooses the highest plausible gain-to-risk response. Preferences, in order when applicable: element of surprise, cover/LOS, ambush timing, zone timing/position, safe drone use or drone routing, and isolated weakest-first squad hunting. A generic "fight better" response is not specific enough; record the exact mechanism and metric.
+- **Build exactly one corrective package and no competing package.** It may contain only one named hypothesis, one primary metric, explicit guardrails, and either a 16-match screen or a 56-match confirmation contract. Stacking multiple hypotheses, re-running a rejected idea unchanged, or queueing two corrective arms is forbidden. The 16/56 result record must state why alternatives were rejected.
+- The package must resist adaptation: vary angles, approach timing, cover, and re-engagement; do not add persistent camping or rear exposure. Drone and zone effects are support and must not be credited as direct kills.
+- Applied to `CLAUDE.md`'s improvement loop and the existing ranked queue. Record each application in `notes/reviews/` or this decision log and update the Critic and Strategist journals.
+
 ## 2026-11-22, iteration 3: placement scoring, strategy and moveset A/B
+
+- **Clarification:** zone and NPC/drone effects may support kills. The objective is for our mech to control the match so the field ends as a win: assisted eliminations count when they improve survival or reduce threats. The 1.6 submission is the baseline. Valid measurements must distinguish direct kills from assisted/external eliminations rather than forbid external effects.
+- **Maximum-hard-squad and learning directive:** build the strongest defensible simulator opponent from protocol and evidence, then learn one root-cause countermeasure after each batch. Keep the opponent and bot changes isolated: never tune one to mask a weakness in the other.
 
 - **Scoring is placement** (16 − place), confirmed by the user. The sim already scores this way (`sim/inproc.py` summarize).
 - **The squad format is confirmed** by the user's paste of the track page: practice = us vs 15 house bots acting as one squad, and the leaderboard ranks the best practice score. The squad sim stays the test bed; a free-for-all batch was started on a wrong doubt and then stopped.

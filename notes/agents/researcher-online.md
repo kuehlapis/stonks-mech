@@ -3,8 +3,12 @@
 Owns: `notes/research/online-*.md`. Rules: `CLAUDE.md` (Agent journals). Goal: `objective.md`.
 
 ## Current task
-
-Iteration 1 brief from the moderator: research online (BR strategy, bot competitions, game AI methods for 50 ms Python, mech games, FFA game theory) and translate it into mechfight rules with config names and numbers. Write `online-battle-royale.md`, `online-bot-competitions.md`, `online-game-ai.md`, `online-mech-games.md`, and a ranked top-15 `online-recommendations.md`. Status: **done** (2026-11-21).
+Iteration 2026-11-22 brief: continue from `notes/progress.md`; research outside
+tactics for battle royale, drones/NPC use, zone control, multi-enemy hunting
+squads, movement, cover and weapon triads; translate them into mechfight
+hypotheses with sources and disconfirming evidence. Do not edit bot code.
+Status: **done** (2026-11-22); report:
+`notes/research/online-iteration-2026-11-22.md`.
 
 ## Plan
 
@@ -30,6 +34,10 @@ Next run: whatever the moderator assigns. Candidates are in the table below.
 | Squad-survival rules rest on search snippets only | R1–R6 effects are guesses | Fetch one game-AI pursuit-evasion source; get Tester A/B of R1 (funnel) and R3 (zero-LOS + silence) | open |
 | Body-shield rule (R2) depends on unknown friendly-fire rule | Wasted build if shots pass through mechs | Checked `protocol.md:306,317`: no rule, dropped; kept lightning chain pick | done |
 | Several primary sources unreadable (Game AI Pro PDFs, Killzone slides, AIIDE reports, MWO forums) | Some findings rest on search snippets | Retry with another mirror, or extract the PDFs with the scratch extractor (worked for Battlecode, not for font-encoded PDFs) | open, low priority |
+| Drone/NPC external evidence is sparse | Avoidance and drone-farm hypotheses can be false if local simulator rewards differ | Run matched 56-seed tests with 30/50/80 m bands and separate direct, NPC-assisted and zone deaths | open |
+| Edge/deadside advice is environment-dependent | A quiet-side rule can become a hunter ambush in a 15-hunter map | A/B exact centre, 0.6-radius edge and 0.85-radius quiet edge over 56 seeds | open |
+| Weapon-triad evidence is mostly rule-backed, not empirical | A nominal counter can lose to mobility or crossfire | Test lightning ambush and laser peek separately on a diversified squad pool | open |
+| Pursuit-evasion result assumes full information | Shared vision is close early; broken LOS and 5 s memory make it less applicable | Test LOS funnels and cover reset before inferring capture-time results | open |
 
 ## Lessons
 
@@ -37,9 +45,32 @@ Next run: whatever the moderator assigns. Candidates are in the table below.
 - WebFetch can't read many PDFs (compressed or font-encoded). A 15-line zlib + `Tj/TJ` extractor in the scratchpad (`scratchpad/scripts/pdftxt.py`, run with `python -I`) recovered the Battlecode PDF text but not Game AI Pro (custom font encoding). Don't sink more time into image-only slides.
 - The most valuable findings came from doing arithmetic on `hello.config` after reading a source (bullet flight vs mech radius, regen time, final-collapse HP), not from the sources themselves. Next time, compute the key numbers before searching, so searches target the open questions.
 - Windows Python prints cp1252; with `-I` the `PYTHONIOENCODING` variable is ignored, so write bytes to `sys.stdout.buffer`.
+- Outside tactics are useful only after a mechanic-level translation and a
+  falsifier. “Deadside,” “horde attack lanes,” “focus fire,” and “peek” all need
+  local distance, timing and LOS variables.
+- Published pursuit-evasion is strongest for the geometry of crowded hunters,
+  but it is not a substitute for damage/zone/endgame simulation.
+- NPC mechanics can have an opposite net effect: cube gains can help, but shots
+  reveal position and expose the bot to the squad. Report assisted deaths
+  separately from direct and zone deaths.
+- Small smoke evidence is not a conclusion. The local 50 m drone-routing smoke
+  was 4 matches, and the 40-seed routing batch was stopped; it remains open.
 
 ## Log (newest first)
-
+- 2026-11-22, iteration 2026-11-22, outside tactic sweep: wrote
+  `notes/research/online-iteration-2026-11-22.md`. Covered zone/deadside,
+  drone/NPC value, multi-hunter pursuit, movement, cover peeking and the
+  laser/mortar/lightning triangle. Added 10 ranked hypotheses and 8 negative
+  controls. Strong evidence: Klein/Suri arXiv 1110.4838 proves 3 pursuers suffice
+  under complete information; Dignitas/Ziphon support early cover routes;
+  RoboWiki supports candidate-point minimum-risk and GuessFactor adaptation.
+  Disconfirmers: full-information capture does not model broken LOS/5 s memory;
+  PUBG centre position assumes a squad and compounds; edge camp invites
+  mortars; and local 4-match drone routing smoke is too small for a conclusion.
+  Evidence also draws on the 2026-11-22 local progress record: sub1/s_base2
+  ≈2.0 in a 40-seed calibrated-style run, zone routing smoke sub1=2.25,
+  drone deaths were 3.1→2.75/match, and the 40-seed routing run was stopped.
+  No bot code or bot constants were changed.
 - 2026-11-22, iteration 1, assumptions discussion: appended "Researcher (online)" to `notes/ideas/assumptions-discussion.md`. Findings: tiered bots differ by ReactionTime (≈0.6 s easy to ≈0 s expert, community BotProfile.db copies), which bears on A10, gives a first-shot window; mobile-BR bots move toward gunfire sound (fan guide, against A12); horde AI staggers attackers (fits A7); no source on bots and zone damage (A4). Evidence: 3 searches, 1 fetch refused (Valve wiki 403). Next: offline Researcher measures per-bot reaction delay and sound-turning in the stream.
 
 - 2026-11-22, iteration 1 (squad era), rev 2 after moderator feedback: fetched arXiv 1110.4838 (3 pursuers suffice with full info, so evasion only works undetected), plus horde-AI attack-token/Kung-Fu circle and LLM-BR sources (snippets). R2 settled from `protocol.md:306,317`: general body shield dropped (no mech-blocks-shot rule), narrowed to lightning chain pick `b_chain`. R3/R6 rewritten as deltas `REGEN_HIDE`, `BURN_QUIET`; loot-silence and R5 dropped (already built). R1 costed: 8 wall cells x 5 hunters = 40 los (= LOS_CAP) at 0.04 ms = 1.6 ms, cached 1 s, no path search (the cause of the 50-62 ms hold search). Variants: s_funnel, b_regen_hide, s_zone_lean, b_burn_quiet, b_chain. Next: Tester A/B in that order.

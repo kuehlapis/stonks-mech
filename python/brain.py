@@ -778,6 +778,9 @@ class Brain:
         me = obs["self"]
         if e.get("hp") is None:
             return None
+        our_hp = me.get("hp")
+        if not isinstance(our_hp, (int, float)) or our_hp <= 0:
+            return 99.0
         d = _dist(me["pos"], e["pos"])
         cpc = (self.cfg.get("cubes") or {}).get("damage_per_cube", 0.04)
         cap = (self.cfg.get("cubes") or {}).get("stat_cap", 10)
@@ -800,6 +803,9 @@ class Brain:
         """(target, ratio): the visible enemy we kill fastest, and our time to kill it divided by the time
         all of them together need to kill us. None if HP is unknown for every one."""
         me = obs["self"]
+        our_hp = me.get("hp")
+        if not isinstance(our_hp, (int, float)) or our_hp <= 0:
+            return None
         pos = me["pos"]
         cpc = (self.cfg.get("cubes") or {}).get("damage_per_cube", 0.04)
         cap = (self.cfg.get("cubes") or {}).get("stat_cap", 10)

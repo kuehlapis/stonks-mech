@@ -4,6 +4,33 @@ Owns: `notes/reviews/`. Rules: `CLAUDE.md` (Agent journals). Goal: `objective.md
 
 ## Current task
 
+Enforce the match-run counterstrategy gate: after every 16-match screener or
+56-match confirmation, review the run's win/death classification, challenge
+the selected single strongest counterstrategy, and verify that exactly one
+corrective package is proposed. Evidence must cover element-of-surprise,
+cover/LOS, ambush, zone, drone, and squad-hunting adaptations. No code or
+match launch is part of this task.
+
+Iteration-evaluation review, 2026-11-22: continued from
+`notes/progress.md`, the 56-match `b_peek` evidence, and the rebuilt
+`c_aim` snapshot. Highest-impact loop change: return to simulator
+calibration and raise squad pressure before any bot-switch promotion.
+Evidence and exact gates:
+`notes/reviews/iteration-evaluation-2026-11-22.md`.
+No bot behavior or competing match batch was changed.
+
+Reviewed the next isolated switch after the laser-defense A/B queue:
+`AIM_PREDICT` in `python/combat.py` versus `sim/versions/c_aim`.
+Found the existing c_aim snapshot is invalid for an isolation test because
+it has extra brain/economy differences and is missing s_base2 run-hit fixes.
+Output: `notes/reviews/aim-predict-ab-spec-2026-11-22.md`.
+No code was edited and no competing match batch was run.
+
+Iteration 3, calibration handoff: identify the highest-value action after
+the zone-death trace. Done: trace/fix the v2 squad's pre-415 zone deaths
+before any rerun or bot switch work. Evidence and the bounded stop plan are
+in `notes/reviews/calibration-next-action-2026-11-22.md`.
+
 Brief (moderator, 2026-11-22 #8): specify exactly two off-default first-fight
 switches (conservative gun-only opening and laser-aware range) without code
 edits. Done: `notes/reviews/first-fight-switch-spec-2026-11-22.md`.
@@ -33,6 +60,8 @@ Brief (moderator, iteration 1): review `notes/ideas/game-plan.md` against `proto
 3. Rank findings by impact on mean score, crash risk and timing risk. (done)
 4. Second pass: online-recommendations comparison; re-check the Strategist's fixes. (done: 13 fixed, #2 partly; new N1 M1-blocking, N2, N3)
 5. Re-check N1 fix in plan/code when M1 lands; review M1 diffs. (open)
+6. Current: block bot A/B and shipped-bot edits until the squad model has
+   0 zone deaths before 415 s on a trace/small smoke and on 40 seeds.
 
 Done when every high-impact finding is fixed in the plan or accepted by the moderator in `notes/decisions.md`.
 
@@ -40,14 +69,20 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 
 | What | Why (effect on score or proxy) | How to be better | Status |
 |---|---|---|---|
+| FPS inspiration could become camp, cadence or copy-overfit behaviour | A fixed corner, fixed peek cadence or replay-specific route hides as aim/surprise while reducing adaptation | Reviewed FPS/TenZ/Shroud analogies in `notes/reviews/fps-tactics-2026-11-22.md`: keep protocol bounds, one lever, paired 16/56 gates, no-camping, opponent diversity and direct/assisted kill separation | done (2026-11-22) |
+| Post-16/56 runs can become a multitheory stack | Multiple unclassified losses invite parallel fixes and weaken attribution | Require win/death classification, one counterstrategy, and exactly one corrective package | done (2026-11-22) |
+| `c_aim` is not an isolated s_base2 snapshot | Extra brain/economy diffs and missing run-hit fixes would confound the AIM_PREDICT effect | Rebuild/review c_aim as a byte-normalized s_base2 copy with only AIM_PREDICT=True; do not run until isolation is proven | in progress |
+| Evaluation loop is currently calibration-first, not switch-first | Standalone or uncalibrated A/Bs can improve a proxy while remaining below the track target | Raise squad pressure once, rerun 40-seed paired anchors, then admit only one 56-paired bot switch | in progress |
+| v2 squad calibration invalid before bot A/B work | c1 has 407 squad zone deaths in 40 sub1 seeds and 357 in example seeds, so the score columns do not test bot placement | Trace/fix only `sim/bots/squad.py`, 4-match smoke to 0, then 40-seed calibration | done for bounded smoke |
 | Sim squad ignores sound and never boosts | Over-rewards run/hide plans (P1/P3) vs track | Ask Tester for a boost+hearing squad variant in A/Bs | open |
-| Squad sim calibration unverified | Fixes 3/4 in squad-sim review are guesses | Re-check after Tester runs example vs f803b02 paired | open |
+| Squad sim calibration unverified | Fixes 3/4 in squad-sim review are guesses | Re-check after Tester runs example vs f803b02 paired on the trace-valid model | open |
 | First-fight TTK treats gun-only as weak and spaces every duel at 130 m | Can voluntarily reveal us to a stronger hunter at laser-favourable range | A/B the two isolated, default-off switches in `first-fight-switch-spec-2026-11-22.md` only after calibration | open |
 | Nothing reviewed yet | Unchecked assumptions become bugs | Review the plan before building starts | done (game-plan review, 2026-11-21) |
 | Findings rest on rule reasoning, not measurement | Severity of finding 3 (edge-hold rear exposure) and finding 9 (estimates) is a guess; wrong ranking wastes builder time | When the Tester's sim runs, ask for rear-hit share inward vs outward facing and the M1 death-time histogram; re-rank | open |
 | No re-check of fixes yet | A fix can introduce a new error | Second pass on the revised plan: verify each fix against the same evidence | done: found N1 (fix #6's cap + fix #2's 'no cover = cornered' recreate E1) |
 | Online research not compared | Outside tactics may contradict edge-hold | Read `online-recommendations.md` when it lands; add a section | done (summary only; source files `online-*.md` not read) |
 | M1 code not reviewed | N1 could survive into code even if the plan is fixed | Review the M1 Brain/Survival diff for the cornered rule and the time guard | open |
+| FPS analogies are not yet bounded to protocol mechanics | TenZ/Shroud terms can imply ADS, smoke, headshots or crouch peeks that do not exist | Keep cover/LOS, 50 ms, rear armor, laser timing, zone timing and 5 s memory in every FPS-tactics review; maintain exposure and guardrail limits | done (2026-11-22) |
 
 ## Lessons
 
@@ -66,6 +101,80 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 - Checking a single number in the stream (who hit first, where the enemy was aiming) settled a claim in minutes. Prefer one-line stream queries over arguing.
 
 ## Log (newest first)
+- 2026-11-22, FPS elite-tactics review: read
+  `notes/ideas/fps-elite-tactics-2026-11-22.md`, `protocol.md`,
+  `notes/interfaces.md`, `objective.md`, and the existing 16/56 queue.
+  Verdict: the document is protocol-valid as strategy only. One package has
+  exactly one named lever, with module ownership and evidence/primary metric
+  defined. Highest risks are fixed-cadence peeking, corner camping and
+  post-hoc opponent fitting. Enforce expiry, relocation, paired seed testing,
+  diverse opponent pools, and direct/assisted removal separation. No code or
+  match batch was changed.
+- 2026-11-22, FPS tactic protocol review: updated
+  `notes/reviews/fps-tactics-2026-11-22.md`. Rejected ADS, recoil,
+  smoke/flash, headshots, wall-bangs, eco rounds and generic counter-strafe
+  as mechanics absent from `mechfight/1`. Marked peeking, pre-aim,
+  strafing, crossfire, real cover/LOS and surprise as valid only within
+  protocol bounds: 50 ms decisions, gun/mortar/laser timing, rear ×1.5,
+  5 s tracks, 1400 base HP, 45 HP/s regen, 415 s final-circle collapse,
+  and the 15-mech hunt. Proposed no code or match; next if requested is only
+  a bounded laser-aware cover-peek A/B.
+- 2026-11-22, post-run counterstrategy gate: read `notes/progress.md`,
+  `CLAUDE.md`, the 56-match evidence, and the ranked strategy queue. Added
+  a hard rule that every 16/56 run must classify wins/deaths, select one
+  strongest counterstrategy, and define exactly one corrective package.
+  Reviewed themes: surprise, cover/LOS, ambush, zone, drone, and
+  squad-hunting. No code or match was launched.
+- 2026-11-22, cover-and-engage review: reviewed
+  `notes/ideas/iteration-brainstorm-2026-11-22.md` item 4,
+  `notes/ideas/strategies.md` camper/ambusher, `python/brain.py`,
+  `python/survival.py`, and `notes/ideas/game-plan.md` against the
+  requested corner exposure, camp, zone, rear, timer, economy, and
+  `_fight`/`_evade` conflicts. Wrote 9 evidence-ranked findings in
+  `notes/reviews/cover-engage-2026-11-22.md`; no code or matches changed.
+  Highest impact: a corner camp can become a 2–4 hunter trap and may
+  defeat normal zone/TTK/cover priorities if added as a persistent mode.
+- 2026-11-22, iteration evaluation: read `objective.md`, `notes/progress.md`,
+  `notes/decisions.md`, the 56-match `b_peek` report, the `c_aim` rebuild
+  report/spec, and authoritative/post-fix calibration outputs. Evidence:
+  `b_peek` 1.96 ± 0.26 versus rerun baseline 2.00 ± 0.25, paired score
+  -0.20 ± 0.20 and kills -0.14 ± 0.14; early-death share worsened
+  48.2%→51.8%, so PEEK_AFTER_BEAM stays off. `c_aim` is now isolated
+  (normalized diff only `AIM_PREDICT`) but has no 56-match result.
+  Authoritative current-squad 40-seed results are sub1 1.98 ± 0.29,
+  s_base2 2.20 ± 0.29, example 1.40 ± 0.28, all with 0 pre-415 squad zone
+  deaths. These miss the 1.6 ±0.2 calibration balance for sub1/s_base2.
+  Verdict: the highest-impact loop change is to raise squad pressure once
+  (DEFEND_RANGE 60→80, prefer it over changing the hunter schedule), rerun
+  40-seed anchors, and hold bot switches until calibration passes.
+  Wrote `notes/reviews/iteration-evaluation-2026-11-22.md`; no behavior
+  changed and no match batch was launched.
+
+- 2026-11-22, AIM_PREDICT next-switch review: inspected `python/combat.py`,
+  `sim/versions/c_aim/combat.py`, `sim/versions/s_base2/combat.py`,
+  `python/tests/test_combat.py`, and the 56-match s_base2 baseline.
+  Verdict: existing c_aim is invalid for an isolated A/B due to extra
+  `brain.py`/`economy.py` diffs and omitted run-hit fixes. Wrote exact
+  baseline/candidate commands, isolation requirement, paired metrics,
+  promotion gates and runtime/validity guardrails in
+  `notes/reviews/aim-predict-ab-spec-2026-11-22.md`. No code or batch changed.
+
+- 2026-11-22, bounded zone fix: replayed seed 2100000 slot 15 and ran a
+  4-match pre-fix smoke. The first smoke found an exact-centre
+  `ZeroDivisionError` in `sim/bots/squad.py` rather than a remaining zone
+  death. Added a simulator-only non-zero-distance guard. Post-fix smoke:
+  60 squad mechs, 0 pre-415 zone deaths, 0 errors, 0 late answers.
+  Raw: `notes/tests/zone-smoke-4-fixed.json`.
+  `python -m unittest discover sim/tests`: 50/50 passed.
+  Result: bounded stop condition met; no shipped bot behavior changed.
+
+- 2026-11-22, calibration handoff: ranked the next action after the v2
+  calibration and zone traces. c1 sub1 2.23 ± 0.31 and example 1.62 ± 0.34
+  are invalid because raw rows contain 407/357 squad zone deaths before
+  415 s. Drone routing is also only a 4-match 2.25 smoke, not a 40-seed
+  result. Verdict: trace/fix simulator zone routing first, then 40-seed
+  sub1/example/s_base2 calibration; no shipped-bot edit or bot switch A/B.
+  Output: `notes/reviews/calibration-next-action-2026-11-22.md`.
 
 - 2026-11-22 #8: inspected `brain.py` opening, TTK, and range paths. Wrote
   `notes/reviews/first-fight-switch-spec-2026-11-22.md`: exactly two default-off

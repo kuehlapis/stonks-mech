@@ -30,6 +30,7 @@ HUNT_ALL_T = 300.0       # guess: "all of them late"
 DEFEND_RANGE = 60.0     # guess: non-hunters shoot visible enemies this close
 ZONE_SMART = True        # user directive: house bots stay inside the next circle and regen before the end
 ZONE_MARGIN = 15.0
+DRONE_AVOID = 50.0       # drones fire at mechs within 45 m with LOS (breakdown.md, NPC drones)
 RETALIATE_S = 30.0      # a member hit by an enemy hunts it this long (house-bots.md: >= 31 s)
 STRAFE_S = (0.3, 0.6)   # juke period (house-bots.md section 4)
 CHASE_BOOST_M = 40.0    # hunters boost toward targets farther than this (house-bots.md: boost 19.4 m/s closing)
@@ -62,7 +63,7 @@ class Bot:
         key = id(self.cfg)
         reg = _REG.get(key)
         if reg is None or self.slot in reg["members"]:
-            reg = _REG[key] = {"members": [], "seen": {}, "alive": {}, "dead": set()}
+            reg = _REG[key] = {"members": [], "seen": {}, "alive": {}, "dead": set(), "drones": {}}
             for k in list(_REG):
                 if k != key:
                     del _REG[k]
@@ -92,9 +93,13 @@ class Bot:
 
     def pick_goal(self, z):
         nc, nr = z["next_center"], z["next_radius"]
-        r = max(0.0, nr - 15) * math.sqrt(self.rng.random())
-        a = self.rng.uniform(0, 2 * math.pi)
-        return [nc[0] + r * math.cos(a), nc[1] + r * math.sin(a)]
+        for _ in range(10):  # avoid parking near a known drone home
+            r = max(0.0, nr - 15) * math.sqrt(self.rng.random())
+            a = self.rng.uniform(0, 2 * math.pi)
+            g = [nc[0] + r * math.cos(a), nc[1] + r * math.sin(a)]
+            if all(math.dist(g, h) > DRONE_AVOID for h in self.reg["drones"].values()):
+                break
+        return g
 
     def act(self, obs):
         me, z, t = obs["self"], obs["zone"], obs["t"]
@@ -121,6 +126,9 @@ class Bot:
         for i in list(self.first_seen):
             if not any(m["id"] == i for m in obs.get("mechs") or []):
                 del self.first_seen[i]
+        for m in obs.get("mechs") or []:
+            if m.get("kind") == "npc":
+                self.reg["drones"].setdefault(m["id"], m["pos"][:2])  # first sighting ≈ home (they wander ≤ 30 m)
         hunting = self.slot in self._hunters(t)
         key = (tuple(z["next_center"]), z["next_radius"])
         if self.goal_for != key or self.goal is None:
@@ -157,12 +165,22 @@ class Bot:
         nc, nrm = z["next_center"], max(0.0, z["next_radius"] - ZONE_MARGIN)
         if ZONE_SMART and math.dist(goal[:2], nc) > nrm:  # clamp the goal into the next circle
             gd = math.dist(goal[:2], nc)
-            goal = [nc[0] + (goal[0] - nc[0]) * nrm / gd, nc[1] + (goal[1] - nc[1]) * nrm / gd]
+            if gd > 1e-9:
+                goal = [nc[0] + (goal[0] - nc[0]) * nrm / gd, nc[1] + (goal[1] - nc[1]) * nrm / gd]
         if not me.get("in_zone", True):
             goal = z["next_center"]
         dx, dy = goal[0] - x, goal[1] - y
         d = math.hypot(dx, dy)
         mv = [dx / d, dy / d] if d > 3 else [0.0, 0.0]
+        if me.get("in_zone", True):  # route around drone homes: push away from any within DRONE_AVOID
+            for h in self.reg["drones"].values():
+                hd = math.dist(h, (x, y))
+                if 0 < hd < DRONE_AVOID:
+                    w = (DRONE_AVOID - hd) / DRONE_AVOID * 2
+                    mv = [mv[0] + (x - h[0]) / hd * w, mv[1] + (y - h[1]) / hd * w]
+            n = math.hypot(*mv)
+            if n > 1:
+                mv = [mv[0] / n, mv[1] / n]
         aim = [math.atan2(dy, dx) if d > 3 else me["aim"][0] + 0.5, 0.0]
         fire = [False, False]
         shoot = tgt
@@ -220,9 +238,13 @@ class Bot:
                     mv = [px + fwd * math.cos(b), py + fwd * math.sin(b)]
             if gun and gun.get("ammo", 1) == 0:
                 act["reload"] = True
-        if ZONE_SMART and math.dist((x, y), nc) > nrm + 5:  # never let fighting pull us out of the next circle
+        zone_exit = (not me.get("in_zone", True)) or (
+            ZONE_SMART and math.dist((x, y), nc) > nrm + 5
+        )
+        if zone_exit:  # never let fighting or a wall slide override zone exit
             d = math.dist((x, y), nc)
-            mv = [(nc[0] - x) / d, (nc[1] - y) / d]
+            if d > 1e-9:
+                mv = [(nc[0] - x) / d, (nc[1] - y) / d]
         jump = False
         if self.last_pos and math.dist(self.last_pos, (x, y)) < 0.3 and (mv[0] or mv[1]):
             self.stuck_t += 0.1
@@ -232,9 +254,9 @@ class Bot:
         boost = (not me.get("in_zone", True)) or (self.stuck_t > 0.5 and not me.get("grounded", True))
         if hunting and self.stuck_t == 0 and me.get("energy", 0) > 30 and math.dist(goal[:2], (x, y)) > CHASE_BOOST_M:
             boost = True
-        if ZONE_SMART and (not me.get("in_zone", True) or (t > z["shrink_start"] - 10 and math.dist((x, y), nc) > nrm + 5)):
+        if ZONE_SMART and (zone_exit or (t > z["shrink_start"] - 10 and math.dist((x, y), nc) > nrm + 5)):
             boost = True  # about to be caught: the pull-back already points mv at the next centre
-        if self.stuck_t > 0.3 and (mv[0] or mv[1]):
+        if self.stuck_t > 0.3 and (mv[0] or mv[1]) and not zone_exit:
             # wedged on a wall the zone pull-back keeps aiming at: slide sideways (flip every 4 s)
             sg = 1 if int(t / 4) % 2 else -1
             mv = [-mv[1] * sg, mv[0] * sg]

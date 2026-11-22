@@ -2,11 +2,73 @@
 
 Updated by the moderator after every agent report. A new session reads this first, then `notes/agents/moderator.md` and `notes/decisions.md`.
 
+## Match-run process rule (2026-11-22)
+
+- After every 16-match screener or 56-match confirmation, classify wins and
+  deaths before any replan or next launch.
+- Win categories: direct mech kills, NPC/drone-assisted removals,
+  zone-assisted removals, final-burn/placement wins, and HP/position outcomes.
+- Death categories: cause; `<120 s`, `120–300 s`, `300–415 s`, or `>415 s`;
+  cover/LOS state; zone pressure; hunter/squad count; surprise state; and
+  rear/exposed state.
+- Select the single strongest evidence-backed counterstrategy, prioritizing
+  element of surprise, cover/LOS, short ambush, zone timing/position, safe
+  drone use/routing, and isolated squad-hunting adaptations.
+- Build exactly one corrective package: one hypothesis, one primary metric,
+  guardrails, and an explicit 16/56 screen or confirmation contract. No
+  competing package may be built, queued, or stacked for that run.
+- Record the result in `notes/reviews/` or `notes/decisions.md` and update the
+  Critic and Strategist journals. The rule is documented in `CLAUDE.md`,
+  `notes/decisions.md`, and `notes/ideas/iteration-brainstorm-2026-11-22.md`.
+
 ## Session 2026-11-22 (later): status
+- `c_aim` rebuilt from `s_base2` with only `AIM_PREDICT=True` in
+  `combat.py`; normalized isolation and raw diff confirmed. Report:
+  `notes/tests/2026-11-22-c_aim-rebuild.md`. Combat tests 18/18 pass and
+  the full suite passed 93/93 on rerun. No match batch run.
+- Laser-defense A/B: 56 paired seeds 11/`--rotate`, `b_peek` = 1.96 ± 0.26
+  vs the completed `s_base2` baseline 2.00 ± 0.25. Paired rerun score difference
+  is -0.20 ± 0.20; paired kills -0.14 ± 0.14. Early deaths rose 48.2% to
+  51.8%, laser hits fell from 1.20/match to 1.04/match in the rerun, and
+  outside-zone ticks rose 0.34% to 0.44%. 0 act errors in both; b_peek had
+  3 late answers and squad had 24. Verdict: no benefit; keep PEEK_AFTER_BEAM off.
+  Report: `notes/tests/2026-11-22-b_peek56.md`.
+- Authoritative current-squad 40-seed calibration completed with paired
+  rotated seeds (`--seed 21 --rotate`), 40 matches each:
+  sub1 `1.98 ± 0.29`, 0.90 kills, 55.0% early deaths, 0.00% anchor
+  outside-zone ticks, 0 pre-415 squad zone deaths;
+  s_base2 `2.20 ± 0.29`, 1.05 kills, 55.0% early deaths, 0.37%
+  anchor outside-zone ticks, 0 pre-415 squad zone deaths;
+  example `1.40 ± 0.28`, 0.45 kills, 67.5% early deaths, 2.95%
+  anchor outside-zone ticks, 0 pre-415 squad zone deaths.
+- Squad outside-zone ticks: sub1 27.10%, s_base2 27.18%, example 27.84%.
+- Raw results: `cal-current-sub1.json`, `cal-current-s_base2.json`,
+  `cal-current-example.json`.
+- Calibration gate: sub1 and s_base2 exceed the target around 1.6;
+  no bot A/B starts. Per handover, the next model-only action is to raise
+  squad pressure (earlier hunters or DEFEND_RANGE 60 -> 80), not drone behavior.
+- Post-fix 8-seed smoke: 0 pre-415 squad zone deaths, 0 squad/sub1 errors.
+- Post-fix 40-seed sub1 rerun: sub1 **1.82 ± 0.27**, 0 pre-415 squad zone deaths,
+  0 squad/sub1 errors, squad outside-zone ticks 27.93%, sub1 outside ticks 0%.
+- Post-fix 40-seed s_base2: **1.55 ± 0.26**, 0 pre-415 squad zone deaths, 0 errors,
+  bot outside-zone ticks 1.09%.
+- Post-fix 40-seed example: **1.12 ± 0.22**, 0 pre-415 squad zone deaths, 0 errors,
+  bot outside-zone ticks 2.29%.
+- The 40-seed run passes the zero-zone-death and zero-error validity gates.
 - User target now **mean 10**.
+- **Clarified objective (2026-11-22):** zone and NPC/drone effects may support eliminations. The bot must control the match and finish the field, while reporting direct and assisted squad deaths separately. The submitted 1.6 score is the baseline.
+- **Strategy direction (2026-11-22):** prefer cover, building geometry, LOS breaks, surprise re-engagement, and short ambushes over open duels. No camping or rear exposure; candidates must be isolated and paired-tested.
+- **Maximum-hard-squad directive (2026-11-22):** the local squad should be made as hard as protocol and evidence permit. After every match batch, learn from deaths and enemy counters, change one strong root-cause package, and re-test under the hardest valid model. NPC/zone support may remain in the bot strategy.
 - Step 0 done: the map loads under the Docker sandbox. Windows needs `MSYS_NO_PATHCONV=1`, and the check passes `--map-dir` through `abspath`, which breaks `/arena`. Mount `arena/`, not `arena/v2`. `ready` took 6.1 s, over the 5 s guardrail.
 - Sim change: squad slots (label `squad*`) take no zone damage (`sim/engine.py`, `sim/inproc.py`), per the user rule.
-- Running: calibration with squad v2 at 40 seeds each for sub1, s_base2 and example. Output goes to `notes/tests/cal-immune-*.json`.
+- Calibration result with zone immunity only (`notes/tests/cal-immune-sub1.json`, 40 seeds): sub1 = **2.05 ± 0.28**, against a target of 1.6. Kills 0.93, median death 80 s. The squad had 0 zone deaths but **123 drone deaths** (about 3 per match), which inflates our score.
+- User: squad bots move toward the next ring (they already did). User chose **drone routing**. `sim/bots/squad.py` now has `DRONE_AVOID = 50`: drone homes are shared, goals within 50 m of one are rejected, and bots steer away from any drone within 50 m while in the zone. Smoke test, 4 matches (`cal-route-smoke.json`): drone deaths went from about 3.1 to 2.75 per match, and sub1 scored 2.25. Small effect. Drone deaths at 22–38 s are probably bots already wounded, since one drone alone needs about 56 s.
+- The 40-seed run with routing was **stopped by the user before it finished**. No result.
+
+**Next:**
+1. Ladder screener prepared: `sim/versions/z_ladder` rebuilt as an exact copy of `s_base2` with only `LADDER=True`; the existing invalid snapshot is replaced. The normalized diff is one Brain assignment, and `python -m unittest discover python/tests` passes 93/93.
+2. Run the new 16-match ladder screener next: `python sim/inproc.py --bot z_ladder=sim/versions/z_ladder/bot.py --count 1 --bot squad=sim/bots/squad.py --count 15 --matches 16 --jobs 4 --seed 11 --rotate --out notes/tests/<ladder-screen-output>.json`.
+3. Rejected laser defence remains off: b_peek **1.96 ± 0.26** vs s_base2 **2.00 ± 0.25**, paired -0.20 ± 0.20.
 
 ## HANDOVER: 2026-11-22 ~03:30, iteration 3, branch `iter-1` (read this first)
 

@@ -25,6 +25,11 @@ HOLD_SEARCH_M = 300.0    # m, path search limit for the hold point
 HOLD_FAR_M = 120.0       # m outside the clamped circle: walk the straight line first, search later
 HOLD_NODES = 4000        # grid nodes, path search limit for the hold point
 HOLD_SEARCH = False      # wall-side hold point search off: it took 50-62 ms worst case (> 50 ms budget)
+FUNNEL = False           # R1: with >= FUNNEL_MIN hunters, take the wall cell the fewest of them can see
+FUNNEL_MIN = 3
+FUNNEL_K = 8             # nearest wall cells scored
+FUNNEL_N = 5             # nearest hunters checked per cell (K x N <= LOS_CAP)
+ZONE_LEAN = False        # R4: wait on the side of the next circle away from the visible hunters
 CACHE_S, MOVE_M = 1.0, 10.0  # F3 cache life, threat move that invalidates it
 
 
@@ -112,6 +117,17 @@ class Survival:
         if d < 1e-9 or k <= 0:
             return [nc[0], nc[1]]
         ux, uy = dx / d, dy / d
+        if ZONE_LEAN:
+            hs = [m["pos"] for m in obs.get("mechs") or () if m.get("kind") == "mech" and m.get("pos")]
+            if hs:
+                ax = nc[0] - sum(h[0] for h in hs) / len(hs)
+                ay = nc[1] - sum(h[1] for h in hs) / len(hs)
+                a = math.hypot(ax, ay)
+                if a > 1e-6:
+                    vx, vy = ux + ax / a, uy + ay / a  # halfway between our side and the far side
+                    v = math.hypot(vx, vy)
+                    if v > 1e-6:
+                        ux, uy = vx / v, vy / v
         w = self.world
         if w is None:
             return [nc[0] + ux * k, nc[1] + uy * k]
@@ -211,9 +227,12 @@ class Survival:
                 and math.hypot(prev[0] - pos[0], prev[1] - pos[1]) <= WALL_SEARCH and self._hidden(prev, checks):
             self._cover = (t, tps, prev)
             return prev
-        # 2. Wall cells whose building lies between the cell and the main threat (its shadow side).
         nav = getattr(self, "nav", None)
-        best = None
+        best = self._funnel(obs, tps, st, eye, pos, cc, cr, nav) if FUNNEL and nav is not None else None
+        if best is not None:
+            self._cover = (t, tps, best)
+            return best
+        # 2. Wall cells whose building lies between the cell and the main threat (its shadow side).
         if nav is not None:
             tx, ty = tps[0][0], tps[0][1]
             cands = []
@@ -237,6 +256,34 @@ class Survival:
             best = self._ring_cover(obs, tps, st, eye, pos, cc, cr, checks)
         self._cover = (t, tps, best)
         return best
+
+    def _funnel(self, obs, tps, st, eye, pos, cc, cr, nav):
+        """R1: among the FUNNEL_K nearest wall cells facing away from the hunters' centroid, the one the
+        fewest of the FUNNEL_N nearest hunters can see (score = seen x 100 + m). None if > 2 see the best."""
+        if len(tps) < FUNNEL_MIN:
+            return None
+        hs = sorted(tps, key=lambda p: math.hypot(p[0] - pos[0], p[1] - pos[1]))[:FUNNEL_N]
+        mx, my = sum(p[0] for p in tps) / len(tps), sum(p[1] for p in tps) / len(tps)
+        cands = []
+        for x, y, gz, nx, ny in nav.wall_cells(pos[0], pos[1], WALL_SEARCH):
+            if math.hypot(x - cc[0], y - cc[1]) > cr - 5 or abs(gz - pos[2]) > COVER_DZ:
+                continue
+            if nx * (mx - x) + ny * (my - y) <= 0:
+                continue  # normal points into the building (as in find_cover): building between cell and hunters
+            cands.append((math.hypot(x - pos[0], y - pos[1]), x, y, gz))
+        cands.sort()
+        best, h2 = None, st["height"] / 2
+        for d, x, y, gz in cands[:FUNNEL_K]:
+            if self.los_calls + len(hs) > LOS_CAP:
+                break
+            seen = 0
+            for p in hs:
+                self.los_calls += 1
+                seen += bool(self.world.los((p[0], p[1], p[2] + eye), (x, y, gz + h2)))
+            sc = seen * 100 + d
+            if seen <= 2 and (best is None or sc < best[0]):
+                best = (sc, [x, y, gz])
+        return best[1] if best else None
 
     def _ring_cover(self, obs, tps, st, eye, pos, cc, cr, checks):
         w = self.world

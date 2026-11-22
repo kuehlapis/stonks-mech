@@ -19,6 +19,7 @@ import sys
 import time
 import traceback
 from multiprocessing import Pool
+from batchlock import BatchLock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
@@ -180,6 +181,10 @@ def play(specs, seed, trace_slot=None, timing=True, engine="engine", trace_label
                      "cause": m.death_cause, "death_t": None if m.death_tick is None else round(m.death_tick * match.dt, 2),
                      "killed_by": specs[m.killed_by][0] if isinstance(m.killed_by, int) and 0 <= m.killed_by < len(specs) else m.killed_by,
                      "hp_before": m.hp_before_death, "dmg_taken": round(m.dmg_taken), "dmg_rear": round(m.dmg_rear),
+                     "dmg_taken_by": {k: round(v, 2) for k, v in m.dmg_taken_by.items()},
+                     "hits_taken_by": dict(m.hits_taken_by),
+                     "dmg_by_slot": {str(k): round(v, 2) for k, v in getattr(m, "dmg_by_slot", {}).items()},
+                     "hits_by_slot": {str(k): v for k, v in getattr(m, "hits_by_slot", {}).items()},
                      "ticks_alive": m.ticks_alive, "ticks_out": m.ticks_out,
                      "cubes": getattr(m, "cubes", 0), "errors": errs[m.id], "late": late[m.id],
                      "ms_mean": round(1000 * sum(L) / len(L), 2), "ms_p99": round(1000 * L[int(0.99 * (len(L) - 1))], 2),
@@ -222,7 +227,9 @@ def summarize(results, n):
                     "rear%": round(100 * sum(r["dmg_rear"] for r in rs) / dmg, 1) if dmg else None,
                     "out%": round(100 * sum(r["ticks_out"] for r in rs) / max(1, sum(r["ticks_alive"] for r in rs)), 2),
                     "errors": sum(r["errors"] for r in rs), "late": sum(r["late"] for r in rs),
-                    "ms_mean": round(sum(r["ms_mean"] for r in rs) / k, 2), "ms_max": max(r["ms_max"] for r in rs),
+                    "ms_mean": round(sum(r["ms_mean"] for r in rs) / k, 2),
+                    "ms_p99": round(sum(r["ms_p99"] for r in rs) / k, 2),
+                    "ms_max": max(r["ms_max"] for r in rs),
                     "death_t_median": dts[len(dts) // 2] if dts else None}
     return out
 
@@ -243,6 +250,9 @@ def main():
     ap.add_argument("--start", type=int, default=0, help="first match index (to replay one match of a batch)")
     ap.add_argument("--engine", default="engine", help="engine module in sim/ (engine_p1 = frozen phase 1)")
     a = ap.parse_args()
+    calibration_lock = BatchLock("56+ match calibration", timeout=1800) if a.matches >= 56 else None
+    if calibration_lock:
+        calibration_lock.acquire()
     specs = []
     for i, b in enumerate(a.bot):
         lab, _, path = b.partition("=")
@@ -265,6 +275,8 @@ def main():
     else:
         res = [_job(j) for j in jobs]
     results = [r for r, _ in res if r]
+    if calibration_lock:
+        calibration_lock.release()
     if a.trace_label is not None and a.trace_out:
         with open(a.trace_out, "w") as f:
             for k, (r, tr) in enumerate(res):

@@ -1,5 +1,7 @@
 # CLAUDE.md: how agents work on this repo
 
+**Start every session by reading `notes/progress.md` and carrying on from its newest status and next steps.**
+
 Goal: `objective.md`: mean score ≥ 12.00 and ≥ 50% wins (current highest score on the track: 6.00).
 Rules: `protocol.md` (source of truth), `breakdown.md` (summary), `mechfight.schema.json` (message format).
 
@@ -86,6 +88,13 @@ The moderator runs this loop **continuously until the objective in `objective.md
     - **What we expected vs what happened**, for each change tested
     - **Replan:** what changes next and why, which becomes step 2 of the next iteration
     Every agent whose work was tested reads the review and updates its journal's Areas of improvement from it.
+11. **16/56 match-run counterstrategy gate.** After every 16-match screener or 56-match confirmation run, the Tester and Critic must classify every run by wins and deaths before any replan or launch:
+    - **Wins:** place/HP wins, direct mech kills, NPC/drone-assisted removals, zone-assisted removals, and final-burn survivors; keep each category separate.
+    - **Deaths:** cause (gun, laser, lightning, mortar, drone/NPC, zone, collision/unknown), phase (`<120 s`, `120–300 s`, `300–415 s`, `>415 s`), line of sight/cover state, zone pressure, hunter/squad size, surprise window, and whether the loss was exposed/rear-facing.
+    - Identify the **single strongest counterstrategy** against the dominant evidence: the one change with the largest plausible gain-to-risk ratio. Candidate counterstrategies must prioritize element of surprise, cover/LOS breaks, ambush timing, zone position/timing, drone routing or safe drone use, and squad-hunting isolation. State the evidence, rejected alternatives, expected metric, and why it outranks the rest.
+    - Build **exactly one corrective package** for that counterstrategy. The package may test only one named hypothesis and must include one primary metric, guardrails, a 16-match screen or 56-match confirmation, and an explicit reject/promote bar. Do not build, launch, or queue a second package at the same time. Never combine a new package with an unrejected package, and never relabel stacking as a single package.
+    - No change is "corrective" if it only repeats an already rejected 16/56 result. Prefer a new corner, timing, route, or squad target; do not copy obvious edge-camping or rear exposure.
+    - Record the classification, counterstrategy, and package in `notes/reviews/` or `notes/decisions.md`, update the Critic and Strategist journals, and append the AAR/replan. The next match launch may contain that package only.
 12. **Learn.** Every agent updates its journal: what moved the score, what didn't, and its next areas of improvement. Go to step 1 with the replan from step 11.
 
 **Opponents are AI-built too.** Other bots on the track are written by other teams' AI agents, so expect them to find the same obvious strategies (edge-holding, lasers, plating, hiding) and to adapt between submissions. Plans must say how they hold up against a field of similar bots, and the simulator's opponent pool must include several styles (passive, aggressive, campers, copies of our own past versions), not just the example bot.

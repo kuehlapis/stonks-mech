@@ -4,6 +4,26 @@ Owns: `notes/ideas/`. Rules: `CLAUDE.md` (Agent journals). Goal: `objective.md`.
 
 ## Current task
 
+Maintain the match-run counterstrategy gate in the strategy queue. After
+every 16-match screen or 56-match confirmation, return one ranked
+counterstrategy supported by classified wins/deaths, then specify exactly
+one corrective package. Emphasize surprise re-engagement, cover/LOS,
+short ambushes, zone timing, drone support/routing, and isolated
+squad-hunting adaptations. No code or match launch.
+
+2026-11-22 moderator brief: continue from `notes/progress.md` and produce a
+ranked queue for **16-match screeners** covering cover/LOS, ladder, surprise,
+supply, drone/ambush, and final burn. Exclude the rejected peek variant.
+Define each exact one-lever package, its promotion to 56 matches, and its
+rejection bar. No code or matches.
+
+Status: written in `notes/ideas/iteration-brainstorm-2026-11-22.md`.
+The queue ranks cover/LOS, weakest-first ladder, surprise re-engagement,
+supply discipline, drone/ambush pressure, and final-burn preparation. It
+defines paired 16-match screening, explicit rejection conditions, and a
+56-match confirmation/ship bar, with direct and NPC-assisted removals kept
+separate.
+
 Iteration 3 brief (moderator): why we die early vs the squad; 2–4 big strategy changes to reach 6+. Status: **written** `notes/ideas/plateau.md` (P1 run doctrine, P2 burn endgame, P3 edge ghost, P4 lone-hunter kill), ranked by expected death time per the Critic's floor-effect finding.
 
 
@@ -24,6 +44,17 @@ Second brief, same iteration (moderator): write `notes/ideas/strategies.md`, alt
 Done when the Critic has reviewed `game-plan.md` and the high-impact findings are fixed.
 
 ## Areas of improvement
+
+| Whole-match hypothesis | Why it matters | Next change | Status |
+|---|---|---|---|
+| TenZ/Shroud-inspired mechanics were not converted into isolated protocol-valid levers | Generic FPS terms do not change score unless each maps to an observation, action and metric | Use `notes/ideas/fps-elite-tactics-2026-11-22.md`: six ranked one-lever packages with 16/56 gates and anti-overfit rules | done (2026-11-22) |
+| Post-run correction is unbounded unless one counterstrategy is selected | Parallel fixes hide the actual loss mechanism and defeat A/B attribution | After 16/56 runs, classify wins/deaths and output exactly one surprise/cover/ambush/zone/drone/squad-hunting package | done (2026-11-22) |
+| Ranked hunter ladder is only plausible if weak hunters appear first | 48.2% early deaths are the first-score floor | Add paired 56-match ladder A/B after model calibration | open |
+| Drone/crate gains are not measured | NPC assistance can help or expose us | Add direct/assisted/NPC death counts and 45 m hunter exposure | open |
+| Supply-drop rewards can be contested | 600 m sound plus 4 s capture can become a death | Gate on 80 m, 10 s memory, and post-capture death | open |
+| Corner ambush can attract a squad | Shared vision can turn one mech into 2–4 hunters | Test 20–25 m corner separately; cap exposure at 3 s | open |
+| Final-burn HP is not useful if we never reach 300 s | 260 HP/s can rank survivors only if survival improves | Test after early-fight evidence | open |
+| Six proposals lacked an exact single-lever screener contract | Without a fixed 16→56 gate, noisy score changes invite stacking and hindsight | Give every package one named lever, primary metric, rejection bar, and promotion rule | done (2026-11-22) |
 
 | What | Why (effect on score or proxy) | How to be better | Status |
 |---|---|---|---|
@@ -52,6 +83,46 @@ Done when the Critic has reviewed `game-plan.md` and the high-impact findings ar
 - Label rules with distinct prefixes from the start (I first used E1 for both evidence and an endgame rule and had to rename).
 
 ## Log (newest first)
+
+- 2026-11-22, FPS elite-tactics conversion: read `objective.md`,
+  `protocol.md`, `notes/interfaces.md`, `breakdown.md`, the current
+  56-match baseline and `notes/ideas/iteration-brainstorm-2026-11-22.md`.
+  Wrote `notes/ideas/fps-elite-tactics-2026-11-22.md` as inspiration rather
+  than copied plays: controlled 1 s cover peeks, 3 s corridor pre-aim,
+  valid first-shot discipline, short off-angle re-entry, sound/beam timing,
+  and zone/drone support. Ranked six exact one-lever packages and defined
+  paired 16/56 promotion/rejection gates, removal accounting, and
+  anti-overfit/no-camping rules. No code or match was changed.
+
+- 2026-11-22, counterstrategy queue update: read `notes/progress.md`,
+  `CLAUDE.md`, and the ranked 16-match packages. Added a mandatory
+  post-run procedure: classify wins/deaths, select the single strongest
+  counterstrategy, and build exactly one corrective package. The selection
+  is to emphasize surprise, cover/LOS, short ambushes, zone control,
+  drone/ambush support, and isolated squad-hunting. No code or match was
+  launched.
+
+- 2026-11-22, 16-match queue: read `notes/progress.md`, the calibrated
+  56-match baseline, `protocol.md` supply/NPC/LOS rules, and the latest
+  strategy brainstorm. Replaced the brainstorm with six ranked one-lever
+  packages: `COVER_FIRST`, `HUNTER_LADDER`, `SURPRISE_REENGAGE`,
+  `SUPPLY_GATE`, `DRONE_AMBUSH`, and `FINAL_BURN`. Defined the 16-match
+  rejection bar (score −0.5, early deaths +5 pp, or mechanism regression),
+  promotion bar (score +1.0 or ≥10 pp primary-metric gain without >0.5 score
+  loss), and 56-match ship bar (paired mean +0.4, no guardrail regression).
+  No code or matches were run.
+
+- 2026-11-22, iteration brainstorm: read `notes/progress.md`,
+  `objective.md`, `notes/ideas/assumptions-discussion.md`,
+  `notes/tests/2026-11-22-b_peek56.md`,
+  `notes/tests/2026-11-22-cal-current-s_base2-baseline56.md`,
+  `notes/tests/2026-11-22-c_aim-rebuild.md`, and
+  `notes/reviews/aim-predict-ab-spec-2026-11-22.md`.
+  Wrote `notes/ideas/iteration-brainstorm-2026-11-22.md` with five ranked
+  whole-match iterations, expected score ranges, legitimate removal methods,
+  A/B metrics, and a Critic challenge. Findings: baseline 2.00 ± 0.25;
+  b_peek rejected by paired score (-0.20 ± 0.20); AIM_PREDICT has no match
+  evidence yet. No bot or simulator behavior was edited.
 
 - 2026-11-22, iteration 3 (kills round): appended "Round 2: kills" to assumptions-discussion.md. TTK table from protocol §7. K1 lightning ambush (laser denial via 2 s short; +1.5–2.5 kills), K2 peek laser (exposure < their 1.35 s react + charge; +1–1.5), K3 kill spacing via regen (+0.5), K4 laser upgrades first (+0.2–0.4), K5 no gun duels at range. Stacked ≈ 4–5.5 kills (guesses).
 
