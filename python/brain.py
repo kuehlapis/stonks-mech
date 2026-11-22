@@ -80,6 +80,8 @@ SQ_FINISH = 26.0              # m: close in to finish a low target
 SQ_LOOT = 150.0               # m: loot radius (cubes x0.7, remembered crates)
 SQ_FARM_HP = 0.5              # farm crates above this HP fraction
 SQ_PRECHARGE = 6.0  # s: keep the laser charged this long after the last threat (0 = off)
+SQ_SKILL_W = 0.0              # squad mode: target score penalty per observed enemy dps on us (0 = off)
+SQ_SKILL_DANGER = 0.0         # squad mode: observed dps above this + our HP < 60% = losing (0 = off)
 SQ_HULL = False               # squad mode: fight from hull-down spots (our muzzle sees them, their eye can't see our center)
 HULL_M = 8.0                  # m: search radius for a hull-down spot
 SQ_FIGHTMOVE = False          # squad mode: candidate-scored fight steps (range, LOS to target, hidden from others)
@@ -699,6 +701,9 @@ class Brain:
                 sc += 80  # prefer gun-only hunters while we have no laser
             if SQ_BACKSTAB > 0 and back:
                 sc -= 60  # its rear arc takes x1.5 and it hasn't reacted yet
+            sk = self._call(P, "skill", th.get("id"), default=0.0) or 0.0
+            if SQ_SKILL_W > 0:
+                sc += SQ_SKILL_W * min(sk, 150.0)  # learned in-match: hunt the inaccurate ones first
             if sc < best:
                 best, target = sc, th
         if target is not None:
@@ -719,6 +724,11 @@ class Brain:
         if (target is not None and "laser" in (target.get("weapons") or []) and "laser" not in kinds
                 and td > 55 and hf < 0.8):
             losing = losing or SQ_OUTGUN
+        if SQ_SKILL_DANGER > 0 and hf < 0.6 and not losing:
+            for th in visible:
+                if _dist(pos, th["pos"]) < 160 and (self._call(P, "skill", th.get("id"), default=0.0) or 0.0) > SQ_SKILL_DANGER:
+                    losing = True  # an accurate (hard/expert) enemy and we're hurt: break contact
+                    break
         if losing:
             self._lose_t = t
         retreat = t - self._lose_t < 1.5
