@@ -95,13 +95,17 @@ SQ_FIGHTMOVE = False          # squad mode: candidate-scored fight steps (range,
 SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could see a candidate step
 SQ_LASER_AVOID = False        # squad mode, no laser: skip laser holders that aren't attacking us; prefer gun-only targets
 SQ_NO_POKE = False            # squad mode: don't open on bots merely closing/aiming from afar (they retaliate 30 s)
-SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP) when reachable and clear
+SQ_DRONE_FIRST = 0.45  # squad mode: farm visible NPC drones (2 cubes each) before crates while our HP fraction is above this (0 = off)
+SQ_DROPS = True  # squad mode: take supply drops (3 cubes + full HP) when reachable and clear
 CHECK6_T = 0.0                # s: until then, glance behind every CHECK6_P s while looting/travelling with no visible threat (0 = off)
 CHECK6_P = 6.0                # s: glance period
 CHECK6_D = 1.6                # s: glance length (180 deg out and back at 4 rad/s)
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_BOOST = 999.0         # boost while exploring/looting for a laser when energy is above this (999 = off)
+ROOF_T = 60.0  # s: until then (no laser), explore by touring reachable rooftops (a quarter of loot and crates are up there) (0 = off)
+ROOF_MAX_H = 40.0             # m: roofs this high above the ground or lower (jet reach)
+ROOF_R = 170.0                # m: only roofs this close
 EXPLORE_M = 110.0             # m: explore waypoint distance
 SQ_BACKSTAB = 0.0             # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
 SQ_BACK_OFF = 1.75            # rad: "facing away" = its aim this far off the bearing to us
@@ -147,6 +151,17 @@ class Brain:
         self._myhp, self._ehp = [], {}  # (t, hp) histories for the live trade forecast
         self._fm_until = -1e9
         self._visited, self._explore_wp, self._explore_t = [], None, -1e9
+        self._roofs, self._roof_done = [], set()
+        if ROOF_T > 0:
+            try:
+                for (base, top, x0, y0, x1, y1, _) in world._p:
+                    cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+                    g = world.ground(cx, cy)
+                    if (x1 - x0) * (y1 - y0) >= 300 and abs(world.top(cx, cy, 1e4) - top) < 0.6 and 4 < top - g <= ROOF_MAX_H:
+                        self._roofs.append((cx, cy))
+            except Exception as e:
+                self._log("roofs", e)
+                self._roofs = []
         self._start_alive, self._is_ffa = None, False
         self._stick_id, self._stick_t = None, -1e9
         self._hurt_t = self._threat_t = self._lose_t = -1e9
@@ -830,6 +845,10 @@ class Brain:
         cube = self._nearest_cube(obs, SQ_LOOT * 0.7)
         if cube is not None:
             return {**self._go(obs, cube), **self._aim(obs, threats, None, cube)}, "cube"
+        if SQ_DRONE_FIRST > 0 and hf > SQ_DRONE_FIRST and not danger:
+            farm = self._farm_target(obs, threats, False)
+            if farm and farm[1] == "npc":
+                return self._fight_at(obs, farm[0], 70.0), "farm"
         if hf > SQ_FARM_HP and not danger:
             cr = self.cfg.get("crates") or {}
             bc = None
@@ -854,6 +873,10 @@ class Brain:
         farm = self._farm_target(obs, threats, False)
         if farm and farm[1] == "npc" and hf > 0.6:
             return self._fight_at(obs, farm[0], 70.0), "farm"
+        if ROOF_T > 0 and t < ROOF_T and "laser" not in kinds and self._roofs:
+            wp = self._roof_point(obs, t)
+            if wp is not None:
+                return {**self._go(obs, wp), **self._aim(obs, threats, None, wp)}, "roof"
         if SQ_HUNT_T > 0 and t < SQ_HUNT_T and "laser" not in kinds:
             wp = self._explore_point(obs, t)
             if wp is not None:
@@ -896,6 +919,30 @@ class Brain:
         if MESH_COMMIT > 0 and hitters <= 1 and their_ttd < MESH_COMMIT * my_ttd:
             return "commit"
         return None
+
+    def _roof_point(self, obs, t):
+        """Nearest unvisited reachable roof inside the live circle; a roof counts as visited once we stand within 6 m."""
+        pos = obs["self"]["pos"]
+        wp = self._explore_wp
+        if wp is not None and t - self._explore_t >= 30:
+            self._roof_done.add((round(wp[0]), round(wp[1])))  # unreachable or too slow: skip it
+        elif wp is not None:
+            if _dist(pos, wp) < 6 or (pos[2] - (self.world.ground(pos[0], pos[1]) if self.world else 0)) > 3 and _dist(pos, wp) < 25:
+                self._roof_done.add((round(wp[0]), round(wp[1])))
+            elif (round(wp[0]), round(wp[1])) not in self._roof_done:
+                return wp
+        circle = self._call(self.survival, "live_circle", obs)
+        best, bd = None, ROOF_R
+        for cx, cy in self._roofs:
+            if (round(cx), round(cy)) in self._roof_done:
+                continue
+            if circle and math.hypot(cx - circle[0][0], cy - circle[0][1]) > circle[1] - 30:
+                continue
+            d = math.hypot(cx - pos[0], cy - pos[1])
+            if d < bd:
+                best, bd = [cx, cy], d
+        self._explore_wp, self._explore_t = best, t
+        return best
 
     def _explore_point(self, obs, t):
         """A waypoint ~EXPLORE_M away, inside the current circle, far from where we've already been."""
