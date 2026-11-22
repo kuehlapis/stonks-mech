@@ -1,0 +1,7825 @@
+{
+ "summary": {
+  "z_ladder": {
+   "n": 16,
+   "score": 3.19,
+   "se": 0.7,
+   "win%": 0.0,
+   "top3%": 0.0,
+   "early_death%": 43.8,
+   "causes": {
+    "gun": 9,
+    "zone": 2,
+    "laser": 5
+   },
+   "kills": 1.75,
+   "rear%": 7.4,
+   "out%": 1.84,
+   "errors": 0,
+   "late": 0,
+   "ms_mean": 0.87,
+   "ms_p99": 7.83,
+   "ms_max": 49.1,
+   "death_t_median": 140.95
+  },
+  "squad": {
+   "n": 240,
+   "score": 8.78,
+   "se": 0.3,
+   "win%": 7.1,
+   "top3%": 26.7,
+   "early_death%": 16.2,
+   "causes": {
+    "npc": 41,
+    "gun": 17,
+    "laser": 10,
+    "lightning": 2
+   },
+   "kills": 0.06,
+   "rear%": 46.0,
+   "out%": 33.07,
+   "errors": 0,
+   "late": 11,
+   "ms_mean": 0.11,
+   "ms_p99": 0.58,
+   "ms_max": 84.08,
+   "death_t_median": 102.8
+  }
+ },
+ "matches": [
+  {
+   "seed": 1100000,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "z_ladder",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 34.65,
+     "killed_by": "squad",
+     "hp_before": 18.0,
+     "dmg_taken": 1431,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "npc": 50.0,
+      "gun": 1380.6
+     },
+     "hits_taken_by": {
+      "npc": 2,
+      "gun": 29
+     },
+     "dmg_by_slot": {
+      "9": 1380.6
+     },
+     "hits_by_slot": {
+      "9": 29
+     },
+     "ticks_alive": 694,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 1.4,
+     "ms_p99": 25.61,
+     "ms_max": 32.74,
+     "hp415": null
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 62,
+     "dmg_rear": 38,
+     "dmg_taken_by": {
+      "npc": 62.5
+     },
+     "hits_taken_by": {
+      "npc": 2
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1748,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.23,
+     "ms_max": 14.37,
+     "hp415": 1.0
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1808,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.2,
+     "ms_max": 7.69,
+     "hp415": 1.0
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1150,
+     "dmg_rear": 150,
+     "dmg_taken_by": {
+      "npc": 1150.0
+     },
+     "hits_taken_by": {
+      "npc": 44
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1844,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.23,
+     "ms_max": 35.63,
+     "hp415": 1.0
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 152.4,
+     "killed_by": 111,
+     "hp_before": 23.5,
+     "dmg_taken": 1825,
+     "dmg_rear": 1800,
+     "dmg_taken_by": {
+      "npc": 1825.0
+     },
+     "hits_taken_by": {
+      "npc": 49
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 3049,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.19,
+     "ms_max": 3.46,
+     "hp415": null
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 163.3,
+     "killed_by": 107,
+     "hp_before": 25.0,
+     "dmg_taken": 1400,
+     "dmg_rear": 900,
+     "dmg_taken_by": {
+      "npc": 1400.0
+     },
+     "hits_taken_by": {
+      "npc": 44
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 3267,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.25,
+     "ms_max": 13.18,
+     "hp415": null
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7655,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 28.62,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4529,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.23,
+     "ms_max": 10.06,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7615,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.2,
+     "ms_max": 24.36,
+     "hp415": 1.0
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 3,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1412,
+     "dmg_rear": 38,
+     "dmg_taken_by": {
+      "npc": 62.5,
+      "gun": 1350.0
+     },
+     "hits_taken_by": {
+      "npc": 2,
+      "gun": 30
+     },
+     "dmg_by_slot": {
+      "0": 1350.0
+     },
+     "hits_by_slot": {
+      "0": 30
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1512,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.27,
+     "ms_max": 39.3,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 412,
+     "dmg_rear": 338,
+     "dmg_taken_by": {
+      "npc": 412.5
+     },
+     "hits_taken_by": {
+      "npc": 12
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 5733,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.24,
+     "ms_max": 40.22,
+     "hp415": 1.0
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 135,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 135.0
+     },
+     "hits_taken_by": {
+      "gun": 3
+     },
+     "dmg_by_slot": {
+      "0": 135.0
+     },
+     "hits_by_slot": {
+      "0": 3
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 6426,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.24,
+     "ms_max": 17.1,
+     "hp415": 1.0
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4489,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.22,
+     "ms_max": 22.25,
+     "hp415": 1.0
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 5888,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 31.83,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1906,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.26,
+     "ms_max": 35.39,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1850,
+     "dmg_rear": 1800,
+     "dmg_taken_by": {
+      "npc": 1850.0
+     },
+     "hits_taken_by": {
+      "npc": 50
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1410,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.23,
+     "ms_max": 25.81,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100001,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 3594,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.26,
+     "ms_max": 33.5,
+     "hp415": 1.0
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 21.35,
+     "killed_by": "z_ladder",
+     "hp_before": 5.0,
+     "dmg_taken": 1440,
+     "dmg_rear": 135,
+     "dmg_taken_by": {
+      "gun": 1440.0
+     },
+     "hits_taken_by": {
+      "gun": 31
+     },
+     "dmg_by_slot": {
+      "15": 1440.0
+     },
+     "hits_by_slot": {
+      "15": 31
+     },
+     "ticks_alive": 428,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.16,
+     "ms_p99": 0.32,
+     "ms_max": 0.86,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 12,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 168.15,
+     "killed_by": 111,
+     "hp_before": 37.5,
+     "dmg_taken": 1400,
+     "dmg_rear": 825,
+     "dmg_taken_by": {
+      "npc": 1400.0
+     },
+     "hits_taken_by": {
+      "npc": 45
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 3364,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.12,
+     "ms_p99": 0.38,
+     "ms_max": 11.59,
+     "hp415": null
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7440,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 24.91,
+     "hp415": 1.0
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 30.55,
+     "killed_by": 110,
+     "hp_before": 18.5,
+     "dmg_taken": 1475,
+     "dmg_rear": 525,
+     "dmg_taken_by": {
+      "npc": 1475.0
+     },
+     "hits_taken_by": {
+      "npc": 52
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 612,
+     "ticks_out": 0,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.17,
+     "ms_p99": 0.28,
+     "ms_max": 17.27,
+     "hp415": null
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 100,
+     "dmg_rear": 75,
+     "dmg_taken_by": {
+      "npc": 100.0
+     },
+     "hits_taken_by": {
+      "npc": 3
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 2264,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.29,
+     "ms_max": 35.47,
+     "hp415": 1.0
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 116.5,
+     "killed_by": 103,
+     "hp_before": 16.8,
+     "dmg_taken": 2128,
+     "dmg_rear": 1966,
+     "dmg_taken_by": {
+      "npc": 2127.5
+     },
+     "hits_taken_by": {
+      "npc": 64
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 2331,
+     "ticks_out": 0,
+     "cubes": 5,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.13,
+     "ms_p99": 0.28,
+     "ms_max": 29.66,
+     "hp415": null
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4940,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.24,
+     "ms_max": 34.81,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1366,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.22,
+     "ms_max": 20.59,
+     "hp415": 1.0
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1357,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.22,
+     "ms_max": 25.37,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4609,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.22,
+     "ms_max": 21.1,
+     "hp415": 1.0
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 988,
+     "dmg_rear": 788,
+     "dmg_taken_by": {
+      "npc": 987.5
+     },
+     "hits_taken_by": {
+      "npc": 29
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 2402,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.24,
+     "ms_max": 41.64,
+     "hp415": 1.0
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 11,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 658,
+     "dmg_rear": 75,
+     "dmg_taken_by": {
+      "npc": 75.0,
+      "gun": 583.2
+     },
+     "hits_taken_by": {
+      "npc": 2,
+      "gun": 12
+     },
+     "dmg_by_slot": {
+      "15": 583.2
+     },
+     "hits_by_slot": {
+      "15": 12
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 7458,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.25,
+     "ms_max": 28.3,
+     "hp415": 0.9096785714285719
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 225,
+     "dmg_rear": 225,
+     "dmg_taken_by": {
+      "npc": 225.0
+     },
+     "hits_taken_by": {
+      "npc": 6
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1382,
+     "cubes": 4,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 26.23,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1338,
+     "dmg_rear": 1162,
+     "dmg_taken_by": {
+      "npc": 1337.5
+     },
+     "hits_taken_by": {
+      "npc": 38
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1358,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.19,
+     "ms_max": 30.82,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "z_ladder",
+     "place": 13,
+     "kills": 1,
+     "cause": "zone",
+     "death_t": 140.95,
+     "killed_by": null,
+     "hp_before": 0.0,
+     "dmg_taken": 1238,
+     "dmg_rear": 202,
+     "dmg_taken_by": {
+      "gun": 1237.5,
+      "zone": 1160.0
+     },
+     "hits_taken_by": {
+      "gun": 26,
+      "zone": 695
+     },
+     "dmg_by_slot": {
+      "1": 225.0,
+      "12": 877.5,
+      "2": 135.0
+     },
+     "hits_by_slot": {
+      "1": 5,
+      "12": 19,
+      "2": 2
+     },
+     "ticks_alive": 2820,
+     "ticks_out": 695,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.98,
+     "ms_p99": 8.64,
+     "ms_max": 47.74,
+     "hp415": null
+    }
+   ]
+  },
+  {
+   "seed": 1100002,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1383,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.21,
+     "ms_max": 31.6,
+     "hp415": 1.0
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 15.65,
+     "killed_by": "z_ladder",
+     "hp_before": 5.0,
+     "dmg_taken": 1440,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 1440.0
+     },
+     "hits_taken_by": {
+      "gun": 32
+     },
+     "dmg_by_slot": {
+      "14": 1440.0
+     },
+     "hits_by_slot": {
+      "14": 32
+     },
+     "ticks_alive": 314,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.13,
+     "ms_p99": 0.19,
+     "ms_max": 0.27,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 12,
+     "kills": 0,
+     "cause": "laser",
+     "death_t": 164.7,
+     "killed_by": "z_ladder",
+     "hp_before": 75.9,
+     "dmg_taken": 1911,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 572.4,
+      "laser": 1338.12
+     },
+     "hits_taken_by": {
+      "gun": 11,
+      "laser": 3
+     },
+     "dmg_by_slot": {
+      "4": 140.4,
+      "14": 1770.12
+     },
+     "hits_by_slot": {
+      "4": 3,
+      "14": 11
+     },
+     "ticks_alive": 3295,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.32,
+     "ms_max": 10.69,
+     "hp415": null
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 5733,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.17,
+     "ms_max": 23.21,
+     "hp415": 1.0
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 2,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 300,
+     "dmg_rear": 300,
+     "dmg_taken_by": {
+      "npc": 300.0
+     },
+     "hits_taken_by": {
+      "npc": 8
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4323,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.25,
+     "ms_max": 21.02,
+     "hp415": 1.0
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 4,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 898,
+     "dmg_rear": 412,
+     "dmg_taken_by": {
+      "npc": 412.5,
+      "gun": 486.0
+     },
+     "hits_taken_by": {
+      "npc": 11,
+      "gun": 9
+     },
+     "dmg_by_slot": {
+      "14": 486.0
+     },
+     "hits_by_slot": {
+      "14": 9
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 4959,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.19,
+     "ms_max": 31.27,
+     "hp415": 1.0
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 762,
+     "dmg_rear": 638,
+     "dmg_taken_by": {
+      "npc": 762.5
+     },
+     "hits_taken_by": {
+      "npc": 22
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 5700,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.23,
+     "ms_max": 26.27,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 102.8,
+     "killed_by": 100,
+     "hp_before": 25.0,
+     "dmg_taken": 1825,
+     "dmg_rear": 300,
+     "dmg_taken_by": {
+      "npc": 1825.0
+     },
+     "hits_taken_by": {
+      "npc": 69
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 2057,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 2.46,
+     "hp415": null
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1438,
+     "dmg_rear": 1312,
+     "dmg_taken_by": {
+      "npc": 1437.5
+     },
+     "hits_taken_by": {
+      "npc": 40
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4335,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.21,
+     "ms_max": 4.9,
+     "hp415": 1.0
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 39.1,
+     "killed_by": 103,
+     "hp_before": 12.5,
+     "dmg_taken": 1425,
+     "dmg_rear": 1425,
+     "dmg_taken_by": {
+      "npc": 1425.0
+     },
+     "hits_taken_by": {
+      "npc": 38
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 783,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.22,
+     "ms_p99": 0.18,
+     "ms_max": 32.76,
+     "hp415": null
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 4,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1070,
+     "dmg_rear": 724,
+     "dmg_taken_by": {
+      "npc": 1069.5
+     },
+     "hits_taken_by": {
+      "npc": 36
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 3681,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.23,
+     "ms_max": 22.77,
+     "hp415": 1.0
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 13,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 159.05,
+     "killed_by": 102,
+     "hp_before": 12.5,
+     "dmg_taken": 1425,
+     "dmg_rear": 1425,
+     "dmg_taken_by": {
+      "npc": 1425.0
+     },
+     "hits_taken_by": {
+      "npc": 38
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 3182,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.28,
+     "ms_max": 3.35,
+     "hp415": null
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 10,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 178.55,
+     "killed_by": 101,
+     "hp_before": 17.5,
+     "dmg_taken": 2012,
+     "dmg_rear": 112,
+     "dmg_taken_by": {
+      "npc": 2012.5
+     },
+     "hits_taken_by": {
+      "npc": 79
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 3572,
+     "ticks_out": 0,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.16,
+     "ms_max": 5.26,
+     "hp415": null
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1356,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.19,
+     "ms_max": 21.03,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "z_ladder",
+     "place": 11,
+     "kills": 2,
+     "cause": "gun",
+     "death_t": 171.7,
+     "killed_by": "squad",
+     "hp_before": 45.2,
+     "dmg_taken": 2397,
+     "dmg_rear": 634,
+     "dmg_taken_by": {
+      "gun": 1402.56,
+      "npc": 175.0,
+      "laser": 819.0
+     },
+     "hits_taken_by": {
+      "gun": 30,
+      "npc": 6,
+      "laser": 2
+     },
+     "dmg_by_slot": {
+      "1": 540.0,
+      "2": 562.5,
+      "5": 980.46,
+      "0": 45.0,
+      "4": 93.6
+     },
+     "hits_by_slot": {
+      "1": 12,
+      "2": 12,
+      "5": 5,
+      "0": 1,
+      "4": 2
+     },
+     "ticks_alive": 3435,
+     "ticks_out": 0,
+     "cubes": 5,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.46,
+     "ms_p99": 4.33,
+     "ms_max": 26.03,
+     "hp415": null
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1363,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.21,
+     "ms_max": 9.6,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100003,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 312,
+     "dmg_rear": 262,
+     "dmg_taken_by": {
+      "npc": 312.5
+     },
+     "hits_taken_by": {
+      "npc": 9
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1755,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.11,
+     "ms_p99": 0.24,
+     "ms_max": 32.25,
+     "hp415": 1.0
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 15.95,
+     "killed_by": 109,
+     "hp_before": 7.5,
+     "dmg_taken": 1430,
+     "dmg_rear": 510,
+     "dmg_taken_by": {
+      "npc": 575.0,
+      "gun": 855.0
+     },
+     "hits_taken_by": {
+      "npc": 18,
+      "gun": 18
+     },
+     "dmg_by_slot": {
+      "13": 855.0
+     },
+     "hits_by_slot": {
+      "13": 18
+     },
+     "ticks_alive": 320,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.15,
+     "ms_p99": 0.38,
+     "ms_max": 5.65,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 712,
+     "dmg_rear": 712,
+     "dmg_taken_by": {
+      "npc": 712.5
+     },
+     "hits_taken_by": {
+      "npc": 19
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1557,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.18,
+     "ms_max": 20.87,
+     "hp415": 1.0
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1541,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.23,
+     "ms_max": 15.64,
+     "hp415": 1.0
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 588,
+     "dmg_rear": 562,
+     "dmg_taken_by": {
+      "npc": 587.5
+     },
+     "hits_taken_by": {
+      "npc": 16
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1440,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.24,
+     "ms_max": 22.78,
+     "hp415": 1.0
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7781,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.19,
+     "ms_max": 13.27,
+     "hp415": 1.0
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1853,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.2,
+     "ms_max": 30.72,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 5859,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 30.29,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1551,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.18,
+     "ms_max": 31.53,
+     "hp415": 1.0
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 6499,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.16,
+     "ms_max": 21.29,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 300,
+     "dmg_rear": 300,
+     "dmg_taken_by": {
+      "npc": 300.0
+     },
+     "hits_taken_by": {
+      "npc": 8
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1480,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.26,
+     "ms_max": 16.29,
+     "hp415": 1.0
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 4,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 495,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 495.0
+     },
+     "hits_taken_by": {
+      "gun": 11
+     },
+     "dmg_by_slot": {
+      "13": 495.0
+     },
+     "hits_by_slot": {
+      "13": 11
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 4727,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.2,
+     "ms_max": 25.02,
+     "hp415": 1.0
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1430,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.19,
+     "ms_max": 8.93,
+     "hp415": 1.0
+    },
+    {
+     "slot": 13,
+     "label": "z_ladder",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 68.55,
+     "killed_by": "squad",
+     "hp_before": 39.2,
+     "dmg_taken": 1619,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 864.0,
+      "npc": 75.0,
+      "laser": 680.4
+     },
+     "hits_taken_by": {
+      "gun": 18,
+      "npc": 3,
+      "laser": 2
+     },
+     "dmg_by_slot": {
+      "1": 135.0,
+      "11": 1409.4
+     },
+     "hits_by_slot": {
+      "1": 3,
+      "11": 17
+     },
+     "ticks_alive": 1372,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.5,
+     "ms_p99": 5.17,
+     "ms_max": 19.45,
+     "hp415": null
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1813,
+     "cubes": 3,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.22,
+     "ms_max": 16.37,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 275,
+     "dmg_rear": 225,
+     "dmg_taken_by": {
+      "npc": 275.0
+     },
+     "hits_taken_by": {
+      "npc": 8
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 3266,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.22,
+     "ms_max": 24.25,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100004,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 37.3,
+     "killed_by": "z_ladder",
+     "hp_before": 17.5,
+     "dmg_taken": 1428,
+     "dmg_rear": 188,
+     "dmg_taken_by": {
+      "npc": 212.5,
+      "gun": 1215.0
+     },
+     "hits_taken_by": {
+      "npc": 6,
+      "gun": 27
+     },
+     "dmg_by_slot": {
+      "12": 1215.0
+     },
+     "hits_by_slot": {
+      "12": 27
+     },
+     "ticks_alive": 747,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.13,
+     "ms_p99": 0.53,
+     "ms_max": 2.53,
+     "hp415": null
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 8,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 278.95,
+     "killed_by": 108,
+     "hp_before": 12.5,
+     "dmg_taken": 1613,
+     "dmg_rear": 1506,
+     "dmg_taken_by": {
+      "gun": 188.37,
+      "npc": 1425.0
+     },
+     "hits_taken_by": {
+      "gun": 3,
+      "npc": 38
+     },
+     "dmg_by_slot": {
+      "4": 188.37
+     },
+     "hits_by_slot": {
+      "4": 3
+     },
+     "ticks_alive": 5580,
+     "ticks_out": 1962,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.12,
+     "ms_p99": 0.34,
+     "ms_max": 35.03,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 675,
+     "dmg_rear": 450,
+     "dmg_taken_by": {
+      "npc": 675.0
+     },
+     "hits_taken_by": {
+      "npc": 21
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 6017,
+     "cubes": 0,
+     "errors": 0,
+     "late": 1,
+     "ms_mean": 0.11,
+     "ms_p99": 0.2,
+     "ms_max": 58.56,
+     "hp415": 1.0
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 14.7,
+     "killed_by": "z_ladder",
+     "hp_before": 27.5,
+     "dmg_taken": 1418,
+     "dmg_rear": 68,
+     "dmg_taken_by": {
+      "gun": 1417.5
+     },
+     "hits_taken_by": {
+      "gun": 31
+     },
+     "dmg_by_slot": {
+      "12": 1417.5
+     },
+     "hits_by_slot": {
+      "12": 31
+     },
+     "ticks_alive": 295,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.15,
+     "ms_p99": 0.37,
+     "ms_max": 5.22,
+     "hp415": null
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 157,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 156.6
+     },
+     "hits_taken_by": {
+      "gun": 3
+     },
+     "dmg_by_slot": {
+      "12": 156.6
+     },
+     "hits_by_slot": {
+      "12": 3
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 6000,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.21,
+     "ms_max": 29.63,
+     "hp415": 1.0
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 12,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 72.85,
+     "killed_by": "z_ladder",
+     "hp_before": 42.8,
+     "dmg_taken": 1409,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 1409.4
+     },
+     "hits_taken_by": {
+      "gun": 27
+     },
+     "dmg_by_slot": {
+      "12": 1409.4
+     },
+     "hits_by_slot": {
+      "12": 27
+     },
+     "ticks_alive": 1458,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.23,
+     "ms_max": 8.18,
+     "hp415": null
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1384,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.2,
+     "ms_max": 30.87,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 412,
+     "dmg_rear": 38,
+     "dmg_taken_by": {
+      "npc": 412.5
+     },
+     "hits_taken_by": {
+      "npc": 16
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1369,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.23,
+     "ms_max": 25.99,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 9,
+     "kills": 1,
+     "cause": "npc",
+     "death_t": 230.95,
+     "killed_by": 108,
+     "hp_before": 12.5,
+     "dmg_taken": 1582,
+     "dmg_rear": 1425,
+     "dmg_taken_by": {
+      "gun": 156.6,
+      "npc": 1425.0
+     },
+     "hits_taken_by": {
+      "gun": 3,
+      "npc": 38
+     },
+     "dmg_by_slot": {
+      "12": 156.6
+     },
+     "hits_by_slot": {
+      "12": 3
+     },
+     "ticks_alive": 4620,
+     "ticks_out": 990,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.23,
+     "ms_max": 15.25,
+     "hp415": null
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 57.0,
+     "killed_by": 105,
+     "hp_before": 25.0,
+     "dmg_taken": 1400,
+     "dmg_rear": 150,
+     "dmg_taken_by": {
+      "npc": 1400.0
+     },
+     "hits_taken_by": {
+      "npc": 54
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 1141,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.12,
+     "ms_p99": 0.78,
+     "ms_max": 7.4,
+     "hp415": null
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 13,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 67.1,
+     "killed_by": 102,
+     "hp_before": 20.0,
+     "dmg_taken": 1459,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "npc": 1459.0
+     },
+     "hits_taken_by": {
+      "npc": 63
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 1343,
+     "ticks_out": 0,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.2,
+     "ms_max": 1.0,
+     "hp415": null
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 450,
+     "dmg_rear": 375,
+     "dmg_taken_by": {
+      "npc": 450.0
+     },
+     "hits_taken_by": {
+      "npc": 13
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1356,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.11,
+     "ms_p99": 0.19,
+     "ms_max": 35.49,
+     "hp415": 1.0
+    },
+    {
+     "slot": 12,
+     "label": "z_ladder",
+     "place": 11,
+     "kills": 3,
+     "cause": "laser",
+     "death_t": 93.7,
+     "killed_by": "squad",
+     "hp_before": 194.7,
+     "dmg_taken": 3046,
+     "dmg_rear": 68,
+     "dmg_taken_by": {
+      "gun": 1471.32,
+      "laser": 1575.0
+     },
+     "hits_taken_by": {
+      "gun": 32,
+      "laser": 5
+     },
+     "dmg_by_slot": {
+      "3": 360.0,
+      "0": 270.0,
+      "5": 337.5,
+      "8": 1980.0,
+      "4": 53.82,
+      "1": 45.0
+     },
+     "hits_by_slot": {
+      "3": 8,
+      "0": 6,
+      "5": 7,
+      "8": 14,
+      "4": 1,
+      "1": 1
+     },
+     "ticks_alive": 1875,
+     "ticks_out": 0,
+     "cubes": 4,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.59,
+     "ms_p99": 3.82,
+     "ms_max": 9.96,
+     "hp415": null
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 10,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 132.7,
+     "killed_by": 102,
+     "hp_before": 20.5,
+     "dmg_taken": 1604,
+     "dmg_rear": 693,
+     "dmg_taken_by": {
+      "npc": 1604.0
+     },
+     "hits_taken_by": {
+      "npc": 65
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 2655,
+     "ticks_out": 0,
+     "cubes": 3,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.37,
+     "ms_max": 6.24,
+     "hp415": null
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7412,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.18,
+     "ms_max": 24.25,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4424,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.18,
+     "ms_max": 25.14,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100005,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 68,
+     "dmg_rear": 68,
+     "dmg_taken_by": {
+      "gun": 67.5
+     },
+     "hits_taken_by": {
+      "gun": 1
+     },
+     "dmg_by_slot": {
+      "4": 67.5
+     },
+     "hits_by_slot": {
+      "4": 1
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 4613,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.11,
+     "ms_p99": 0.23,
+     "ms_max": 29.82,
+     "hp415": 1.0
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 261,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 261.0
+     },
+     "hits_taken_by": {
+      "gun": 5
+     },
+     "dmg_by_slot": {
+      "11": 261.0
+     },
+     "hits_by_slot": {
+      "11": 5
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 4964,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.21,
+     "ms_max": 20.37,
+     "hp415": 1.0
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "lightning",
+     "death_t": 96.25,
+     "killed_by": "z_ladder",
+     "hp_before": 52.7,
+     "dmg_taken": 1412,
+     "dmg_rear": 359,
+     "dmg_taken_by": {
+      "gun": 893.7,
+      "lightning": 518.4
+     },
+     "hits_taken_by": {
+      "gun": 16,
+      "lightning": 8
+     },
+     "dmg_by_slot": {
+      "11": 1344.6,
+      "0": 67.5
+     },
+     "hits_by_slot": {
+      "11": 23,
+      "0": 1
+     },
+     "ticks_alive": 1926,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.39,
+     "ms_max": 9.53,
+     "hp415": null
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 13,
+     "kills": 0,
+     "cause": "lightning",
+     "death_t": 100.25,
+     "killed_by": "z_ladder",
+     "hp_before": 36.1,
+     "dmg_taken": 1984,
+     "dmg_rear": 656,
+     "dmg_taken_by": {
+      "gun": 947.7,
+      "lightning": 1036.8
+     },
+     "hits_taken_by": {
+      "gun": 15,
+      "lightning": 16
+     },
+     "dmg_by_slot": {
+      "11": 1984.5
+     },
+     "hits_by_slot": {
+      "11": 31
+     },
+     "ticks_alive": 2006,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.2,
+     "ms_max": 3.61,
+     "hp415": null
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 97,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 97.2
+     },
+     "hits_taken_by": {
+      "gun": 2
+     },
+     "dmg_by_slot": {
+      "11": 97.2
+     },
+     "hits_by_slot": {
+      "11": 2
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 4912,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.13,
+     "ms_p99": 0.31,
+     "ms_max": 38.92,
+     "hp415": 1.0
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4978,
+     "cubes": 0,
+     "errors": 0,
+     "late": 1,
+     "ms_mean": 0.13,
+     "ms_p99": 0.25,
+     "ms_max": 50.91,
+     "hp415": 1.0
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 3,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 150,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "npc": 150.0
+     },
+     "hits_taken_by": {
+      "npc": 6
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4933,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.12,
+     "ms_p99": 0.22,
+     "ms_max": 38.64,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 250,
+     "dmg_rear": 225,
+     "dmg_taken_by": {
+      "npc": 250.0
+     },
+     "hits_taken_by": {
+      "npc": 7
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1905,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.22,
+     "ms_max": 23.45,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 2398,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.18,
+     "ms_max": 20.68,
+     "hp415": 1.0
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1404,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 26.27,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 37.2,
+     "killed_by": 111,
+     "hp_before": 12.5,
+     "dmg_taken": 1425,
+     "dmg_rear": 1425,
+     "dmg_taken_by": {
+      "npc": 1425.0
+     },
+     "hits_taken_by": {
+      "npc": 38
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 745,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.17,
+     "ms_max": 0.38,
+     "hp415": null
+    },
+    {
+     "slot": 11,
+     "label": "z_ladder",
+     "place": 12,
+     "kills": 3,
+     "cause": "laser",
+     "death_t": 107.95,
+     "killed_by": "squad",
+     "hp_before": 112.0,
+     "dmg_taken": 2353,
+     "dmg_rear": 124,
+     "dmg_taken_by": {
+      "gun": 2052.0,
+      "laser": 301.39
+     },
+     "hits_taken_by": {
+      "gun": 45,
+      "laser": 1
+     },
+     "dmg_by_slot": {
+      "12": 540.0,
+      "2": 405.0,
+      "3": 765.0,
+      "0": 45.0,
+      "4": 131.4,
+      "1": 165.6,
+      "6": 301.39
+     },
+     "hits_by_slot": {
+      "12": 12,
+      "2": 9,
+      "3": 17,
+      "0": 1,
+      "4": 3,
+      "1": 3,
+      "6": 1
+     },
+     "ticks_alive": 2160,
+     "ticks_out": 0,
+     "cubes": 4,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.77,
+     "ms_p99": 10.19,
+     "ms_max": 36.97,
+     "hp415": null
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 35.6,
+     "killed_by": "z_ladder",
+     "hp_before": 27.5,
+     "dmg_taken": 1440,
+     "dmg_rear": 540,
+     "dmg_taken_by": {
+      "gun": 1440.0
+     },
+     "hits_taken_by": {
+      "gun": 28
+     },
+     "dmg_by_slot": {
+      "11": 1440.0
+     },
+     "hits_by_slot": {
+      "11": 28
+     },
+     "ticks_alive": 713,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.27,
+     "ms_p99": 0.49,
+     "ms_max": 18.98,
+     "hp415": null
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 6482,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.18,
+     "ms_max": 33.12,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 6438,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.19,
+     "ms_max": 31.68,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1498,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 32.9,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100006,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 150,
+     "dmg_rear": 150,
+     "dmg_taken_by": {
+      "npc": 150.0
+     },
+     "hits_taken_by": {
+      "npc": 4
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7534,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.19,
+     "ms_max": 22.25,
+     "hp415": 1.0
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 231.95,
+     "killed_by": 100,
+     "hp_before": 15.0,
+     "dmg_taken": 1422,
+     "dmg_rear": 38,
+     "dmg_taken_by": {
+      "gun": 1260.0,
+      "npc": 162.5
+     },
+     "hits_taken_by": {
+      "gun": 28,
+      "npc": 6
+     },
+     "dmg_by_slot": {
+      "10": 1260.0
+     },
+     "hits_by_slot": {
+      "10": 28
+     },
+     "ticks_alive": 4640,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 18.43,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1442,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.18,
+     "ms_max": 29.49,
+     "hp415": 1.0
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1430,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.2,
+     "ms_max": 28.61,
+     "hp415": 1.0
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 1,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 902,
+     "dmg_rear": 188,
+     "dmg_taken_by": {
+      "npc": 812.5,
+      "gun": 90.0
+     },
+     "hits_taken_by": {
+      "npc": 30,
+      "gun": 2
+     },
+     "dmg_by_slot": {
+      "10": 90.0
+     },
+     "hits_by_slot": {
+      "10": 2
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1628,
+     "cubes": 3,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.2,
+     "ms_max": 21.99,
+     "hp415": 1.0
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7417,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.21,
+     "ms_max": 5.03,
+     "hp415": 1.0
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 3671,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.21,
+     "ms_max": 32.26,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 405,
+     "dmg_rear": 405,
+     "dmg_taken_by": {
+      "gun": 405.0
+     },
+     "hits_taken_by": {
+      "gun": 6
+     },
+     "dmg_by_slot": {
+      "10": 405.0
+     },
+     "hits_by_slot": {
+      "10": 6
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1545,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.21,
+     "ms_max": 36.46,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1426,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.22,
+     "ms_max": 32.27,
+     "hp415": 1.0
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 300,
+     "dmg_rear": 300,
+     "dmg_taken_by": {
+      "npc": 300.0
+     },
+     "hits_taken_by": {
+      "npc": 8
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1428,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.22,
+     "ms_max": 30.89,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "z_ladder",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 242.4,
+     "killed_by": "squad",
+     "hp_before": 20.5,
+     "dmg_taken": 1487,
+     "dmg_rear": 150,
+     "dmg_taken_by": {
+      "gun": 959.4,
+      "npc": 200.0,
+      "laser": 327.6
+     },
+     "hits_taken_by": {
+      "gun": 21,
+      "npc": 6,
+      "laser": 1
+     },
+     "dmg_by_slot": {
+      "1": 495.0,
+      "4": 702.0,
+      "2": 90.0
+     },
+     "hits_by_slot": {
+      "1": 11,
+      "4": 9,
+      "2": 2
+     },
+     "ticks_alive": 4849,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 1.56,
+     "ms_p99": 8.53,
+     "ms_max": 48.51,
+     "hp415": null
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1384,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 5.98,
+     "hp415": 1.0
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4381,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 30.38,
+     "hp415": 1.0
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 4,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 34,
+     "dmg_rear": 34,
+     "dmg_taken_by": {
+      "npc": 34.5
+     },
+     "hits_taken_by": {
+      "npc": 1
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1410,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.23,
+     "ms_max": 30.28,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7468,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.16,
+     "ms_max": 13.55,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 175,
+     "dmg_rear": 150,
+     "dmg_taken_by": {
+      "npc": 175.0
+     },
+     "hits_taken_by": {
+      "npc": 5
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 3130,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.17,
+     "ms_max": 34.83,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100007,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 6,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 250,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 225.0,
+      "npc": 25.0
+     },
+     "hits_taken_by": {
+      "gun": 5,
+      "npc": 1
+     },
+     "dmg_by_slot": {
+      "9": 225.0
+     },
+     "hits_by_slot": {
+      "9": 5
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1719,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.12,
+     "ms_p99": 0.23,
+     "ms_max": 33.65,
+     "hp415": 1.0
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 238,
+     "dmg_rear": 188,
+     "dmg_taken_by": {
+      "npc": 237.5
+     },
+     "hits_taken_by": {
+      "npc": 7
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1786,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.22,
+     "ms_max": 32.11,
+     "hp415": 1.0
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 13,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 93.5,
+     "killed_by": 103,
+     "hp_before": 25.0,
+     "dmg_taken": 1400,
+     "dmg_rear": 150,
+     "dmg_taken_by": {
+      "npc": 1400.0
+     },
+     "hits_taken_by": {
+      "npc": 54
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 1871,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 0.45,
+     "hp415": null
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1778,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.23,
+     "ms_max": 26.2,
+     "hp415": 1.0
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7619,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 28.77,
+     "hp415": 1.0
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 461,
+     "dmg_rear": 211,
+     "dmg_taken_by": {
+      "npc": 250.0,
+      "gun": 210.6
+     },
+     "hits_taken_by": {
+      "npc": 10,
+      "gun": 3
+     },
+     "dmg_by_slot": {
+      "6": 210.6
+     },
+     "hits_by_slot": {
+      "6": 3
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 5810,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.17,
+     "ms_max": 49.17,
+     "hp415": 1.0
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 312,
+     "dmg_rear": 262,
+     "dmg_taken_by": {
+      "npc": 312.5
+     },
+     "hits_taken_by": {
+      "npc": 9
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1607,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.2,
+     "ms_max": 15.14,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1872,
+     "cubes": 3,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.11,
+     "ms_p99": 0.28,
+     "ms_max": 33.72,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 85.3,
+     "killed_by": 104,
+     "hp_before": 37.5,
+     "dmg_taken": 1400,
+     "dmg_rear": 900,
+     "dmg_taken_by": {
+      "npc": 1400.0
+     },
+     "hits_taken_by": {
+      "npc": 44
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 1707,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.23,
+     "ms_max": 6.3,
+     "hp415": null
+    },
+    {
+     "slot": 9,
+     "label": "z_ladder",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 37.45,
+     "killed_by": "squad",
+     "hp_before": 16.7,
+     "dmg_taken": 1662,
+     "dmg_rear": 618,
+     "dmg_taken_by": {
+      "gun": 1662.3
+     },
+     "hits_taken_by": {
+      "gun": 31
+     },
+     "dmg_by_slot": {
+      "0": 517.5,
+      "10": 874.8,
+      "7": 270.0
+     },
+     "hits_by_slot": {
+      "0": 10,
+      "10": 17,
+      "7": 4
+     },
+     "ticks_alive": 750,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.72,
+     "ms_p99": 3.47,
+     "ms_max": 5.67,
+     "hp415": null
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 665,
+     "dmg_rear": 525,
+     "dmg_taken_by": {
+      "npc": 575.0,
+      "gun": 90.0
+     },
+     "hits_taken_by": {
+      "npc": 16,
+      "gun": 2
+     },
+     "dmg_by_slot": {
+      "9": 90.0
+     },
+     "hits_by_slot": {
+      "9": 2
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1795,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.26,
+     "ms_max": 30.28,
+     "hp415": 1.0
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 4,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1552,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 10.48,
+     "hp415": 1.0
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 48.75,
+     "killed_by": 102,
+     "hp_before": 12.5,
+     "dmg_taken": 1425,
+     "dmg_rear": 375,
+     "dmg_taken_by": {
+      "npc": 1425.0
+     },
+     "hits_taken_by": {
+      "npc": 52
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 976,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.2,
+     "ms_max": 0.45,
+     "hp415": null
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7694,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.2,
+     "ms_max": 21.2,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 4,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1466,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.23,
+     "ms_max": 27.86,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4310,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.18,
+     "ms_max": 31.73,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100008,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 26.1,
+     "killed_by": "z_ladder",
+     "hp_before": 33.2,
+     "dmg_taken": 1414,
+     "dmg_rear": 150,
+     "dmg_taken_by": {
+      "npc": 150.0,
+      "gun": 1263.6
+     },
+     "hits_taken_by": {
+      "npc": 4,
+      "gun": 27
+     },
+     "dmg_by_slot": {
+      "8": 1263.6
+     },
+     "hits_by_slot": {
+      "8": 27
+     },
+     "ticks_alive": 523,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.17,
+     "ms_p99": 0.27,
+     "ms_max": 13.43,
+     "hp415": null
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 11,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 116.2,
+     "killed_by": "z_ladder",
+     "hp_before": 39.2,
+     "dmg_taken": 1411,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 1411.2
+     },
+     "hits_taken_by": {
+      "gun": 28
+     },
+     "dmg_by_slot": {
+      "8": 1411.2
+     },
+     "hits_by_slot": {
+      "8": 28
+     },
+     "ticks_alive": 2325,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.12,
+     "ms_p99": 0.21,
+     "ms_max": 29.29,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 69.15,
+     "killed_by": "squad",
+     "hp_before": 55.4,
+     "dmg_taken": 1412,
+     "dmg_rear": 202,
+     "dmg_taken_by": {
+      "gun": 1412.1
+     },
+     "hits_taken_by": {
+      "gun": 27
+     },
+     "dmg_by_slot": {
+      "8": 1209.6,
+      "3": 202.5
+     },
+     "hits_by_slot": {
+      "8": 24,
+      "3": 3
+     },
+     "ticks_alive": 1384,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.11,
+     "ms_p99": 0.26,
+     "ms_max": 12.33,
+     "hp415": null
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 13,
+     "kills": 1,
+     "cause": "gun",
+     "death_t": 86.35,
+     "killed_by": "z_ladder",
+     "hp_before": 44.8,
+     "dmg_taken": 1462,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 1461.6
+     },
+     "hits_taken_by": {
+      "gun": 29
+     },
+     "dmg_by_slot": {
+      "8": 1461.6
+     },
+     "hits_by_slot": {
+      "8": 29
+     },
+     "ticks_alive": 1728,
+     "ticks_out": 0,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.14,
+     "ms_p99": 0.3,
+     "ms_max": 18.48,
+     "hp415": null
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4440,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.15,
+     "ms_max": 13.76,
+     "hp415": 1.0
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 57.45,
+     "killed_by": 100,
+     "hp_before": 37.5,
+     "dmg_taken": 1438,
+     "dmg_rear": 1312,
+     "dmg_taken_by": {
+      "npc": 1437.5
+     },
+     "hits_taken_by": {
+      "npc": 40
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 1150,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.19,
+     "ms_max": 9.95,
+     "hp415": null
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 4,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1374,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.15,
+     "ms_max": 23.01,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 405,
+     "dmg_rear": 405,
+     "dmg_taken_by": {
+      "gun": 405.0
+     },
+     "hits_taken_by": {
+      "gun": 5
+     },
+     "dmg_by_slot": {
+      "8": 405.0
+     },
+     "hits_by_slot": {
+      "8": 5
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 4647,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.06,
+     "ms_p99": 0.15,
+     "ms_max": 9.21,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "z_ladder",
+     "place": 10,
+     "kills": 3,
+     "cause": "gun",
+     "death_t": 156.35,
+     "killed_by": "squad",
+     "hp_before": 8.1,
+     "dmg_taken": 4126,
+     "dmg_rear": 780,
+     "dmg_taken_by": {
+      "gun": 4088.7,
+      "npc": 37.5
+     },
+     "hits_taken_by": {
+      "gun": 85,
+      "npc": 1
+     },
+     "dmg_by_slot": {
+      "0": 675.0,
+      "2": 405.0,
+      "3": 511.2,
+      "1": 742.5,
+      "10": 990.0,
+      "9": 765.0
+     },
+     "hits_by_slot": {
+      "0": 15,
+      "2": 9,
+      "3": 11,
+      "1": 16,
+      "10": 22,
+      "9": 12
+     },
+     "ticks_alive": 3128,
+     "ticks_out": 0,
+     "cubes": 5,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 2.03,
+     "ms_p99": 21.33,
+     "ms_max": 32.3,
+     "hp415": null
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 7,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 6150,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.17,
+     "ms_max": 15.62,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1094,
+     "dmg_rear": 338,
+     "dmg_taken_by": {
+      "npc": 337.5,
+      "gun": 756.0
+     },
+     "hits_taken_by": {
+      "npc": 9,
+      "gun": 14
+     },
+     "dmg_by_slot": {
+      "8": 756.0
+     },
+     "hits_by_slot": {
+      "8": 14
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 4782,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.17,
+     "ms_max": 18.67,
+     "hp415": 1.0
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 4,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4552,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.06,
+     "ms_p99": 0.13,
+     "ms_max": 16.16,
+     "hp415": 1.0
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 4,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 5908,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.06,
+     "ms_p99": 0.13,
+     "ms_max": 17.72,
+     "hp415": 1.0
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4779,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.17,
+     "ms_max": 25.18,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 12,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 97.55,
+     "killed_by": 100,
+     "hp_before": 37.5,
+     "dmg_taken": 1938,
+     "dmg_rear": 1838,
+     "dmg_taken_by": {
+      "npc": 1937.5
+     },
+     "hits_taken_by": {
+      "npc": 53
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 1952,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.16,
+     "ms_max": 8.32,
+     "hp415": null
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1354,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.17,
+     "ms_max": 23.25,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100009,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1538,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.16,
+     "ms_max": 24.46,
+     "hp415": 1.0
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 31.8,
+     "killed_by": 104,
+     "hp_before": 12.5,
+     "dmg_taken": 1425,
+     "dmg_rear": 225,
+     "dmg_taken_by": {
+      "gun": 1125.0,
+      "npc": 300.0
+     },
+     "hits_taken_by": {
+      "gun": 25,
+      "npc": 9
+     },
+     "dmg_by_slot": {
+      "7": 1125.0
+     },
+     "hits_by_slot": {
+      "7": 25
+     },
+     "ticks_alive": 637,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.19,
+     "ms_p99": 0.24,
+     "ms_max": 24.41,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 675,
+     "dmg_rear": 525,
+     "dmg_taken_by": {
+      "npc": 675.0
+     },
+     "hits_taken_by": {
+      "npc": 20
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1394,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.16,
+     "ms_max": 22.24,
+     "hp415": 1.0
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1411,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.15,
+     "ms_max": 29.7,
+     "hp415": 1.0
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 13.7,
+     "killed_by": "z_ladder",
+     "hp_before": 5.0,
+     "dmg_taken": 1440,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 1440.0
+     },
+     "hits_taken_by": {
+      "gun": 32
+     },
+     "dmg_by_slot": {
+      "7": 1440.0
+     },
+     "hits_by_slot": {
+      "7": 32
+     },
+     "ticks_alive": 275,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.13,
+     "ms_p99": 0.16,
+     "ms_max": 0.24,
+     "hp415": null
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1632,
+     "dmg_rear": 788,
+     "dmg_taken_by": {
+      "npc": 962.5,
+      "gun": 669.6
+     },
+     "hits_taken_by": {
+      "npc": 28,
+      "gun": 12
+     },
+     "dmg_by_slot": {
+      "7": 669.6
+     },
+     "hits_by_slot": {
+      "7": 12
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1416,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.18,
+     "ms_max": 33.99,
+     "hp415": 1.0
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 2,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 662,
+     "dmg_rear": 562,
+     "dmg_taken_by": {
+      "npc": 662.5
+     },
+     "hits_taken_by": {
+      "npc": 19
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1443,
+     "cubes": 3,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.17,
+     "ms_max": 27.66,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "z_ladder",
+     "place": 13,
+     "kills": 1,
+     "cause": "laser",
+     "death_t": 225.3,
+     "killed_by": "squad",
+     "hp_before": 150.6,
+     "dmg_taken": 3072,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "npc": 275.0,
+      "gun": 1892.58,
+      "laser": 904.18
+     },
+     "hits_taken_by": {
+      "npc": 11,
+      "gun": 43,
+      "laser": 3
+     },
+     "dmg_by_slot": {
+      "4": 495.0,
+      "1": 90.0,
+      "5": 952.2,
+      "9": 775.01,
+      "6": 484.55
+     },
+     "hits_by_slot": {
+      "4": 11,
+      "1": 2,
+      "5": 11,
+      "9": 18,
+      "6": 4
+     },
+     "ticks_alive": 4507,
+     "ticks_out": 0,
+     "cubes": 6,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.47,
+     "ms_p99": 4.14,
+     "ms_max": 24.25,
+     "hp415": null
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 788,
+     "dmg_rear": 788,
+     "dmg_taken_by": {
+      "npc": 787.5
+     },
+     "hits_taken_by": {
+      "npc": 21
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1681,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.16,
+     "ms_max": 24.38,
+     "hp415": 1.0
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 633,
+     "dmg_rear": 87,
+     "dmg_taken_by": {
+      "npc": 100.0,
+      "gun": 533.34
+     },
+     "hits_taken_by": {
+      "npc": 4,
+      "gun": 9
+     },
+     "dmg_by_slot": {
+      "7": 446.4,
+      "6": 86.94
+     },
+     "hits_by_slot": {
+      "7": 8,
+      "6": 1
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1764,
+     "cubes": 9,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.18,
+     "ms_max": 12.59,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1393,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.17,
+     "ms_max": 30.37,
+     "hp415": 1.0
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 46.3,
+     "killed_by": 108,
+     "hp_before": 25.0,
+     "dmg_taken": 1412,
+     "dmg_rear": 1388,
+     "dmg_taken_by": {
+      "npc": 1412.5
+     },
+     "hits_taken_by": {
+      "npc": 38
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 927,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.13,
+     "ms_p99": 0.25,
+     "ms_max": 21.59,
+     "hp415": null
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 275,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "npc": 275.0
+     },
+     "hits_taken_by": {
+      "npc": 11
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1386,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 34.09,
+     "hp415": 1.0
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 262,
+     "dmg_rear": 262,
+     "dmg_taken_by": {
+      "npc": 262.5
+     },
+     "hits_taken_by": {
+      "npc": 7
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1449,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 19.98,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1702,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.14,
+     "ms_max": 16.21,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1407,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.16,
+     "ms_max": 29.81,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100010,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4669,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.23,
+     "ms_max": 22.74,
+     "hp415": 1.0
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 130.8,
+     "killed_by": "z_ladder",
+     "hp_before": 25.0,
+     "dmg_taken": 1420,
+     "dmg_rear": 600,
+     "dmg_taken_by": {
+      "npc": 700.0,
+      "gun": 405.0,
+      "laser": 315.0
+     },
+     "hits_taken_by": {
+      "npc": 20,
+      "gun": 9,
+      "laser": 1
+     },
+     "dmg_by_slot": {
+      "6": 720.0
+     },
+     "hits_by_slot": {
+      "6": 10
+     },
+     "ticks_alive": 2617,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.27,
+     "ms_max": 7.76,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 491,
+     "dmg_rear": 491,
+     "dmg_taken_by": {
+      "laser": 491.4
+     },
+     "hits_taken_by": {
+      "laser": 1
+     },
+     "dmg_by_slot": {
+      "5": 491.4
+     },
+     "hits_by_slot": {
+      "5": 1
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 5994,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 22.07,
+     "hp415": 1.0
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 225,
+     "dmg_rear": 225,
+     "dmg_taken_by": {
+      "npc": 225.0
+     },
+     "hits_taken_by": {
+      "npc": 6
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 6484,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.18,
+     "ms_max": 31.96,
+     "hp415": 1.0
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "laser",
+     "death_t": 128.1,
+     "killed_by": "z_ladder",
+     "hp_before": 263.5,
+     "dmg_taken": 2195,
+     "dmg_rear": 555,
+     "dmg_taken_by": {
+      "npc": 687.5,
+      "gun": 562.5,
+      "laser": 945.0
+     },
+     "hits_taken_by": {
+      "npc": 21,
+      "gun": 12,
+      "laser": 3
+     },
+     "dmg_by_slot": {
+      "6": 1507.5
+     },
+     "hits_by_slot": {
+      "6": 15
+     },
+     "ticks_alive": 2563,
+     "ticks_out": 0,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.2,
+     "ms_max": 2.46,
+     "hp415": null
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 13,
+     "kills": 0,
+     "cause": "laser",
+     "death_t": 157.5,
+     "killed_by": "z_ladder",
+     "hp_before": 10.8,
+     "dmg_taken": 1879,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "laser": 1134.0,
+      "gun": 745.2
+     },
+     "hits_taken_by": {
+      "laser": 3,
+      "gun": 12
+     },
+     "dmg_by_slot": {
+      "6": 1879.2
+     },
+     "hits_by_slot": {
+      "6": 15
+     },
+     "ticks_alive": 3151,
+     "ticks_out": 0,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.23,
+     "ms_max": 22.58,
+     "hp415": null
+    },
+    {
+     "slot": 6,
+     "label": "z_ladder",
+     "place": 12,
+     "kills": 4,
+     "cause": "gun",
+     "death_t": 185.65,
+     "killed_by": "squad",
+     "hp_before": 10.8,
+     "dmg_taken": 3256,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 1372.39,
+      "laser": 1883.95
+     },
+     "hits_taken_by": {
+      "gun": 31,
+      "laser": 6
+     },
+     "dmg_by_slot": {
+      "4": 842.4,
+      "1": 180.0,
+      "5": 670.68,
+      "8": 983.66,
+      "7": 579.6
+     },
+     "hits_by_slot": {
+      "4": 6,
+      "1": 4,
+      "5": 9,
+      "8": 10,
+      "7": 8
+     },
+     "ticks_alive": 3714,
+     "ticks_out": 0,
+     "cubes": 5,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.5,
+     "ms_p99": 4.78,
+     "ms_max": 29.54,
+     "hp415": null
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 3,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 214,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "laser": 214.2
+     },
+     "hits_taken_by": {
+      "laser": 1
+     },
+     "dmg_by_slot": {
+      "6": 214.2
+     },
+     "hits_by_slot": {
+      "6": 1
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1862,
+     "cubes": 3,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.18,
+     "ms_max": 33.95,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 4,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1199,
+     "dmg_rear": 112,
+     "dmg_taken_by": {
+      "npc": 137.5,
+      "gun": 683.1,
+      "laser": 378.0
+     },
+     "hits_taken_by": {
+      "npc": 4,
+      "gun": 11,
+      "laser": 1
+     },
+     "dmg_by_slot": {
+      "6": 1061.1
+     },
+     "hits_by_slot": {
+      "6": 12
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1494,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 15.36,
+     "hp415": 1.0
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4616,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.18,
+     "ms_max": 18.7,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 938,
+     "dmg_rear": 938,
+     "dmg_taken_by": {
+      "npc": 937.5
+     },
+     "hits_taken_by": {
+      "npc": 25
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1541,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.18,
+     "ms_max": 35.1,
+     "hp415": 1.0
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 96.0,
+     "killed_by": "z_ladder",
+     "hp_before": 32.1,
+     "dmg_taken": 1503,
+     "dmg_rear": 810,
+     "dmg_taken_by": {
+      "gun": 742.5,
+      "laser": 760.2
+     },
+     "hits_taken_by": {
+      "gun": 14,
+      "laser": 2
+     },
+     "dmg_by_slot": {
+      "6": 1502.7
+     },
+     "hits_by_slot": {
+      "6": 16
+     },
+     "ticks_alive": 1921,
+     "ticks_out": 0,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.16,
+     "ms_max": 15.71,
+     "hp415": null
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 388,
+     "dmg_rear": 338,
+     "dmg_taken_by": {
+      "npc": 387.5
+     },
+     "hits_taken_by": {
+      "npc": 11
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1557,
+     "cubes": 1,
+     "errors": 0,
+     "late": 1,
+     "ms_mean": 0.09,
+     "ms_p99": 0.16,
+     "ms_max": 55.45,
+     "hp415": 1.0
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1150,
+     "dmg_rear": 1125,
+     "dmg_taken_by": {
+      "npc": 1150.0
+     },
+     "hits_taken_by": {
+      "npc": 31
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1388,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.17,
+     "ms_max": 28.9,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4428,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.18,
+     "ms_max": 49.51,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 3376,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 25.09,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100011,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7519,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.22,
+     "ms_max": 21.39,
+     "hp415": 1.0
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 161.2,
+     "killed_by": 109,
+     "hp_before": 12.5,
+     "dmg_taken": 1612,
+     "dmg_rear": 1312,
+     "dmg_taken_by": {
+      "npc": 1612.5
+     },
+     "hits_taken_by": {
+      "npc": 47
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 3225,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.24,
+     "ms_max": 2.75,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 632,
+     "dmg_rear": 632,
+     "dmg_taken_by": {
+      "npc": 75.0,
+      "laser": 556.66
+     },
+     "hits_taken_by": {
+      "npc": 2,
+      "laser": 2
+     },
+     "dmg_by_slot": {
+      "15": 556.66
+     },
+     "hits_by_slot": {
+      "15": 2
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 3313,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.18,
+     "ms_max": 33.63,
+     "hp415": 1.0
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1771,
+     "cubes": 3,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.26,
+     "ms_max": 27.38,
+     "hp415": 1.0
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4365,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 26.29,
+     "hp415": 1.0
+    },
+    {
+     "slot": 5,
+     "label": "z_ladder",
+     "place": 15,
+     "kills": 0,
+     "cause": "laser",
+     "death_t": 138.7,
+     "killed_by": "squad",
+     "hp_before": 297.9,
+     "dmg_taken": 2031,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 871.2,
+      "laser": 1159.7
+     },
+     "hits_taken_by": {
+      "gun": 19,
+      "laser": 3
+     },
+     "dmg_by_slot": {
+      "14": 360.0,
+      "15": 1580.9,
+      "1": 90.0
+     },
+     "hits_by_slot": {
+      "14": 8,
+      "15": 12,
+      "1": 2
+     },
+     "ticks_alive": 2775,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.37,
+     "ms_p99": 1.73,
+     "ms_max": 11.25,
+     "hp415": null
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 188,
+     "dmg_rear": 112,
+     "dmg_taken_by": {
+      "npc": 187.5
+     },
+     "hits_taken_by": {
+      "npc": 6
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1583,
+     "cubes": 3,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.23,
+     "ms_max": 26.35,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 13,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 167.9,
+     "killed_by": 102,
+     "hp_before": 25.0,
+     "dmg_taken": 1400,
+     "dmg_rear": 825,
+     "dmg_taken_by": {
+      "npc": 1400.0
+     },
+     "hits_taken_by": {
+      "npc": 45
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 3359,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.19,
+     "ms_max": 6.97,
+     "hp415": null
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 5855,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.17,
+     "ms_max": 22.35,
+     "hp415": 1.0
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1964,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.23,
+     "ms_max": 19.11,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1105,
+     "dmg_rear": 744,
+     "dmg_taken_by": {
+      "npc": 362.5,
+      "laser": 742.21
+     },
+     "hits_taken_by": {
+      "npc": 12,
+      "laser": 3
+     },
+     "dmg_by_slot": {
+      "15": 742.21
+     },
+     "hits_by_slot": {
+      "15": 3
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1460,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.11,
+     "ms_p99": 0.23,
+     "ms_max": 33.92,
+     "hp415": 1.0
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 562,
+     "dmg_rear": 488,
+     "dmg_taken_by": {
+      "npc": 562.5
+     },
+     "hits_taken_by": {
+      "npc": 16
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1808,
+     "cubes": 3,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.2,
+     "ms_max": 28.75,
+     "hp415": 1.0
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 5837,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.18,
+     "ms_max": 34.23,
+     "hp415": 1.0
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1433,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.15,
+     "ms_max": 24.48,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 36.1,
+     "killed_by": 105,
+     "hp_before": 35.0,
+     "dmg_taken": 1402,
+     "dmg_rear": 638,
+     "dmg_taken_by": {
+      "gun": 540.0,
+      "npc": 862.5
+     },
+     "hits_taken_by": {
+      "gun": 12,
+      "npc": 26
+     },
+     "dmg_by_slot": {
+      "5": 540.0
+     },
+     "hits_by_slot": {
+      "5": 12
+     },
+     "ticks_alive": 723,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.11,
+     "ms_p99": 0.24,
+     "ms_max": 4.27,
+     "hp415": null
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 5,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1655,
+     "dmg_rear": 900,
+     "dmg_taken_by": {
+      "gun": 405.0,
+      "npc": 1250.0
+     },
+     "hits_taken_by": {
+      "gun": 9,
+      "npc": 38
+     },
+     "dmg_by_slot": {
+      "5": 405.0
+     },
+     "hits_by_slot": {
+      "5": 9
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 4596,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.2,
+     "ms_max": 22.39,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100012,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 61.0,
+     "killed_by": "z_ladder",
+     "hp_before": 27.2,
+     "dmg_taken": 1420,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 608.4,
+      "lightning": 811.2
+     },
+     "hits_taken_by": {
+      "gun": 13,
+      "lightning": 13
+     },
+     "dmg_by_slot": {
+      "4": 1419.6
+     },
+     "hits_by_slot": {
+      "4": 26
+     },
+     "ticks_alive": 1221,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.12,
+     "ms_p99": 0.33,
+     "ms_max": 11.71,
+     "hp415": null
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "laser",
+     "death_t": 142.7,
+     "killed_by": "z_ladder",
+     "hp_before": 89.6,
+     "dmg_taken": 1663,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 604.8,
+      "laser": 1058.4
+     },
+     "hits_taken_by": {
+      "gun": 12,
+      "laser": 3
+     },
+     "dmg_by_slot": {
+      "4": 1663.2
+     },
+     "hits_by_slot": {
+      "4": 15
+     },
+     "ticks_alive": 2855,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.19,
+     "ms_max": 4.67,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "laser",
+     "death_t": 132.2,
+     "killed_by": "z_ladder",
+     "hp_before": 291.2,
+     "dmg_taken": 1462,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "laser": 1058.4,
+      "gun": 403.2
+     },
+     "hits_taken_by": {
+      "laser": 3,
+      "gun": 8
+     },
+     "dmg_by_slot": {
+      "4": 1461.6
+     },
+     "hits_by_slot": {
+      "4": 11
+     },
+     "ticks_alive": 2645,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.12,
+     "ms_p99": 0.23,
+     "ms_max": 33.57,
+     "hp415": null
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 12,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 184.5,
+     "killed_by": "z_ladder",
+     "hp_before": 44.8,
+     "dmg_taken": 1462,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 756.0,
+      "laser": 705.6
+     },
+     "hits_taken_by": {
+      "gun": 15,
+      "laser": 2
+     },
+     "dmg_by_slot": {
+      "4": 1461.6
+     },
+     "hits_by_slot": {
+      "4": 17
+     },
+     "ticks_alive": 3691,
+     "ticks_out": 0,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.13,
+     "ms_p99": 0.26,
+     "ms_max": 29.87,
+     "hp415": null
+    },
+    {
+     "slot": 4,
+     "label": "z_ladder",
+     "place": 10,
+     "kills": 6,
+     "cause": "laser",
+     "death_t": 210.6,
+     "killed_by": "squad",
+     "hp_before": 74.2,
+     "dmg_taken": 4786,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 4131.0,
+      "laser": 655.2
+     },
+     "hits_taken_by": {
+      "gun": 90,
+      "laser": 2
+     },
+     "dmg_by_slot": {
+      "0": 630.0,
+      "15": 135.0,
+      "2": 225.0,
+      "1": 405.0,
+      "7": 1263.6,
+      "8": 1040.4,
+      "3": 500.4,
+      "11": 46.8,
+      "10": 540.0
+     },
+     "hits_by_slot": {
+      "0": 14,
+      "15": 3,
+      "2": 5,
+      "1": 9,
+      "7": 15,
+      "8": 22,
+      "3": 11,
+      "11": 1,
+      "10": 12
+     },
+     "ticks_alive": 4213,
+     "ticks_out": 0,
+     "cubes": 10,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.54,
+     "ms_p99": 2.28,
+     "ms_max": 30.42,
+     "hp415": null
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 138,
+     "dmg_rear": 112,
+     "dmg_taken_by": {
+      "npc": 137.5
+     },
+     "hits_taken_by": {
+      "npc": 4
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 6057,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.17,
+     "ms_max": 24.71,
+     "hp415": 1.0
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 238,
+     "dmg_rear": 112,
+     "dmg_taken_by": {
+      "npc": 237.5
+     },
+     "hits_taken_by": {
+      "npc": 8
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1382,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 18.91,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 1,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1075,
+     "dmg_rear": 248,
+     "dmg_taken_by": {
+      "gun": 596.16,
+      "laser": 478.75
+     },
+     "hits_taken_by": {
+      "gun": 10,
+      "laser": 1
+     },
+     "dmg_by_slot": {
+      "10": 186.3,
+      "6": 62.1,
+      "4": 826.51
+     },
+     "hits_by_slot": {
+      "10": 3,
+      "6": 1,
+      "4": 7
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 3249,
+     "cubes": 7,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.23,
+     "ms_max": 20.71,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 13,
+     "kills": 0,
+     "cause": "laser",
+     "death_t": 181.2,
+     "killed_by": "z_ladder",
+     "hp_before": 55.0,
+     "dmg_taken": 2372,
+     "dmg_rear": 608,
+     "dmg_taken_by": {
+      "gun": 1313.1,
+      "laser": 1058.4
+     },
+     "hits_taken_by": {
+      "gun": 23,
+      "laser": 3
+     },
+     "dmg_by_slot": {
+      "4": 1764.0,
+      "3": 607.5
+     },
+     "hits_by_slot": {
+      "4": 17,
+      "3": 9
+     },
+     "ticks_alive": 3625,
+     "ticks_out": 0,
+     "cubes": 3,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.13,
+     "ms_p99": 0.26,
+     "ms_max": 31.57,
+     "hp415": null
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 2158,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.2,
+     "ms_max": 23.27,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 11,
+     "kills": 0,
+     "cause": "laser",
+     "death_t": 200.4,
+     "killed_by": "z_ladder",
+     "hp_before": 375.6,
+     "dmg_taken": 2087,
+     "dmg_rear": 491,
+     "dmg_taken_by": {
+      "gun": 554.4,
+      "laser": 1532.16
+     },
+     "hits_taken_by": {
+      "gun": 9,
+      "laser": 3
+     },
+     "dmg_by_slot": {
+      "4": 1595.16,
+      "7": 491.4
+     },
+     "hits_by_slot": {
+      "4": 11,
+      "7": 1
+     },
+     "ticks_alive": 4009,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.22,
+     "ms_max": 1.42,
+     "hp415": null
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 306,
+     "dmg_rear": 256,
+     "dmg_taken_by": {
+      "npc": 306.5
+     },
+     "hits_taken_by": {
+      "npc": 9
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 3119,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 26.3,
+     "hp415": 1.0
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 4,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1423,
+     "cubes": 4,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.2,
+     "ms_max": 23.96,
+     "hp415": 1.0
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 3217,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.22,
+     "ms_max": 28.69,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1378,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.07,
+     "ms_p99": 0.16,
+     "ms_max": 16.69,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1193,
+     "dmg_rear": 675,
+     "dmg_taken_by": {
+      "gun": 916.2,
+      "laser": 276.36
+     },
+     "hits_taken_by": {
+      "gun": 15,
+      "laser": 1
+     },
+     "dmg_by_slot": {
+      "4": 427.56,
+      "6": 765.0
+     },
+     "hits_by_slot": {
+      "4": 4,
+      "6": 12
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1356,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.2,
+     "ms_max": 18.45,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100013,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 13,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 70.55,
+     "killed_by": 110,
+     "hp_before": 25.0,
+     "dmg_taken": 1475,
+     "dmg_rear": 75,
+     "dmg_taken_by": {
+      "npc": 1475.0
+     },
+     "hits_taken_by": {
+      "npc": 58
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 1412,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.25,
+     "ms_max": 8.09,
+     "hp415": null
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 38,
+     "dmg_rear": 38,
+     "dmg_taken_by": {
+      "npc": 37.5
+     },
+     "hits_taken_by": {
+      "npc": 1
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 5821,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.28,
+     "ms_max": 23.98,
+     "hp415": 1.0
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 11,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 177.8,
+     "killed_by": 110,
+     "hp_before": 25.0,
+     "dmg_taken": 1412,
+     "dmg_rear": 412,
+     "dmg_taken_by": {
+      "npc": 1412.5
+     },
+     "hits_taken_by": {
+      "npc": 51
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 3557,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.22,
+     "ms_max": 5.08,
+     "hp415": null
+    },
+    {
+     "slot": 3,
+     "label": "z_ladder",
+     "place": 14,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 54.8,
+     "killed_by": "squad",
+     "hp_before": 12.2,
+     "dmg_taken": 1510,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "npc": 75.0,
+      "gun": 1434.6
+     },
+     "hits_taken_by": {
+      "npc": 3,
+      "gun": 31
+     },
+     "dmg_by_slot": {
+      "12": 405.0,
+      "6": 1029.6
+     },
+     "hits_by_slot": {
+      "12": 9,
+      "6": 22
+     },
+     "ticks_alive": 1097,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.74,
+     "ms_p99": 5.55,
+     "ms_max": 11.34,
+     "hp415": null
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4667,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.25,
+     "ms_max": 21.6,
+     "hp415": 1.0
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 12,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 122.7,
+     "killed_by": 110,
+     "hp_before": 2.0,
+     "dmg_taken": 2170,
+     "dmg_rear": 1170,
+     "dmg_taken_by": {
+      "npc": 1900.0,
+      "gun": 270.0
+     },
+     "hits_taken_by": {
+      "npc": 64,
+      "gun": 4
+     },
+     "dmg_by_slot": {
+      "14": 270.0
+     },
+     "hits_by_slot": {
+      "14": 4
+     },
+     "ticks_alive": 2455,
+     "ticks_out": 0,
+     "cubes": 5,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.2,
+     "ms_max": 2.25,
+     "hp415": null
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 3,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1645,
+     "dmg_rear": 990,
+     "dmg_taken_by": {
+      "npc": 137.5,
+      "gun": 1507.5
+     },
+     "hits_taken_by": {
+      "npc": 4,
+      "gun": 27
+     },
+     "dmg_by_slot": {
+      "3": 1507.5
+     },
+     "hits_by_slot": {
+      "3": 27
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 4815,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.22,
+     "ms_max": 27.08,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7452,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.27,
+     "ms_max": 28.26,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1363,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.1,
+     "ms_p99": 0.29,
+     "ms_max": 29.19,
+     "hp415": 1.0
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 10,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 216.35,
+     "killed_by": 106,
+     "hp_before": 12.5,
+     "dmg_taken": 1412,
+     "dmg_rear": 1312,
+     "dmg_taken_by": {
+      "npc": 1412.5
+     },
+     "hits_taken_by": {
+      "npc": 39
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 4328,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.31,
+     "ms_max": 21.83,
+     "hp415": null
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 51.05,
+     "killed_by": 108,
+     "hp_before": 26.3,
+     "dmg_taken": 1750,
+     "dmg_rear": 1650,
+     "dmg_taken_by": {
+      "npc": 1750.0
+     },
+     "hits_taken_by": {
+      "npc": 48
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 1022,
+     "ticks_out": 0,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.21,
+     "ms_max": 0.89,
+     "hp415": null
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 39.85,
+     "killed_by": 105,
+     "hp_before": 12.5,
+     "dmg_taken": 1425,
+     "dmg_rear": 1275,
+     "dmg_taken_by": {
+      "npc": 1425.0
+     },
+     "hits_taken_by": {
+      "npc": 40
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 798,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.18,
+     "ms_max": 1.72,
+     "hp415": null
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 180,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 180.0
+     },
+     "hits_taken_by": {
+      "gun": 4
+     },
+     "dmg_by_slot": {
+      "3": 180.0
+     },
+     "hits_by_slot": {
+      "3": 4
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 6455,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.24,
+     "ms_max": 15.26,
+     "hp415": 1.0
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4945,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.08,
+     "ms_p99": 0.29,
+     "ms_max": 15.59,
+     "hp415": 1.0
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1358,
+     "cubes": 9,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.09,
+     "ms_p99": 0.28,
+     "ms_max": 17.55,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 5,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 6466,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.11,
+     "ms_p99": 0.32,
+     "ms_max": 32.28,
+     "hp415": 1.0
+    }
+   ]
+  },
+  {
+   "seed": 1100014,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 713,
+     "dmg_rear": 225,
+     "dmg_taken_by": {
+      "npc": 275.0,
+      "gun": 280.8,
+      "laser": 157.25
+     },
+     "hits_taken_by": {
+      "npc": 8,
+      "gun": 6,
+      "laser": 1
+     },
+     "dmg_by_slot": {
+      "2": 438.05
+     },
+     "hits_by_slot": {
+      "2": 7
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 4609,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.19,
+     "ms_p99": 3.23,
+     "ms_max": 32.36,
+     "hp415": 1.0
+    },
+    {
+     "slot": 1,
+     "label": "squad",
+     "place": 12,
+     "kills": 0,
+     "cause": "laser",
+     "death_t": 127.7,
+     "killed_by": "z_ladder",
+     "hp_before": 258.4,
+     "dmg_taken": 1732,
+     "dmg_rear": 262,
+     "dmg_taken_by": {
+      "npc": 262.5,
+      "gun": 514.8,
+      "laser": 954.41
+     },
+     "hits_taken_by": {
+      "npc": 7,
+      "gun": 11,
+      "laser": 3
+     },
+     "dmg_by_slot": {
+      "2": 1469.21
+     },
+     "hits_by_slot": {
+      "2": 14
+     },
+     "ticks_alive": 2555,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.21,
+     "ms_p99": 4.08,
+     "ms_max": 8.19,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "z_ladder",
+     "place": 6,
+     "kills": 5,
+     "cause": "zone",
+     "death_t": 422.3,
+     "killed_by": null,
+     "hp_before": 6.8,
+     "dmg_taken": 2986,
+     "dmg_rear": 135,
+     "dmg_taken_by": {
+      "gun": 2986.2,
+      "zone": 2067.0
+     },
+     "hits_taken_by": {
+      "gun": 65,
+      "zone": 159
+     },
+     "dmg_by_slot": {
+      "8": 270.0,
+      "15": 1395.0,
+      "1": 180.0,
+      "0": 225.0,
+      "7": 421.2,
+      "4": 315.0,
+      "5": 180.0
+     },
+     "hits_by_slot": {
+      "8": 6,
+      "15": 31,
+      "1": 4,
+      "0": 5,
+      "7": 9,
+      "4": 6,
+      "5": 4
+     },
+     "ticks_alive": 8447,
+     "ticks_out": 159,
+     "cubes": 7,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.89,
+     "ms_p99": 8.73,
+     "ms_max": 49.1,
+     "hp415": 0.9179930124223602
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 812,
+     "dmg_rear": 638,
+     "dmg_taken_by": {
+      "npc": 812.5
+     },
+     "hits_taken_by": {
+      "npc": 24
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4377,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.2,
+     "ms_p99": 3.57,
+     "ms_max": 40.84,
+     "hp415": 1.0
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 11,
+     "kills": 0,
+     "cause": "laser",
+     "death_t": 239.7,
+     "killed_by": "z_ladder",
+     "hp_before": 88.3,
+     "dmg_taken": 1990,
+     "dmg_rear": 975,
+     "dmg_taken_by": {
+      "npc": 1050.0,
+      "laser": 730.8,
+      "gun": 208.8
+     },
+     "hits_taken_by": {
+      "npc": 29,
+      "laser": 2,
+      "gun": 4
+     },
+     "dmg_by_slot": {
+      "2": 939.6
+     },
+     "hits_by_slot": {
+      "2": 6
+     },
+     "ticks_alive": 4795,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.24,
+     "ms_p99": 4.32,
+     "ms_max": 34.22,
+     "hp415": null
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 10,
+     "kills": 0,
+     "cause": "laser",
+     "death_t": 247.2,
+     "killed_by": "z_ladder",
+     "hp_before": 95.0,
+     "dmg_taken": 1795,
+     "dmg_rear": 75,
+     "dmg_taken_by": {
+      "npc": 125.0,
+      "gun": 574.2,
+      "laser": 1096.2
+     },
+     "hits_taken_by": {
+      "npc": 4,
+      "gun": 11,
+      "laser": 3
+     },
+     "dmg_by_slot": {
+      "2": 1670.4
+     },
+     "hits_by_slot": {
+      "2": 14
+     },
+     "ticks_alive": 4945,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.19,
+     "ms_p99": 3.77,
+     "ms_max": 34.13,
+     "hp415": null
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 1,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 38,
+     "dmg_rear": 38,
+     "dmg_taken_by": {
+      "npc": 37.5
+     },
+     "hits_taken_by": {
+      "npc": 1
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4402,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.18,
+     "ms_p99": 2.61,
+     "ms_max": 37.98,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 1029,
+     "dmg_rear": 405,
+     "dmg_taken_by": {
+      "npc": 250.0,
+      "gun": 779.4
+     },
+     "hits_taken_by": {
+      "npc": 10,
+      "gun": 14
+     },
+     "dmg_by_slot": {
+      "0": 405.0,
+      "2": 374.4
+     },
+     "hits_by_slot": {
+      "0": 6,
+      "2": 8
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 4670,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.21,
+     "ms_p99": 4.05,
+     "ms_max": 48.25,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 11.0,
+     "killed_by": "z_ladder",
+     "hp_before": 2.5,
+     "dmg_taken": 1442,
+     "dmg_rear": 292,
+     "dmg_taken_by": {
+      "gun": 1192.5,
+      "npc": 250.0
+     },
+     "hits_taken_by": {
+      "gun": 26,
+      "npc": 7
+     },
+     "dmg_by_slot": {
+      "2": 1192.5
+     },
+     "hits_by_slot": {
+      "2": 26
+     },
+     "ticks_alive": 221,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.67,
+     "ms_p99": 4.38,
+     "ms_max": 28.66,
+     "hp415": null
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 900,
+     "dmg_rear": 900,
+     "dmg_taken_by": {
+      "npc": 900.0
+     },
+     "hits_taken_by": {
+      "npc": 24
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 5858,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.14,
+     "ms_p99": 3.08,
+     "ms_max": 25.77,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 353.75,
+     "killed_by": 104,
+     "hp_before": 12.0,
+     "dmg_taken": 1788,
+     "dmg_rear": 188,
+     "dmg_taken_by": {
+      "npc": 1787.5
+     },
+     "hits_taken_by": {
+      "npc": 69
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 7076,
+     "ticks_out": 706,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.21,
+     "ms_p99": 4.41,
+     "ms_max": 28.31,
+     "hp415": null
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 8,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 293.2,
+     "killed_by": 111,
+     "hp_before": 6.0,
+     "dmg_taken": 1538,
+     "dmg_rear": 788,
+     "dmg_taken_by": {
+      "npc": 1537.5
+     },
+     "hits_taken_by": {
+      "npc": 51
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 5865,
+     "ticks_out": 0,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.18,
+     "ms_p99": 3.59,
+     "ms_max": 34.5,
+     "hp415": null
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 13,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 106.45,
+     "killed_by": 108,
+     "hp_before": 25.0,
+     "dmg_taken": 1675,
+     "dmg_rear": 1125,
+     "dmg_taken_by": {
+      "npc": 1675.0
+     },
+     "hits_taken_by": {
+      "npc": 52
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 2130,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.2,
+     "ms_p99": 2.89,
+     "ms_max": 30.28,
+     "hp415": null
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 9,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 262.95,
+     "killed_by": 104,
+     "hp_before": 4.0,
+     "dmg_taken": 1886,
+     "dmg_rear": 1194,
+     "dmg_taken_by": {
+      "npc": 1886.0
+     },
+     "hits_taken_by": {
+      "npc": 64
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 5260,
+     "ticks_out": 0,
+     "cubes": 3,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.19,
+     "ms_p99": 3.1,
+     "ms_max": 32.57,
+     "hp415": null
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 95.1,
+     "killed_by": 102,
+     "hp_before": 6.0,
+     "dmg_taken": 1475,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "npc": 1475.0
+     },
+     "hits_taken_by": {
+      "npc": 59
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 1903,
+     "ticks_out": 0,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.19,
+     "ms_p99": 4.27,
+     "ms_max": 16.97,
+     "hp415": null
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 93.9,
+     "killed_by": "z_ladder",
+     "hp_before": 42.8,
+     "dmg_taken": 1404,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "gun": 1404.0
+     },
+     "hits_taken_by": {
+      "gun": 30
+     },
+     "dmg_by_slot": {
+      "2": 1404.0
+     },
+     "hits_by_slot": {
+      "2": 30
+     },
+     "ticks_alive": 1879,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.21,
+     "ms_p99": 4.24,
+     "ms_max": 7.3,
+     "hp415": null
+    }
+   ]
+  },
+  {
+   "seed": 1100015,
+   "t_end": 480.0,
+   "rows": [
+    {
+     "slot": 0,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7403,
+     "cubes": 0,
+     "errors": 0,
+     "late": 1,
+     "ms_mean": 0.16,
+     "ms_p99": 2.17,
+     "ms_max": 52.49,
+     "hp415": 1.0
+    },
+    {
+     "slot": 1,
+     "label": "z_ladder",
+     "place": 16,
+     "kills": 0,
+     "cause": "gun",
+     "death_t": 23.8,
+     "killed_by": "squad",
+     "hp_before": 42.3,
+     "dmg_taken": 1459,
+     "dmg_rear": 135,
+     "dmg_taken_by": {
+      "gun": 1131.12,
+      "laser": 327.6
+     },
+     "hits_taken_by": {
+      "gun": 21,
+      "laser": 1
+     },
+     "dmg_by_slot": {
+      "13": 699.66,
+      "5": 489.06,
+      "14": 270.0
+     },
+     "hits_by_slot": {
+      "13": 13,
+      "5": 4,
+      "14": 5
+     },
+     "ticks_alive": 477,
+     "ticks_out": 0,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 1.42,
+     "ms_p99": 7.05,
+     "ms_max": 13.12,
+     "hp415": null
+    },
+    {
+     "slot": 2,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1379,
+     "cubes": 0,
+     "errors": 0,
+     "late": 1,
+     "ms_mean": 0.18,
+     "ms_p99": 2.53,
+     "ms_max": 79.51,
+     "hp415": 1.0
+    },
+    {
+     "slot": 3,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7454,
+     "cubes": 0,
+     "errors": 0,
+     "late": 1,
+     "ms_mean": 0.17,
+     "ms_p99": 2.17,
+     "ms_max": 56.34,
+     "hp415": 1.0
+    },
+    {
+     "slot": 4,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 34,
+     "dmg_rear": 34,
+     "dmg_taken_by": {
+      "npc": 34.5
+     },
+     "hits_taken_by": {
+      "npc": 1
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1423,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.16,
+     "ms_p99": 2.16,
+     "ms_max": 47.31,
+     "hp415": 1.0
+    },
+    {
+     "slot": 5,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 25,
+     "dmg_rear": 0,
+     "dmg_taken_by": {
+      "npc": 25.0
+     },
+     "hits_taken_by": {
+      "npc": 1
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1375,
+     "cubes": 2,
+     "errors": 0,
+     "late": 3,
+     "ms_mean": 0.23,
+     "ms_p99": 2.85,
+     "ms_max": 84.08,
+     "hp415": 1.0
+    },
+    {
+     "slot": 6,
+     "label": "squad",
+     "place": 2,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1369,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.2,
+     "ms_p99": 3.66,
+     "ms_max": 48.12,
+     "hp415": 1.0
+    },
+    {
+     "slot": 7,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 7481,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.12,
+     "ms_p99": 0.4,
+     "ms_max": 39.77,
+     "hp415": 1.0
+    },
+    {
+     "slot": 8,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1370,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.17,
+     "ms_p99": 2.17,
+     "ms_max": 44.06,
+     "hp415": 1.0
+    },
+    {
+     "slot": 9,
+     "label": "squad",
+     "place": 6,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 500,
+     "dmg_rear": 450,
+     "dmg_taken_by": {
+      "npc": 500.0
+     },
+     "hits_taken_by": {
+      "npc": 14
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 1518,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.15,
+     "ms_p99": 2.32,
+     "ms_max": 40.64,
+     "hp415": 1.0
+    },
+    {
+     "slot": 10,
+     "label": "squad",
+     "place": 13,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 264.8,
+     "killed_by": 109,
+     "hp_before": 12.5,
+     "dmg_taken": 1900,
+     "dmg_rear": 1425,
+     "dmg_taken_by": {
+      "npc": 1900.0
+     },
+     "hits_taken_by": {
+      "npc": 57
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 5297,
+     "ticks_out": 0,
+     "cubes": 0,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.17,
+     "ms_p99": 3.07,
+     "ms_max": 32.3,
+     "hp415": null
+    },
+    {
+     "slot": 11,
+     "label": "squad",
+     "place": 15,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 97.2,
+     "killed_by": 106,
+     "hp_before": 24.4,
+     "dmg_taken": 1688,
+     "dmg_rear": 1012,
+     "dmg_taken_by": {
+      "npc": 1687.5
+     },
+     "hits_taken_by": {
+      "npc": 54
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 1945,
+     "ticks_out": 0,
+     "cubes": 1,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.23,
+     "ms_p99": 4.38,
+     "ms_max": 13.8,
+     "hp415": null
+    },
+    {
+     "slot": 12,
+     "label": "squad",
+     "place": 3,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 450,
+     "dmg_rear": 150,
+     "dmg_taken_by": {
+      "npc": 450.0
+     },
+     "hits_taken_by": {
+      "npc": 16
+     },
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 4360,
+     "cubes": 2,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.17,
+     "ms_p99": 0.82,
+     "ms_max": 42.78,
+     "hp415": 1.0
+    },
+    {
+     "slot": 13,
+     "label": "squad",
+     "place": 14,
+     "kills": 0,
+     "cause": "npc",
+     "death_t": 185.85,
+     "killed_by": 109,
+     "hp_before": 1.0,
+     "dmg_taken": 2256,
+     "dmg_rear": 1690,
+     "dmg_taken_by": {
+      "gun": 468.0,
+      "npc": 1788.5
+     },
+     "hits_taken_by": {
+      "gun": 10,
+      "npc": 53
+     },
+     "dmg_by_slot": {
+      "1": 468.0
+     },
+     "hits_by_slot": {
+      "1": 10
+     },
+     "ticks_alive": 3718,
+     "ticks_out": 0,
+     "cubes": 5,
+     "errors": 0,
+     "late": 0,
+     "ms_mean": 0.24,
+     "ms_p99": 4.2,
+     "ms_max": 35.02,
+     "hp415": null
+    },
+    {
+     "slot": 14,
+     "label": "squad",
+     "place": 1,
+     "kills": 1,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 128,
+     "dmg_rear": 34,
+     "dmg_taken_by": {
+      "gun": 93.6,
+      "npc": 34.5
+     },
+     "hits_taken_by": {
+      "gun": 2,
+      "npc": 1
+     },
+     "dmg_by_slot": {
+      "1": 93.6
+     },
+     "hits_by_slot": {
+      "1": 2
+     },
+     "ticks_alive": 9600,
+     "ticks_out": 1551,
+     "cubes": 9,
+     "errors": 0,
+     "late": 1,
+     "ms_mean": 0.17,
+     "ms_p99": 2.14,
+     "ms_max": 60.82,
+     "hp415": 1.0
+    },
+    {
+     "slot": 15,
+     "label": "squad",
+     "place": 7,
+     "kills": 0,
+     "cause": null,
+     "death_t": null,
+     "killed_by": null,
+     "hp_before": null,
+     "dmg_taken": 0,
+     "dmg_rear": 0,
+     "dmg_taken_by": {},
+     "hits_taken_by": {},
+     "dmg_by_slot": {},
+     "hits_by_slot": {},
+     "ticks_alive": 9600,
+     "ticks_out": 6016,
+     "cubes": 0,
+     "errors": 0,
+     "late": 1,
+     "ms_mean": 0.13,
+     "ms_p99": 1.17,
+     "ms_max": 51.45,
+     "hp415": 1.0
+    }
+   ]
+  }
+ ]
+}

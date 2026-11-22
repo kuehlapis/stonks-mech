@@ -4,6 +4,13 @@ Owns: `notes/reviews/`. Rules: `CLAUDE.md` (Agent journals). Goal: `objective.md
 
 ## Current task
 
+Review the concentrated maximum-hard squad-AOE proposal against protocol:
+shared vision, friendly fire, lightning chain, mortar splash, laser timing,
+30° lightning cone, NPC support, zone, and exact tier behavior. No code or
+match launch is part of this task.
+
+## Previous task
+
 Enforce the match-run counterstrategy gate: after every 16-match screener or
 56-match confirmation, review the run's win/death classification, challenge
 the selected single strongest counterstrategy, and verify that exactly one
@@ -69,6 +76,7 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 
 | What | Why (effect on score or proxy) | How to be better | Status |
 |---|---|---|---|
+| Maximum-hard model mixes protocol rules with guessed/track-only values | 30 s/3 s memory, exact tier/pressure, and hard-coded zone/weapon values can create a simulator that is more omniscient or different from the engine | Review the concentrated AOE proposal in `notes/reviews/maximum-hard-squad-aoe-2026-11-22.md`; keep protocol vision 5 s, explicit friendly-fire exclusions, live weapon/zone config, and label tier/pressure/movement values as hypotheses | done (2026-11-22) |
 | FPS inspiration could become camp, cadence or copy-overfit behaviour | A fixed corner, fixed peek cadence or replay-specific route hides as aim/surprise while reducing adaptation | Reviewed FPS/TenZ/Shroud analogies in `notes/reviews/fps-tactics-2026-11-22.md`: keep protocol bounds, one lever, paired 16/56 gates, no-camping, opponent diversity and direct/assisted kill separation | done (2026-11-22) |
 | Post-16/56 runs can become a multitheory stack | Multiple unclassified losses invite parallel fixes and weaken attribution | Require win/death classification, one counterstrategy, and exactly one corrective package | done (2026-11-22) |
 | `c_aim` is not an isolated s_base2 snapshot | Extra brain/economy diffs and missing run-hit fixes would confound the AIM_PREDICT effect | Rebuild/review c_aim as a byte-normalized s_base2 copy with only AIM_PREDICT=True; do not run until isolation is proven | in progress |
@@ -101,6 +109,19 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 - Checking a single number in the stream (who hit first, where the enemy was aiming) settled a claim in minutes. Prefer one-line stream queries over arguing.
 
 ## Log (newest first)
+- 2026-11-22, maximum-hard squad-AOE protocol review: read
+  `notes/ideas/maximum-hard-squad-2026-11-22.md`, `protocol.md`,
+  `notes/research/config.md`, `notes/research/hello.json`,
+  `notes/research/house-bots.md`, and `sim/bots/squad.py`. Wrote
+  `notes/reviews/maximum-hard-squad-aoe-2026-11-22.md`.
+  Verdict: the concentrated model is not protocol-derived. Blocking findings:
+  30 s shared memory and 3 s projection exceed the 5 s protocol memory;
+  damage bearings must not become synthetic positions; exact tier/pressure
+  schedules are unsupported guesses; friendly-fire exclusions are missing;
+  mortar, laser and no-target lightning behaviors are incomplete; first-sight
+  drone position is not a true drone home; and fixed 150/240/300/415 s and
+  25/15 m values require live-config or explicit simulator-only labels.
+  No code or match launch was performed.
 - 2026-11-22, FPS elite-tactics review: read
   `notes/ideas/fps-elite-tactics-2026-11-22.md`, `protocol.md`,
   `notes/interfaces.md`, `objective.md`, and the existing 16/56 queue.

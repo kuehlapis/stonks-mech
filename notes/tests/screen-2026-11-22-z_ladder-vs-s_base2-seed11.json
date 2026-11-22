@@ -1,0 +1,75 @@
+{
+  "seed": 11,
+  "paired_seeds": 16,
+  "stopped_after_seeds": 16,
+  "rotate": true,
+  "wall_s": 1152.59,
+  "candidates": {
+    "z_ladder": {
+      "seeds": 16,
+      "candidate": {
+        "n": 16,
+        "score": 2.81,
+        "se": 0.55,
+        "win%": 0.0,
+        "top3%": 0.0,
+        "early_death%": 50.0,
+        "causes": {
+          "gun": 11,
+          "zone": 1,
+          "laser": 4
+        },
+        "kills": 1.44,
+        "rear%": 5.8,
+        "out%": 1.56,
+        "errors": 0,
+        "late": 4,
+        "ms_mean": 0.77,
+        "ms_p99": 8.26,
+        "ms_max": 66.9,
+        "death_t_median": 140.55
+      },
+      "baseline": {
+        "n": 16,
+        "score": 2.38,
+        "se": 0.46,
+        "win%": 0.0,
+        "top3%": 0.0,
+        "early_death%": 56.2,
+        "causes": {
+          "gun": 13,
+          "zone": 1,
+          "laser": 2
+        },
+        "kills": 1.19,
+        "rear%": 4.5,
+        "out%": 1.91,
+        "errors": 0,
+        "late": 3,
+        "ms_mean": 0.79,
+        "ms_p99": 8.55,
+        "ms_max": 61.0,
+        "death_t_median": 111.35
+      },
+      "paired_score_delta": {
+        "mean": 0.44,
+        "se": 0.45
+      },
+      "paired_kill_delta": {
+        "mean": 0.25,
+        "se": 0.19
+      },
+      "direct_squad_deaths": {
+        "gun": 16,
+        "laser": 5,
+        "lightning": 2
+      },
+      "assisted_squad_deaths": {
+        "unknown": 27,
+        "npc": 5,
+        "gun": 3,
+        "laser": 1
+      }
+    }
+  }
+}

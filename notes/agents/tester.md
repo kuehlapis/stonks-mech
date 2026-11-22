@@ -4,6 +4,35 @@ Owns: `notes/tests/`, test harnesses and the local simulator (not bot behavior).
 
 ## Current task
 
+2026-11-22 ladder 56-match confirmation: **cancelled/stopped by
+user finish-and-stop instruction before an active run completed**. No
+`cal-z-ladder-56-2026-11-22.json` artifact was produced and no result,
+AAR, or promotion claim is being reported. No code or bot switch changed.
+
+2026-11-22 maximum-hard AOE grouping hypothesis:
+`notes/ideas/maximum-hard-squad-2026-11-22.md` now defines V1 convergent AOE
+grouping and V2 one-point staggered crossfire. Both are design-only:
+
+- V1: 3–5 hunters in a 25–45 m ring, mortar/splash first, lightning cone and
+  chain second, full-charge laser third, 72-degree nominal sectors.
+- V2: four 0°/90°/180°/270° sectors with 0.00/0.35/0.70/1.05 s stagger and
+  1.5 s maximum exposure.
+- Live engine values come from `hello.config`; test-only timing/ring constants
+  are isolated in the proposal and must not be hard-coded in bot behavior.
+- Direct and assisted removals have exact 1 s/5 s/20% max-HP attribution
+  rules. NPC, drone, zone, and unknown removals are never direct mech kills.
+- Validity: zero pre-415 squad zone deaths, zero act exceptions, no hidden LOS,
+  no target memory older than 30 s, and zone routing may not be overridden.
+- 16-pair seed-11 rotate: promote only baseline +1.0, or baseline/no-loss
+  plus >=10 pp primary-metric gain <=0.5 loss; reject mean >0.5 below,
+  early deaths +>=5 pp, or guardrail failure.
+- 56-pair seed-11 rotate: promote only paired baseline +0.4, win rate no worse
+  than 5 pp, early deaths no worse than 2 pp, and exact validity gate pass.
+
+No code or match launch is authorized by this task. Current map/engine support
+is sufficient for a future simulator model, but roof, next-circle, mortar,
+ledge, and exact wall trace evidence remain incomplete.
+
 2026-11-22 bounded 16-pair strategy screen: ran only the clean candidate
 `z_ladder` against `s_base2`, seed 11, rotate, jobs 4, against the current
 `sim/bots/squad.py`. Result: z_ladder 2.81 ± 0.55 vs baseline 2.38 ± 0.46,
@@ -74,6 +103,7 @@ Superseded plan (phase 1, iteration 1): engine/runner/tests/baseline, all done; 
 
 | What | Why (effect on score or proxy) | How to be better | Status |
 |---|---|---|---|
+| AOE grouping/crossfire attribution is not implemented | A future batch could miscredit NPC/zone damage or miss pack convergence | Implement only after model approval: V1/V2 constants, 1 s/5 s/20% attribution, 30 s memory, and 16/56 validity gates in the proposal | open |
 | Maximum-hard squad spec not frozen | Different future test runs can silently change shared memory, pressure, mobility or hunter count | Freeze the proposed constants and three pressure arms in `notes/ideas/maximum-hard-squad-2026-11-22.md`; retain normalized diffs only | done (design-only) |
 | Failure metrics do not separate direct and assisted removals consistently | A placement score can improve because NPC/drone/zone events, while the bot/tactic did not improve; this misreads winning behavior | Log direct mech kills, NPC-assisted squad deaths, drone-assisted squad deaths, zone removals, first-encounter size, weapon/cause, hunter count and time since sight/memory; never credit assisted squad deaths as direct kills | open (future harness change) |
 | Pressure sensitivity 60/80/100 has no calibration order | Raising pressure can overfit one anchor and obscure whether the squad is too easy or too hard | Rank 60, 80, 100 with paired 40-seed anchor runs; valid gate first (0 zone deaths, 0 exceptions), calibration gate second | open |
@@ -115,6 +145,21 @@ Superseded plan (phase 1, iteration 1): engine/runner/tests/baseline, all done; 
 - Timing per match varies 2× with machine load from parallel agents; report the worst case.
 
 ## Log (newest first)
+
+- 2026-11-22, ladder confirmation cancellation: stopped the
+  z_ladder 56-pair run under the user's finish-and-stop instruction.
+  Evidence: no `notes/tests/cal-z-ladder-56-2026-11-22.json` artifact
+  exists and no batch-result report was generated. No code changed.
+
+- 2026-11-22, maximum-hard AOE grouping design: added V1 convergent ring
+  and V2 staggered one-point crossfire to
+  `notes/ideas/maximum-hard-squad-2026-11-22.md`; no code or match changed.
+  Evidence: protocol/config/map docs and `sim/engine.py` support real mortar,
+  laser, lightning, LOS, NPC, and zone mechanics. The 16-pair gate is
+  baseline +1.0 promotion or baseline with >=10 pp primary-metric gain and
+  <=0.5 loss; the 56-pair gate is baseline +0.4 with early-death and win-rate
+  guardrails. The proposal ranks V1 first and requires exact direct/assisted
+  attribution, 30 s memory, and zero pre-415 squad zone deaths.
 
 - 2026-11-22, bounded 16-pair screen: ran shell `126` at seed 11 with
   `--seeds 16 --jobs 4`, rotate enabled, candidate `z_ladder` and baseline

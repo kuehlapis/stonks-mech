@@ -4,6 +4,9 @@ Updated by the moderator after every agent report. A new session reads this firs
 
 ## Match-run process rule (2026-11-22)
 
+- **New track baseline:** submitted candidate `ca4646a` scored **1.93**. Future
+  local and track comparisons use 1.93, not the older 1.60 submission.
+
 - After every 16-match screener or 56-match confirmation, classify wins and
   deaths before any replan or next launch.
 - Win categories: direct mech kills, NPC/drone-assisted removals,
@@ -58,6 +61,8 @@ Updated by the moderator after every agent report. A new session reads this firs
 - User target now **mean 10**.
 - **Clarified objective (2026-11-22):** zone and NPC/drone effects may support eliminations. The bot must control the match and finish the field, while reporting direct and assisted squad deaths separately. The submitted 1.6 score is the baseline.
 - **Strategy direction (2026-11-22):** prefer cover, building geometry, LOS breaks, surprise re-engagement, and short ambushes over open duels. No camping or rear exposure; candidates must be isolated and paired-tested.
+- **Priority (2026-11-22):** placement score first, kills second. Direct and assisted eliminations are reported separately and do not outweigh a placement win or survival improvement.
+- **Hard-squad idea (2026-11-22):** test whether squad convergence plus lightning/mortar/laser AOE can force lower placement. It must be modeled as a reviewable opponent strategy, not a fake damage multiplier.
 - **Maximum-hard-squad directive (2026-11-22):** the local squad should be made as hard as protocol and evidence permit. After every match batch, learn from deaths and enemy counters, change one strong root-cause package, and re-test under the hardest valid model. NPC/zone support may remain in the bot strategy.
 - Step 0 done: the map loads under the Docker sandbox. Windows needs `MSYS_NO_PATHCONV=1`, and the check passes `--map-dir` through `abspath`, which breaks `/arena`. Mount `arena/`, not `arena/v2`. `ready` took 6.1 s, over the 5 s guardrail.
 - Sim change: squad slots (label `squad*`) take no zone damage (`sim/engine.py`, `sim/inproc.py`), per the user rule.

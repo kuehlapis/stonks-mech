@@ -14,6 +14,7 @@ Moderator's log, newest first. Each entry: what was decided, why, and what was r
 
 - **Clarification:** zone and NPC/drone effects may support kills. The objective is for our mech to control the match so the field ends as a win: assisted eliminations count when they improve survival or reduce threats. The 1.6 submission is the baseline. Valid measurements must distinguish direct kills from assisted/external eliminations rather than forbid external effects.
 - **Maximum-hard-squad and learning directive:** build the strongest defensible simulator opponent from protocol and evidence, then learn one root-cause countermeasure after each batch. Keep the opponent and bot changes isolated: never tune one to mask a weakness in the other.
+- **Priority clarification:** placement score is primary. Kills are secondary only because the user allows zone/NPC/drone support to improve final placement. Promote a strategy first for paired placement improvement, then for direct/assisted kill impact, survival and guardrails.
 
 - **Scoring is placement** (16 − place), confirmed by the user. The sim already scores this way (`sim/inproc.py` summarize).
 - **The squad format is confirmed** by the user's paste of the track page: practice = us vs 15 house bots acting as one squad, and the leaderboard ranks the best practice score. The squad sim stays the test bed; a free-for-all batch was started on a wrong doubt and then stopped.

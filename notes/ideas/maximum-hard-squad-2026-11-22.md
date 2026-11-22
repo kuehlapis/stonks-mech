@@ -27,6 +27,170 @@ evidence already collected:
   seed-21 rerun gives sub1 1.98 ± 0.29 and s_base2 2.20 ± 0.29.
   DEFEND_RANGE therefore needs a controlled 60/80/100 sensitivity sweep.
 
+## Maximum-hard AOE grouping hypothesis
+
+Status: design only; no model edit or match launch authorized.
+
+The strongest defensible cooperative behavior is to make the squad converge
+and deliberately overlap mortar/lightning/laser effects around the player,
+instead of relying only on isolated gun trades. When a candidate, NPC, or
+valid AOE target is inside the same effect, the squad may use splash or chain
+opportunity for support damage. This is a behavior model, not a damage
+multiplier.
+
+### Evidence for the hypothesis
+
+- `protocol.md` and `hello.config` provide 16-mech FFA, two weapon slots,
+  LOS/cover, shared enemy observations, mortar, laser, lightning, NPC, and
+  zone rules. No hidden-squad feature or wall-penetrating telemetry exists.
+- `notes/research/house-bots.md`: one observed bot reacted in about 0.6 s,
+  led at about 0.023 rad, boosted at 19.4 m/s, jet-hopped, juked every
+  0.3–0.6 s, and kept chase/re-entry for at least 31 s. It supports hard-tier
+  aim and movement; it does not prove house-bot coordination.
+- Engine evidence: `sim/engine.py` implements mortar direct/splash/concussion,
+  full-charge linear laser damage/cookoff, and lightning 30° cone plus two
+  chain jumps. The live config supplies all ranges and cooldowns.
+- Map evidence: `arena/v2/world.json` plus terrain have 77% open ground,
+  22.8% building/stadium footprint, 1,560 trees, and 244 of 250 roofs
+  reachable to 49.5 m. Long crossfire and building LOS breaks are both valid;
+  four-sector crossfire can be represented geometrically.
+- Existing anchors: post-fix 40-seed sub1 1.82 ±0.27, s_base2 1.55 ±0.26,
+  example 1.12 ±0.22, with zero squad zone deaths before 415 s.
+
+### Shared and timing constants
+
+| Constant | Exact value | Basis |
+|---|---:|---|
+| Shared target age | 30 s | Maximum-hard proposal; normal mech track remains `vision.memory_s` |
+| Mortar interception | 2 s prediction | Test constant; projection stops after 2 s |
+| V1 inner ring | 25 m | Below `vision.near_range` 45 m; keeps a lightning opportunity |
+| V1 outer ring | 45 m | `vision.near_range` and lightning `range` in live config |
+| V1 sectors | 72° nominal, 5 active positions | One point around a ring |
+| V1 tangential offset | 8–12 m every 1 s | Map-spacing tactic, not a damage rule |
+| V2 sectors | 0°, 90°, 180°, 270° | Four angular crossfire sectors |
+| V2 stagger | 0.00, 0.35, 0.70, 1.05 s | Tactic constants |
+| V2 exposure | 1.5 s | Short LOS exposure |
+| Hunter zigs | 0.3–0.6 s reversal | Recorded FFA movement evidence |
+| Reaction floor | 31 s retaliation | Recorded minimum observed continuity |
+| Stale target | reject after 30 s | Never infer current position beyond the shared age |
+
+Any weapon radius, damage, charge, splash, chain, energy, or cooldown used by
+an implementation must come from live `hello.config`. Only these sector,
+timing, and ring constants are test-model choices.
+
+### Variant 1: convergent AOE grouping
+
+Rank **1** as the primary experiment.
+
+1. Three to five hunters select the youngest/closest shared target and enter
+   a 25–45 m ring around the player.
+2. They occupy 72-degree sectors, then retain 8 m center separation where
+   terrain permits. They tangentially offset 8–12 m every 1 s.
+3. Aim at the player COM: feet plus 50% of live mech height. Mortar lead is
+   bounded to 2 s of velocity projection.
+4. Fire priority:
+   - mortar when a splash/center LOS opportunity exists;
+   - lightning in the live 30-degree cone within live 45 m range, candidate
+     target first and chain to up to two live targets;
+   - full-charge laser only after clear LOS;
+   - gun only while another AOE/laser effect is not improving.
+5. If LOS breaks for 1 s, the player remains a 30 s shared-memory pursuit
+   target; hunters may reach the newest remembered position but may not fire
+   through a wall or aim at a stale exact position.
+6. Zone escape is absolute: convergence, ring, and V1 offsets stop while
+   the zone goal or margin is active.
+
+**Why it may win:** overlapping mortar splash, lightning chaining/control,
+and laser/cookoff damage attack cover, position, and reaction at once.
+
+**Failure risks:** wall wedges; own mortar splash; crowding and overlap;
+stale-memory omniscience; overstatement of mortar/laser assumptions;
+nav/terrain not modeling actual roof edges; a cover player can cancel all
+three effects by alternating 1 s LOS breaks.
+
+### Variant 2: one-point crossfire with staggered exposure
+
+Rank **2** as the isolated follow-up.
+
+1. Name one point, the player's live COM, and use four angular sectors:
+   0°, 90°, 180°, and 270° around that point.
+2. Stagger sector exposure at 0.00, 0.35, 0.70, and 1.05 s. No sector has
+   more than one active hunter.
+3. Exposed hunters hold LOS for at most 1.5 s, make one AOE/laser release or
+   a short gun window, then move 8–12 m to cover.
+4. Apply the same mortar, lightning, and laser priority as V1. AOE may be
+   used against a cluster of NPC/valid targets; it is not reserved for the
+   player only.
+5. Non-exposed hunters avoid crossing the player's front 180-degree arc when
+   geometry permits. They stop for zone routing and never hold a crossfire
+   lane outside the next circle.
+
+**Why it may win:** staggered firing reduces simultaneous exposure and can
+force a candidate to choose a side while the next angle arrives.
+
+**Failure risks:** fixed sectors become predictable; 0.35 s gaps are too slow
+to beat cover peeks; wall geometry can create one mutual LOS lane instead of
+four angles; rear protection/facing can delete the advantage; if only the
+first sector damages, V2 degenerates to ordinary pursuit.
+
+### Direct/assisted kill attribution
+
+Keep candidate and squad removals separate.
+
+| Class | Exact rule |
+|---|---|
+| Candidate direct squad kill | Candidate's `hit`/`kill` event is the final damaging source within 1.0 s of the squad target's removal |
+| Candidate assisted squad removal | Candidate dealt >=20% of the target max HP in 5 s and NPC/drone/zone/unknown is the final removal source |
+| Squad direct candidate kill | Candidate's final HP-loss event has `by` equal to a squad member and that event is the last damage source |
+| Squad assisted candidate removal | One squad member dealt >=20% of candidate max HP in 5 s, while final removal is zone/NPC/drone/unknown |
+| Group-assisted candidate removal | 2+ squad members damage in 5 s and one lands the final blow: the final source is direct; other squad sources are assisted |
+| NPC/drone/zone removal | Final `weapon` is `npc` or `zone`, or the source id is a drone/NPC; never direct mech kill |
+| Unknown | No traceable final source or damage window; never infer attribution |
+
+The same output retains final source, by id, weapon, tier, 5 s damage shares,
+and whether the last hit was rear.
+
+### 16/56 match gates
+
+**Validity gate (before every 16 or 56 batch):** zero pre-415 squad zone
+deaths, zero act exceptions, conformance/late-answer guardrail pass, direct/
+assisted fields complete, no memory age >30 s, no hidden LOS, and no convergence
+or crossfire override of the zone margin. Any failure rejects the batch.
+
+**16-match seed-11, paired, rotated screener**
+
+- Promote V1/V2 to 56 if paired placement mean is baseline +1.0 or more, or
+  the mean is not below baseline and a primary AOE metric improves >=10
+  percentage points with mean loss <=0.5.
+- Inconclusive if paired placement difference is <1.0 and no AOE threshold
+  is met.
+- Reject if mean is >0.5 below baseline, early deaths rise >=5 percentage
+  points, or any validity gate fails.
+- V1 primary: 2+ hunter convergence within 5 s, mortar/lightning/laser hits,
+  and stale-target share.
+- V2 primary: crossfire exposure-to-hit ratio, rear-hit share, LOS-break time,
+  staggered-fire count, and 5 s group damage.
+
+**56-match seed-11, paired, rotated confirmation**
+
+- Paired placement mean baseline +0.4 or better.
+- Win rate not worse by >5 percentage points.
+- Early-death share no worse by >2 percentage points.
+- Report paired SE and never stack V1 and V2 in one run.
+- Preserve the validity gate and separate direct, assisted, NPC/drone, zone,
+  and unknown removals.
+
+### Validity against the current map and engine
+
+Valid as a simulator model: current engine has mortar splash/concussion,
+laser hitscan/cookoff, and lightning cone/chaining; live config supplies
+weapon values; the map has both open and dense LOS sectors.
+
+Not valid for launch until a model implementation, exact trace, and explicit
+moderator release exist. Roof routing, exact next-circle timing, mortar
+assumptions, and complete wall/ledge behavior are incomplete or assumed.
+No code or match is authorized by this document.
+
 ## Central design
 
 The squad shares one `seen` table per match. A member reports a visible mech

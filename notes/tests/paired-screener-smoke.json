@@ -1,0 +1,66 @@
+{
+  "seed": 11,
+  "paired_seeds": 1,
+  "stopped_after_seeds": 1,
+  "rotate": true,
+  "wall_s": 253.76,
+  "candidates": {
+    "c_aim": {
+      "seeds": 1,
+      "candidate": {
+        "n": 1,
+        "score": 2.0,
+        "se": 0.0,
+        "win%": 0.0,
+        "top3%": 0.0,
+        "early_death%": 0.0,
+        "causes": {
+          "gun": 1
+        },
+        "kills": 2.0,
+        "rear%": 0.0,
+        "out%": 0.0,
+        "errors": 0,
+        "late": 0,
+        "ms_mean": 1.12,
+        "ms_p99": 16.49,
+        "ms_max": 33.66,
+        "death_t_median": 157.25
+      },
+      "baseline": {
+        "n": 1,
+        "score": 0.0,
+        "se": 0.0,
+        "win%": 0.0,
+        "top3%": 0.0,
+        "early_death%": 100.0,
+        "causes": {
+          "gun": 1
+        },
+        "kills": 0.0,
+        "rear%": 31.5,
+        "out%": 0.0,
+        "errors": 0,
+        "late": 0,
+        "ms_mean": 0.47,
+        "ms_p99": 2.85,
+        "ms_max": 4.02,
+        "death_t_median": 29.75
+      },
+      "paired_score_delta": {
+        "mean": 2.0,
+        "se": 0.0
+      },
+      "paired_kill_delta": {
+        "mean": 2.0,
+        "se": 0.0
+      },
+      "direct_squad_deaths": {
+        "gun": 2
+      },
+      "assisted_squad_deaths": {
+        "unknown": 2
+      }
+    }
+  }
+}
