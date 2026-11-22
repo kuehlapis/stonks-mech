@@ -98,7 +98,7 @@ SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could s
 SQ_LASER_AVOID = False        # squad mode, no laser: skip laser holders that aren't attacking us; prefer gun-only targets
 SQ_NO_POKE = False            # squad mode: don't open on bots merely closing/aiming from afar (they retaliate 30 s)
 SQ_DRONE_FIRST = 0.0          # squad mode: farm visible NPC drones (2 cubes each) before crates while our HP fraction is above this (0 = off)
-SITU_LOOT = False             # squad mode: take drops / drones / rooftops only when the live situation makes them worth it (see _loot_worth)
+SITU_LOOT = True  # squad mode: take drops / drones / rooftops only when the live situation makes them worth it (see _loot_worth)
 SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP) when reachable and clear
 CHECK6_T = 0.0                # s: until then, glance behind every CHECK6_P s while looting/travelling with no visible threat (0 = off)
 CHECK6_P = 6.0                # s: glance period
@@ -106,7 +106,7 @@ CHECK6_D = 1.6                # s: glance length (180 deg out and back at 4 rad/
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_BOOST = 999.0         # boost while exploring/looting for a laser when energy is above this (999 = off)
-ROOF_T = 0.0                  # s: until then (no laser), explore by touring reachable rooftops (a quarter of loot and crates are up there) (0 = off)
+ROOF_T = 90.0  # s: until then (no laser), explore by touring reachable rooftops (a quarter of loot and crates are up there) (0 = off)
 ROOF_MAX_H = 40.0             # m: roofs this high above the ground or lower (jet reach)
 ROOF_R = 170.0                # m: only roofs this close
 EXPLORE_M = 110.0             # m: explore waypoint distance
@@ -122,7 +122,7 @@ MESH_MULTI_HP = 0.0           # tactic mesh: 2+ distinct enemies hit us in MESH_
 MESH_HIT_S = 4.0              # ... "recent hit" window (s)
 MESH_EDGE = 0.0               # tactic mesh: live duel forecast; our time-to-die < this x target's = break contact (0 = off)
 MESH_COMMIT = 0.0             # ... target's time-to-die < this x ours (and <=1 hitter) = commit, ignore crowd retreat (0 = off)
-MESH_ISO_W = 40.0  # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
+MESH_ISO_W = 0.0              # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
 MESH_ISO_R = 80.0             # m
 MESH_ISO_SKIP = 0             # ... don't open on a target with this many+ friends near it unless it hit us / is close (0 = off)
 MESH_W = 5.0                  # s: trade-rate window
