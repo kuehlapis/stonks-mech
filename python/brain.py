@@ -71,7 +71,7 @@ DROP_SEEN_S = 0.0             # s: skip drops if a real enemy was seen this rece
 DROP_SAFE_R = 0.0             # m: skip a drop with any remembered enemy this close (0 = off)
 LASER_DUCK = 10.0             # m: duck to cover this close when a fought enemy charges its laser (0 = off)
 SQUAD_MODE = True  # practice vs the house squad: giddy-style rules (_decide_squad)
-SQ_ENGAGE = 60.0              # m: engage anything this close
+SQ_ENGAGE = 90.0  # m: engage anything this close
 SQ_MAXT = 240.0               # m: farthest target
 SQ_LASER_RANGE = 120.0        # m: fight range with a laser
 SQ_GUN_RANGE = 85.0           # m: ... with only the gun
@@ -90,7 +90,7 @@ SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_M = 110.0             # m: explore waypoint distance
-SQ_BACKSTAB = 150.0  # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
+SQ_BACKSTAB = 0.0             # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
 SQ_BACK_OFF = 1.75            # rad: "facing away" = its aim this far off the bearing to us
 SQ_RESET_HP = 0.0             # squad mode: with no target and HP below this fraction, heal in cover from remembered enemies (0 = off)
 SQ_LOSE2 = 0.55               # squad mode: two enemies within 160 m and HP below this fraction = losing (retreat)
