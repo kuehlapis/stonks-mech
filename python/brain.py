@@ -77,9 +77,11 @@ SQ_MAXT = 240.0               # m: farthest target
 SQ_LASER_RANGE = 120.0        # m: fight range with a laser
 SQ_GUN_RANGE = 85.0           # m: ... with only the gun
 SQ_LIGHT_RANGE = 28.0         # m: ... with lightning (no laser)
-SQ_LASER_HUNT = 150.0  # squad mode, no laser: target score bonus for laser holders and engage them within 150 m (kill, take its laser) (0 = off)
-SQ_LH_RANGE = 150.0           # ... engage laser holders this close
+SQ_LASER_HUNT = 100.0  # squad mode, no laser: target score bonus for laser holders and engage them within 150 m (kill, take its laser) (0 = off)
+SQ_LH_RANGE = 120.0  # ... engage laser holders this close
 SQ_LH_HP = 0.5                # ... while our HP fraction is above this
+NOLASER_ENGAGE = 0.0          # squad mode, no laser yet: engage only within this many m (or when hit / laser carrier / finishing); no pokes (0 = off)
+NOLASER_FARM_HP = 0.0         # ... and farm crates above this HP fraction even with threats around (0 = off)
 SQ_STICK = 120.0              # squad target score bonus for the current target
 SQ_LOWB = 100.0               # ... bonus for a target at or below 30% HP
 SQ_HPW = 0.2                  # ... score per enemy HP point
@@ -95,15 +97,16 @@ SQ_FIGHTMOVE = False          # squad mode: candidate-scored fight steps (range,
 SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could see a candidate step
 SQ_LASER_AVOID = False        # squad mode, no laser: skip laser holders that aren't attacking us; prefer gun-only targets
 SQ_NO_POKE = False            # squad mode: don't open on bots merely closing/aiming from afar (they retaliate 30 s)
-SQ_DRONE_FIRST = 0.45  # squad mode: farm visible NPC drones (2 cubes each) before crates while our HP fraction is above this (0 = off)
-SQ_DROPS = True  # squad mode: take supply drops (3 cubes + full HP) when reachable and clear
+SQ_DRONE_FIRST = 0.0          # squad mode: farm visible NPC drones (2 cubes each) before crates while our HP fraction is above this (0 = off)
+SITU_LOOT = False             # squad mode: take drops / drones / rooftops only when the live situation makes them worth it (see _loot_worth)
+SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP) when reachable and clear
 CHECK6_T = 0.0                # s: until then, glance behind every CHECK6_P s while looting/travelling with no visible threat (0 = off)
 CHECK6_P = 6.0                # s: glance period
 CHECK6_D = 1.6                # s: glance length (180 deg out and back at 4 rad/s)
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_BOOST = 999.0         # boost while exploring/looting for a laser when energy is above this (999 = off)
-ROOF_T = 60.0  # s: until then (no laser), explore by touring reachable rooftops (a quarter of loot and crates are up there) (0 = off)
+ROOF_T = 0.0                  # s: until then (no laser), explore by touring reachable rooftops (a quarter of loot and crates are up there) (0 = off)
 ROOF_MAX_H = 40.0             # m: roofs this high above the ground or lower (jet reach)
 ROOF_R = 170.0                # m: only roofs this close
 EXPLORE_M = 110.0             # m: explore waypoint distance
@@ -716,8 +719,9 @@ class Brain:
             thp, tmax = th.get("hp"), th.get("max_hp") or 1400.0
             low = thp is not None and thp < 0.4 * tmax
             back = bool(aim) and abs(_wrap(aim[0] - math.atan2(uy, ux))) > SQ_BACK_OFF
-            engage = (d < SQ_ENGAGE or hitme < 6 or late or (low and d < 160)
-                      or (not SQ_NO_POKE and ((closing > 3 and d < 180) or (aimed and d < 190)))
+            scav = NOLASER_ENGAGE > 0 and "laser" not in kinds and not late
+            engage = (d < (NOLASER_ENGAGE if scav else SQ_ENGAGE) or hitme < 6 or late or (low and d < 160)
+                      or (not SQ_NO_POKE and not scav and ((closing > 3 and d < 180) or (aimed and d < 190)))
                       or (SQ_BACKSTAB > 0 and back and d < SQ_BACKSTAB and hf > 0.7))
             if engage or hitme < 4:
                 danger = True
@@ -833,8 +837,11 @@ class Brain:
                             **self._face(obs, _bearing(pos, danger[0]["pos"]))}, "reset"
         if zg:
             return {**self._go(obs, zg[0], boost=zg[1]), **self._aim(obs, threats, None, zg[0])}, "travel"
-        if SQ_DROPS and hf > 0.4:
+        if (SQ_DROPS and hf > 0.4) or (SITU_LOOT and self._loot_worth(obs, "drop", hf, threats, t)):
             dr = self._drop_target(obs, threats)
+            if dr is not None and SITU_LOOT and not SQ_DROPS and (_dist(pos, dr) > 150
+                    or self._call(P, "danger", t, dr, 120.0)):
+                dr = None
             if dr is not None:
                 return {**self._go(obs, dr), **self._aim(obs, threats, None, dr)}, "drop"
         # loot: a laser first, then wanted weapons, cubes, crates, drones
@@ -845,11 +852,12 @@ class Brain:
         cube = self._nearest_cube(obs, SQ_LOOT * 0.7)
         if cube is not None:
             return {**self._go(obs, cube), **self._aim(obs, threats, None, cube)}, "cube"
-        if SQ_DRONE_FIRST > 0 and hf > SQ_DRONE_FIRST and not danger:
+        if ((SQ_DRONE_FIRST > 0 and hf > SQ_DRONE_FIRST) or (SITU_LOOT and self._loot_worth(obs, "drone", hf, threats, t)))                 and not danger:
             farm = self._farm_target(obs, threats, False)
             if farm and farm[1] == "npc":
                 return self._fight_at(obs, farm[0], 70.0), "farm"
-        if hf > SQ_FARM_HP and not danger:
+        scav_farm = NOLASER_FARM_HP > 0 and "laser" not in kinds and hf > NOLASER_FARM_HP and not late
+        if (hf > SQ_FARM_HP and not danger) or scav_farm:
             cr = self.cfg.get("crates") or {}
             bc = None
             for i, (cp, ts) in self._crates.items():
@@ -873,8 +881,10 @@ class Brain:
         farm = self._farm_target(obs, threats, False)
         if farm and farm[1] == "npc" and hf > 0.6:
             return self._fight_at(obs, farm[0], 70.0), "farm"
-        if ROOF_T > 0 and t < ROOF_T and "laser" not in kinds and self._roofs:
+        if ROOF_T > 0 and t < ROOF_T and "laser" not in kinds and self._roofs                 and (not SITU_LOOT or self._loot_worth(obs, "roof", hf, threats, t)):
             wp = self._roof_point(obs, t)
+            if wp is not None and SITU_LOOT and _dist(pos, wp) > 60:
+                wp = None
             if wp is not None:
                 return {**self._go(obs, wp), **self._aim(obs, threats, None, wp)}, "roof"
         if SQ_HUNT_T > 0 and t < SQ_HUNT_T and "laser" not in kinds:
@@ -919,6 +929,22 @@ class Brain:
         if MESH_COMMIT > 0 and hitters <= 1 and their_ttd < MESH_COMMIT * my_ttd:
             return "commit"
         return None
+
+    def _loot_worth(self, obs, kind, hf, threats, t):
+        """Is this loot errand worth it right now? Value (HP need, an upgrade within reach, no laser yet)
+        against risk (enemies in view, HP)."""
+        me = obs["self"]
+        cubes = me.get("cubes", 0) or 0
+        th = [x for x in (getattr(self.economy, "thresholds", None) or [1, 3, 6, 10]) if x > cubes]
+        need = (th[0] - cubes) if th else 99
+        seen = any(x.get("visible") and not x.get("virtual") for x in threats)
+        if kind == "drop":
+            return hf < 0.6 or need <= 3
+        if kind == "drone":
+            return need <= 2 and hf > 0.6 and not seen
+        if kind == "roof":
+            return not seen and hf > 0.5
+        return False
 
     def _roof_point(self, obs, t):
         """Nearest unvisited reachable roof inside the live circle; a roof counts as visited once we stand within 6 m."""
