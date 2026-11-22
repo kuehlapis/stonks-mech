@@ -70,7 +70,7 @@ RUN_KILLS_MAX = 2             # RUN_MODE: at most this many run-finish kills per
 DROP_SEEN_S = 0.0             # s: skip drops if a real enemy was seen this recently (0 = off)
 DROP_SAFE_R = 0.0             # m: skip a drop with any remembered enemy this close (0 = off)
 LASER_DUCK = 10.0             # m: duck to cover this close when a fought enemy charges its laser (0 = off)
-SQUAD_MODE = False             # practice vs the house squad: giddy-style rules (_decide_squad)
+SQUAD_MODE = True  # practice vs the house squad: giddy-style rules (_decide_squad)
 SQ_ENGAGE = 60.0              # m: engage anything this close
 SQ_MAXT = 240.0               # m: farthest target
 SQ_LASER_RANGE = 120.0        # m: fight range with a laser
@@ -79,7 +79,11 @@ SQ_LIGHT_RANGE = 28.0         # m: ... with lightning (no laser)
 SQ_FINISH = 26.0              # m: close in to finish a low target
 SQ_LOOT = 150.0               # m: loot radius (cubes x0.7, remembered crates)
 SQ_FARM_HP = 0.5              # farm crates above this HP fraction
-SQ_PRECHARGE = 0.0            # s: keep the laser charged this long after the last threat (0 = off)
+SQ_PRECHARGE = 6.0  # s: keep the laser charged this long after the last threat (0 = off)
+FFA_DEAD = 5                  # mechs dead without our kill that prove a free-for-all (squad mode off)
+PEEK_LASER = False            # squad mode: charge the laser in cover, swing out to fire, duck again
+PEEK_COVER_M = 15.0           # m: only use cover this close for the peek cycle
+PEEK_MAX_CROWD = 2            # ... and only with this many or fewer enemies in the fight
 SQ_OUTGUN = False             # count "they have a laser and we don't" (beyond 55 m) as losing
 DODGE = True                  # sidestep visible projectiles that would hit us
 DODGE_T, DODGE_MARGIN = 0.9, 0.7   # s look-ahead; m added to our hit radius
@@ -104,6 +108,7 @@ class Brain:
         self._strafe_dt = 1.0
         self._mode = None
         self._crates = {}
+        self._start_alive, self._is_ffa = None, False
         self._stick_id, self._stick_t = None, -1e9
         self._hurt_t = self._threat_t = self._lose_t = -1e9
         self._fight_id, self._fight_t = None, -1e9
@@ -246,7 +251,7 @@ class Brain:
         if any(not x.get("virtual") for x in visible):
             self._seen_t = t
         foe = engaged or threatened
-        if SQUAD_MODE:
+        if SQUAD_MODE and not self._ffa(obs):
             return self._decide_squad(obs, threats, t)
 
         # 1. Zone first when urgent: travel, but shoot back with the gun if someone is on us
@@ -682,6 +687,10 @@ class Brain:
             rng = self._pref_range(kinds)
             if thp is not None and thp < 0.38 * tmax and hf > 0.42 and crowd <= 2:
                 rng = SQ_FINISH
+            if PEEK_LASER and not finishing and crowd <= PEEK_MAX_CROWD:
+                pk = self._peek(obs, target, visible)
+                if pk is not None:
+                    return pk
             act = self._fight_at(obs, target, rng)
             r = 70.0 if hf > 0.5 else 40.0
             cube = self._nearest_cube(obs, r)
@@ -727,6 +736,45 @@ class Brain:
             return self._fight_at(obs, farm[0], 70.0), "farm"
         hold = self._call(S, "hold_point", obs) or self._next_center(obs)
         return {**self._go(obs, hold), **self._aim(obs, threats, None, hold)}, "roam"
+
+    def _peek(self, obs, target, visible):
+        """Peek-laser cycle: while our laser is not ready, stand in cover from the target and charge; when it is
+        full, return None so the normal fight steps out and fires. None also when there's no laser or no cover."""
+        me = obs["self"]
+        pos = me["pos"]
+        las = next((w for w in me.get("weapons") or [] if w and w.get("kind") == "laser"), None)
+        if las is None:
+            return None
+        st = las.get("stats") or (self.cfg.get("weapons") or {}).get("laser") or {}
+        full = st.get("charge", 0.75)
+        if las.get("charge", 0) >= full - 0.05 and las.get("cooldown", 0) <= 0.05:
+            return None  # ready: swing out (normal fight) and fire
+        if self._slow():
+            return None
+        cover = self._call(self.survival, "find_cover", obs, visible or [target])
+        if not cover or _dist(pos, cover) > PEEK_COVER_M:
+            return None
+        act = {**self._go(obs, cover, boost=me.get("energy", 0) > 20 and _dist(pos, cover) > 4),
+               **self._face(obs, _bearing(pos, target["pos"]))}
+        pre = self._call(self.combat, "precharge", obs)
+        if pre:
+            act["fire"] = pre
+        return act, "peek-hide"
+
+    def _ffa(self, obs):
+        """True once the match proves it is not squad practice: FFA_DEAD or more mechs died without us killing
+        them (house-squad bots never fight each other, so in practice only we and drones remove them)."""
+        if self._is_ffa:
+            return True
+        alive = obs.get("alive")
+        if not isinstance(alive, int):
+            return False
+        if self._start_alive is None:
+            self._start_alive = alive
+        if self._start_alive - alive - self._kills >= FFA_DEAD:
+            self._is_ffa = True
+            mf.log("brain: free-for-all detected, squad mode off")
+        return self._is_ffa
 
     def _pref_range(self, kinds):
         if "laser" in kinds:

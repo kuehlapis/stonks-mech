@@ -4,7 +4,7 @@ import math
 AIM_TOL_FRAC = 0.6  # fire when the actual aim is within 0.6 target radii of the desired aim at the target
 MIN_TOL = 0.004  # rad, floor so long shots still fire
 LOW_AMMO_FRAC = 0.5  # reload with no target in range at or below this fraction of the mag
-LETHAL = False       # release a partial laser charge early when it already kills (giddy's Lethal rule)
+LETHAL = True  # release a partial laser charge early when it already kills (giddy's Lethal rule)
 AIM_PREDICT = False  # A/B switch: lead with variance-blended smoothed velocity; laser aims at release time
 HIT_GATE = 0.25  # AIM_PREDICT: hold gun fire under this P(hit) (a miss is heard 320 m away)
 PREDICT_WINDOW_S = 1.0  # s of velocity history per target; also the max blind extrapolation

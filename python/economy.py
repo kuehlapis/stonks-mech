@@ -11,8 +11,8 @@ ORDER_LASER = ["plating", "armor", "laser_damage", "laser_charge", "nanites", "g
                "lightning_efficiency", "lightning_range", "servos", "gun_mag", "gun_velocity", "gyros",
                "lightning_chain", "reactor", "capacitor", "mortar_reload", "mortar_splash", "mortar_velocity",
                "sensors", "jets", "laser_pierce"]
-LASER_UP = False   # use ORDER_LASER
-LASER_SEEK = 0.0   # m: walk this far to a remembered laser pickup when we hold none (0 = off)
+LASER_UP = True  # use ORDER_LASER
+LASER_SEEK = 240.0  # m: walk this far to a remembered laser pickup when we hold none (0 = off)
 MEM_S = 120.0      # s: remember seen pickups this long
 TAKE_MORTAR = False  # A/B switch: also take a mortar into an empty special slot (ranked last)
 WANT = ["laser", "lightning"]   # weapon pickups worth taking, best first (the gun is always kept)

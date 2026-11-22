@@ -10,7 +10,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "python"))
+import brain as _brain_mod  # noqa: E402
 from brain import Brain  # noqa: E402
+
+_brain_mod.SQUAD_MODE = False  # these tests cover the legacy decision path; squad mode: test_squad.py
 
 STREAM = ROOT / "check" / "stream.jsonl.gz"
 
