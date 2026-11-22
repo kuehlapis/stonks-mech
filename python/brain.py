@@ -98,7 +98,7 @@ SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could s
 SQ_LASER_AVOID = False        # squad mode, no laser: skip laser holders that aren't attacking us; prefer gun-only targets
 SQ_NO_POKE = False            # squad mode: don't open on bots merely closing/aiming from afar (they retaliate 30 s)
 SQ_DRONE_FIRST = 0.0          # squad mode: farm visible NPC drones (2 cubes each) before crates while our HP fraction is above this (0 = off)
-SITU_LOOT = True  # squad mode: take drops / drones / rooftops only when the live situation makes them worth it (see _loot_worth)
+SITU_LOOT = False             # squad mode: take drops / drones / rooftops only when the live situation makes them worth it (see _loot_worth)
 SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP) when reachable and clear
 CHECK6_T = 0.0                # s: until then, glance behind every CHECK6_P s while looting/travelling with no visible threat (0 = off)
 CHECK6_P = 6.0                # s: glance period
@@ -106,7 +106,8 @@ CHECK6_D = 1.6                # s: glance length (180 deg out and back at 4 rad/
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_BOOST = 999.0         # boost while exploring/looting for a laser when energy is above this (999 = off)
-ROOF_T = 90.0  # s: until then (no laser), explore by touring reachable rooftops (a quarter of loot and crates are up there) (0 = off)
+ROOF_T = 0.0                  # s: until then (no laser), explore by touring reachable rooftops (a quarter of loot and crates are up there) (0 = off)
+ROOFCAMP_T = 280.0  # s: from then on, hold the centre of a reachable roof inside the next circle (final-burn play) (0 = off)
 ROOF_MAX_H = 40.0             # m: roofs this high above the ground or lower (jet reach)
 ROOF_R = 170.0                # m: only roofs this close
 EXPLORE_M = 110.0             # m: explore waypoint distance
@@ -155,7 +156,7 @@ class Brain:
         self._fm_until = -1e9
         self._visited, self._explore_wp, self._explore_t = [], None, -1e9
         self._roofs, self._roof_done = [], set()
-        if ROOF_T > 0:
+        if ROOF_T > 0 or ROOFCAMP_T > 0:
             try:
                 for (base, top, x0, y0, x1, y1, _) in world._p:
                     cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
@@ -826,6 +827,10 @@ class Brain:
         npc = self._call(P, "npc_attacker", t)
         if npc and npc.get("pos"):
             return self._fight_at(obs, self._npc_target(npc), 60.0), "npc"
+        if ROOFCAMP_T > 0 and t >= ROOFCAMP_T and self._roofs:
+            rp = self._camp_roof(obs)
+            if rp is not None:
+                return {**self._go(obs, rp, quiet=_dist(pos, rp) < 4), **self._aim(obs, threats, None, rp)}, "roofcamp"
         if SQ_RESET_HP > 0 and hf < SQ_RESET_HP and not self._slow():
             # reset: hunters remember where we were; heal out of their sight before the next fight
             danger = self._call(P, "danger", t, pos, 220.0) or []
@@ -945,6 +950,25 @@ class Brain:
         if kind == "roof":
             return not seen and hf > 0.5
         return False
+
+    def _camp_roof(self, obs):
+        """Nearest reachable roof centre at least 10 m inside the next circle, kept while it stays inside."""
+        z = obs.get("zone") or {}
+        nc, nr = z.get("next_center"), z.get("next_radius")
+        if not nc or nr is None:
+            return None
+        pos = obs["self"]["pos"]
+        cur = getattr(self, "_camp", None)
+        if cur and math.hypot(cur[0] - nc[0], cur[1] - nc[1]) < nr - 10:
+            return cur
+        best, bd = None, 1e9
+        for cx, cy in self._roofs:
+            if math.hypot(cx - nc[0], cy - nc[1]) < nr - 10:
+                d = math.hypot(cx - pos[0], cy - pos[1])
+                if d < bd:
+                    best, bd = [cx, cy], d
+        self._camp = best
+        return best
 
     def _roof_point(self, obs, t):
         """Nearest unvisited reachable roof inside the live circle; a roof counts as visited once we stand within 6 m."""
