@@ -818,6 +818,11 @@ class Brain:
                 if pk is not None:
                     return pk
             act = self._fight_at(obs, target, rng)
+            if ROOFCAMP_T > 0 and t >= ROOFCAMP_T and self._roofs:
+                rp = self._camp_roof(obs)
+                if rp is not None:  # hold the roof and shoot from it; don't chase off it
+                    act.update(self._go(obs, rp, quiet=_dist(pos, rp) < 4))
+                    return act, "roofcamp-fight"
             r = 70.0 if hf > 0.5 else 40.0
             cube = self._nearest_cube(obs, r)
             if cube is not None:
