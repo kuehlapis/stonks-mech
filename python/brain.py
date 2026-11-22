@@ -80,7 +80,7 @@ SQ_FINISH = 26.0              # m: close in to finish a low target
 SQ_LOOT = 150.0               # m: loot radius (cubes x0.7, remembered crates)
 SQ_FARM_HP = 0.5              # farm crates above this HP fraction
 SQ_PRECHARGE = 6.0  # s: keep the laser charged this long after the last threat (0 = off)
-SQ_HULL = True  # squad mode: fight from hull-down spots (our muzzle sees them, their eye can't see our center)
+SQ_HULL = False               # squad mode: fight from hull-down spots (our muzzle sees them, their eye can't see our center)
 HULL_M = 8.0                  # m: search radius for a hull-down spot
 SQ_FIGHTMOVE = False          # squad mode: candidate-scored fight steps (range, LOS to target, hidden from others)
 SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could see a candidate step
@@ -90,7 +90,7 @@ SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_M = 110.0             # m: explore waypoint distance
-SQ_BACKSTAB = 0.0             # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
+SQ_BACKSTAB = 150.0  # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
 SQ_BACK_OFF = 1.75            # rad: "facing away" = its aim this far off the bearing to us
 SQ_RESET_HP = 0.0             # squad mode: with no target and HP below this fraction, heal in cover from remembered enemies (0 = off)
 SQ_LOSE2 = 0.55               # squad mode: two enemies within 160 m and HP below this fraction = losing (retreat)
