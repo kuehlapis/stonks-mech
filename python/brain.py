@@ -80,6 +80,9 @@ SQ_FINISH = 26.0              # m: close in to finish a low target
 SQ_LOOT = 150.0               # m: loot radius (cubes x0.7, remembered crates)
 SQ_FARM_HP = 0.5              # farm crates above this HP fraction
 SQ_PRECHARGE = 6.0  # s: keep the laser charged this long after the last threat (0 = off)
+SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
+SQ_HUNT_T = 0.0               # s: until then, explore new ground for a laser instead of roaming (0 = off)
+EXPLORE_M = 110.0             # m: explore waypoint distance
 SQ_BACKSTAB = 0.0             # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
 SQ_BACK_OFF = 1.75            # rad: "facing away" = its aim this far off the bearing to us
 SQ_RESET_HP = 0.0             # squad mode: with no target and HP below this fraction, heal in cover from remembered enemies (0 = off)
@@ -112,6 +115,7 @@ class Brain:
         self._strafe_dt = 1.0
         self._mode = None
         self._crates = {}
+        self._visited, self._explore_wp, self._explore_t = [], None, -1e9
         self._start_alive, self._is_ffa = None, False
         self._stick_id, self._stick_t = None, -1e9
         self._hurt_t = self._threat_t = self._lose_t = -1e9
@@ -581,6 +585,10 @@ class Brain:
 
     def _decide_squad(self, obs, threats, t):
         act, mode = self._decide_squad_core(obs, threats, t)
+        if SQ_SCAN > 0 and mode in ("roam", "explore", "crate-walk", "loot", "travel", "cube") \
+                and "laser" not in _kinds(obs["self"]) and not any(x.get("visible") for x in threats):
+            act["aim"] = [_wrap(t * SQ_SCAN), 0.0]  # our aim is our eyes: sweep 360 deg to find pickups
+            act["fire"] = [False, False]
         if SQ_PRECHARGE > 0 and mode not in ("fight", "fight:cube", "cornered", "npc", "farm", "crate")                 and t - self._threat_t < SQ_PRECHARGE:
             pre = self._call(self.combat, "precharge", obs)
             if pre:
@@ -750,8 +758,39 @@ class Brain:
         farm = self._farm_target(obs, threats, False)
         if farm and farm[1] == "npc" and hf > 0.6:
             return self._fight_at(obs, farm[0], 70.0), "farm"
+        if SQ_HUNT_T > 0 and t < SQ_HUNT_T and "laser" not in kinds:
+            wp = self._explore_point(obs, t)
+            if wp is not None:
+                return {**self._go(obs, wp), **self._aim(obs, threats, None, wp)}, "explore"
         hold = self._call(S, "hold_point", obs) or self._next_center(obs)
         return {**self._go(obs, hold), **self._aim(obs, threats, None, hold)}, "roam"
+
+    def _explore_point(self, obs, t):
+        """A waypoint ~EXPLORE_M away, inside the current circle, far from where we've already been."""
+        me = obs["self"]
+        pos = me["pos"]
+        if not self._visited or _dist(self._visited[-1], pos) > 25:
+            self._visited.append([pos[0], pos[1]])
+            self._visited = self._visited[-40:]
+        wp = self._explore_wp
+        if wp is not None and _dist(pos, wp) > 8 and t - self._explore_t < 25:
+            return wp
+        circle = self._call(self.survival, "live_circle", obs)
+        best, bs = None, -1.0
+        for k in range(12):
+            a = k * math.pi / 6
+            x, y = pos[0] + EXPLORE_M * math.cos(a), pos[1] + EXPLORE_M * math.sin(a)
+            if circle:
+                c, r = circle
+                if math.hypot(x - c[0], y - c[1]) > r - 30:
+                    continue
+            if not self._call(self.nav, "free_at", x, y, default=True):
+                continue
+            sc = min((_dist(v, (x, y)) for v in self._visited), default=999.0)
+            if sc > bs:
+                best, bs = [x, y], sc
+        self._explore_wp, self._explore_t = best, t
+        return best
 
     def _peek(self, obs, target, visible):
         """Peek-laser cycle: while our laser is not ready, stand in cover from the target and charge; when it is

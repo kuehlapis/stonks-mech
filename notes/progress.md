@@ -1,5 +1,24 @@
 # Progress (resume here)
 
+## LATEST (2026-11-22 ~07:40 UTC, moderator session 3) — read first
+
+**Submit this:** `iter-1` HEAD (squad mode ON). Behaviour = commit `73c6302`; later commits only add switches that are OFF.
+Scoring closes Sun 11:00 AM EST. Leaderboard top ≈ 6.28 (rescoring on 96 seeds, scorer builders-4).
+
+**What changed (all measured on the calibrated squad sim, paired seeds, `sim/bots/squad.py`):**
+| Build | Score | Kills/match |
+|---|---|---|
+| old default (c529ecc/ca4646a, track 1.60 / 1.93) | 2.09 (seed 21) | 0.84 |
+| SQUAD_MODE (giddy-style rules: laser first, crate farm, engage/target/lose rules) | 2.55 | 1.52 |
+| + LETHAL laser release + SQ_PRECHARGE 6 s (commit 518b8b0) | 2.73 | 1.66 |
+| + AIM_PREDICT (commit 73c6302) | 2.52 vs 2.36 base (seed 22) | 1.45 vs 1.25 |
+
+- Squad mode = `python/brain.py` `_decide_squad*`; turns itself off when 5+ mechs die without our kill (free-for-all finals safety, `FFA_DEAD`).
+- **Key finding:** we pick up a laser in only 31% of matches; with a laser 3.15 kills/match, without 1.00.
+- Tested, no gain (kept OFF): PEEK_LASER, SQ_RESET_HP 0.9, SQ_LOSE2 0.75, SQ_BACKSTAB 150, SQ_OUTGUN, SQ_SCAN 3 (spin-scan), SQ_HUNT_T 150 (explore for lasers; worse).
+- Research: giddygiddyboy's MIT Go bot (base of most top-5 entries) studied from source (`charliescull/mech-royale-bot` drivers/giddy, upstream e19e3c8); its squad rules were re-implemented in Python. Building/running their binary was blocked by the safety classifier (third-party code); the user decides that route.
+
+
 Updated by the moderator after every agent report. A new session reads this first, then `notes/agents/moderator.md` and `notes/decisions.md`.
 
 ## Match-run process rule (2026-11-22)
