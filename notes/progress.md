@@ -9,7 +9,7 @@ Base image pinned: `python:3.13.18-slim@sha256:e48f59cd...` (finalists are rebui
 |---|---|---|---|
 | A | `14bc97837c3e3de90e18b76cab40a29eadab66cc` | iter-1 e6768d2 (squad mode, LETHAL, PRECHARGE, AIM_PREDICT, HUNT 25 s, HOLD_DEPTH 0.5) | **3.69** (entered the final) |
 | B | `82af545ffe721c2f3ba8423e8963fcef1907133d` | A + LASER_JUKE (iter-1 9204adb) | **3.76** (best, in the final) |
-| C | `4aae146b249b81cecae76012f813388ebf44e98e` | B + SQ_RESET_HP 0.9 | pending |
+| C | `4aae146b249b81cecae76012f813388ebf44e98e` | B + SQ_RESET_HP 0.9 | 3.71 (no gain) |
 
 Old note: **Submit this:** commit `e6768d2` (iter-1, squad mode ON + AIM_PREDICT + explore 25 s for a laser + HOLD_DEPTH 0.5). Full check passed 09:20 UTC: 99 tests, check.py direct, Docker sandbox with map (ready 1.7 s, max 1.5 ms). Nothing after squad mode has a track score yet: this submission is the key measurement.
 Scoring closes Sun 11:00 AM EST. Leaderboard top ≈ 6.28 (rescoring on 96 seeds, scorer builders-4).
