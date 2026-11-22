@@ -23,9 +23,27 @@ def main():
         mod, const = lhs.split(".")
         p = os.path.join(dst, mod + ".py")
         s = open(p, encoding="utf-8").read()
-        s2, n = re.subn(rf"^{const}\s*=\s*[^#\n]*", f"{const} = {val}  ", s, count=1, flags=re.M)
-        if n != 1:
+        m = re.search(rf"^{const}\s*=\s*", s, flags=re.M)
+        if not m:
             sys.exit(f"{const} not found in {mod}.py")
+        i = j = m.end()
+        if s[i] in "[({":  # multi-line literal: consume until the brackets balance
+            depth = 0
+            while True:
+                ch = s[j]
+                j += 1
+                if ch in "[({":
+                    depth += 1
+                elif ch in "])}":
+                    depth -= 1
+                    if depth == 0:
+                        break
+        else:
+            j = s.find("\n", i)
+            k = s.find("#", i, j)
+            j = k if k != -1 else j
+        s2 = s[:m.start()] + f"{const} = {val}  " + s[j:]
+        compile(s2, p, "exec")  # never write a broken module
         open(p, "w", encoding="utf-8").write(s2)
     print(dst)
 

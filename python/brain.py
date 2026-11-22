@@ -83,6 +83,7 @@ SQ_PRECHARGE = 6.0  # s: keep the laser charged this long after the last threat 
 SQ_FIGHTMOVE = False          # squad mode: candidate-scored fight steps (range, LOS to target, hidden from others)
 SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could see a candidate step
 SQ_LASER_AVOID = False        # squad mode, no laser: skip laser holders that aren't attacking us; prefer gun-only targets
+SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP) when reachable and clear
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_M = 110.0             # m: explore waypoint distance
@@ -736,6 +737,10 @@ class Brain:
                             **self._face(obs, _bearing(pos, danger[0]["pos"]))}, "reset"
         if zg:
             return {**self._go(obs, zg[0], boost=zg[1]), **self._aim(obs, threats, None, zg[0])}, "travel"
+        if SQ_DROPS and hf > 0.4:
+            dr = self._drop_target(obs, threats)
+            if dr is not None:
+                return {**self._go(obs, dr), **self._aim(obs, threats, None, dr)}, "drop"
         # loot: a laser first, then wanted weapons, cubes, crates, drones
         want = self._call(E, "seek_laser", obs) or self._call(E, "wanted_pickup", obs, threats)
         if want and want.get("pos"):
