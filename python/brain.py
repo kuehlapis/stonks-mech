@@ -80,6 +80,10 @@ SQ_FINISH = 26.0              # m: close in to finish a low target
 SQ_LOOT = 150.0               # m: loot radius (cubes x0.7, remembered crates)
 SQ_FARM_HP = 0.5              # farm crates above this HP fraction
 SQ_PRECHARGE = 6.0  # s: keep the laser charged this long after the last threat (0 = off)
+SQ_BACKSTAB = 0.0             # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
+SQ_BACK_OFF = 1.75            # rad: "facing away" = its aim this far off the bearing to us
+SQ_RESET_HP = 0.0             # squad mode: with no target and HP below this fraction, heal in cover from remembered enemies (0 = off)
+SQ_LOSE2 = 0.55               # squad mode: two enemies within 160 m and HP below this fraction = losing (retreat)
 FFA_DEAD = 5                  # mechs dead without our kill that prove a free-for-all (squad mode off)
 PEEK_LASER = False            # squad mode: charge the laser in cover, swing out to fire, duck again
 PEEK_COVER_M = 15.0           # m: only use cover this close for the peek cycle
@@ -628,8 +632,9 @@ class Brain:
             hitme = t - hit_by.get(th.get("id"), -1e9)
             thp, tmax = th.get("hp"), th.get("max_hp") or 1400.0
             low = thp is not None and thp < 0.4 * tmax
+            back = bool(aim) and abs(_wrap(aim[0] - math.atan2(uy, ux))) > SQ_BACK_OFF
             engage = (d < SQ_ENGAGE or hitme < 6 or late or (closing > 3 and d < 180) or (low and d < 160)
-                      or (aimed and d < 190))
+                      or (aimed and d < 190) or (SQ_BACKSTAB > 0 and back and d < SQ_BACKSTAB and hf > 0.7))
             if engage or hitme < 4:
                 danger = True
             if vis and (engage or d < 150):
@@ -645,6 +650,8 @@ class Brain:
                 sc -= 40
             if closing > 3:
                 sc -= 15
+            if SQ_BACKSTAB > 0 and back:
+                sc -= 60  # its rear arc takes x1.5 and it hasn't reacted yet
             if sc < best:
                 best, target = sc, th
         if target is not None:
@@ -655,7 +662,7 @@ class Brain:
         thp = target.get("hp") if target else None
         tmax = (target.get("max_hp") or 1400.0) if target else 1400.0
         finishing = target is not None and td < 120 and thp is not None and (thp < 200 or thp < 0.5 * hp)
-        losing = (near >= 2 and hf < 0.55) or (near >= 3 and hf < 0.8)
+        losing = (near >= 2 and hf < SQ_LOSE2) or (near >= 3 and hf < 0.8)
         if target is not None and thp is not None:
             tf = thp / tmax
             if hf < 0.35 and tf > hf + 0.1:
@@ -701,6 +708,15 @@ class Brain:
         npc = self._call(P, "npc_attacker", t)
         if npc and npc.get("pos"):
             return self._fight_at(obs, self._npc_target(npc), 60.0), "npc"
+        if SQ_RESET_HP > 0 and hf < SQ_RESET_HP and not self._slow():
+            # reset: hunters remember where we were; heal out of their sight before the next fight
+            danger = self._call(P, "danger", t, pos, 220.0) or []
+            if danger:
+                cover = self._call(S, "find_cover", obs, danger)
+                if cover:
+                    quiet = _dist(pos, cover) < 3
+                    return {**self._go(obs, cover, quiet=quiet),
+                            **self._face(obs, _bearing(pos, danger[0]["pos"]))}, "reset"
         if zg:
             return {**self._go(obs, zg[0], boost=zg[1]), **self._aim(obs, threats, None, zg[0])}, "travel"
         # loot: a laser first, then wanted weapons, cubes, crates, drones

@@ -60,6 +60,9 @@ def miss(pos, vel, shooter=(0, 0, 0)):
 
 class TestCombat(unittest.TestCase):
     def test_intercept_hits_moving_target(self):
+        import combat as _c
+        saved, _c.AIM_PREDICT = _c.AIM_PREDICT, False  # exact single-sample intercept (AIM_PREDICT smooths velocity)
+        self.addCleanup(setattr, _c, "AIM_PREDICT", saved)
         cases = [((150, 0, 0), (0, 11.7, 0)), ((100, 80, 5), (-19.5, 4, 0)), ((40, -30, -3), (8, 8, 10)),
                  ((200, 50, 20), (0, -19.5, -5)), ((-120, 10, 0), (11.7, 11.7, 0))]
         misses = [miss(p, v) for p, v in cases]
