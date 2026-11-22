@@ -77,7 +77,9 @@ SQ_MAXT = 240.0               # m: farthest target
 SQ_LASER_RANGE = 120.0        # m: fight range with a laser
 SQ_GUN_RANGE = 85.0           # m: ... with only the gun
 SQ_LIGHT_RANGE = 28.0         # m: ... with lightning (no laser)
-SQ_LASER_HUNT = 150.0  # squad mode, no laser: target score bonus for laser holders and engage them within 150 m (kill, take its laser) (0 = off)
+SQ_LASER_HUNT = 250.0  # squad mode, no laser: target score bonus for laser holders and engage them within 150 m (kill, take its laser) (0 = off)
+SQ_LH_RANGE = 220.0  # ... engage laser holders this close
+SQ_LH_HP = 0.35  # ... while our HP fraction is above this
 SQ_STICK = 120.0              # squad target score bonus for the current target
 SQ_LOWB = 100.0               # ... bonus for a target at or below 30% HP
 SQ_HPW = 0.2                  # ... score per enemy HP point
@@ -707,7 +709,7 @@ class Brain:
             if vis and (engage or d < 150):
                 crowd += 1
             lz = "laser" in (th.get("weapons") or []) and "laser" not in kinds
-            if SQ_LASER_HUNT > 0 and lz and vis and d < 150 and hf > 0.5:
+            if SQ_LASER_HUNT > 0 and lz and vis and d < SQ_LH_RANGE and hf > SQ_LH_HP:
                 engage = True  # it carries what we need: kill it and take the laser
             if SQ_LASER_AVOID and lz and hitme > 6 and d > SQ_ENGAGE and not low:
                 engage = False  # no laser of our own: don't open on a laser holder that isn't on us
