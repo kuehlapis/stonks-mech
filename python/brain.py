@@ -99,7 +99,7 @@ SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP
 CHECK6_T = 0.0                # s: until then, glance behind every CHECK6_P s while looting/travelling with no visible threat (0 = off)
 CHECK6_P = 6.0                # s: glance period
 CHECK6_D = 1.6                # s: glance length (180 deg out and back at 4 rad/s)
-SQ_SCAN = 3.0  # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
+SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_BOOST = 999.0         # boost while exploring/looting for a laser when energy is above this (999 = off)
 EXPLORE_M = 110.0             # m: explore waypoint distance
