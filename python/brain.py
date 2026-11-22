@@ -92,7 +92,7 @@ SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_M = 110.0             # m: explore waypoint distance
-SQ_BACKSTAB = 0.0             # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
+SQ_BACKSTAB = 150.0  # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
 SQ_BACK_OFF = 1.75            # rad: "facing away" = its aim this far off the bearing to us
 SQ_RESET_HP = 0.0             # squad mode: with no target and HP below this fraction, heal in cover from remembered enemies (0 = off)
 SQ_LOSE2 = 0.55               # squad mode: two enemies within 160 m and HP below this fraction = losing (retreat)
@@ -104,7 +104,7 @@ MESH_MULTI_HP = 0.0           # tactic mesh: 2+ distinct enemies hit us in MESH_
 MESH_HIT_S = 4.0              # ... "recent hit" window (s)
 MESH_EDGE = 0.0               # tactic mesh: live duel forecast; our time-to-die < this x target's = break contact (0 = off)
 MESH_COMMIT = 0.0             # ... target's time-to-die < this x ours (and <=1 hitter) = commit, ignore crowd retreat (0 = off)
-MESH_ISO_W = 40.0  # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
+MESH_ISO_W = 0.0              # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
 MESH_ISO_R = 80.0             # m
 MESH_ISO_SKIP = 0             # ... don't open on a target with this many+ friends near it unless it hit us / is close (0 = off)
 MESH_W = 5.0                  # s: trade-rate window
