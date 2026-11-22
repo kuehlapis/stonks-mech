@@ -77,8 +77,8 @@ SQ_MAXT = 240.0               # m: farthest target
 SQ_LASER_RANGE = 120.0        # m: fight range with a laser
 SQ_GUN_RANGE = 85.0           # m: ... with only the gun
 SQ_LIGHT_RANGE = 28.0         # m: ... with lightning (no laser)
-SQ_LASER_HUNT = 100.0  # squad mode, no laser: target score bonus for laser holders and engage them within 150 m (kill, take its laser) (0 = off)
-SQ_LH_RANGE = 120.0  # ... engage laser holders this close
+SQ_LASER_HUNT = 150.0  # squad mode, no laser: target score bonus for laser holders and engage them within 150 m (kill, take its laser) (0 = off)
+SQ_LH_RANGE = 150.0           # ... engage laser holders this close
 SQ_LH_HP = 0.5                # ... while our HP fraction is above this
 NOLASER_ENGAGE = 0.0          # squad mode, no laser yet: engage only within this many m (or when hit / laser carrier / finishing); no pokes (0 = off)
 NOLASER_FARM_HP = 0.0         # ... and farm crates above this HP fraction even with threats around (0 = off)
@@ -122,7 +122,7 @@ MESH_MULTI_HP = 0.0           # tactic mesh: 2+ distinct enemies hit us in MESH_
 MESH_HIT_S = 4.0              # ... "recent hit" window (s)
 MESH_EDGE = 0.0               # tactic mesh: live duel forecast; our time-to-die < this x target's = break contact (0 = off)
 MESH_COMMIT = 0.0             # ... target's time-to-die < this x ours (and <=1 hitter) = commit, ignore crowd retreat (0 = off)
-MESH_ISO_W = 0.0              # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
+MESH_ISO_W = 40.0  # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
 MESH_ISO_R = 80.0             # m
 MESH_ISO_SKIP = 0             # ... don't open on a target with this many+ friends near it unless it hit us / is close (0 = off)
 MESH_W = 5.0                  # s: trade-rate window
