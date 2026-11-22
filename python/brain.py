@@ -72,11 +72,12 @@ DROP_SEEN_S = 0.0             # s: skip drops if a real enemy was seen this rece
 DROP_SAFE_R = 0.0             # m: skip a drop with any remembered enemy this close (0 = off)
 LASER_DUCK = 10.0             # m: duck to cover this close when a fought enemy charges its laser (0 = off)
 SQUAD_MODE = True  # practice vs the house squad: giddy-style rules (_decide_squad)
-SQ_ENGAGE = 60.0              # m: engage anything this close
-SQ_MAXT = 240.0               # m: farthest target
+SQ_ENGAGE = 130.0  # m: engage anything this close
+SQ_MAXT = 300.0  # m: farthest target
 SQ_LASER_RANGE = 120.0        # m: fight range with a laser
 SQ_GUN_RANGE = 85.0           # m: ... with only the gun
 SQ_LIGHT_RANGE = 28.0         # m: ... with lightning (no laser)
+SQ_LASER_HUNT = 0.0           # squad mode, no laser: target score bonus for laser holders and engage them within 150 m (kill, take its laser) (0 = off)
 SQ_STICK = 120.0              # squad target score bonus for the current target
 SQ_LOWB = 100.0               # ... bonus for a target at or below 30% HP
 SQ_HPW = 0.2                  # ... score per enemy HP point
@@ -103,7 +104,7 @@ EXPLORE_M = 110.0             # m: explore waypoint distance
 SQ_BACKSTAB = 0.0             # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
 SQ_BACK_OFF = 1.75            # rad: "facing away" = its aim this far off the bearing to us
 SQ_RESET_HP = 0.0             # squad mode: with no target and HP below this fraction, heal in cover from remembered enemies (0 = off)
-SQ_LOSE2 = 0.55               # squad mode: two enemies within 160 m and HP below this fraction = losing (retreat)
+SQ_LOSE2 = 0.4  # squad mode: two enemies within 160 m and HP below this fraction = losing (retreat)
 FFA_DEAD = 5                  # mechs dead without our kill that prove a free-for-all (squad mode off)
 PEEK_LASER = False            # squad mode: charge the laser in cover, swing out to fire, duck again
 PEEK_COVER_M = 15.0           # m: only use cover this close for the peek cycle
@@ -112,7 +113,7 @@ MESH_MULTI_HP = 0.0           # tactic mesh: 2+ distinct enemies hit us in MESH_
 MESH_HIT_S = 4.0              # ... "recent hit" window (s)
 MESH_EDGE = 0.0               # tactic mesh: live duel forecast; our time-to-die < this x target's = break contact (0 = off)
 MESH_COMMIT = 0.0             # ... target's time-to-die < this x ours (and <=1 hitter) = commit, ignore crowd retreat (0 = off)
-MESH_ISO_W = 40.0  # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
+MESH_ISO_W = 0.0              # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
 MESH_ISO_R = 80.0             # m
 MESH_ISO_SKIP = 0             # ... don't open on a target with this many+ friends near it unless it hit us / is close (0 = off)
 MESH_W = 5.0                  # s: trade-rate window
@@ -706,6 +707,8 @@ class Brain:
             if vis and (engage or d < 150):
                 crowd += 1
             lz = "laser" in (th.get("weapons") or []) and "laser" not in kinds
+            if SQ_LASER_HUNT > 0 and lz and vis and d < 150 and hf > 0.5:
+                engage = True  # it carries what we need: kill it and take the laser
             if SQ_LASER_AVOID and lz and hitme > 6 and d > SQ_ENGAGE and not low:
                 engage = False  # no laser of our own: don't open on a laser holder that isn't on us
             friends = 0
@@ -726,7 +729,9 @@ class Brain:
             if closing > 3:
                 sc -= 15
             if SQ_LASER_AVOID and lz:
-                sc += 80  # prefer gun-only hunters while we have no laser
+                sc += 80
+            if SQ_LASER_HUNT > 0 and lz:
+                sc -= SQ_LASER_HUNT  # prefer gun-only hunters while we have no laser
             if SQ_BACKSTAB > 0 and back:
                 sc -= 60
             sc += MESH_ISO_W * friends  # its rear arc takes x1.5 and it hasn't reacted yet
