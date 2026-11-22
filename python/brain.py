@@ -77,9 +77,9 @@ SQ_MAXT = 240.0               # m: farthest target
 SQ_LASER_RANGE = 120.0        # m: fight range with a laser
 SQ_GUN_RANGE = 85.0           # m: ... with only the gun
 SQ_LIGHT_RANGE = 28.0         # m: ... with lightning (no laser)
-SQ_LASER_HUNT = 250.0  # squad mode, no laser: target score bonus for laser holders and engage them within 150 m (kill, take its laser) (0 = off)
-SQ_LH_RANGE = 220.0  # ... engage laser holders this close
-SQ_LH_HP = 0.35  # ... while our HP fraction is above this
+SQ_LASER_HUNT = 150.0  # squad mode, no laser: target score bonus for laser holders and engage them within 150 m (kill, take its laser) (0 = off)
+SQ_LH_RANGE = 150.0           # ... engage laser holders this close
+SQ_LH_HP = 0.5                # ... while our HP fraction is above this
 SQ_STICK = 120.0              # squad target score bonus for the current target
 SQ_LOWB = 100.0               # ... bonus for a target at or below 30% HP
 SQ_HPW = 0.2                  # ... score per enemy HP point
@@ -99,7 +99,7 @@ SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP
 CHECK6_T = 0.0                # s: until then, glance behind every CHECK6_P s while looting/travelling with no visible threat (0 = off)
 CHECK6_P = 6.0                # s: glance period
 CHECK6_D = 1.6                # s: glance length (180 deg out and back at 4 rad/s)
-SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
+SQ_SCAN = 3.0  # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_BOOST = 999.0         # boost while exploring/looting for a laser when energy is above this (999 = off)
 EXPLORE_M = 110.0             # m: explore waypoint distance
