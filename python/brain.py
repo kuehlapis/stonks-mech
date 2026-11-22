@@ -105,9 +105,9 @@ CHECK6_T = 0.0                # s: until then, glance behind every CHECK6_P s wh
 CHECK6_P = 6.0                # s: glance period
 CHECK6_D = 1.6                # s: glance length (180 deg out and back at 4 rad/s)
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
-SQ_HUNT_T = 45.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
+SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_BOOST = 999.0         # boost while exploring/looting for a laser when energy is above this (999 = off)
-ROOF_T = 60.0  # s: until then (no laser), explore by touring reachable rooftops (a quarter of loot and crates are up there) (0 = off)
+ROOF_T = 0.0                  # s: until then (no laser), explore by touring reachable rooftops (a quarter of loot and crates are up there) (0 = off)
 ROOFCAMP_T = 0.0              # s: from then on, hold the centre of a reachable roof inside the next circle (final-burn play) (0 = off)
 ROOF_MAX_H = 40.0             # m: roofs this high above the ground or lower (jet reach)
 ROOF_R = 170.0                # m: only roofs this close
@@ -120,7 +120,7 @@ FFA_DEAD = 5                  # mechs dead without our kill that prove a free-fo
 PEEK_LASER = False            # squad mode: charge the laser in cover, swing out to fire, duck again
 PEEK_COVER_M = 15.0           # m: only use cover this close for the peek cycle
 PEEK_MAX_CROWD = 2            # ... and only with this many or fewer enemies in the fight
-MESH_MULTI_HP = 0.0           # tactic mesh: 2+ distinct enemies hit us in MESH_HIT_S and HP below this = break contact (0 = off)
+MESH_MULTI_HP = 0.75  # tactic mesh: 2+ distinct enemies hit us in MESH_HIT_S and HP below this = break contact (0 = off)
 MESH_HIT_S = 4.0              # ... "recent hit" window (s)
 MESH_EDGE = 0.0               # tactic mesh: live duel forecast; our time-to-die < this x target's = break contact (0 = off)
 MESH_COMMIT = 0.0             # ... target's time-to-die < this x ours (and <=1 hitter) = commit, ignore crowd retreat (0 = off)
