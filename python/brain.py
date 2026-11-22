@@ -97,6 +97,7 @@ PEEK_LASER = False            # squad mode: charge the laser in cover, swing out
 PEEK_COVER_M = 15.0           # m: only use cover this close for the peek cycle
 PEEK_MAX_CROWD = 2            # ... and only with this many or fewer enemies in the fight
 SQ_OUTGUN = False             # count "they have a laser and we don't" (beyond 55 m) as losing
+LASER_JUKE = True            # boost-sidestep a visible laser charging at us (giddy-style; real bots may lead or lag)
 DODGE = True                  # sidestep visible projectiles that would hit us
 DODGE_T, DODGE_MARGIN = 0.9, 0.7   # s look-ahead; m added to our hit radius
 SLOW_MS = 30.0                # past this many ms in act(), skip optional work (cover search)
@@ -207,6 +208,30 @@ class Brain:
                     action["move"] = d
             except Exception as e:
                 self._log("dodge", e)
+        if LASER_JUKE:
+            try:
+                me = obs["self"]
+                p = me["pos"]
+                jx = jy = 0.0
+                for m in obs.get("mechs") or []:
+                    if m.get("kind") != "mech" or not m.get("charging") or not m.get("aim") or not m.get("pos"):
+                        continue
+                    to_me = math.atan2(p[1] - m["pos"][1], p[0] - m["pos"][0])
+                    if abs(_wrap(m["aim"][0] - to_me)) > 0.15:
+                        continue
+                    a = to_me + math.pi / 2 * self._strafe  # sidestep a laser charging at us
+                    jx += math.cos(a)
+                    jy += math.sin(a)
+                L = math.hypot(jx, jy)
+                if L > 0.01 and self._call(self.nav, "free_at", p[0] + 5 * jx / L, p[1] + 5 * jy / L, default=True):
+                    mv = action.get("move") or [0.0, 0.0]
+                    bx, by = 0.4 * mv[0] + jx / L, 0.4 * mv[1] + jy / L
+                    bl = math.hypot(bx, by) or 1.0
+                    action["move"] = [bx / bl, by / bl]
+                    if me.get("energy", 0) > 25:
+                        action["boost"] = True
+            except Exception as e:
+                self._log("laser_juke", e)
         if not self._engaged:  # never swap weapons while engaged
             tk = self._call(self.economy, "take", obs)
             if isinstance(tk, dict):
