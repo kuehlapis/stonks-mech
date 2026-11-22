@@ -105,7 +105,7 @@ CHECK6_T = 0.0                # s: until then, glance behind every CHECK6_P s wh
 CHECK6_P = 6.0                # s: glance period
 CHECK6_D = 1.6                # s: glance length (180 deg out and back at 4 rad/s)
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
-SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
+SQ_HUNT_T = 45.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_BOOST = 999.0         # boost while exploring/looting for a laser when energy is above this (999 = off)
 ROOF_T = 60.0  # s: until then (no laser), explore by touring reachable rooftops (a quarter of loot and crates are up there) (0 = off)
 ROOFCAMP_T = 0.0              # s: from then on, hold the centre of a reachable roof inside the next circle (final-burn play) (0 = off)
