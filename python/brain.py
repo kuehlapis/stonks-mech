@@ -82,6 +82,7 @@ SQ_LH_RANGE = 150.0           # ... engage laser holders this close
 SQ_LH_HP = 0.5                # ... while our HP fraction is above this
 NOLASER_ENGAGE = 0.0          # squad mode, no laser yet: engage only within this many m (or when hit / laser carrier / finishing); no pokes (0 = off)
 NOLASER_FARM_HP = 0.0         # ... and farm crates above this HP fraction even with threats around (0 = off)
+LATE_ALL = False  # squad mode: late (next circle <= 70 m or <= 3 alive) engage every visible enemy at any range
 SQ_STICK = 120.0              # squad target score bonus for the current target
 SQ_LOWB = 100.0               # ... bonus for a target at or below 30% HP
 SQ_HPW = 0.2                  # ... score per enemy HP point
@@ -107,7 +108,7 @@ SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_BOOST = 999.0         # boost while exploring/looting for a laser when energy is above this (999 = off)
 ROOF_T = 0.0                  # s: until then (no laser), explore by touring reachable rooftops (a quarter of loot and crates are up there) (0 = off)
-ROOFCAMP_T = 280.0  # s: from then on, hold the centre of a reachable roof inside the next circle (final-burn play) (0 = off)
+ROOFCAMP_T = 0.0              # s: from then on, hold the centre of a reachable roof inside the next circle (final-burn play) (0 = off)
 ROOF_MAX_H = 40.0             # m: roofs this high above the ground or lower (jet reach)
 ROOF_R = 170.0                # m: only roofs this close
 EXPLORE_M = 110.0             # m: explore waypoint distance
@@ -721,7 +722,7 @@ class Brain:
             low = thp is not None and thp < 0.4 * tmax
             back = bool(aim) and abs(_wrap(aim[0] - math.atan2(uy, ux))) > SQ_BACK_OFF
             scav = NOLASER_ENGAGE > 0 and "laser" not in kinds and not late
-            engage = (d < (NOLASER_ENGAGE if scav else SQ_ENGAGE) or hitme < 6 or late or (low and d < 160)
+            engage = (d < (NOLASER_ENGAGE if scav else SQ_ENGAGE) or hitme < 6 or (late and LATE_ALL) or (low and d < 160)
                       or (not SQ_NO_POKE and not scav and ((closing > 3 and d < 180) or (aimed and d < 190)))
                       or (SQ_BACKSTAB > 0 and back and d < SQ_BACKSTAB and hf > 0.7))
             if engage or hitme < 4:
