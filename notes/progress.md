@@ -2,6 +2,12 @@
 
 Updated by the moderator after every agent report. A new session reads this first, then `notes/agents/moderator.md` and `notes/decisions.md`.
 
+## Session 2026-11-22 (later): status
+- User target now **mean 10**.
+- Step 0 done: the map loads under the Docker sandbox. Windows needs `MSYS_NO_PATHCONV=1`, and the check passes `--map-dir` through `abspath`, which breaks `/arena`. Mount `arena/`, not `arena/v2`. `ready` took 6.1 s, over the 5 s guardrail.
+- Sim change: squad slots (label `squad*`) take no zone damage (`sim/engine.py`, `sim/inproc.py`), per the user rule.
+- Running: calibration with squad v2 at 40 seeds each for sub1, s_base2 and example. Output goes to `notes/tests/cal-immune-*.json`.
+
 ## HANDOVER: 2026-11-22 ~03:30, iteration 3, branch `iter-1` (read this first)
 
 **Track scores:** f803b02 = 1.6, c529ecc (current default bot, all iteration-3 switches off) = **1.60**. 876 lines of fight changes between them did nothing on the track. Leaderboard best ≈ 5.96. Scoring closes **Sun 11:00 AM EST**; 4 submissions/hour; the user submits (give them repo `https://github.com/kuehlapis/stonks-mech` + full commit hash, then wait for the score).

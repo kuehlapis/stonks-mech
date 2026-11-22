@@ -10,8 +10,10 @@ Command: `python sim/inproc.py --bot <L>=<path> --count 1 --bot squad=<model> --
 |---|---|---|---|---|---|---|---|---|
 | c0 | `sim/bots/squad_v1.py` (zone-smart + retaliation, before calibration) | RETALIATE_S 10, DEFEND_RANGE 60, strafe 0.6–1.6 s, no chase boost, no wall slide | sub1 | **1.23 ± 0.21** (target 1.6) | 0.65 | 59.8 s | 320 of 419 zone deaths | **No** (zone deaths) |
 | c0 | squad_v1 | same | example | not finished (stopped at session end) | | | | |
+| c1 | `sim/bots/squad.py` v2 | RETALIATE_S 30, DEFEND_RANGE 60, strafe 0.3–0.6 s, chase boost, wall slide | sub1 | **2.23 ± 0.31** | 1.02 | 79.7 s | **407** | **No** |
+| c1 | squad.py v2 | same | example | **1.62 ± 0.34** | 0.45 | 39.55 s | **357** | **No** |
 
-Not run: s_base2, and every run on the new squad.py (v2).
+V2 is invalid: raw match rows show 407 squad zone deaths before 415 s in sub1 and 357 in example. Do not run s_base2 until the zone-death regression is traced and fixed.
 
 ## Where the 1.6 floor comes from
 

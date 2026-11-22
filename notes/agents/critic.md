@@ -4,6 +4,10 @@ Owns: `notes/reviews/`. Rules: `CLAUDE.md` (Agent journals). Goal: `objective.md
 
 ## Current task
 
+Brief (moderator, 2026-11-22 #8): specify exactly two off-default first-fight
+switches (conservative gun-only opening and laser-aware range) without code
+edits. Done: `notes/reviews/first-fight-switch-spec-2026-11-22.md`.
+
 Brief (moderator, 2026-11-22 #7): critic round 2: why two bots both 1.60; fight model first-engagement loser; review Strategist Round 2 when it appears (pending; session ended, carry over).
 
 Brief (moderator, 2026-11-22 #6): rank assumptions A1-A23, cheapest checks, how to reach 6.00; output Critic section in notes/ideas/assumptions-discussion.md. Done.
@@ -38,6 +42,7 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 |---|---|---|---|
 | Sim squad ignores sound and never boosts | Over-rewards run/hide plans (P1/P3) vs track | Ask Tester for a boost+hearing squad variant in A/Bs | open |
 | Squad sim calibration unverified | Fixes 3/4 in squad-sim review are guesses | Re-check after Tester runs example vs f803b02 paired | open |
+| First-fight TTK treats gun-only as weak and spaces every duel at 130 m | Can voluntarily reveal us to a stronger hunter at laser-favourable range | A/B the two isolated, default-off switches in `first-fight-switch-spec-2026-11-22.md` only after calibration | open |
 | Nothing reviewed yet | Unchecked assumptions become bugs | Review the plan before building starts | done (game-plan review, 2026-11-21) |
 | Findings rest on rule reasoning, not measurement | Severity of finding 3 (edge-hold rear exposure) and finding 9 (estimates) is a guess; wrong ranking wastes builder time | When the Tester's sim runs, ask for rear-hit share inward vs outward facing and the M1 death-time histogram; re-rank | open |
 | No re-check of fixes yet | A fix can introduce a new error | Second pass on the revised plan: verify each fix against the same evidence | done: found N1 (fix #6's cap + fix #2's 'no cover = cornered' recreate E1) |
@@ -61,6 +66,14 @@ Done when every high-impact finding is fixed in the plan or accepted by the mode
 - Checking a single number in the stream (who hit first, where the enemy was aiming) settled a claim in minutes. Prefer one-line stream queries over arguing.
 
 ## Log (newest first)
+
+- 2026-11-22 #8: inspected `brain.py` opening, TTK, and range paths. Wrote
+  `notes/reviews/first-fight-switch-spec-2026-11-22.md`: exactly two default-off
+  A/Bs, no code edits. Switch A changes the gun-only multiplier to 1.0 plus
+  voluntary-open edge to 0.8 only while enabled; Switch B uses a 50 m target
+  only versus an enemy laser when we lack one. Deferred remembered-enemy and
+  laser-alpha modelling to avoid confounding these A/Bs. Evidence: brain.py
+  lines 25–26, 355–366, 575–596, 739–753; discussion Round 2 lines 116–121.
 
 - 2026-11-22 #7: round 2. Track rounds to 1 decimal (scores.md '1.6'), SE ~0.2 so equal 1.60 is weak evidence. Cheapest decisive check: scorer-style docker run, grep 'world load failed' (bot.py:15 silent map-free fallback). Fight loser: OPEN_EDGE 1.2 + WEAK_GUN 0.6 open fights vs gun-only hard bots; kiting to 130 m favours lasers. Strategist Round 2 not yet written.
 - 2026-11-22 #6: assumptions ranking. Top: A23 (is 6.00 from this squad?), A4/A3 (check (16-place)-kills from track end messages), A7, A8 (sim sensitivity runs), A15 (cross-version comparisons invalid). Recommend no builds until checks 1-2.

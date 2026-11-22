@@ -111,6 +111,7 @@ def play(specs, seed, trace_slot=None, timing=True, engine="engine", trace_label
     cfg = hello0["config"]
     world = _world()
     match = Match(cfg, world, seed, len(specs))
+    match.zone_immune = {i for i, (label, _) in enumerate(specs) if label.startswith("squad")}
     budget = cfg["bot"]["tick_budget_ms"] / 1000
     bots, envs, last, errs, lat, late = [], [], [], [0] * len(specs), [[] for _ in specs], [0] * len(specs)
     for i, (label, path) in enumerate(specs):

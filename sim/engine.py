@@ -491,7 +491,8 @@ class Match:
             m.in_zone = math.hypot(m.pos[0] - cx, m.pos[1] - cy) <= r
             if not m.in_zone:
                 m.ticks_out += 1
-                self._hurt(m, dps * dt, "zone", None, None, t)
+                if m.id not in getattr(self, "zone_immune", ()):  # track squad bots never die to the zone (user rule)
+                    self._hurt(m, dps * dt, "zone", None, None, t)
             elif t - m.last_combat_t >= m.st["regen_delay"] and m.hp > 0:
                 m.hp = min(m.max_hp, m.hp + m.st["regen_per_s"] * dt)
         self._deaths()
