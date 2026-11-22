@@ -2,7 +2,7 @@
 
 ## LATEST (2026-11-22 ~07:40 UTC, moderator session 3) — read first
 
-**Submit this:** `iter-1` HEAD (squad mode ON). Behaviour = commit `73c6302`; later commits only add switches that are OFF.
+**Submit this:** commit `e6768d2` (iter-1, squad mode ON + AIM_PREDICT + explore 25 s for a laser + HOLD_DEPTH 0.5). Full check passed 09:20 UTC: 99 tests, check.py direct, Docker sandbox with map (ready 1.7 s, max 1.5 ms). Nothing after squad mode has a track score yet: this submission is the key measurement.
 Scoring closes Sun 11:00 AM EST. Leaderboard top ≈ 6.28 (rescoring on 96 seeds, scorer builders-4).
 
 **RULES UPDATE (leaderboard page):** "excessive code reuse may result in disqualification" (including another team's entry). Do NOT submit or vendor giddy/other teams' code. Our squad mode is our own Python implementation of ideas, not their code. Scoring is now 96 fresh random seeds per run (scorer builders-4); identical code keeps its first builders-4 score. Leader 6.74 (Ahmad Suliman) at ~08:10 UTC.
@@ -17,6 +17,8 @@ Scoring closes Sun 11:00 AM EST. Leaderboard top ≈ 6.28 (rescoring on 96 seeds
 
 - Squad mode = `python/brain.py` `_decide_squad*`; turns itself off when 5+ mechs die without our kill (free-for-all finals safety, `FFA_DEAD`).
 - **Key finding:** we pick up a laser in only 31% of matches; with a laser 3.15 kills/match, without 1.00.
+- Adopted later: SQ_HUNT_T 25 s (explore for a laser early: 3.05 vs 2.88, laser deaths 15 -> 11), HOLD_DEPTH 0.5 (outside-zone time halved).
+- Tested 09:00 UTC, no gain (kept OFF / unchanged): SQ_FIGHTMOVE (worse, 2.63 vs 2.81), COVER_BFS, SQ_LASER_AVOID, SQ_ENGAGE 35, SQ_MAXT 150, upgrade orders (nanites first: no effect, few offers), SQ_DROPS, aggressive crate farming, lightning-first.
 - Tested, no gain (kept OFF): PEEK_LASER, SQ_RESET_HP 0.9, SQ_LOSE2 0.75, SQ_BACKSTAB 150, SQ_OUTGUN, SQ_SCAN 3 (spin-scan), SQ_HUNT_T 150 (explore for lasers; worse).
 - Research: giddygiddyboy's MIT Go bot (base of most top-5 entries) studied from source (`charliescull/mech-royale-bot` drivers/giddy, upstream e19e3c8); its squad rules were re-implemented in Python. Building/running their binary was blocked by the safety classifier (third-party code); the user decides that route.
 
