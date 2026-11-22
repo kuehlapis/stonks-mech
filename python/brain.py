@@ -77,6 +77,9 @@ SQ_MAXT = 240.0               # m: farthest target
 SQ_LASER_RANGE = 120.0        # m: fight range with a laser
 SQ_GUN_RANGE = 85.0           # m: ... with only the gun
 SQ_LIGHT_RANGE = 28.0         # m: ... with lightning (no laser)
+SQ_STICK = 120.0              # squad target score bonus for the current target
+SQ_LOWB = 100.0               # ... bonus for a target at or below 30% HP
+SQ_HPW = 0.2                  # ... score per enemy HP point
 SQ_FINISH = 26.0              # m: close in to finish a low target
 SQ_LOOT = 150.0               # m: loot radius (cubes x0.7, remembered crates)
 SQ_FARM_HP = 0.5              # farm crates above this HP fraction
@@ -713,11 +716,11 @@ class Brain:
                     engage = False  # grouped: opening here pulls the whole group onto us
             if not (engage and vis and d < SQ_MAXT):
                 continue
-            sc = d + 0.2 * (thp if thp is not None else 1400.0)
+            sc = d + SQ_HPW * (thp if thp is not None else 1400.0)
             if thp is not None and thp <= 0.3 * tmax:
-                sc -= 100
+                sc -= SQ_LOWB
             if th.get("id") == self._stick_id and t - self._stick_t < 2:
-                sc -= 120
+                sc -= SQ_STICK
             if hitme < 4:
                 sc -= 40
             if closing > 3:

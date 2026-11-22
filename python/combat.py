@@ -3,8 +3,8 @@ import math
 
 AIM_TOL_FRAC = 0.6  # fire when the actual aim is within 0.6 target radii of the desired aim at the target
 TRIGGER_SPLIT = True  # gun trigger: separate yaw/pitch tolerances (a mech is tall) and credit the next tick's torso turn
-TRIG_YAW = 0.75        # ... yaw tolerance in target radii
-TRIG_PITCH = 0.4       # ... pitch tolerance in target heights
+TRIG_YAW = 1.0  # ... yaw tolerance in target radii
+TRIG_PITCH = 0.45  # ... pitch tolerance in target heights
 MIN_TOL = 0.004  # rad, floor so long shots still fire
 LOW_AMMO_FRAC = 0.5  # reload with no target in range at or below this fraction of the mag
 LETHAL = True  # release a partial laser charge early when it already kills (giddy's Lethal rule)
