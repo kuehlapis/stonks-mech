@@ -5,6 +5,8 @@
 **Submit this:** `iter-1` HEAD (squad mode ON). Behaviour = commit `73c6302`; later commits only add switches that are OFF.
 Scoring closes Sun 11:00 AM EST. Leaderboard top ≈ 6.28 (rescoring on 96 seeds, scorer builders-4).
 
+**RULES UPDATE (leaderboard page):** "excessive code reuse may result in disqualification" (including another team's entry). Do NOT submit or vendor giddy/other teams' code. Our squad mode is our own Python implementation of ideas, not their code. Scoring is now 96 fresh random seeds per run (scorer builders-4); identical code keeps its first builders-4 score. Leader 6.74 (Ahmad Suliman) at ~08:10 UTC.
+
 **What changed (all measured on the calibrated squad sim, paired seeds, `sim/bots/squad.py`):**
 | Build | Score | Kills/match |
 |---|---|---|
