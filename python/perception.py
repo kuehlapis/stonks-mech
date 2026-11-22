@@ -28,10 +28,14 @@ class Perception:
         self.npcs = {}         # id -> {"id", "pos", "vel", "hp", "last_seen", "visible"} (drones, 100+)
         self.npc_hit = {}      # npc id -> t of its latest damage on us
         self.heard = None      # t of the latest heard combat sound at any range
+        self.dmg_by = {}       # mech id -> damage it has landed on us this match
+        self.exposed = {}      # mech id -> seconds it has been visible within 200 m of us
+        self._last_t = None
         self.last_known = {}   # mech id -> (t, pos) of its latest sighting or hit on us, kept DANGER_S
 
     def update(self, obs):
         t = obs["t"]
+        self._expose(obs, t)
         me = obs.get("self") or {}
         mp = me.get("pos") or [0.0, 0.0, 0.0]
         seen = set()
@@ -65,6 +69,7 @@ class Perception:
             if not isinstance(by, int) or not 0 <= by <= 15:
                 continue
             self.hit_by[by] = t
+            self.dmg_by[by] = self.dmg_by.get(by, 0.0) + float(e.get("amount") or 0.0)
             if by not in seen:
                 # shortcut: z is our own feet height (update() has no world), fine for bearing-only use
                 d = VIRTUAL_DIST.get(w, 100.0)
@@ -90,6 +95,19 @@ class Perception:
                 if t - th["last_seen"] > (WINDOW if th["virtual"] else self.memory_s):
                     del self.tracks[i]
         self.threats = list(self.tracks.values())
+
+    def _expose(self, obs, t):
+        dt = 0.0 if self._last_t is None else max(0.0, min(1.0, t - self._last_t))
+        self._last_t = t
+        mp = (obs.get("self") or {}).get("pos") or [0.0, 0.0, 0.0]
+        for m in obs.get("mechs") or ():
+            i = m.get("id")
+            if m.get("kind") == "mech" and isinstance(i, int) and m.get("pos")                     and math.hypot(m["pos"][0] - mp[0], m["pos"][1] - mp[1]) < 200:
+                self.exposed[i] = self.exposed.get(i, 0.0) + dt
+
+    def skill(self, i):
+        """Observed damage per second this enemy lands on us while we're in its sight (0 if unknown)."""
+        return self.dmg_by.get(i, 0.0) / max(self.exposed.get(i, 0.0), 5.0)
 
     def engaged_by(self, t):
         best = None

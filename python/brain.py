@@ -71,7 +71,7 @@ DROP_SEEN_S = 0.0             # s: skip drops if a real enemy was seen this rece
 DROP_SAFE_R = 0.0             # m: skip a drop with any remembered enemy this close (0 = off)
 LASER_DUCK = 10.0             # m: duck to cover this close when a fought enemy charges its laser (0 = off)
 SQUAD_MODE = True  # practice vs the house squad: giddy-style rules (_decide_squad)
-SQ_ENGAGE = 90.0  # m: engage anything this close
+SQ_ENGAGE = 60.0              # m: engage anything this close
 SQ_MAXT = 240.0               # m: farthest target
 SQ_LASER_RANGE = 120.0        # m: fight range with a laser
 SQ_GUN_RANGE = 85.0           # m: ... with only the gun
@@ -80,7 +80,9 @@ SQ_FINISH = 26.0              # m: close in to finish a low target
 SQ_LOOT = 150.0               # m: loot radius (cubes x0.7, remembered crates)
 SQ_FARM_HP = 0.5              # farm crates above this HP fraction
 SQ_PRECHARGE = 6.0  # s: keep the laser charged this long after the last threat (0 = off)
-SQ_HULL = False               # squad mode: fight from hull-down spots (our muzzle sees them, their eye can't see our center)
+SQ_SKILL_W = 0.0              # squad mode: target score penalty per observed enemy dps on us (0 = off)
+SQ_SKILL_DANGER = 0.0         # squad mode: observed dps above this + our HP < 60% = losing (0 = off)
+SQ_HULL = True                # squad mode: fight from hull-down spots (our muzzle sees them, their eye can't see our center)
 HULL_M = 8.0                  # m: search radius for a hull-down spot
 SQ_FIGHTMOVE = False          # squad mode: candidate-scored fight steps (range, LOS to target, hidden from others)
 SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could see a candidate step
@@ -98,6 +100,14 @@ FFA_DEAD = 5                  # mechs dead without our kill that prove a free-fo
 PEEK_LASER = False            # squad mode: charge the laser in cover, swing out to fire, duck again
 PEEK_COVER_M = 15.0           # m: only use cover this close for the peek cycle
 PEEK_MAX_CROWD = 2            # ... and only with this many or fewer enemies in the fight
+MESH_MULTI_HP = 0.0           # tactic mesh: 2+ distinct enemies hit us in MESH_HIT_S and HP below this = break contact (0 = off)
+MESH_HIT_S = 4.0              # ... "recent hit" window (s)
+MESH_EDGE = 0.0               # tactic mesh: live duel forecast; our time-to-die < this x target's = break contact (0 = off)
+MESH_COMMIT = 0.0             # ... target's time-to-die < this x ours (and <=1 hitter) = commit, ignore crowd retreat (0 = off)
+MESH_ISO_W = 40.0  # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
+MESH_ISO_R = 80.0             # m
+MESH_ISO_SKIP = 0             # ... don't open on a target with this many+ friends near it unless it hit us / is close (0 = off)
+MESH_W = 5.0                  # s: trade-rate window
 SQ_OUTGUN = False             # count "they have a laser and we don't" (beyond 55 m) as losing
 LASER_JUKE = True            # boost-sidestep a visible laser charging at us (giddy-style; real bots may lead or lag)
 DODGE = True                  # sidestep visible projectiles that would hit us
@@ -123,6 +133,7 @@ class Brain:
         self._strafe_dt = 1.0
         self._mode = None
         self._crates = {}
+        self._myhp, self._ehp = [], {}  # (t, hp) histories for the live trade forecast
         self._fm_until = -1e9
         self._visited, self._explore_wp, self._explore_t = [], None, -1e9
         self._start_alive, self._is_ffa = None, False
@@ -684,6 +695,12 @@ class Brain:
             lz = "laser" in (th.get("weapons") or []) and "laser" not in kinds
             if SQ_LASER_AVOID and lz and hitme > 6 and d > SQ_ENGAGE and not low:
                 engage = False  # no laser of our own: don't open on a laser holder that isn't on us
+            friends = 0
+            if MESH_ISO_W > 0 or MESH_ISO_SKIP > 0:
+                friends = sum(1 for o in threats if o is not th and not o.get("virtual")
+                              and t - o.get("last_seen", t) < 5 and _dist(o["pos"], th["pos"]) < MESH_ISO_R)
+                if MESH_ISO_SKIP > 0 and friends >= MESH_ISO_SKIP and hitme > 6 and d > SQ_ENGAGE and not late and not low:
+                    engage = False  # grouped: opening here pulls the whole group onto us
             if not (engage and vis and d < SQ_MAXT):
                 continue
             sc = d + 0.2 * (thp if thp is not None else 1400.0)
@@ -698,7 +715,11 @@ class Brain:
             if SQ_LASER_AVOID and lz:
                 sc += 80  # prefer gun-only hunters while we have no laser
             if SQ_BACKSTAB > 0 and back:
-                sc -= 60  # its rear arc takes x1.5 and it hasn't reacted yet
+                sc -= 60
+            sc += MESH_ISO_W * friends  # its rear arc takes x1.5 and it hasn't reacted yet
+            sk = self._call(P, "skill", th.get("id"), default=0.0) or 0.0
+            if SQ_SKILL_W > 0:
+                sc += SQ_SKILL_W * min(sk, 150.0)  # learned in-match: hunt the inaccurate ones first
             if sc < best:
                 best, target = sc, th
         if target is not None:
@@ -719,6 +740,17 @@ class Brain:
         if (target is not None and "laser" in (target.get("weapons") or []) and "laser" not in kinds
                 and td > 55 and hf < 0.8):
             losing = losing or SQ_OUTGUN
+        if SQ_SKILL_DANGER > 0 and hf < 0.6 and not losing:
+            for th in visible:
+                if _dist(pos, th["pos"]) < 160 and (self._call(P, "skill", th.get("id"), default=0.0) or 0.0) > SQ_SKILL_DANGER:
+                    losing = True  # an accurate (hard/expert) enemy and we're hurt: break contact
+                    break
+        if MESH_MULTI_HP > 0 or MESH_EDGE > 0 or MESH_COMMIT > 0:
+            m = self._mesh(obs, t, target, hp, hf, hit_by, finishing)
+            if m == "break":
+                losing = True
+            elif m == "commit":
+                losing = False
         if losing:
             self._lose_t = t
         retreat = t - self._lose_t < 1.5
@@ -807,6 +839,42 @@ class Brain:
                 return {**self._go(obs, wp), **self._aim(obs, threats, None, wp)}, "explore"
         hold = self._call(S, "hold_point", obs) or self._next_center(obs)
         return {**self._go(obs, hold), **self._aim(obs, threats, None, hold)}, "roam"
+
+    def _mesh(self, obs, t, target, hp, hf, hit_by, finishing):
+        """Live tactic switch from what the last few seconds showed: 'break', 'commit' or None."""
+        h = self._myhp
+        h.append((t, hp))
+        while h and t - h[0][0] > MESH_W:
+            h.pop(0)
+        for th in obs.get("mechs") or ():
+            i = th.get("id")
+            if th.get("kind") == "mech" and th.get("hp") is not None:
+                e = self._ehp.setdefault(i, [])
+                e.append((t, th["hp"]))
+                while e and t - e[0][0] > MESH_W:
+                    e.pop(0)
+        if finishing:
+            return None
+        hitters = sum(1 for ht in hit_by.values() if t - ht < MESH_HIT_S)
+        if MESH_MULTI_HP > 0 and hitters >= 2 and hf < MESH_MULTI_HP:
+            return "break"
+        if target is None or not target.get("visible") or target.get("hp") is None:
+            return None
+        e = self._ehp.get(target.get("id")) or []
+        if not e or t - e[0][0] < 2.0 or t - h[0][0] < 2.0:
+            return None
+        w = t - max(e[0][0], h[0][0])
+        taken = h[0][1] - hp
+        dealt = e[0][1] - target["hp"]
+        if taken <= 0:
+            return "commit" if MESH_COMMIT > 0 and dealt > 0 and hitters <= 1 else None
+        my_ttd = hp * w / taken
+        their_ttd = target["hp"] * w / max(dealt, 1.0)
+        if MESH_EDGE > 0 and my_ttd < MESH_EDGE * their_ttd and hf < 0.8:
+            return "break"
+        if MESH_COMMIT > 0 and hitters <= 1 and their_ttd < MESH_COMMIT * my_ttd:
+            return "commit"
+        return None
 
     def _explore_point(self, obs, t):
         """A waypoint ~EXPLORE_M away, inside the current circle, far from where we've already been."""
