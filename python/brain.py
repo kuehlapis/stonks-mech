@@ -80,6 +80,8 @@ SQ_FINISH = 26.0              # m: close in to finish a low target
 SQ_LOOT = 150.0               # m: loot radius (cubes x0.7, remembered crates)
 SQ_FARM_HP = 0.5              # farm crates above this HP fraction
 SQ_PRECHARGE = 6.0  # s: keep the laser charged this long after the last threat (0 = off)
+SQ_HULL = True  # squad mode: fight from hull-down spots (our muzzle sees them, their eye can't see our center)
+HULL_M = 8.0                  # m: search radius for a hull-down spot
 SQ_FIGHTMOVE = False          # squad mode: candidate-scored fight steps (range, LOS to target, hidden from others)
 SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could see a candidate step
 SQ_LASER_AVOID = False        # squad mode, no laser: skip laser holders that aren't attacking us; prefer gun-only targets
@@ -90,7 +92,7 @@ SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roa
 EXPLORE_M = 110.0             # m: explore waypoint distance
 SQ_BACKSTAB = 0.0             # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
 SQ_BACK_OFF = 1.75            # rad: "facing away" = its aim this far off the bearing to us
-SQ_RESET_HP = 0.9  # squad mode: with no target and HP below this fraction, heal in cover from remembered enemies (0 = off)
+SQ_RESET_HP = 0.0             # squad mode: with no target and HP below this fraction, heal in cover from remembered enemies (0 = off)
 SQ_LOSE2 = 0.55               # squad mode: two enemies within 160 m and HP below this fraction = losing (retreat)
 FFA_DEAD = 5                  # mechs dead without our kill that prove a free-for-all (squad mode off)
 PEEK_LASER = False            # squad mode: charge the laser in cover, swing out to fire, duck again
@@ -886,11 +888,53 @@ class Brain:
             cover = self._call(self.survival, "find_cover", obs, [e])
             if cover and _dist(obs["self"]["pos"], cover) <= LASER_DUCK:
                 return {**self._go(obs, cover, boost=True), **self._gun_only(obs, e)}
+        if SQ_HULL and self.world is not None and not self._slow():
+            hd = self._hull_down(obs, e)
+            if hd is not None:
+                return {**hd, **self._attack(obs, e)}
         if SQ_FIGHTMOVE and self.world is not None and not self._slow():
             mv = self._fight_move(obs, e, rng)
             if mv is not None:
                 return {**mv, **self._attack(obs, e)}
         return {**self._strafe_move(obs, e["pos"], away=away), **self._attack(obs, e)}
+
+    def _hull_down(self, obs, tg):
+        """Hull-down (reverse-slope) step: a spot within HULL_M where our muzzle sees the target's center but
+        its eye can't see our center (shots aimed at our center hit the crest). Move there / hold; else None."""
+        me = obs["self"]
+        p = me["pos"]
+        st = me.get("stats") or self.cfg.get("mech") or {}
+        mh, eh, hh = st.get("muzzle_height", 7.0), st.get("eye_height", 8.0), st.get("height", 9.0)
+        tp = tg["pos"]
+        scale = 1 + ((self.cfg.get("cubes") or {}).get("size_per_cube", 0.05)) * (tg.get("cubes") or 0)
+        tc = (tp[0], tp[1], tp[2] + hh * scale / 2)
+        te = (tp[0], tp[1], tp[2] + eh * scale)
+        w, nav = self.world, self.nav
+
+        def good(x, y, z):
+            return w.los((x, y, z + mh), tc) and not w.los(te, (x, y, z + hh / 2))
+
+        if good(p[0], p[1], p[2]):
+            return {"move": [0.0, 0.0], "boost": False, "jump": False}
+        best = None
+        for k in range(12):
+            a = k * math.pi / 6
+            for r in (4.0, HULL_M):
+                x, y = p[0] + r * math.cos(a), p[1] + r * math.sin(a)
+                if not self._call(nav, "free_at", x, y, default=True):
+                    continue
+                z = self._call(nav, "surface", x, y)
+                z = p[2] if z is None else z
+                if abs(z - p[2]) > 2.5:
+                    continue
+                if good(x, y, z):
+                    if best is None or r < best[0]:
+                        best = (r, x, y)
+                    break
+        if best is None:
+            return None
+        r, x, y = best
+        return {"move": [(x - p[0]) / r, (y - p[1]) / r], "boost": False, "jump": False}
 
     def _fight_move(self, obs, tg, rng):
         """Score 16 steps of 6 m (and standing): keep the preferred range, keep line of sight to the target,
