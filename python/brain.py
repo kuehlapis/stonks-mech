@@ -80,6 +80,8 @@ SQ_FINISH = 26.0              # m: close in to finish a low target
 SQ_LOOT = 150.0               # m: loot radius (cubes x0.7, remembered crates)
 SQ_FARM_HP = 0.5              # farm crates above this HP fraction
 SQ_PRECHARGE = 6.0  # s: keep the laser charged this long after the last threat (0 = off)
+SQ_FIGHTMOVE = False          # squad mode: candidate-scored fight steps (range, LOS to target, hidden from others)
+SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could see a candidate step
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 0.0               # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_M = 110.0             # m: explore waypoint distance
@@ -115,6 +117,7 @@ class Brain:
         self._strafe_dt = 1.0
         self._mode = None
         self._crates = {}
+        self._fm_until = -1e9
         self._visited, self._explore_wp, self._explore_t = [], None, -1e9
         self._start_alive, self._is_ffa = None, False
         self._stick_id, self._stick_t = None, -1e9
@@ -845,7 +848,79 @@ class Brain:
             cover = self._call(self.survival, "find_cover", obs, [e])
             if cover and _dist(obs["self"]["pos"], cover) <= LASER_DUCK:
                 return {**self._go(obs, cover, boost=True), **self._gun_only(obs, e)}
+        if SQ_FIGHTMOVE and self.world is not None and not self._slow():
+            mv = self._fight_move(obs, e, rng)
+            if mv is not None:
+                return {**mv, **self._attack(obs, e)}
         return {**self._strafe_move(obs, e["pos"], away=away), **self._attack(obs, e)}
+
+    def _fight_move(self, obs, tg, rng):
+        """Score 16 steps of 6 m (and standing): keep the preferred range, keep line of sight to the target,
+        stay out of sight of every other enemy, stay in the zone, drift toward cubes; strafe on ties.
+        (Scoring after giddygiddyboy's MIT bot fightMove; our implementation.)"""
+        me, t = obs["self"], obs.get("t", 0.0)
+        p = me["pos"]
+        st = me.get("stats") or self.cfg.get("mech") or {}
+        mh, eh, hh = st.get("muzzle_height", 7.0), st.get("eye_height", 8.0), st.get("height", 9.0)
+        w, nav = self.world, self.nav
+        if t >= self._fm_until:
+            if self.rng.random() < 0.6:
+                self._strafe = -self._strafe
+            self._fm_until = t + 0.3 + self.rng.random() * 0.7
+        bx, by = tg["pos"][0] - p[0], tg["pos"][1] - p[1]
+        bd = math.hypot(bx, by) or 1e-9
+        ux, uy = bx / bd, by / bd
+        sx, sy = -uy * self._strafe, ux * self._strafe
+        tc = (tg["pos"][0], tg["pos"][1], tg["pos"][2] + hh / 2)
+        others = [x for x in (getattr(self.perception, "threats", None) or [])
+                  if isinstance(x, dict) and x.get("visible") and not x.get("virtual") and x.get("id") != tg.get("id")
+                  and x.get("pos") and _dist(x["pos"], p) < 170]
+        circle = self._call(self.survival, "live_circle", obs)
+        cubes = [c["pos"] for c in obs.get("cubes") or [] if c.get("pos") and _dist(c["pos"], p) < 40
+                 and abs(c["pos"][2] - p[2]) < 4]
+        cube = min(cubes, key=lambda c: _dist(c, p)) if cubes else None
+        best, bm, blocked = -1e18, None, False
+        for k in range(-1, 16):
+            if k >= 0:
+                a = k * math.pi / 8
+                dx, dy, r = math.cos(a), math.sin(a), 6.0
+                cx, cy = p[0] + dx * r, p[1] + dy * r
+                if not self._call(nav, "free_at", cx, cy, default=True) or \
+                        not self._call(nav, "clear_line", (p[0], p[1]), (cx, cy), default=True):
+                    if dx * sx + dy * sy > 0.9:
+                        blocked = True
+                    continue
+            else:
+                dx = dy = r = 0.0
+                cx, cy = p[0], p[1]
+            cz = self._call(nav, "surface", cx, cy) if k >= 0 else p[2]
+            cz = p[2] if cz is None else cz
+            d = math.hypot(tc[0] - cx, tc[1] - cy)
+            sc = -1.1 * abs(d - rng) - r * 0.4
+            if w.los((cx, cy, cz + mh), tc):
+                sc += 45
+            body = (cx, cy, cz + hh * 0.6)
+            for e in others:
+                if w.los((e["pos"][0], e["pos"][1], e["pos"][2] + eh), body):
+                    sc -= SQ_FM_EXPOSE
+            if circle:
+                c, rr = circle
+                out = math.hypot(cx - c[0], cy - c[1]) - (rr - 5)
+                if out > 0:
+                    sc -= 10 * out
+            if cube is not None:
+                sc += 1.5 * (_dist(cube, p) - math.hypot(cube[0] - cx, cube[1] - cy))
+            sc += 9 * (dx * sx + dy * sy)
+            if k < 0:
+                sc -= 8
+            if sc > best:
+                best, bm = sc, (dx, dy)
+        if blocked:
+            self._strafe = -self._strafe
+            self._fm_until = t + 0.5
+        if bm is None:
+            return None
+        return {"move": [bm[0], bm[1]], "boost": False, "jump": False}
 
     def _nearest_cube(self, obs, r):
         p = obs["self"]["pos"]

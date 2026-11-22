@@ -13,6 +13,8 @@ SWEEP_PERIOD = 4.0       # s per full sweep (our choice; turn_rate 4 rad/s cover
 RINGS = (15.0, 30.0)     # F3 candidate rings
 LOS_CAP = 40             # F3 max los calls per search
 WALL_SEARCH = 60.0       # m, radius of the wall-cell cover search
+COVER_BFS = False        # cover = nearest hidden cell by walking distance (stay if already hidden)
+BFS_CHECKS, BFS_LOS_CAP, BFS_MAX_M = 40, 120, 200.0   # candidate cells, los calls, metres walked
 COVER_DZ = 2.5           # m, cover cells must be about our own height
 URGENT_LOOK, URGENT_EDGE = 8.0, 10.0   # zone travel is urgent if the edge passes within 10 m of us in 8 s
 URGENT_FACTOR, URGENT_SLACK = 1.5, 8.0  # ... or eta x 1.5 + 8 s reaches the deadline
@@ -205,6 +207,43 @@ class Survival:
                 return False
         return True
 
+    def _cover_bfs(self, obs, tps, st, pos, cc, cr, nav):
+        """Nearest hidden cell by walking distance (after giddygiddyboy's MIT bot coverMove; ours): stay if
+        already hidden, else search outward, preferring short walks and not hugging the threats."""
+        eye = st["eye_height"]
+        checks = [((p[0], p[1], p[2] + eye), h) for p in tps for h in (st["height"] / 2, st["height"])]
+        here = (pos[0], pos[1], pos[2])
+        if math.hypot(pos[0] - cc[0], pos[1] - cc[1]) <= cr - 5 and self._hidden(here, checks):
+            return [pos[0], pos[1], pos[2]]
+        found = []
+        n = [0]
+
+        def accept(x, y, wall, c, expo):
+            if n[0] >= BFS_CHECKS or (found and c * 2 > found[0][0] + 30):
+                return True
+            if (int(x // 4) + int(y // 4)) % 2 or c <= 0:
+                return False
+            if math.hypot(x - cc[0], y - cc[1]) > cr - 5:
+                return False
+            if self.los_calls + len(checks) > BFS_LOS_CAP:
+                return True
+            n[0] += 1
+            z = nav.surface(x, y)
+            z = pos[2] if z is None else z
+            if abs(z - pos[2]) > COVER_DZ:
+                return False
+            if self._hidden((x, y, z), checks):
+                near = min(math.hypot(p[0] - x, p[1] - y) for p in tps)
+                sc = c * 2 / 4.0 - min(near, 80.0) * 0.25
+                found.append((c * 2 / 4.0, sc, [x, y, z]))
+                found.sort()
+            return False
+
+        nav.search(pos[0], pos[1], accept, max_cost=BFS_MAX_M, max_nodes=1500)
+        if not found:
+            return None
+        return min(found, key=lambda f: f[1])[2]
+
     def find_cover(self, obs, threats):
         w = self.world
         tps = [list(th["pos"]) for th in threats if th.get("pos")]
@@ -228,6 +267,11 @@ class Survival:
             self._cover = (t, tps, prev)
             return prev
         nav = getattr(self, "nav", None)
+        if COVER_BFS and nav is not None:
+            best = self._cover_bfs(obs, tps[:4], st, pos, cc, cr, nav)
+            if best is not None:
+                self._cover = (t, tps, best)
+                return best
         best = self._funnel(obs, tps, st, eye, pos, cc, cr, nav) if FUNNEL and nav is not None else None
         if best is not None:
             self._cover = (t, tps, best)
