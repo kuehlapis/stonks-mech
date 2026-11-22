@@ -52,6 +52,7 @@ REGEN_BREAK = False           # after a trade, no voluntary fights for regen_del
 REGEN_HIDE = False            # with REGEN_BREAK: in the regen window, run to cover from all hunters, then walk quiet, no fire
 BURN_QUIET = False            # with BURN_ENDGAME: hold in cover inside the final circle; fire only while exposed
 RUN_MODE = False              # never start a fight: on contact break LOS / run to the far side of the next circle
+SQ_SURVIVE_T = 0.0            # squad mode: from this time on, switch to RUN_MODE survival (let drones/zone thin the squad) (0 = off)
 RUN_HIT_S = 3.0               # RUN_MODE yields to the normal fight/evade logic for this long after any hit on us
 RUN_ENERGY = 40.0             # ... boost only above this energy (escape reserve)
 RUN_FINISH = 0.35             # ... but finish a lone visible enemy below this fraction of its max HP
@@ -89,13 +90,17 @@ SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could s
 SQ_LASER_AVOID = False        # squad mode, no laser: skip laser holders that aren't attacking us; prefer gun-only targets
 SQ_NO_POKE = False            # squad mode: don't open on bots merely closing/aiming from afar (they retaliate 30 s)
 SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP) when reachable and clear
+CHECK6_T = 0.0                # s: until then, glance behind every CHECK6_P s while looting/travelling with no visible threat (0 = off)
+CHECK6_P = 6.0                # s: glance period
+CHECK6_D = 1.6                # s: glance length (180 deg out and back at 4 rad/s)
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
+EXPLORE_BOOST = 999.0         # boost while exploring/looting for a laser when energy is above this (999 = off)
 EXPLORE_M = 110.0             # m: explore waypoint distance
 SQ_BACKSTAB = 0.0             # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
 SQ_BACK_OFF = 1.75            # rad: "facing away" = its aim this far off the bearing to us
 SQ_RESET_HP = 0.0             # squad mode: with no target and HP below this fraction, heal in cover from remembered enemies (0 = off)
-SQ_LOSE2 = 0.4  # squad mode: two enemies within 160 m and HP below this fraction = losing (retreat)
+SQ_LOSE2 = 0.55               # squad mode: two enemies within 160 m and HP below this fraction = losing (retreat)
 FFA_DEAD = 5                  # mechs dead without our kill that prove a free-for-all (squad mode off)
 PEEK_LASER = False            # squad mode: charge the laser in cover, swing out to fire, duck again
 PEEK_COVER_M = 15.0           # m: only use cover this close for the peek cycle
@@ -104,7 +109,7 @@ MESH_MULTI_HP = 0.0           # tactic mesh: 2+ distinct enemies hit us in MESH_
 MESH_HIT_S = 4.0              # ... "recent hit" window (s)
 MESH_EDGE = 0.0               # tactic mesh: live duel forecast; our time-to-die < this x target's = break contact (0 = off)
 MESH_COMMIT = 0.0             # ... target's time-to-die < this x ours (and <=1 hitter) = commit, ignore crowd retreat (0 = off)
-MESH_ISO_W = 40.0  # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
+MESH_ISO_W = 0.0              # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
 MESH_ISO_R = 80.0             # m
 MESH_ISO_SKIP = 0             # ... don't open on a target with this many+ friends near it unless it hit us / is close (0 = off)
 MESH_W = 5.0                  # s: trade-rate window
@@ -143,6 +148,7 @@ class Brain:
         self._evade_id, self._evade_t = None, 0.0
         self._beam_t = {}   # enemy id -> time of its last laser beam
         self._seen_t = -1e9   # last time a real enemy was visible
+        self._runm = RUN_MODE
         self._run_spot = None # (t, point) RUN_MODE walks to after breaking line of sight
         self._kills = 0
         self._kill_t = -1e9
@@ -204,7 +210,7 @@ class Brain:
                     action["fire"] = self._prefer_gun(obs, self._tgt, action["fire"])
             except Exception as e:
                 self._log("fire", e)
-        if (RUN_MODE or FIRE_POLICY) and isinstance(action, dict):
+        if (self._runm or FIRE_POLICY) and isinstance(action, dict):
             try:
                 me = obs["self"]
                 if any(action.get("fire") or []):  # a shot is heard 320-420 m away: count it as being seen
@@ -277,6 +283,8 @@ class Brain:
     def _decide(self, obs):
         P, S, E = self.perception, self.survival, self.economy
         t = obs.get("t", 0.0)
+        survive = SQ_SURVIVE_T > 0 and t >= SQ_SURVIVE_T
+        self._runm = RUN_MODE or survive
         me = obs["self"]
         pos = me["pos"]
         self._call(P, "update", obs)
@@ -303,7 +311,7 @@ class Brain:
         if any(not x.get("virtual") for x in visible):
             self._seen_t = t
         foe = engaged or threatened
-        if SQUAD_MODE and not self._ffa(obs):
+        if SQUAD_MODE and not survive and not self._ffa(obs):
             return self._decide_squad(obs, threats, t)
 
         # 1. Zone first when urgent: travel, but shoot back with the gun if someone is on us
@@ -344,7 +352,7 @@ class Brain:
 
         # 1d. Run mode: never start a fight; fire back only when cornered or to finish a lone weak enemy
         # trace (r_run, seed 3): running under fire = few shots back, rear hits, death; so under fire fight/evade as usual
-        if RUN_MODE and t - self._dmg_t >= RUN_HIT_S and (hunters or (foe and not foe.get("virtual"))):
+        if self._runm and t - self._dmg_t >= RUN_HIT_S and (hunters or (foe and not foe.get("virtual"))):
             if engaged and not engaged.get("virtual") and _dist(pos, engaged["pos"]) < CORNER_DIST:
                 return self._fight(obs, engaged), "run-fight"
             v = visible[0] if len(visible) == 1 else None
@@ -352,7 +360,7 @@ class Brain:
                 return self._fight(obs, v), "run-finish"
             hs = hunters or [foe]
             return self._hide(obs, hs, engaged, "run", fallback=self._far_point(obs, hs), reserve=RUN_ENERGY)
-        if RUN_MODE and t - self._seen_t < RUN_HIDE_S and not foe and t - self._dmg_t >= RUN_HIT_S:
+        if self._runm and t - self._seen_t < RUN_HIDE_S and not foe and t - self._dmg_t >= RUN_HIT_S:
             # nobody in view but the squad still remembers us: stay put, quiet, facing the last sighting
             cube = LADDER and t - self._kill_t < LADDER_CUBE_S and self._safe_cube(obs, threats)
             if cube:  # a ladder kill's drop
@@ -463,7 +471,7 @@ class Brain:
             return {**self._go(obs, dr), **self._aim(obs, threats, threatened, dr)}, "drop"
 
         # 6. Farm drones and crates while nobody is around
-        farm = None if RUN_MODE and t - self._seen_t < RUN_HIDE_S else self._farm_target(obs, threats, endgame)
+        farm = None if self._runm and t - self._seen_t < RUN_HIDE_S else self._farm_target(obs, threats, endgame)
         if farm:
             tgt, kind = farm
             d = _dist(pos, tgt["pos"])
@@ -633,6 +641,8 @@ class Brain:
                 and "laser" not in _kinds(obs["self"]) and not any(x.get("visible") for x in threats):
             act["aim"] = [_wrap(t * SQ_SCAN), 0.0]  # our aim is our eyes: sweep 360 deg to find pickups
             act["fire"] = [False, False]
+        if CHECK6_T > 0 and t < CHECK6_T and (t % CHECK6_P) < CHECK6_D                 and mode in ("roam", "explore", "crate-walk", "loot", "travel", "cube", "zone")                 and not any(x.get("visible") for x in threats) and act.get("aim"):
+            act["aim"] = [_wrap(act["aim"][0] + math.pi), act["aim"][1] if len(act["aim"]) > 1 else 0.0]
         if SQ_PRECHARGE > 0 and mode not in ("fight", "fight:cube", "cornered", "npc", "farm", "crate")                 and t - self._threat_t < SQ_PRECHARGE:
             pre = self._call(self.combat, "precharge", obs)
             if pre:
@@ -805,7 +815,8 @@ class Brain:
         # loot: a laser first, then wanted weapons, cubes, crates, drones
         want = self._call(E, "seek_laser", obs) or self._call(E, "wanted_pickup", obs, threats)
         if want and want.get("pos"):
-            return {**self._go(obs, want["pos"]), **self._aim(obs, threats, None, want["pos"])}, "loot"
+            return {**self._go(obs, want["pos"], boost="laser" not in kinds and me.get("energy", 0) > EXPLORE_BOOST),
+                    **self._aim(obs, threats, None, want["pos"])}, "loot"
         cube = self._nearest_cube(obs, SQ_LOOT * 0.7)
         if cube is not None:
             return {**self._go(obs, cube), **self._aim(obs, threats, None, cube)}, "cube"
@@ -836,7 +847,7 @@ class Brain:
         if SQ_HUNT_T > 0 and t < SQ_HUNT_T and "laser" not in kinds:
             wp = self._explore_point(obs, t)
             if wp is not None:
-                return {**self._go(obs, wp), **self._aim(obs, threats, None, wp)}, "explore"
+                return {**self._go(obs, wp, boost=me.get("energy", 0) > EXPLORE_BOOST), **self._aim(obs, threats, None, wp)}, "explore"
         hold = self._call(S, "hold_point", obs) or self._next_center(obs)
         return {**self._go(obs, hold), **self._aim(obs, threats, None, hold)}, "roam"
 

@@ -2,6 +2,9 @@
 import math
 
 AIM_TOL_FRAC = 0.6  # fire when the actual aim is within 0.6 target radii of the desired aim at the target
+TRIGGER_SPLIT = True  # gun trigger: separate yaw/pitch tolerances (a mech is tall) and credit the next tick's torso turn
+TRIG_YAW = 0.75        # ... yaw tolerance in target radii
+TRIG_PITCH = 0.4       # ... pitch tolerance in target heights
 MIN_TOL = 0.004  # rad, floor so long shots still fire
 LOW_AMMO_FRAC = 0.5  # reload with no target in range at or below this fraction of the mag
 LETHAL = True  # release a partial laser charge early when it already kills (giddy's Lethal rule)
@@ -165,8 +168,18 @@ class Combat:
                 reload = True
             elif ammo <= LOW_AMMO_FRAC * s.get("mag", 12) and not in_range and not w.get("reload"):
                 reload = True
+            if TRIGGER_SPLIT:
+                rad = target.get("radius", self.radius * size)
+                hgt = 2 * target.get("center_h", self.half_h * size)
+                step_y = st.get("turn_rate", 4.0) * self.dt * 0.5
+                step_p = st.get("pitch_rate", 2.0) * self.dt * 0.5
+                ey = max(0.0, abs(_wrap(lead[0] - actual[0])) - step_y)
+                ep = max(0.0, abs(lead[1] - actual[1]) - step_p)
+                aimed = ey <= math.atan2(TRIG_YAW * rad, max(dist, 1.0)) and ep <= math.atan2(TRIG_PITCH * hgt, max(dist, 1.0))
+            else:
+                aimed = self._err(actual, lead) <= tol and p_hit >= HIT_GATE
             fire[i] = (in_range and clear and ammo > 0 and not w.get("reload")
-                       and w.get("cooldown", 0) <= self.dt and self._err(actual, lead) <= tol and p_hit >= HIT_GATE)
+                       and w.get("cooldown", 0) <= self.dt and aimed)
         for i, w in self._slots(obs, "mortar"):
             s = self._stats(w)
             sol = self._mortar(p[2] + st.get("height", 2 * self.half_h) + 0.5, p, tp, tv, s, r0, clear)
