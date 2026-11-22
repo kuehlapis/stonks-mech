@@ -16,9 +16,10 @@ WALL_SEARCH = 60.0       # m, radius of the wall-cell cover search
 COVER_BFS = False        # cover = nearest hidden cell by walking distance (stay if already hidden)
 BFS_CHECKS, BFS_LOS_CAP, BFS_MAX_M = 40, 120, 200.0   # candidate cells, los calls, metres walked
 COVER_DZ = 2.5           # m, cover cells must be about our own height
-URGENT_LOOK, URGENT_EDGE = 8.0, 10.0   # zone travel is urgent if the edge passes within 10 m of us in 8 s
+URGENT_LOOK = 8.0        # s: zone travel is urgent if the live edge passes within URGENT_EDGE of us this soon
+URGENT_EDGE = 10.0       # m
 URGENT_FACTOR, URGENT_SLACK = 1.5, 8.0  # ... or eta x 1.5 + 8 s reaches the deadline
-HOLD_DEPTH = 0.85        # hold within this fraction of the clamped next radius (room for the next circle)
+HOLD_DEPTH = 0.5        # hold within this fraction of the clamped next radius (room for the next circle)
 WALL_DETOUR = 60.0       # m of extra walking accepted to hold at a better (beside a wall, hidden) spot
 HOLD_ROOF = 0.0          # m: if > 0, hold on roofs at least this high above the street (hunters must climb)
 HOLD_EXPO_W = 1.0        # hold score = exposure x this + path metres / 100
