@@ -71,7 +71,7 @@ DROP_SEEN_S = 0.0             # s: skip drops if a real enemy was seen this rece
 DROP_SAFE_R = 0.0             # m: skip a drop with any remembered enemy this close (0 = off)
 LASER_DUCK = 10.0             # m: duck to cover this close when a fought enemy charges its laser (0 = off)
 SQUAD_MODE = True  # practice vs the house squad: giddy-style rules (_decide_squad)
-SQ_ENGAGE = 90.0  # m: engage anything this close
+SQ_ENGAGE = 130.0  # m: engage anything this close
 SQ_MAXT = 240.0               # m: farthest target
 SQ_LASER_RANGE = 120.0        # m: fight range with a laser
 SQ_GUN_RANGE = 85.0           # m: ... with only the gun
