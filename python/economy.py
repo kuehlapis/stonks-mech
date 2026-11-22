@@ -6,6 +6,14 @@ ORDER = ["plating", "nanites", "armor", "laser_damage", "sensors", "laser_charge
          "gun_damage", "gun_rate", "gun_mag", "gyros", "jets", "reactor", "capacitor", "gun_velocity",
          "lightning_efficiency", "lightning_range", "lightning_chain",
          "mortar_splash", "mortar_reload", "mortar_velocity", "laser_pierce"]
+# Laser-first order (from giddygiddyboy's MIT bot, upgradeOrderLaser): HP, armor, then the laser.
+ORDER_LASER = ["plating", "armor", "laser_damage", "laser_charge", "nanites", "gun_damage", "gun_rate",
+               "lightning_efficiency", "lightning_range", "servos", "gun_mag", "gun_velocity", "gyros",
+               "lightning_chain", "reactor", "capacitor", "mortar_reload", "mortar_splash", "mortar_velocity",
+               "sensors", "jets", "laser_pierce"]
+LASER_UP = False   # use ORDER_LASER
+LASER_SEEK = 0.0   # m: walk this far to a remembered laser pickup when we hold none (0 = off)
+MEM_S = 120.0      # s: remember seen pickups this long
 TAKE_MORTAR = False  # A/B switch: also take a mortar into an empty special slot (ranked last)
 WANT = ["laser", "lightning"]   # weapon pickups worth taking, best first (the gun is always kept)
 # L1 tuning constants (game-plan §5).
@@ -23,11 +31,44 @@ TAKE_DZ = 4.0           # protocol §6: vertical take reach is fixed, not in con
 class Economy:
     def __init__(self, cfg: dict) -> None:
         # Fallback for ids not in ORDER: their order in config.upgrades, then anything unknown last.
-        extra = [u.get("id") for u in (cfg.get("upgrades") or []) if u.get("id") not in ORDER]
-        self.rank = {u: i for i, u in enumerate(ORDER + extra)}
+        order = ORDER_LASER if LASER_UP else ORDER
+        extra = [u.get("id") for u in (cfg.get("upgrades") or []) if u.get("id") not in order]
+        self.rank = {u: i for i, u in enumerate(order + extra)}
+        self.mem = {}  # pickup id -> (kind, pos, t last seen)
         self.reach = float((cfg.get("loot") or {}).get("pickup_radius", 4))
         self.thresholds = (cfg.get("cubes") or {}).get("upgrade_thresholds") or []
         self.skip = {}  # pickup id -> t until which we don't try it again
+
+    def remember(self, obs: dict) -> None:
+        """Keep seen weapon pickups; forget ones we're close to but no longer see (taken), or stale ones."""
+        t = obs.get("t", 0.0)
+        p0 = (obs.get("self") or {}).get("pos") or [0.0, 0.0, 0.0]
+        seen = set()
+        for p in obs.get("pickups") or []:
+            if p.get("id") is not None and p.get("pos"):
+                self.mem[p["id"]] = (p.get("kind"), list(p["pos"]), t)
+                seen.add(p["id"])
+        for i, (k, pos, ts) in list(self.mem.items()):
+            if i not in seen and (t - ts > MEM_S or math.hypot(pos[0] - p0[0], pos[1] - p0[1]) < 30):
+                del self.mem[i]
+
+    def seek_laser(self, obs: dict) -> dict | None:
+        """Nearest remembered laser pickup within LASER_SEEK m when we hold no laser, else None."""
+        if LASER_SEEK <= 0:
+            return None
+        me = obs["self"]
+        if any(w and w.get("kind") == "laser" for w in me.get("weapons") or []):
+            return None
+        t = obs.get("t", 0.0)
+        x, y = me["pos"][0], me["pos"][1]
+        best, bd = None, LASER_SEEK
+        for i, (k, pos, ts) in self.mem.items():
+            if k != "laser" or self.skip.get(i, -1.0) > t:
+                continue
+            d = math.hypot(pos[0] - x, pos[1] - y)
+            if d < bd:
+                best, bd = {"id": i, "kind": k, "pos": pos}, d
+        return best
 
     def cube_ok(self, obs: dict) -> bool:
         """Is one more cube worth picking up?"""

@@ -4,6 +4,7 @@ import math
 AIM_TOL_FRAC = 0.6  # fire when the actual aim is within 0.6 target radii of the desired aim at the target
 MIN_TOL = 0.004  # rad, floor so long shots still fire
 LOW_AMMO_FRAC = 0.5  # reload with no target in range at or below this fraction of the mag
+LETHAL = False       # release a partial laser charge early when it already kills (giddy's Lethal rule)
 AIM_PREDICT = False  # A/B switch: lead with variance-blended smoothed velocity; laser aims at release time
 HIT_GATE = 0.25  # AIM_PREDICT: hold gun fire under this P(hit) (a miss is heard 320 m away)
 PREDICT_WINDOW_S = 1.0  # s of velocity history per target; also the max blind extrapolation
@@ -45,6 +46,8 @@ def arc_pitch(dx, dz, v, g, high):
 class Combat:
     def __init__(self, cfg: dict, world) -> None:
         self.world = world
+        cc = cfg.get("cubes", {})
+        self.cpc, self.cap = cc.get("damage_per_cube", 0.04), cc.get("stat_cap", 10)
         self.wcfg = cfg.get("weapons", {})
         m = cfg.get("mech", {})
         self.radius = m.get("radius", 2.5)
@@ -180,7 +183,17 @@ class Combat:
                 direct = self._aim_at([d[k] + tv[k] * lead_t for k in range(3)])
             if charge > 0:
                 aim = direct  # hitscan: no lead; the beam owns the torso while charging
-                fire[i] = not (charge >= s.get("charge", 0.75) and clear and self._err(actual, direct) <= tol)
+                full = s.get("charge", 0.75)
+                fire[i] = not (charge >= full and clear and self._err(actual, direct) <= tol)
+                thp = target.get("hp")
+                if LETHAL and fire[i] and thp is not None and charge >= s.get("min_charge", 0.15) and clear \
+                        and self._err(actual, direct) <= tol * 0.9:
+                    mf_ = s.get("min_frac", 0.35)
+                    dmg = s.get("damage", 315) * (mf_ + (1 - mf_) * min(1.0, charge / full)) * self.cube_mult(obs)
+                    if "mortar" in (target.get("weapons") or []):
+                        dmg *= 1 + s.get("cookoff", 0.6)
+                    if dmg * 0.8 >= thp:
+                        fire[i] = False  # release now: this partial charge already kills
             else:
                 fire[i] = clear and dist <= s.get("range", 280) and w.get("cooldown", 0) <= self.dt
         for i, w in self._slots(obs, "lightning"):
@@ -208,6 +221,20 @@ class Combat:
         if not self.min_pitch <= pitch <= self.max_pitch:
             return None
         return [math.atan2(dy, dx), pitch], R
+
+    def cube_mult(self, obs):
+        me = obs["self"]
+        return 1 + self.cpc * min(me.get("cubes") or 0, self.cap)
+
+    def precharge(self, obs: dict) -> list:
+        """fire flags that keep a laser charged (ready on sight) without auto-firing: hold while
+        charge < charge + hold_s - 0.35 s and the laser is off cooldown."""
+        fire = [False, False]
+        for i, w in self._slots(obs, "laser"):
+            s = self._stats(w)
+            if w.get("cooldown", 0) <= 0.05 and w.get("charge", 0) < s.get("charge", 0.75) + s.get("hold_s", 2) - 0.35:
+                fire[i] = True
+        return fire
 
     def face(self, obs: dict, yaw: float) -> dict:
         # A laser charge can't be cancelled (protocol §7): any release fires, at min_charge at least,

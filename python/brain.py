@@ -70,6 +70,17 @@ RUN_KILLS_MAX = 2             # RUN_MODE: at most this many run-finish kills per
 DROP_SEEN_S = 0.0             # s: skip drops if a real enemy was seen this recently (0 = off)
 DROP_SAFE_R = 0.0             # m: skip a drop with any remembered enemy this close (0 = off)
 LASER_DUCK = 10.0             # m: duck to cover this close when a fought enemy charges its laser (0 = off)
+SQUAD_MODE = False             # practice vs the house squad: giddy-style rules (_decide_squad)
+SQ_ENGAGE = 60.0              # m: engage anything this close
+SQ_MAXT = 240.0               # m: farthest target
+SQ_LASER_RANGE = 120.0        # m: fight range with a laser
+SQ_GUN_RANGE = 85.0           # m: ... with only the gun
+SQ_LIGHT_RANGE = 28.0         # m: ... with lightning (no laser)
+SQ_FINISH = 26.0              # m: close in to finish a low target
+SQ_LOOT = 150.0               # m: loot radius (cubes x0.7, remembered crates)
+SQ_FARM_HP = 0.5              # farm crates above this HP fraction
+SQ_PRECHARGE = 0.0            # s: keep the laser charged this long after the last threat (0 = off)
+SQ_OUTGUN = False             # count "they have a laser and we don't" (beyond 55 m) as losing
 DODGE = True                  # sidestep visible projectiles that would hit us
 DODGE_T, DODGE_MARGIN = 0.9, 0.7   # s look-ahead; m added to our hit radius
 SLOW_MS = 30.0                # past this many ms in act(), skip optional work (cover search)
@@ -92,6 +103,9 @@ class Brain:
         self._strafe_t = -1.0
         self._strafe_dt = 1.0
         self._mode = None
+        self._crates = {}
+        self._stick_id, self._stick_t = None, -1e9
+        self._hurt_t = self._threat_t = self._lose_t = -1e9
         self._fight_id, self._fight_t = None, -1e9
         self._evade_id, self._evade_t = None, 0.0
         self._beam_t = {}   # enemy id -> time of its last laser beam
@@ -232,6 +246,8 @@ class Brain:
         if any(not x.get("virtual") for x in visible):
             self._seen_t = t
         foe = engaged or threatened
+        if SQUAD_MODE:
+            return self._decide_squad(obs, threats, t)
 
         # 1. Zone first when urgent: travel, but shoot back with the gun if someone is on us
         zg = self._call(S, "zone_goal", obs)
@@ -552,6 +568,191 @@ class Brain:
                             "radius": cr.get("radius", 1.4), "weapons": [], "hp": c.get("hp")}, "crate")
         return (best[1], best[2]) if best else None
 
+    # --- squad mode (rules after giddygiddyboy's MIT bot, squadParams; our own implementation) ---
+
+    def _decide_squad(self, obs, threats, t):
+        act, mode = self._decide_squad_core(obs, threats, t)
+        if SQ_PRECHARGE > 0 and mode not in ("fight", "fight:cube", "cornered", "npc", "farm", "crate")                 and t - self._threat_t < SQ_PRECHARGE:
+            pre = self._call(self.combat, "precharge", obs)
+            if pre:
+                f = list(act.get("fire") or [False, False])
+                act["fire"] = [bool(a) or bool(b) for a, b in zip(f, pre)]
+        return act, mode
+
+    def _decide_squad_core(self, obs, threats, t):
+        """Practice vs the house squad: laser first, farm crates all match, engage hunters at our weapon's range,
+        pick targets by distance and HP, retreat only while losing."""
+        P, S, E = self.perception, self.survival, self.economy
+        me = obs["self"]
+        pos = me["pos"]
+        hp, mhp = me.get("hp", 0.0), me.get("max_hp") or 1.0
+        hf = hp / mhp
+        self._call(E, "remember", obs)
+        for c in obs.get("crates") or []:
+            if c.get("id") is not None and c.get("pos"):
+                self._crates[c["id"]] = (list(c["pos"]), t)
+        vis_crates = {c.get("id") for c in obs.get("crates") or []}
+        for i, (cp, ts) in list(self._crates.items()):
+            if i not in vis_crates and (t - ts > 120 or _dist(cp, pos) < 35):
+                del self._crates[i]
+        for ev in obs.get("events") or ():
+            if ev.get("type") == "damaged" and ev.get("weapon") != "zone":
+                self._hurt_t = t
+        kinds = _kinds(me)
+        z = obs.get("zone") or {}
+        late = (z.get("next_radius", 999) <= 70) or obs.get("alive", 16) <= 3
+        hit_by = getattr(P, "hit_by", None)
+        hit_by = hit_by if isinstance(hit_by, dict) else {}
+        target, best, crowd, near, danger = None, 1e18, 0, 0, False
+        visible = []
+        for th in threats:
+            if th.get("virtual") or t - th.get("last_seen", t) > 2.5:
+                continue
+            d = _dist(pos, th["pos"])
+            vis = th.get("visible")
+            if vis:
+                visible.append(th)
+                if d < 160:
+                    near += 1
+            ux, uy = pos[0] - th["pos"][0], pos[1] - th["pos"][1]
+            L = math.hypot(ux, uy) or 1.0
+            v = th.get("vel") or [0.0, 0.0, 0.0]
+            closing = (v[0] * ux + v[1] * uy) / L
+            aim = th.get("aim")
+            aimed = bool(aim) and abs(_wrap(aim[0] - math.atan2(uy, ux))) < 0.22
+            hitme = t - hit_by.get(th.get("id"), -1e9)
+            thp, tmax = th.get("hp"), th.get("max_hp") or 1400.0
+            low = thp is not None and thp < 0.4 * tmax
+            engage = (d < SQ_ENGAGE or hitme < 6 or late or (closing > 3 and d < 180) or (low and d < 160)
+                      or (aimed and d < 190))
+            if engage or hitme < 4:
+                danger = True
+            if vis and (engage or d < 150):
+                crowd += 1
+            if not (engage and vis and d < SQ_MAXT):
+                continue
+            sc = d + 0.2 * (thp if thp is not None else 1400.0)
+            if thp is not None and thp <= 0.3 * tmax:
+                sc -= 100
+            if th.get("id") == self._stick_id and t - self._stick_t < 2:
+                sc -= 120
+            if hitme < 4:
+                sc -= 40
+            if closing > 3:
+                sc -= 15
+            if sc < best:
+                best, target = sc, th
+        if target is not None:
+            self._stick_id, self._stick_t = target.get("id"), t
+        if danger or t - self._hurt_t < 3:
+            self._threat_t = t
+        td = _dist(pos, target["pos"]) if target else 1e9
+        thp = target.get("hp") if target else None
+        tmax = (target.get("max_hp") or 1400.0) if target else 1400.0
+        finishing = target is not None and td < 120 and thp is not None and (thp < 200 or thp < 0.5 * hp)
+        losing = (near >= 2 and hf < 0.55) or (near >= 3 and hf < 0.8)
+        if target is not None and thp is not None:
+            tf = thp / tmax
+            if hf < 0.35 and tf > hf + 0.1:
+                losing = True
+            if tf < 0.25 and hf > 0.2 and near <= 2:
+                losing = False
+        if (target is not None and "laser" in (target.get("weapons") or []) and "laser" not in kinds
+                and td > 55 and hf < 0.8):
+            losing = losing or SQ_OUTGUN
+        if losing:
+            self._lose_t = t
+        retreat = t - self._lose_t < 1.5
+
+        # zone when it must happen now
+        zg = self._call(S, "zone_goal", obs)
+        urgent = bool(zg) and self._call(S, "zone_urgent", obs, zg[0], default=True)
+        if zg and urgent:
+            aim = self._attack(obs, target) if target else self._aim(obs, threats, None, zg[0])
+            return {**self._go(obs, zg[0], boost=zg[1]), **aim}, "zone"
+        if retreat and not finishing and not late:
+            against = visible if visible else ([target] if target else [])
+            cover = None if (self._slow() or not against) else self._call(S, "find_cover", obs, against)
+            if cover:
+                aim = self._attack(obs, target) if target else self._face(obs, _bearing(pos, cover))
+                return {**self._go(obs, cover, boost=me.get("energy", 0) > 10), **aim}, "cover"
+            if target is not None:
+                return self._fight_at(obs, target, self._pref_range(kinds)), "cornered"
+        if target is not None:
+            rng = self._pref_range(kinds)
+            if thp is not None and thp < 0.38 * tmax and hf > 0.42 and crowd <= 2:
+                rng = SQ_FINISH
+            act = self._fight_at(obs, target, rng)
+            r = 70.0 if hf > 0.5 else 40.0
+            cube = self._nearest_cube(obs, r)
+            if cube is not None:
+                act.update(self._go(obs, cube))
+                return act, "fight:cube"
+            return act, "fight"
+        npc = self._call(P, "npc_attacker", t)
+        if npc and npc.get("pos"):
+            return self._fight_at(obs, self._npc_target(npc), 60.0), "npc"
+        if zg:
+            return {**self._go(obs, zg[0], boost=zg[1]), **self._aim(obs, threats, None, zg[0])}, "travel"
+        # loot: a laser first, then wanted weapons, cubes, crates, drones
+        want = self._call(E, "seek_laser", obs) or self._call(E, "wanted_pickup", obs, threats)
+        if want and want.get("pos"):
+            return {**self._go(obs, want["pos"]), **self._aim(obs, threats, None, want["pos"])}, "loot"
+        cube = self._nearest_cube(obs, SQ_LOOT * 0.7)
+        if cube is not None:
+            return {**self._go(obs, cube), **self._aim(obs, threats, None, cube)}, "cube"
+        if hf > SQ_FARM_HP and not danger:
+            cr = self.cfg.get("crates") or {}
+            bc = None
+            for i, (cp, ts) in self._crates.items():
+                d = _dist(pos, cp)
+                if d < SQ_LOOT and abs(cp[2] - pos[2]) < 4 and (bc is None or d < bc[0]):
+                    bc = (d, cp, i)
+            if bc is not None:
+                d, cp, i = bc
+                tgt = {"id": i, "pos": cp, "vel": [0.0, 0.0, 0.0], "center_h": cr.get("height", 2.4) / 2,
+                       "radius": cr.get("radius", 1.4), "weapons": []}
+                if i in vis_crates and d < 50:
+                    if d < 12:
+                        mv = {"move": [(pos[0] - cp[0]) / max(d, 0.1), (pos[1] - cp[1]) / max(d, 0.1)],
+                              "boost": False, "jump": False}
+                    elif d < 25:
+                        mv = {"move": [0.0, 0.0], "boost": False, "jump": False}
+                    else:
+                        mv = self._go(obs, cp)
+                    return {**mv, **self._attack(obs, tgt)}, "crate"
+                return {**self._go(obs, cp), **self._aim(obs, threats, None, cp)}, "crate-walk"
+        farm = self._farm_target(obs, threats, False)
+        if farm and farm[1] == "npc" and hf > 0.6:
+            return self._fight_at(obs, farm[0], 70.0), "farm"
+        hold = self._call(S, "hold_point", obs) or self._next_center(obs)
+        return {**self._go(obs, hold), **self._aim(obs, threats, None, hold)}, "roam"
+
+    def _pref_range(self, kinds):
+        if "laser" in kinds:
+            return SQ_LASER_RANGE
+        if "lightning" in kinds:
+            return SQ_LIGHT_RANGE
+        return SQ_GUN_RANGE
+
+    def _fight_at(self, obs, e, rng):
+        d = _dist(obs["self"]["pos"], e["pos"])
+        away = max(-0.7, min(0.8, (rng - d) / 30.0))
+        if LASER_DUCK > 0 and e.get("charging") and e.get("visible") and not self._slow():
+            cover = self._call(self.survival, "find_cover", obs, [e])
+            if cover and _dist(obs["self"]["pos"], cover) <= LASER_DUCK:
+                return {**self._go(obs, cover, boost=True), **self._gun_only(obs, e)}
+        return {**self._strafe_move(obs, e["pos"], away=away), **self._attack(obs, e)}
+
+    def _nearest_cube(self, obs, r):
+        p = obs["self"]["pos"]
+        best, bd = None, r
+        for c in obs.get("cubes") or []:
+            cp = c.get("pos")
+            if cp and abs(cp[2] - p[2]) < 6 and _dist(p, cp) < bd:
+                best, bd = cp, _dist(p, cp)
+        return best
+
     # --- fight model ---
 
     def _dps(self, kinds, dist, mult=1.0, energy=100.0):
@@ -869,6 +1070,10 @@ class Brain:
                 return self._face(obs, y)
         y = _bearing(pos, goal) if _dist(pos, goal) >= 2 else (me.get("aim") or [0.0])[0]
         return self._face(obs, y + SWEEP * math.sin(t * math.pi / 2))  # 4 s sweep period
+
+
+def _wrap(a):
+    return (a + math.pi) % (2 * math.pi) - math.pi
 
 
 def _kinds(me):
