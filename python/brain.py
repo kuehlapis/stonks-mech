@@ -104,7 +104,7 @@ MESH_MULTI_HP = 0.0           # tactic mesh: 2+ distinct enemies hit us in MESH_
 MESH_HIT_S = 4.0              # ... "recent hit" window (s)
 MESH_EDGE = 0.0               # tactic mesh: live duel forecast; our time-to-die < this x target's = break contact (0 = off)
 MESH_COMMIT = 0.0             # ... target's time-to-die < this x ours (and <=1 hitter) = commit, ignore crowd retreat (0 = off)
-MESH_ISO_W = 0.0              # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
+MESH_ISO_W = 40.0  # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
 MESH_ISO_R = 80.0             # m
 MESH_ISO_SKIP = 0             # ... don't open on a target with this many+ friends near it unless it hit us / is close (0 = off)
 MESH_W = 5.0                  # s: trade-rate window
