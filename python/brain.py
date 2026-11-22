@@ -83,6 +83,7 @@ SQ_PRECHARGE = 6.0  # s: keep the laser charged this long after the last threat 
 SQ_FIGHTMOVE = False          # squad mode: candidate-scored fight steps (range, LOS to target, hidden from others)
 SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could see a candidate step
 SQ_LASER_AVOID = False        # squad mode, no laser: skip laser holders that aren't attacking us; prefer gun-only targets
+SQ_NO_POKE = False            # squad mode: don't open on bots merely closing/aiming from afar (they retaliate 30 s)
 SQ_DROPS = False              # squad mode: take supply drops (3 cubes + full HP) when reachable and clear
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
 SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
@@ -646,8 +647,9 @@ class Brain:
             thp, tmax = th.get("hp"), th.get("max_hp") or 1400.0
             low = thp is not None and thp < 0.4 * tmax
             back = bool(aim) and abs(_wrap(aim[0] - math.atan2(uy, ux))) > SQ_BACK_OFF
-            engage = (d < SQ_ENGAGE or hitme < 6 or late or (closing > 3 and d < 180) or (low and d < 160)
-                      or (aimed and d < 190) or (SQ_BACKSTAB > 0 and back and d < SQ_BACKSTAB and hf > 0.7))
+            engage = (d < SQ_ENGAGE or hitme < 6 or late or (low and d < 160)
+                      or (not SQ_NO_POKE and ((closing > 3 and d < 180) or (aimed and d < 190)))
+                      or (SQ_BACKSTAB > 0 and back and d < SQ_BACKSTAB and hf > 0.7))
             if engage or hitme < 4:
                 danger = True
             if vis and (engage or d < 150):
