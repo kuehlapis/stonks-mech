@@ -82,8 +82,9 @@ SQ_FARM_HP = 0.5              # farm crates above this HP fraction
 SQ_PRECHARGE = 6.0  # s: keep the laser charged this long after the last threat (0 = off)
 SQ_FIGHTMOVE = False          # squad mode: candidate-scored fight steps (range, LOS to target, hidden from others)
 SQ_FM_EXPOSE = 30.0           # ... penalty per other visible enemy that could see a candidate step
+SQ_LASER_AVOID = False        # squad mode, no laser: skip laser holders that aren't attacking us; prefer gun-only targets
 SQ_SCAN = 0.0                 # rad/s: spin-scan rate while we hold no laser and see no enemy (0 = off)
-SQ_HUNT_T = 0.0               # s: until then, explore new ground for a laser instead of roaming (0 = off)
+SQ_HUNT_T = 25.0  # s: until then, explore new ground for a laser instead of roaming (0 = off)
 EXPLORE_M = 110.0             # m: explore waypoint distance
 SQ_BACKSTAB = 0.0             # m: squad mode opens on enemies facing away (rear x1.5) this close when healthy (0 = off)
 SQ_BACK_OFF = 1.75            # rad: "facing away" = its aim this far off the bearing to us
@@ -650,6 +651,9 @@ class Brain:
                 danger = True
             if vis and (engage or d < 150):
                 crowd += 1
+            lz = "laser" in (th.get("weapons") or []) and "laser" not in kinds
+            if SQ_LASER_AVOID and lz and hitme > 6 and d > SQ_ENGAGE and not low:
+                engage = False  # no laser of our own: don't open on a laser holder that isn't on us
             if not (engage and vis and d < SQ_MAXT):
                 continue
             sc = d + 0.2 * (thp if thp is not None else 1400.0)
@@ -661,6 +665,8 @@ class Brain:
                 sc -= 40
             if closing > 3:
                 sc -= 15
+            if SQ_LASER_AVOID and lz:
+                sc += 80  # prefer gun-only hunters while we have no laser
             if SQ_BACKSTAB > 0 and back:
                 sc -= 60  # its rear arc takes x1.5 and it hasn't reacted yet
             if sc < best:
