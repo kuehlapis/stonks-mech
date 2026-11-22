@@ -5,6 +5,7 @@ AIM_TOL_FRAC = 0.6  # fire when the actual aim is within 0.6 target radii of the
 TRIGGER_SPLIT = True  # gun trigger: separate yaw/pitch tolerances (a mech is tall) and credit the next tick's torso turn
 TRIG_YAW = 1.0  # ... yaw tolerance in target radii
 TRIG_PITCH = 0.45  # ... pitch tolerance in target heights
+LASER_SPLIT = False    # laser release uses the split yaw/pitch tolerance (TRIG_YAW radii, TRIG_PITCH heights)
 MIN_TOL = 0.004  # rad, floor so long shots still fire
 LOW_AMMO_FRAC = 0.5  # reload with no target in range at or below this fraction of the mag
 LETHAL = True  # release a partial laser charge early when it already kills (giddy's Lethal rule)
@@ -194,13 +195,22 @@ class Combat:
             if AIM_PREDICT:  # hitscan fires at release: aim where the target will be then
                 lead_t = max(s.get("charge", 0.75) - charge, 0.0) or self.dt
                 direct = self._aim_at([d[k] + tv[k] * lead_t for k in range(3)])
+            ltol = None
+            if LASER_SPLIT:
+                rad = target.get("radius", self.radius * size)
+                hgt = 2 * target.get("center_h", self.half_h * size)
+                ey, ep = abs(_wrap(direct[0] - actual[0])), abs(direct[1] - actual[1])
+                ok_y = math.atan2(TRIG_YAW * rad, max(dist, 1.0))
+                ok_p = math.atan2(TRIG_PITCH * hgt, max(dist, 1.0))
+                ltol = (ey <= ok_y and ep <= ok_p, ey <= 0.9 * ok_y and ep <= 0.9 * ok_p)
             if charge > 0:
                 aim = direct  # hitscan: no lead; the beam owns the torso while charging
                 full = s.get("charge", 0.75)
-                fire[i] = not (charge >= full and clear and self._err(actual, direct) <= tol)
+                on = ltol[0] if ltol else self._err(actual, direct) <= tol
+                fire[i] = not (charge >= full and clear and on)
                 thp = target.get("hp")
                 if LETHAL and fire[i] and thp is not None and charge >= s.get("min_charge", 0.15) and clear \
-                        and self._err(actual, direct) <= tol * 0.9:
+                        and (ltol[1] if ltol else self._err(actual, direct) <= tol * 0.9):
                     mf_ = s.get("min_frac", 0.35)
                     dmg = s.get("damage", 315) * (mf_ + (1 - mf_) * min(1.0, charge / full)) * self.cube_mult(obs)
                     if "mortar" in (target.get("weapons") or []):

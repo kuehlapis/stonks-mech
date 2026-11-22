@@ -72,7 +72,7 @@ DROP_SEEN_S = 0.0             # s: skip drops if a real enemy was seen this rece
 DROP_SAFE_R = 0.0             # m: skip a drop with any remembered enemy this close (0 = off)
 LASER_DUCK = 10.0             # m: duck to cover this close when a fought enemy charges its laser (0 = off)
 SQUAD_MODE = True  # practice vs the house squad: giddy-style rules (_decide_squad)
-SQ_ENGAGE = 90.0  # m: engage anything this close
+SQ_ENGAGE = 60.0              # m: engage anything this close
 SQ_MAXT = 240.0               # m: farthest target
 SQ_LASER_RANGE = 120.0        # m: fight range with a laser
 SQ_GUN_RANGE = 85.0           # m: ... with only the gun
@@ -112,7 +112,7 @@ MESH_MULTI_HP = 0.0           # tactic mesh: 2+ distinct enemies hit us in MESH_
 MESH_HIT_S = 4.0              # ... "recent hit" window (s)
 MESH_EDGE = 0.0               # tactic mesh: live duel forecast; our time-to-die < this x target's = break contact (0 = off)
 MESH_COMMIT = 0.0             # ... target's time-to-die < this x ours (and <=1 hitter) = commit, ignore crowd retreat (0 = off)
-MESH_ISO_W = 0.0              # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
+MESH_ISO_W = 40.0  # tactic mesh: target score penalty per other known enemy within MESH_ISO_R of it (0 = off)
 MESH_ISO_R = 80.0             # m
 MESH_ISO_SKIP = 0             # ... don't open on a target with this many+ friends near it unless it hit us / is close (0 = off)
 MESH_W = 5.0                  # s: trade-rate window
